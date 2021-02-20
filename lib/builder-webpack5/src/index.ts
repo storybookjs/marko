@@ -123,14 +123,18 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         if (stats && (stats.hasErrors() || stats.hasWarnings())) {
           const { warnings, errors } = stats.toJson(statsOptions);
 
-          errors.forEach((e) => logger.error(e.message));
-          warnings.forEach((e) => logger.error(e.message));
+          if (stats.hasErrors()) {
+            errors.forEach((e) => logger.error(e.message));
+          }
+          if (stats.hasWarnings()) {
+            warnings.forEach((e) => logger.error(e.message));
+          }
           return fail(stats);
         }
       }
 
       logger.trace({ message: '=> Preview built', time: process.hrtime(startTime) });
-      if (stats) {
+      if (stats && stats.hasWarnings()) {
         stats.toJson(statsOptions).warnings.forEach((e) => logger.warn(e.message));
       }
 
