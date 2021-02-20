@@ -1,3 +1,18 @@
+## 6.2.0-alpha.30 (February 20, 2021)
+
+### Features
+
+- Core: Support webpack5 and webpack4 side by side ([#13808](https://github.com/storybookjs/storybook/pull/13808))
+
+### Bug Fixes
+
+- Args: Fix issues with string default values ([#13919](https://github.com/storybookjs/storybook/pull/13919))
+- Args: Prefer react runtime default values ([#13937](https://github.com/storybookjs/storybook/pull/13937))
+
+### Maintenance
+
+- Core: Improve preset handling test coverage ([#13951](https://github.com/storybookjs/storybook/pull/13951))
+
 ## 6.2.0-alpha.29 (February 18, 2021)
 
 ### Features
