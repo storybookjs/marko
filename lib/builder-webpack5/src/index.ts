@@ -120,14 +120,11 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         }
 
         if (stats && (stats.hasErrors() || stats.hasWarnings())) {
-          const { warnings, errors } = stats.toJson({ warnings: true, errors: true });
+          const { warnings = [], errors = [] } = stats.toJson({ warnings: true, errors: true });
 
-          if (stats.hasErrors()) {
-            errors.forEach((e) => logger.error(e.message));
-          }
-          if (stats.hasWarnings()) {
-            warnings.forEach((e) => logger.error(e.message));
-          }
+          errors.forEach((e) => logger.error(e.message));
+          warnings.forEach((e) => logger.error(e.message));
+
           return fail(stats);
         }
       }
