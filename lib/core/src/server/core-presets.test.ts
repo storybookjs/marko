@@ -160,4 +160,28 @@ describe.each([
       TIMEOUT
     );
   });
+
+  describe.each([
+    ['root directory /', '/', "Won't remove directory '/'. Check your outputDir!"],
+    ['empty string ""', '', "Won't remove current directory. Check your outputDir!"],
+  ])('Invalid outputDir must throw: %s', (_, outputDir, expectedErrorMessage) => {
+    const optionsWithInvalidDir = {
+      ...options,
+      outputDir,
+    };
+    beforeEach(() => {
+      jest.clearAllMocks();
+      cache.clear();
+    });
+    it(
+      'production mode',
+      async () => {
+        expect.assertions(1);
+        await expect(buildStaticStandalone(optionsWithInvalidDir)).rejects.toThrow(
+          expectedErrorMessage
+        );
+      },
+      TIMEOUT
+    );
+  });
 });
