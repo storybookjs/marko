@@ -45,7 +45,7 @@
     "emotion-theming": "^10.0.27",
     "global": "^4.4.0",
     "memoizerific": "^1.11.3",
-    "polished": "^3.6.7",
+    "polished": "^4.0.5",
     "resolve-from": "^5.0.0",
     "ts-dedent": "^2.0.0"
   },

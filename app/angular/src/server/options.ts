@@ -1,4 +1,5 @@
 import { sync } from 'read-pkg-up';
+import { LoadOptions } from '@storybook/core-common';
 
 export default {
   packageJson: sync({ cwd: __dirname }).packageJson,
@@ -7,4 +8,4 @@ export default {
     require.resolve('./framework-preset-angular'),
     require.resolve('./framework-preset-angular-cli'),
   ],
-};
+} as LoadOptions;

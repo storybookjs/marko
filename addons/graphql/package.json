@@ -41,7 +41,6 @@
     "@babel/plugin-transform-classes": "^7.12.1",
     "@storybook/addons": "6.2.0-alpha.29",
     "@storybook/api": "6.2.0-alpha.29",
-    "@types/webpack": "^4.41.26",
     "babel-loader": "^8.2.2",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
@@ -49,7 +48,7 @@
     "graphql": "^15.4.0",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.7",
-    "webpack": "^4.46.0"
+    "webpack": "4"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",

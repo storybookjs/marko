@@ -1,3 +1,4 @@
+/* eslint-disable jest/valid-title */
 /* eslint-disable jest/no-export */
 /* eslint-disable jest/expect-expect */
 import { describe, it } from 'global';
@@ -11,7 +12,7 @@ function snapshotTest({ item, asyncJest, framework, testMethod, testMethodParams
     it(
       name,
       () =>
-        new Promise((resolve, reject) =>
+        new Promise<void>((resolve, reject) =>
           testMethod({
             done: (error: any) => (error ? reject(error) : resolve()),
             story: item,

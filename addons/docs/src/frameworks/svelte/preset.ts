@@ -1,10 +1,10 @@
 import path from 'path';
 
 import { Configuration } from 'webpack';
-import type { StorybookOptions } from '@storybook/core/types';
+import type { Options } from '@storybook/core-common';
 
-export async function webpackFinal(webpackConfig: Configuration, options: StorybookOptions) {
-  const svelteOptions = await options.presets.apply('svelteOptions', {}, options);
+export async function webpackFinal(webpackConfig: Configuration, options: Options) {
+  const svelteOptions = await options.presets.apply('svelteOptions', {} as any, options);
 
   webpackConfig.module.rules.push({
     test: /\.svelte$/,

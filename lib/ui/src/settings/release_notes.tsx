@@ -101,10 +101,9 @@ const PureReleaseNotesScreen: FunctionComponent<ReleaseNotesProps> = ({
 
 const MAX_WAIT_TIME = 10000; // 10 seconds
 
-const ReleaseNotesScreen: FunctionComponent<Omit<
-  ReleaseNotesProps,
-  'isLoaded' | 'setLoaded' | 'didHitMaxWaitTime'
->> = ({ version }) => {
+const ReleaseNotesScreen: FunctionComponent<
+  Omit<ReleaseNotesProps, 'isLoaded' | 'setLoaded' | 'didHitMaxWaitTime'>
+> = ({ version }) => {
   const [isLoaded, setLoaded] = useState(false);
   const [didHitMaxWaitTime, setDidHitMaxWaitTime] = useState(false);
 

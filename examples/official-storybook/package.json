@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@packtracker/webpack-plugin": "^2.3.0",
+    "@pmmmwh/react-refresh-webpack-plugin":"^0.4.3",
     "@storybook/addon-a11y": "6.2.0-alpha.29",
     "@storybook/addon-actions": "6.2.0-alpha.29",
     "@storybook/addon-backgrounds": "6.2.0-alpha.29",
@@ -47,20 +48,20 @@
     "enzyme-to-json": "^3.6.1",
     "eventemitter3": "^4.0.7",
     "express": "^4.17.1",
-    "express-graphql": "^0.9.0",
+    "express-graphql": "^0.12.0",
     "format-json": "^1.0.3",
     "global": "^4.4.0",
     "graphql": "^15.4.0",
     "jest-emotion": "^10.0.32",
     "lodash": "^4.17.20",
-    "paths.macro": "^2.0.2",
+    "paths.macro": "^3.0.1",
     "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "terser-webpack-plugin": "^3.1.0",
-    "ts-loader": "^6.2.2",
+    "terser-webpack-plugin": "^5.0.3",
     "uuid": "^8.3.2",
-    "webpack": "^4.46.0"
+    "uuid-browser": "^3.1.0",
+    "webpack": "4"
   },
   "peerDependencies": {
     "puppeteer": "^2.0.0 || ^3.0.0"

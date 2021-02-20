@@ -41,7 +41,7 @@
     "@storybook/client-logger": "6.2.0-alpha.29",
     "@storybook/csf": "0.0.1",
     "core-js": "^3.8.2",
-    "estraverse": "^4.3.0",
+    "estraverse": "^5.2.0",
     "global": "^4.4.0",
     "loader-utils": "^2.0.0",
     "lodash": "^4.17.20",

@@ -25,18 +25,17 @@
     "enzyme-to-json": "^3.6.1",
     "eventemitter3": "^4.0.7",
     "express": "^4.17.1",
-    "express-graphql": "^0.9.0",
+    "express-graphql": "^0.12.0",
     "format-json": "^1.0.3",
     "global": "^4.4.0",
     "graphql": "^15.4.0",
     "jest-emotion": "^10.0.32",
-    "paths.macro": "^2.0.2",
+    "paths.macro": "^3.0.1",
     "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "ts-loader": "^6.2.2",
     "uuid": "^8.3.2",
-    "webpack": "^4.46.0"
+    "webpack": "4"
   },
   "storybook": {
     "chromatic": {

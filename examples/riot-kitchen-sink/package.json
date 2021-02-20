@@ -31,8 +31,8 @@
     "file-loader": "^6.2.0",
     "raw-loader": "^4.0.2",
     "riot-tag-loader": "^2.1.0",
-    "svg-url-loader": "^5.0.1",
-    "webpack": "^4.46.0",
+    "svg-url-loader": "^7.1.1",
+    "webpack": "4",
     "webpack-dev-server": "^3.11.2"
   },
   "storybook": {

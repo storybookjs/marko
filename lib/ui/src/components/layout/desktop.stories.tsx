@@ -3,7 +3,7 @@ import React, { Fragment } from 'react';
 import { withKnobs, boolean, number } from '@storybook/addon-knobs';
 import { DecoratorFn } from '@storybook/react';
 
-import { isChromatic } from 'chromatic/isChromatic';
+import isChromatic from 'chromatic/isChromatic';
 
 import { Desktop, DesktopProps } from './desktop';
 

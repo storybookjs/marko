@@ -16,6 +16,7 @@ describe.each([
     null,
   ],
 ])('getStorybookVersion', (input, output) => {
+  // eslint-disable-next-line jest/valid-title
   it(input, () => {
     expect(getStorybookVersion(input)).toEqual(output);
   });
@@ -30,6 +31,7 @@ describe.each([
   ['@storybook/linter-config', false],
   ['@storybook/design-system', false],
 ])('isCorePackage', (input, output) => {
+  // eslint-disable-next-line jest/valid-title
   it(input, () => {
     expect(isCorePackage(input)).toEqual(output);
   });

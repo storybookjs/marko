@@ -59,7 +59,7 @@
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^10.4.9",
+    "@testing-library/react": "^11.2.2",
     "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {

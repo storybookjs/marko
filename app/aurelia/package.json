@@ -36,6 +36,7 @@
   "dependencies": {
     "@aurelia/webpack-loader": "^0.7.0",
     "@storybook/addon-knobs": "6.2.0-alpha.29",
+    "@storybook/core-common": "6.2.0-alpha.29",
     "@storybook/addons": "6.2.0-alpha.29",
     "@storybook/core": "6.2.0-alpha.29",
     "@storybook/node-logger": "6.2.0-alpha.29",
