@@ -107,7 +107,6 @@ export const bail: WebpackBuilder['bail'] = (e: Error) => {
 export const build: WebpackBuilder['build'] = async ({ options, startTime }) => {
   logger.info('=> Compiling preview..');
   const config = await getConfig(options);
-  const statsOptions = typeof config.stats === 'boolean' ? 'minimal' : config.stats;
 
   return new Promise((succeed, fail) => {
     webpack(config).run((error, stats) => {
@@ -121,17 +120,18 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         }
 
         if (stats && (stats.hasErrors() || stats.hasWarnings())) {
-          const { warnings, errors } = stats.toJson(statsOptions);
+          const { warnings = [], errors = [] } = stats.toJson({ warnings: true, errors: true });
 
           errors.forEach((e) => logger.error(e.message));
           warnings.forEach((e) => logger.error(e.message));
+
           return fail(stats);
         }
       }
 
       logger.trace({ message: '=> Preview built', time: process.hrtime(startTime) });
-      if (stats) {
-        stats.toJson(statsOptions).warnings.forEach((e) => logger.warn(e.message));
+      if (stats && stats.hasWarnings()) {
+        stats.toJson({ warnings: true }).warnings.forEach((e) => logger.warn(e.message));
       }
 
       return succeed();
