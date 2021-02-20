@@ -41,7 +41,7 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-react": "^7.12.10",
     "@storybook/addons": "6.2.0-alpha.29",
-    "@storybook/builder-webpack5": "6.2.0-alpha.29",
+    "@storybook/builder-webpack4": "6.2.0-alpha.29",
     "@storybook/core-common": "6.2.0-alpha.29",
     "@storybook/node-logger": "6.2.0-alpha.29",
     "@storybook/semver": "^7.3.2",
