@@ -100,10 +100,16 @@
     "webpack-bundle-analyzer": "^4.3.0"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
+    "@storybook/builder-webpack4": "6.2.0-alpha.29",
+    "@storybook/builder-webpack5": "6.2.0-alpha.29"
   },
   "peerDependenciesMeta": {
+    "@storybook/builder-webpack4": {
+      "optional": true
+    },
+    "@storybook/builder-webpack5": {
+      "optional": true
+    },
     "typescript": {
       "optional": true
     }
