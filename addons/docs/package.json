@@ -60,6 +60,7 @@
     "@mdx-js/react": "^1.6.22",
     "@storybook/addons": "6.2.0-alpha.32",
     "@storybook/api": "6.2.0-alpha.32",
+    "@storybook/builder-webpack4": "^6.2.0-alpha.32",
     "@storybook/client-api": "6.2.0-alpha.32",
     "@storybook/client-logger": "6.2.0-alpha.32",
     "@storybook/components": "6.2.0-alpha.32",
