@@ -12,10 +12,9 @@ const LEFT_BUTTON = 0;
 const isPlainLeftClick = (e: React.MouseEvent) =>
   e.button === LEFT_BUTTON && !e.altKey && !e.ctrlKey && !e.metaKey && !e.shiftKey;
 
-const RoutedLink: React.FC<React.DetailedHTMLProps<
-  React.AnchorHTMLAttributes<HTMLAnchorElement>,
-  HTMLAnchorElement
->> = ({ href = '#', children, onClick, className, style }) => {
+const RoutedLink: React.FC<
+  React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>
+> = ({ href = '#', children, onClick, className, style }) => {
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isPlainLeftClick(e)) {
       e.preventDefault();

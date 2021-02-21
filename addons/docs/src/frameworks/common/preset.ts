@@ -6,7 +6,7 @@ import remarkExternalLinks from 'remark-external-links';
 import createCompiler from '../../mdx/mdx-compiler-plugin';
 
 const resolvedBabelLoader = require.resolve('babel-loader', {
-  paths: [require.resolve('@storybook/core')],
+  paths: [require.resolve('@storybook/builder-webpack4')], // FIXME!!!
 });
 
 // for frameworks that are not working with react, we need to configure

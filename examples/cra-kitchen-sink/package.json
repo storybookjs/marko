@@ -1,6 +1,6 @@
 {
   "name": "cra-kitchen-sink",
-  "version": "6.2.0-alpha.29",
+  "version": "6.2.0-alpha.31",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -11,28 +11,31 @@
     "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
+    "@storybook/client-logger": "6.2.0-alpha.31",
     "global": "^4.4.0",
     "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
-    "react-lifecycles-compat": "^3.0.4"
+    "react-lifecycles-compat": "^3.0.4",
+    "react-scripts": "^4.0.2"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.2.0-alpha.29",
-    "@storybook/addon-actions": "6.2.0-alpha.29",
-    "@storybook/addon-backgrounds": "6.2.0-alpha.29",
-    "@storybook/addon-docs": "6.2.0-alpha.29",
-    "@storybook/addon-events": "6.2.0-alpha.29",
-    "@storybook/addon-jest": "6.2.0-alpha.29",
-    "@storybook/addon-knobs": "6.2.0-alpha.29",
-    "@storybook/addon-links": "6.2.0-alpha.29",
-    "@storybook/addon-storyshots": "6.2.0-alpha.29",
-    "@storybook/addons": "6.2.0-alpha.29",
-    "@storybook/client-logger": "6.2.0-alpha.29",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@storybook/addon-a11y": "6.2.0-alpha.31",
+    "@storybook/addon-actions": "6.2.0-alpha.31",
+    "@storybook/addon-backgrounds": "6.2.0-alpha.31",
+    "@storybook/addon-docs": "6.2.0-alpha.31",
+    "@storybook/addon-events": "6.2.0-alpha.31",
+    "@storybook/addon-jest": "6.2.0-alpha.31",
+    "@storybook/addon-knobs": "6.2.0-alpha.31",
+    "@storybook/addon-links": "6.2.0-alpha.31",
+    "@storybook/addon-storyshots": "6.2.0-alpha.31",
+    "@storybook/addons": "6.2.0-alpha.31",
+    "@storybook/builder-webpack4": "6.2.0-alpha.31",
     "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
-    "@storybook/react": "6.2.0-alpha.29",
-    "@storybook/theming": "6.2.0-alpha.29",
-    "react-scripts": "^3.4.4"
+    "@storybook/react": "6.2.0-alpha.31",
+    "@storybook/theming": "6.2.0-alpha.31",
+    "webpack": "4"
   },
   "storybook": {
     "chromatic": {

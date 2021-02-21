@@ -1,6 +1,6 @@
 {
   "name": "ember-example",
-  "version": "6.2.0-alpha.29",
+  "version": "6.2.0-alpha.31",
   "private": true,
   "scripts": {
     "build": "ember build --output-path ember-output",
@@ -17,19 +17,19 @@
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@ember/optional-features": "^2.0.0",
-    "@storybook/addon-a11y": "6.2.0-alpha.29",
-    "@storybook/addon-actions": "6.2.0-alpha.29",
-    "@storybook/addon-backgrounds": "6.2.0-alpha.29",
-    "@storybook/addon-controls": "6.2.0-alpha.29",
-    "@storybook/addon-docs": "6.2.0-alpha.29",
-    "@storybook/addon-knobs": "6.2.0-alpha.29",
-    "@storybook/addon-links": "6.2.0-alpha.29",
-    "@storybook/addon-storysource": "6.2.0-alpha.29",
-    "@storybook/addon-viewport": "6.2.0-alpha.29",
-    "@storybook/addons": "6.2.0-alpha.29",
-    "@storybook/ember": "6.2.0-alpha.29",
+    "@storybook/addon-a11y": "6.2.0-alpha.31",
+    "@storybook/addon-actions": "6.2.0-alpha.31",
+    "@storybook/addon-backgrounds": "6.2.0-alpha.31",
+    "@storybook/addon-controls": "6.2.0-alpha.31",
+    "@storybook/addon-docs": "6.2.0-alpha.31",
+    "@storybook/addon-knobs": "6.2.0-alpha.31",
+    "@storybook/addon-links": "6.2.0-alpha.31",
+    "@storybook/addon-storysource": "6.2.0-alpha.31",
+    "@storybook/addon-viewport": "6.2.0-alpha.31",
+    "@storybook/addons": "6.2.0-alpha.31",
+    "@storybook/ember": "6.2.0-alpha.31",
     "@storybook/ember-cli-storybook": "^0.2.1",
-    "@storybook/source-loader": "6.2.0-alpha.29",
+    "@storybook/source-loader": "6.2.0-alpha.31",
     "babel-loader": "^8",
     "broccoli-asset-rev": "^3.0.0",
     "cross-env": "^7.0.3",
@@ -46,8 +46,8 @@
     "ember-resolver": "^7.0.0",
     "ember-source": "~3.24.0",
     "loader.js": "^4.7.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "webpack": "4",
+    "webpack-cli": "^4.2.0"
   },
   "engines": {
     "node": "^4.5 || 6.* || >= 7.*"

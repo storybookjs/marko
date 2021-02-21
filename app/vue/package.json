@@ -1,6 +1,6 @@
 {
   "name": "@storybook/vue",
-  "version": "6.2.0-alpha.29",
+  "version": "6.2.0-alpha.31",
   "description": "Storybook for Vue: Develop Vue Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -41,8 +41,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.29",
-    "@storybook/core": "6.2.0-alpha.29",
+    "@storybook/addons": "6.2.0-alpha.31",
+    "@storybook/core": "6.2.0-alpha.31",
+    "@storybook/core-common": "6.2.0-alpha.31",
     "@types/webpack-env": "^1.16.0",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
@@ -51,14 +52,13 @@
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
-    "ts-loader": "^6.2.2",
+    "ts-loader": "^8.0.14",
     "vue-docgen-api": "^4.34.2",
     "vue-docgen-loader": "^1.5.0",
-    "webpack": "^4.46.0"
+    "webpack": "4"
   },
   "devDependencies": {
     "@types/node": "^14.14.20",
-    "@types/webpack": "^4.41.26",
     "vue": "^2.6.12",
     "vue-loader": "^15.9.6",
     "vue-template-compiler": "^2.6.12"
@@ -67,7 +67,6 @@
     "@babel/core": "*",
     "babel-loader": "^7.0.0 || ^8.0.0",
     "css-loader": "*",
-    "ts-loader": "^6.2.2",
     "vue": "^2.6.8",
     "vue-loader": "^15.7.0",
     "vue-template-compiler": "^2.6.8"
@@ -78,5 +77,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "66dbae1b4f46f0a654cca2a32410f4654ca48821"
+  "gitHead": "30a22ce4c253224b41558ed46bd7c3e8879d903c"
 }

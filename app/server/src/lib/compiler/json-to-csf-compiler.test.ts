@@ -15,6 +15,7 @@ describe('json-to-csf-compiler', () => {
   fs.readdirSync(transformFixturesDir)
     .filter((fileName: string) => inputRegExp.test(fileName))
     .forEach((fixtureFile: string) => {
+      // eslint-disable-next-line jest/valid-title
       it(fixtureFile, async () => {
         const inputPath = path.join(transformFixturesDir, fixtureFile);
         const code = await generate(inputPath);

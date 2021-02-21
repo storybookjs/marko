@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import type { StorybookConfig } from '@storybook/react/types';
 
 module.exports = {
@@ -29,5 +31,8 @@ module.exports = {
     '@storybook/addon-graphql',
     '@storybook/addon-queryparams',
   ],
+  core: {
+    builder: 'webpack4',
+  },
   logLevel: 'debug',
 } as StorybookConfig;

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "6.2.0-alpha.29",
+  "version": "6.2.0-alpha.31",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -44,10 +44,11 @@
   "dependencies": {
     "@babel/preset-flow": "^7.12.1",
     "@babel/preset-react": "^7.12.10",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.2",
-    "@storybook/addons": "6.2.0-alpha.29",
-    "@storybook/core": "6.2.0-alpha.29",
-    "@storybook/node-logger": "6.2.0-alpha.29",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@storybook/addons": "6.2.0-alpha.31",
+    "@storybook/core": "6.2.0-alpha.31",
+    "@storybook/core-common": "6.2.0-alpha.31",
+    "@storybook/node-logger": "6.2.0-alpha.31",
     "@storybook/semver": "^7.3.2",
     "@types/webpack-env": "^1.16.0",
     "babel-plugin-add-react-displayname": "^0.0.5",
@@ -63,13 +64,12 @@
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
-    "webpack": "^4.46.0"
+    "webpack": "4"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.2.0-alpha.29",
+    "@storybook/client-api": "6.2.0-alpha.31",
     "@types/node": "^14.14.20",
-    "@types/prompts": "^2.0.9",
-    "@types/webpack": "^4.41.26"
+    "@types/prompts": "^2.0.9"
   },
   "peerDependencies": {
     "@babel/core": "^7.11.5",
@@ -90,5 +90,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "66dbae1b4f46f0a654cca2a32410f4654ca48821"
+  "gitHead": "30a22ce4c253224b41558ed46bd7c3e8879d903c"
 }
