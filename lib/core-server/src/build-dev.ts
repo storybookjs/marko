@@ -132,7 +132,10 @@ export async function buildDev(loadOptions: LoadOptions) {
       } else {
         logger.error(error as any);
       }
+    } else if (error.compilation?.errors) {
+      error.compilation.errors.forEach((e: any) => logger.plain(e));
     }
+
     logger.line();
     logger.warn(
       error.close
