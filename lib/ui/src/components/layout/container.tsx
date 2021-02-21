@@ -120,7 +120,7 @@ export const Main: FunctionComponent<{ isFullscreen: boolean; position: CSSPrope
   position = undefined,
   ...props
 }) => (
-  <Pane style={position} top {...props}>
+  <Pane style={position} top {...props} role="main">
     <Paper isFullscreen={isFullscreen}>{children}</Paper>
   </Pane>
 );

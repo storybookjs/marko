@@ -11,5 +11,9 @@ module.exports = {
     '@storybook/addon-jest',
     '@storybook/addon-backgrounds',
     '@storybook/addon-a11y',
+    '@storybook/addon-toolbars',
   ],
+  core: {
+    builder: 'webpack4',
+  },
 };

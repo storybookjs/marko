@@ -71,7 +71,7 @@ const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
   await remove(cwd);
   await remove(path.join(siblingDir, 'node_modules'));
 
-  if (useYarn2PnP) {
+  if (useYarn2Pnp) {
     await shell.rm('-rf', [path.join(siblingDir, '.yarn'), path.join(siblingDir, '.yarnrc.yml')]);
   }
 };
@@ -103,7 +103,7 @@ const configureYarn2PnP = async ({ cwd }: Options) => {
 
 const generate = async ({ cwd, name, version, generator }: Options) => {
   let command = generator.replace(/{{name}}/g, name).replace(/{{version}}/g, version);
-  if (useYarn2PnP) {
+  if (useYarn2Pnp) {
     command = command.replace(/npx/g, `yarn dlx`);
   }
 
@@ -226,7 +226,7 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
   logger.log();
 
   if (!(await prepareDirectory(options))) {
-    if (useYarn2PnP) {
+    if (useYarn2Pnp) {
       await configureYarn2PnP({ ...options, cwd: siblingDir });
     }
 
@@ -322,7 +322,7 @@ program.option(
 program.parse(process.argv);
 
 const {
-  useYarn2PnP,
+  useYarn2Pnp,
   useLocalSbCli,
   clean: startWithCleanSlate,
   args: frameworkArgs,

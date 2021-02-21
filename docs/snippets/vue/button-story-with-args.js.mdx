@@ -9,7 +9,7 @@ export default { title: 'Components/Button' };
 const Template = (args, { argTypes }) => ({
   components: { Button },
   props: Object.keys(argTypes),
-  template: '<Button :primary="primary" :label="label" />',
+  template: '<Button v-bind="$props" v-on="$props" />',
 });
 
 // Each story then reuses that template

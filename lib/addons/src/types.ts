@@ -166,7 +166,7 @@ export type BaseDecorators<StoryFnReturnType> = Array<
 export interface BaseAnnotations<Args, StoryFnReturnType> {
   /**
    * Dynamic data that are provided (and possibly updated by) Storybook and its addons.
-   * @see [Arg story inputs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs)
+   * @see [Arg story inputs](https://storybook.js.org/docs/react/api/csf#args-story-inputs)
    */
   args?: Partial<Args>;
 

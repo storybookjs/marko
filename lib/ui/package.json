@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.2.0-alpha.18",
+  "version": "6.2.0-alpha.32",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -38,15 +38,15 @@
   "dependencies": {
     "@emotion/core": "^10.1.1",
     "@hypnosphi/react-sizeme": "^2.6.13",
-    "@storybook/addons": "6.2.0-alpha.18",
-    "@storybook/api": "6.2.0-alpha.18",
-    "@storybook/channels": "6.2.0-alpha.18",
-    "@storybook/client-logger": "6.2.0-alpha.18",
-    "@storybook/components": "6.2.0-alpha.18",
-    "@storybook/core-events": "6.2.0-alpha.18",
-    "@storybook/router": "6.2.0-alpha.18",
+    "@storybook/addons": "6.2.0-alpha.32",
+    "@storybook/api": "6.2.0-alpha.32",
+    "@storybook/channels": "6.2.0-alpha.32",
+    "@storybook/client-logger": "6.2.0-alpha.32",
+    "@storybook/components": "6.2.0-alpha.32",
+    "@storybook/core-events": "6.2.0-alpha.32",
+    "@storybook/router": "6.2.0-alpha.32",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.18",
+    "@storybook/theming": "6.2.0-alpha.32",
     "@types/markdown-to-jsx": "^6.11.3",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.2",
@@ -58,7 +58,7 @@
     "lodash": "^4.17.20",
     "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
-    "polished": "^3.6.7",
+    "polished": "^4.0.5",
     "qs": "^6.9.5",
     "react-draggable": "^4.4.3",
     "react-helmet-async": "^1.0.7",
@@ -68,16 +68,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/addon-actions": "6.2.0-alpha.18",
-    "@storybook/addon-knobs": "6.2.0-alpha.18",
-    "@storybook/react": "6.2.0-alpha.18",
-    "@testing-library/react": "^10.4.9",
+    "@testing-library/react": "^11.2.2",
     "babel-loader": "^8.2.2",
     "chromatic": "^5.6.0",
     "enzyme": "^3.11.0",
     "flush-promises": "^1.0.2",
-    "terser-webpack-plugin": "^3.1.0",
-    "webpack": "^4.46.0"
+    "terser-webpack-plugin": "^5.0.3",
+    "webpack": "4"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -86,5 +83,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ed19e4b88b0fbc36d10379149b7c98194254897e"
+  "gitHead": "cb02d735a85662ca11212a32a805755458246e4b"
 }

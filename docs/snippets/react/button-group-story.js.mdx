@@ -8,12 +8,12 @@ import * as ButtonStories from './Button.stories';
 export default {
   title: 'ButtonGroup',
   component: ButtonGroup,
-}
-const Template = (args) => <ButtonGroup {...args} />
+};
+const Template = (args) => <ButtonGroup {...args} />;
 
 export const Pair = Template.bind({});
 Pair.args = {
-  buttons: [ ...ButtonStories.Primary.args, ...ButtonStories.Secondary.args ],
+  buttons: [{ ...ButtonStories.Primary.args }, { ...ButtonStories.Secondary.args }],
   orientation: 'horizontal',
 };
 ```

@@ -10,6 +10,7 @@ exports[`Storyshots Args Table Args Table 1`] = `
   "number": 0,
   "unionstr": "a",
   "unionnumeric": 1,
+  "union": null,
   "required": ""
 }
   </pre>

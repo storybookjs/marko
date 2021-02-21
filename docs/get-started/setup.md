@@ -13,7 +13,8 @@ Pick a simple component from your project, like a Button, and write a `.stories.
     'react/your-component.js.mdx',
     'react/your-component.ts.mdx',
     'angular/your-component.ts.mdx',
-    'svelte/your-component.js.mdx',
+    'vue/your-component.js.mdx',
+    'svelte/your-component.js.mdx'
   ]}
 />
 
@@ -61,7 +62,8 @@ Use [decorators](../writing-stories/decorators.md) to “wrap” every story in 
 <CodeSnippets
   paths={[
     'react/storybook-preview-with-styled-components-decorator.js.mdx',
-    'angular/storybook-preview-with-styled-components-decorator.ts.mdx',
+    'vue/storybook-preview-with-styled-components-decorator.js.mdx',
+    'angular/storybook-preview-with-styled-components-decorator.ts.mdx'
   ]}
 />
 

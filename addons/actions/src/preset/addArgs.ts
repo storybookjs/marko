@@ -23,7 +23,7 @@ export const inferActionsFromArgTypesRegex: ArgTypesEnhancer = (context) => {
     if (!argTypesRegex.test(name)) {
       return argType;
     }
-    return { ...argType, defaultValue: argType.defaultValue || action(name) };
+    return { ...argType, defaultValue: action(name) };
   });
 };
 
@@ -41,7 +41,7 @@ export const addActionsFromArgTypes: ArgTypesEnhancer = (context) => {
       return argType;
     }
     const message = typeof argType.action === 'string' ? argType.action : name;
-    return { ...argType, defaultValue: argType.defaultValue || action(message) };
+    return { ...argType, defaultValue: action(message) };
   });
 };
 

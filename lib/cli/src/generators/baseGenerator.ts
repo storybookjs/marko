@@ -2,7 +2,7 @@ import { NpmOptions } from '../NpmOptions';
 import { StoryFormat, SupportedLanguage, SupportedFrameworks } from '../project_types';
 import { getBabelDependencies, copyComponents } from '../helpers';
 import { configure } from './configure';
-import { JsPackageManager } from '../js-package-manager';
+import { getPackageDetails, JsPackageManager } from '../js-package-manager';
 
 export type GeneratorOptions = {
   language: SupportedLanguage;
@@ -64,13 +64,21 @@ export async function baseGenerator(
   const yarn2Dependencies =
     packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
 
+  const packageJson = packageManager.retrievePackageJson();
+  const installedDependencies = new Set(Object.keys(packageJson.dependencies));
+
   const packages = [
     `@storybook/${framework}`,
     ...addonPackages,
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,
-  ].filter(Boolean);
+  ]
+    .filter(Boolean)
+    .filter(
+      (packageToInstall) => !installedDependencies.has(getPackageDetails(packageToInstall)[0])
+    );
+
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   configure(framework, [...addons, ...extraAddons]);
@@ -78,7 +86,6 @@ export async function baseGenerator(
     copyComponents(framework, language);
   }
 
-  const packageJson = packageManager.retrievePackageJson();
   const babelDependencies = addBabel ? await getBabelDependencies(packageManager, packageJson) : [];
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,

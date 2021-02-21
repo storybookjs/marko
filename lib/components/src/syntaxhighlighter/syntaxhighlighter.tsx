@@ -1,7 +1,7 @@
 import React, { ComponentProps, FunctionComponent, MouseEvent, useState } from 'react';
 import { logger } from '@storybook/client-logger';
 import { styled } from '@storybook/theming';
-import { navigator, window } from 'global';
+import { navigator, document, window } from 'global';
 import memoize from 'memoizerific';
 
 // @ts-ignore
@@ -52,6 +52,24 @@ const themedSyntax = memoize(2)((theme) =>
   Object.entries(theme.code || {}).reduce((acc, [key, val]) => ({ ...acc, [`* .${key}`]: val }), {})
 );
 
+let copyToClipboard: (text: string) => Promise<void>;
+
+if (navigator.clipboard) {
+  copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
+} else {
+  copyToClipboard = async (text: string) => {
+    const tmp = document.createElement('TEXTAREA');
+    const focus = document.activeElement;
+
+    tmp.value = text;
+
+    document.body.appendChild(tmp);
+    tmp.select();
+    document.execCommand('copy');
+    document.body.removeChild(tmp);
+    focus.focus();
+  };
+}
 export interface WrapperProps {
   bordered?: boolean;
   padded?: boolean;
@@ -135,8 +153,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
   const onClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
-    navigator.clipboard
-      .writeText(highlightableCode)
+    copyToClipboard(highlightableCode)
       .then(() => {
         setCopied(true);
         window.setTimeout(() => setCopied(false), 1500);
