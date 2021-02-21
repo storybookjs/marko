@@ -6,11 +6,15 @@ export default {
   component: MyPage,
 };
 
-// If your props are optional and don't always exist in argTypes,
-// you can specify them explicitly as you normally specify props
-const Template = () => ({
-  props: ['user'],
+const Template = (args) => ({
+  // Components used in your story `template` are defined in the `components` object
   components: { MyPage },
+  // The story's `args` need to be mapped into the template through the `setup()` method
+  setup() {
+    // Story args can be mapped to keys in the returned object
+    return { user: args.user };
+  },
+  // Then, those values can be accessed directly in the template
   template: '<my-page :user="user" />',
 });
 
