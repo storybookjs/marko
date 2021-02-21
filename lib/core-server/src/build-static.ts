@@ -25,6 +25,11 @@ import { getPreviewBuilder } from './utils/get-preview-builder';
 export async function buildStaticStandalone(options: CLIOptions & LoadOptions & BuilderOptions) {
   /* eslint-disable no-param-reassign */
   options.configType = 'PRODUCTION';
+
+  if (options.outputDir === '') {
+    throw new Error("Won't remove current directory. Check your outputDir!");
+  }
+
   options.outputDir = path.isAbsolute(options.outputDir)
     ? options.outputDir
     : path.join(process.cwd(), options.outputDir);
