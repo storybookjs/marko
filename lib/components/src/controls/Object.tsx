@@ -1,10 +1,13 @@
 import { window } from 'global';
-import React, { SyntheticEvent, useCallback, useMemo } from 'react';
+import React, { ComponentProps, SyntheticEvent, useCallback, useMemo } from 'react';
 import { styled, useTheme, Theme } from '@storybook/theming';
 
-import { JsonTree, JsonTreeProps } from 'react-editable-json-tree';
+// @ts-ignore
+import { JsonTree } from './react-editable-json-tree';
 import type { ControlProps, ObjectValue, ObjectConfig } from './types';
 import { Icons } from '../icon/icon';
+
+type JsonTreeProps = ComponentProps<typeof JsonTree>;
 
 const Wrapper = styled.label(({ theme }) => ({
   display: 'flex',
@@ -203,7 +206,7 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
         }
         plusMenuElement={<ActionIcon icon="add" />}
         minusMenuElement={<ActionIcon icon="subtract" />}
-        inputElement={(_, __, ___, key) =>
+        inputElement={(_: any, __: any, ___: any, key: string) =>
           key ? <Input onFocus={selectValue} onBlur={dispatchEnterKey} /> : <Input />
         }
       />
