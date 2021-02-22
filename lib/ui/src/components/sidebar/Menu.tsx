@@ -50,7 +50,8 @@ export const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme 
     background: theme.barBg,
     boxShadow: 'none',
   },
-  '&:focus:before': {
+  // creates a pseudo border that does not affect the box model, but is accessible in high contrast mode
+  '&:focus:before': { 
     content: '""',
     position: 'absolute',
     top: 0,
