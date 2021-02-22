@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-jest",
-  "version": "6.2.0-alpha.32",
+  "version": "6.2.0-alpha.33",
   "description": "React storybook addon that show component jest report",
   "keywords": [
     "addon",
@@ -44,11 +44,11 @@
   },
   "dependencies": {
     "@hypnosphi/react-sizeme": "^2.6.13",
-    "@storybook/addons": "6.2.0-alpha.32",
-    "@storybook/api": "6.2.0-alpha.32",
-    "@storybook/components": "6.2.0-alpha.32",
-    "@storybook/core-events": "6.2.0-alpha.32",
-    "@storybook/theming": "6.2.0-alpha.32",
+    "@storybook/addons": "6.2.0-alpha.33",
+    "@storybook/api": "6.2.0-alpha.33",
+    "@storybook/components": "6.2.0-alpha.33",
+    "@storybook/core-events": "6.2.0-alpha.33",
+    "@storybook/theming": "6.2.0-alpha.33",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
     "regenerator-runtime": "^0.13.7",
