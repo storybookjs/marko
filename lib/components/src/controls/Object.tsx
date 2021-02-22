@@ -5,6 +5,7 @@ import { styled, useTheme, Theme } from '@storybook/theming';
 // @ts-ignore
 import { JsonTree } from './react-editable-json-tree';
 import type { ControlProps, ObjectValue, ObjectConfig } from './types';
+import { Form } from '../form';
 import { Icons, IconsProps } from '../icon/icon';
 
 type JsonTreeProps = ComponentProps<typeof JsonTree>;
@@ -197,6 +198,16 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
     },
     [onChange]
   );
+  const updateRaw = useCallback(
+    (raw) => {
+      try {
+        onChange(JSON.parse(raw));
+      } catch (e) {
+        // ignore
+      }
+    },
+    [onChange]
+  );
 
   const theme = useTheme() as Theme;
 
@@ -220,6 +231,16 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
         minusMenuElement={<ActionIcon icon="subtract" />}
         inputElement={(_: any, __: any, ___: any, key: string) =>
           key ? <Input onFocus={selectValue} onBlur={dispatchEnterKey} /> : <Input />
+        }
+        fallback={
+          <Form.Textarea
+            id={name}
+            name={name}
+            defaultValue={value}
+            onBlur={(event) => updateRaw(event.target.value)}
+            size="flex"
+            placeholder="JSON string"
+          />
         }
       />
     </Wrapper>

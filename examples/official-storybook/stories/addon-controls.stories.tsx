@@ -33,7 +33,7 @@ export const Action = Template.bind({});
 Action.args = {
   children: 'hmmm',
   type: 'action',
-  json: DEFAULT_NESTED_OBJECT,
+  json: null,
 };
 
 export const ImageFileControl = (args) => <img src={args.imageUrls[0]} alt="Your Example Story" />;
