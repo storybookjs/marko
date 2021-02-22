@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.2.0-alpha.32",
+  "version": "6.2.0-alpha.33",
   "description": "Test component compliance with web accessibility standards",
   "keywords": [
     "a11y",
@@ -41,19 +41,19 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.32",
-    "@storybook/api": "6.2.0-alpha.32",
-    "@storybook/channels": "6.2.0-alpha.32",
-    "@storybook/client-api": "6.2.0-alpha.32",
-    "@storybook/client-logger": "6.2.0-alpha.32",
-    "@storybook/components": "6.2.0-alpha.32",
-    "@storybook/core-events": "6.2.0-alpha.32",
-    "@storybook/theming": "6.2.0-alpha.32",
+    "@hypnosphi/react-sizeme": "^2.6.13",
+    "@storybook/addons": "6.2.0-alpha.33",
+    "@storybook/api": "6.2.0-alpha.33",
+    "@storybook/channels": "6.2.0-alpha.33",
+    "@storybook/client-api": "6.2.0-alpha.33",
+    "@storybook/client-logger": "6.2.0-alpha.33",
+    "@storybook/components": "6.2.0-alpha.33",
+    "@storybook/core-events": "6.2.0-alpha.33",
+    "@storybook/theming": "6.2.0-alpha.33",
     "axe-core": "^4.1.1",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
     "lodash": "^4.17.20",
-    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
@@ -77,7 +77,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cb02d735a85662ca11212a32a805755458246e4b",
+  "gitHead": "149c8bb91b3ac9101fcd90252da87befff97c418",
   "storybook": {
     "displayName": "Accessibility",
     "icon": "https://user-images.githubusercontent.com/263385/101991665-47042f80-3c7c-11eb-8f00-64b5a18f498a.png",

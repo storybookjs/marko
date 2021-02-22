@@ -24,7 +24,6 @@ Object {
     "entry",
     "output",
     "watchOptions",
-    "stats",
     "plugins",
     "module",
     "resolve",

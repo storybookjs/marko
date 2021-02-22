@@ -212,7 +212,7 @@ Object {
         ],
       },
       Object {
-        "test": "/\\\\.(stories|story)\\\\.mdx$/",
+        "test": "/(stories|story)\\\\.mdx$/",
         "use": Array [
           Object {
             "loader": "NODE_MODULES/babel-loader/lib/index.js",
@@ -302,7 +302,7 @@ Object {
         ],
       },
       Object {
-        "exclude": "/\\\\.(stories|story)\\\\.mdx$/",
+        "exclude": "/(stories|story)\\\\.mdx$/",
         "test": "/\\\\.mdx$/",
         "use": Array [
           Object {

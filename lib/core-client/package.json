@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-client",
-  "version": "6.2.0-alpha.32",
+  "version": "6.2.0-alpha.33",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -36,13 +36,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.32",
-    "@storybook/channel-postmessage": "6.2.0-alpha.32",
-    "@storybook/client-api": "6.2.0-alpha.32",
-    "@storybook/client-logger": "6.2.0-alpha.32",
-    "@storybook/core-events": "6.2.0-alpha.32",
+    "@storybook/addons": "6.2.0-alpha.33",
+    "@storybook/channel-postmessage": "6.2.0-alpha.33",
+    "@storybook/client-api": "6.2.0-alpha.33",
+    "@storybook/client-logger": "6.2.0-alpha.33",
+    "@storybook/core-events": "6.2.0-alpha.33",
     "@storybook/csf": "0.0.1",
-    "@storybook/ui": "6.2.0-alpha.32",
+    "@storybook/ui": "6.2.0-alpha.33",
     "ansi-to-html": "^0.6.11",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
@@ -65,5 +65,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "cb02d735a85662ca11212a32a805755458246e4b"
+  "gitHead": "149c8bb91b3ac9101fcd90252da87befff97c418"
 }

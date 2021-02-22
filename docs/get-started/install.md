@@ -28,7 +28,7 @@ Inside your existing project's root directory, issue the following to add Storyb
 
 <summary><code>sb init</code> is not made for empty projects</summary>
 
-Storybook needs to be installed into a project that is already setup with a framework. It will not work on an empty project. There are many ways to bootstrap an app in given framework including:
+Storybook needs to be installed into a project that is already setup with a framework. It will not work on an empty project. There are many ways to bootstrap an app in a given framework including:
 
 - 📦 [Create React App](https://reactjs.org/docs/create-a-new-react-app.html)
 - 📦 [Vue CLI](https://cli.vuejs.org/)
@@ -76,7 +76,6 @@ For instance you can use:
 - `--type react` to setup Storybook with the React configuration options.
 - `--type vue` to setup Storybook with the Vue configuration options.
 - `--type angular` to setup Storybook with the Angular configuration options. -->
-
 
 <!-- prettier-ignore-start -->
 
