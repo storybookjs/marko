@@ -1,8 +1,22 @@
+## 6.2.0-beta.0 (February 22, 2021)
+
+Storybook 6.2 is in beta. 🎉🎉🎉
+
+Hundreds of improvements and fixes, including:
+
+- **Vue 3** - Official support for the latest version of Vue.
+- **Webpack 5** - Experimental support for the latest version of Webpack.
+- **Controls** - Controls improvements including URL sync, filtering, sorting, and more.
+- **Angular** - Overhauled Angular support.
+- **Svelte** - Overhauled Svelte support.
+
+Track the release in the Github: [Storybook 6.2 Release ⚡️](https://github.com/storybookjs/storybook/issues/13160)
+
 ## 6.2.0-alpha.35 (February 22, 2021)
 
 ### Bug Fixes
 
-* Webpack5: Fix progress plugin version conflict ([#14007](https://github.com/storybookjs/storybook/pull/14007))
+- Webpack5: Fix progress plugin version conflict ([#14007](https://github.com/storybookjs/storybook/pull/14007))
 
 ## 6.2.0-alpha.34 (February 22, 2021)
 
@@ -14,7 +28,6 @@
 ### Dependency Upgrades
 
 - Core: Fix core/builder dependencies ([#13999](https://github.com/storybookjs/storybook/pull/13999))
-
 
 ## 6.2.0-alpha.33 (February 22, 2021)
 
