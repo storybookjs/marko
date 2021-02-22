@@ -57,6 +57,8 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
     "@storybook/node-logger": "6.2.0-alpha.33",
+    "@types/glob-base": "^0.3.0",
+    "@types/micromatch": "^4.0.1",
     "@types/node": "^14.0.10",
     "babel-loader": "^8.2.2",
     "babel-plugin-macros": "^3.0.1",
@@ -82,7 +84,8 @@
   "devDependencies": {
     "@types/interpret": "^1.1.1",
     "@types/mock-fs": "^4.13.0",
-    "mock-fs": "^4.13.0"
+    "mock-fs": "^4.13.0",
+    "react-docgen-typescript-plugin": "^0.6.2"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
