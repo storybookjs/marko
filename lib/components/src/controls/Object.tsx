@@ -108,7 +108,7 @@ const Wrapper = styled.label(({ theme }) => ({
   },
   '.rejt-value-node:hover > .rejt-value': {
     background: theme.background.app,
-    borderColor: theme.color.mediumdark,
+    borderColor: theme.color.border,
   },
 }));
 
@@ -118,7 +118,7 @@ const Button = styled.button<{ primary?: boolean }>(({ theme, primary }) => ({
   margin: 1,
   borderRadius: 4,
   background: primary ? theme.color.secondary : 'transparent',
-  color: primary ? theme.color.lightest : theme.color.mediumdark,
+  color: primary ? theme.color.lightest : theme.color.dark,
   fontWeight: primary ? 'bold' : 'normal',
   cursor: 'pointer',
   order: primary ? 'initial' : 9,
@@ -151,10 +151,13 @@ const Input = styled.input(({ theme, placeholder }) => ({
   padding: placeholder ? '2px 4px' : '3px 4px',
   color: theme.color.defaultText,
   background: theme.background.app,
-  border: `1px solid ${theme.color.secondary}`,
+  border: `1px solid ${theme.color.border}`,
   borderRadius: 4,
   lineHeight: '14px',
   width: placeholder === 'Key' ? 80 : 120,
+  '&:focus': {
+    border: `1px solid ${theme.color.secondary}`,
+  },
 }));
 
 const ENTER_EVENT = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13 };
