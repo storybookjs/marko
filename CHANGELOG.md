@@ -1,3 +1,9 @@
+## 6.2.0-alpha.35 (February 22, 2021)
+
+### Bug Fixes
+
+* Webpack5: Fix progress plugin version conflict ([#14007](https://github.com/storybookjs/storybook/pull/14007))
+
 ## 6.2.0-alpha.34 (February 22, 2021)
 
 ### Maintenance
