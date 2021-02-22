@@ -1,5 +1,6 @@
 import { window } from 'global';
-import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
+import cloneDeep from 'lodash/cloneDeep';
+import React, { ComponentProps, SyntheticEvent, useCallback, useMemo, useState } from 'react';
 import { styled, useTheme, Theme } from '@storybook/theming';
 
 // @ts-ignore
@@ -193,6 +194,7 @@ const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (the
 });
 
 export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChange }) => {
+  const data = useMemo(() => cloneDeep(value), [value]);
   const [parseError, setParseError] = useState();
   const updateRaw = useCallback(
     (raw) => {
@@ -209,7 +211,7 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
   return (
     <Wrapper>
       <JsonTree
-        data={value}
+        data={data}
         rootName={name}
         onFullyUpdate={onChange}
         getStyle={getCustomStyleFunction(useTheme())}
