@@ -122,8 +122,8 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         if (stats && (stats.hasErrors() || stats.hasWarnings())) {
           const { warnings, errors } = stats.toJson(statsOptions);
 
-          errors.forEach((e) => logger.error(e.message));
-          warnings.forEach((e) => logger.error(e.message));
+          errors.forEach((e) => logger.error(e));
+          warnings.forEach((e) => logger.error(e));
         }
 
         process.exitCode = 1;
@@ -133,7 +133,7 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         const statsData = stats.toJson(
           typeof statsOptions === 'string' ? statsOptions : { ...statsOptions, warnings: true }
         );
-        statsData?.warnings?.forEach((e) => logger.warn(e.message));
+        statsData?.warnings?.forEach((e) => logger.warn(e));
 
         succeed();
       }
