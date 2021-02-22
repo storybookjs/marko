@@ -1,3 +1,18 @@
+## 6.2.0-alpha.33 (February 22, 2021)
+
+### Features
+
+* Addon-docs: Support story.mdx, stories.mdx ([#13996](https://github.com/storybookjs/storybook/pull/13996))
+
+### Bug Fixes
+
+* Webpack5: Remove outdated html-webpack-plugin types ([#13986](https://github.com/storybookjs/storybook/pull/13986))
+
+### Dependency Upgrades
+
+* Move to a fork of react-sizeme with updated React peer dependency ([#13733](https://github.com/storybookjs/storybook/pull/13733))
+* Webpack4: Upgrade html-webpack-plugin and remove external types ([#13993](https://github.com/storybookjs/storybook/pull/13993))
+
 ## 6.2.0-alpha.32 (February 21, 2021)
 
 ### Breaking prerelease
