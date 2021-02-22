@@ -9,6 +9,9 @@ import { Icons } from '../icon/icon';
 const Wrapper = styled.label(({ theme }) => ({
   display: 'flex',
 
+  '.rejt-tree': {
+    marginLeft: '1rem',
+  },
   '.rejt-value-node, .rejt-object-node > .rejt-collapsed, .rejt-array-node > .rejt-collapsed, .rejt-object-node > .rejt-not-collapsed > span, .rejt-array-node > .rejt-not-collapsed > span': {
     '& > svg': {
       opacity: 0,
@@ -96,7 +99,7 @@ const Wrapper = styled.label(({ theme }) => ({
     margin: '1px 0',
     padding: '0 4px',
     cursor: 'text',
-    color: theme.color.ultraviolet,
+    color: theme.color.darkest,
   },
   '.rejt-value-node:hover > .rejt-value': {
     borderColor: theme.color.border,
@@ -109,7 +112,7 @@ const Button = styled.button<{ primary?: boolean }>(({ theme, primary }) => ({
   margin: 1,
   borderRadius: 4,
   background: primary ? theme.color.secondary : 'transparent',
-  color: primary ? theme.color.lightest : theme.color.defaultText,
+  color: primary ? theme.color.lightest : theme.color.dark,
   fontWeight: primary ? 'bold' : 'normal',
   cursor: 'pointer',
   order: primary ? 'initial' : 9,
