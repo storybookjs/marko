@@ -7,7 +7,7 @@ export default {
   argTypes: {
     children: { control: 'text', name: 'Children' },
     type: { control: 'text', name: 'Type' },
-    somethingElse: { control: 'object', name: 'Something Else' },
+    json: { control: 'object', name: 'JSON' },
     imageUrls: { control: { type: 'file', accept: '.png' }, name: 'Image Urls' },
   },
   parameters: { chromatic: { disable: true } },
@@ -18,14 +18,14 @@ const DEFAULT_NESTED_OBJECT = { a: 4, b: { c: 'hello', d: [1, 2, 3] } };
 const Template = (args) => (
   <div>
     <Button type={args.type}>{args.children}</Button>
-    {args.somethingElse && JSON.stringify(args.somethingElse)}
+    {args.json && <pre>{JSON.stringify(args.json, null, 2)}</pre>}
   </div>
 );
 
 export const Basic = Template.bind({});
 Basic.args = {
   children: 'basic',
-  somethingElse: DEFAULT_NESTED_OBJECT,
+  json: DEFAULT_NESTED_OBJECT,
 };
 Basic.parameters = { chromatic: { disable: false } };
 
@@ -33,7 +33,7 @@ export const Action = Template.bind({});
 Action.args = {
   children: 'hmmm',
   type: 'action',
-  somethingElse: DEFAULT_NESTED_OBJECT,
+  json: DEFAULT_NESTED_OBJECT,
 };
 
 export const ImageFileControl = (args) => <img src={args.imageUrls[0]} alt="Your Example Story" />;
@@ -45,7 +45,7 @@ export const CustomControls = Template.bind({});
 CustomControls.args = {
   children: 'hmmm',
   type: 'action',
-  somethingElse: DEFAULT_NESTED_OBJECT,
+  json: DEFAULT_NESTED_OBJECT,
 };
 
 CustomControls.argTypes = {
