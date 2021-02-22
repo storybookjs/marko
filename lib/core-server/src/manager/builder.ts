@@ -1,7 +1,7 @@
-import webpack, { Stats, Configuration } from 'webpack';
+import webpack, { Stats, Configuration, ProgressPlugin } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import { logger } from '@storybook/node-logger';
-import { Builder } from '@storybook/core-common';
+import { Builder, useProgressReporting } from '@storybook/core-common';
 import { pathExists } from 'fs-extra';
 import express from 'express';
 import { getManagerWebpackConfig } from './manager-config';
@@ -19,12 +19,7 @@ export const executor = {
   get: webpack,
 };
 
-export const start: WebpackBuilder['start'] = async ({
-  startTime,
-  options,
-  useProgressReporting,
-  router,
-}) => {
+export const start: WebpackBuilder['start'] = async ({ startTime, options, router }) => {
   const prebuiltDir = await getPrebuiltDir(options);
   const config = await getConfig(options);
 
@@ -55,7 +50,8 @@ export const start: WebpackBuilder['start'] = async ({
     return;
   }
 
-  await useProgressReporting(compiler, options, startTime);
+  const { handler, modulesCount } = await useProgressReporting(router, startTime, options);
+  new ProgressPlugin({ handler, modulesCount }).apply(compiler);
 
   const middlewareOptions: Parameters<typeof webpackDevMiddleware>[1] = {
     publicPath: config.output?.publicPath as string,
