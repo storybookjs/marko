@@ -10,11 +10,12 @@ import { Icons, IconsProps } from '../icon/icon';
 
 type JsonTreeProps = ComponentProps<typeof JsonTree>;
 
-const Wrapper = styled.label(({ theme }) => ({
+const Wrapper = styled.div(({ theme }) => ({
   display: 'flex',
 
   '.rejt-tree': {
     marginLeft: '1rem',
+    fontSize: '13px',
   },
   '.rejt-value-node, .rejt-object-node > .rejt-collapsed, .rejt-array-node > .rejt-collapsed, .rejt-object-node > .rejt-not-collapsed > span, .rejt-array-node > .rejt-not-collapsed > span': {
     '& > svg': {
