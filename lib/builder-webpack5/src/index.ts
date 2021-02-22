@@ -35,12 +35,7 @@ export const executor = {
   get: webpack,
 };
 
-export const start: WebpackBuilder['start'] = async ({
-  startTime,
-  options,
-  useProgressReporting,
-  router,
-}) => {
+export const start: WebpackBuilder['start'] = async ({ startTime, options, router }) => {
   const config = await getConfig(options);
   const compiler = executor.get(config);
   if (!compiler) {
@@ -57,7 +52,7 @@ export const start: WebpackBuilder['start'] = async ({
     };
   }
 
-  await useProgressReporting(compiler, options, startTime);
+  // FIXME: await useProgressReporting(compiler, options, startTime);
 
   const middlewareOptions: Parameters<typeof webpackDevMiddleware>[1] = {
     publicPath: config.output?.publicPath as string,

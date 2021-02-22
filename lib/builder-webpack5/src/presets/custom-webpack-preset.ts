@@ -30,6 +30,6 @@ export async function webpack(config: Configuration, options: Options) {
     return customConfig({ config: finalDefaultConfig, mode: configType });
   }
 
-  logger.info('=> Using default Webpack setup');
+  logger.info('=> Using default Webpack5 setup');
   return finalDefaultConfig;
 }
