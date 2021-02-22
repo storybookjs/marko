@@ -50,7 +50,7 @@ const Wrapper = styled.label(({ theme }) => ({
   '.rejt-object-node, .rejt-array-node': {
     position: 'relative',
   },
-  '.rejt-object-node > span:first-child::after, .rejt-array-node > span:first-child::after, .rejt-collapsed::before, .rejt-not-collapsed::before': {
+  '.rejt-object-node > span:first-of-type::after, .rejt-array-node > span:first-of-type::after, .rejt-collapsed::before, .rejt-not-collapsed::before': {
     content: '""',
     position: 'absolute',
     top: 0,
