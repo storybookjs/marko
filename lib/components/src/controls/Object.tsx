@@ -5,7 +5,7 @@ import { styled, useTheme, Theme } from '@storybook/theming';
 // @ts-ignore
 import { JsonTree } from './react-editable-json-tree';
 import type { ControlProps, ObjectValue, ObjectConfig } from './types';
-import { Icons } from '../icon/icon';
+import { Icons, IconsProps } from '../icon/icon';
 
 type JsonTreeProps = ComponentProps<typeof JsonTree>;
 
@@ -29,6 +29,9 @@ const Wrapper = styled.label(({ theme }) => ({
   '.rejt-edit-form button': {
     display: 'none',
   },
+  '.rejt-add-form': {
+    marginLeft: '10px',
+  },
   '.rejt-add-value-node': {
     display: 'inline-flex',
     alignItems: 'center',
@@ -37,11 +40,10 @@ const Wrapper = styled.label(({ theme }) => ({
     lineHeight: '22px',
   },
   '.rejt-not-collapsed-delimiter': {
-    marginRight: 5,
     lineHeight: '22px',
   },
   '.rejt-plus-menu': {
-    marginLeft: 2,
+    marginLeft: 5,
   },
   '.rejt-object-node > span > *': {
     position: 'relative',
@@ -121,18 +123,22 @@ const Button = styled.button<{ primary?: boolean }>(({ theme, primary }) => ({
   order: primary ? 'initial' : 9,
 }));
 
-const ActionIcon = styled(Icons)(({ theme, icon }) => ({
+type ActionIconProps = IconsProps & { disabled?: boolean };
+
+const ActionIcon = styled(Icons)(({ theme, icon, disabled }: ActionIconProps) => ({
   display: 'inline-block',
   verticalAlign: 'middle',
   width: 15,
   height: 15,
   padding: 3,
   marginLeft: 5,
-  cursor: 'pointer',
+  cursor: disabled ? 'not-allowed' : 'pointer',
   color: theme.color.mediumdark,
-  '&:hover': {
-    color: icon === 'subtract' ? theme.color.negative : theme.color.ancillary,
-  },
+  '&:hover': disabled
+    ? {}
+    : {
+        color: icon === 'subtract' ? theme.color.negative : theme.color.ancillary,
+      },
   'svg + &': {
     marginLeft: 0,
   },
