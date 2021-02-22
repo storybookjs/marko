@@ -75,7 +75,6 @@
     "ip": "^1.1.5",
     "node-fetch": "^2.6.1",
     "pnp-webpack-plugin": "1.6.4",
-    "pretty-hrtime": "^1.0.3",
     "prompts": "^2.4.0",
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",

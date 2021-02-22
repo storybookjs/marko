@@ -9,7 +9,6 @@ import { useStatics } from './utils/server-statics';
 
 import * as managerBuilder from './manager/builder';
 
-import { useProgressReporting } from './utils/progress-reporting';
 import { openInBrowser } from './utils/open-in-browser';
 import { getPreviewBuilder } from './utils/get-preview-builder';
 
@@ -59,14 +58,12 @@ export async function storybookDevServer(options: Options) {
     : previewBuilder.start({
         startTime,
         options,
-        useProgressReporting,
         router,
       });
 
   const manager = managerBuilder.start({
     startTime,
     options,
-    useProgressReporting,
     router,
   });
 
