@@ -45,7 +45,7 @@ export const MenuButton = styled(Button)<MenuButtonProps>(({ highlighted, theme 
   position: 'relative',
   overflow: 'visible',
   padding: 7,
-  transition: none; //prevents button border from flashing when focused/blurred
+  transition: 'none', //prevents button border from flashing when focused/blurred
   '&:focus': {
     background: theme.barBg,
     boxShadow: 'none',
