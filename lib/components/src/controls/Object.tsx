@@ -1,5 +1,5 @@
 import { window } from 'global';
-import React, { ComponentProps, SyntheticEvent, useCallback, useMemo } from 'react';
+import React, { ComponentProps, SyntheticEvent, useCallback, useState } from 'react';
 import { styled, useTheme, Theme } from '@storybook/theming';
 
 // @ts-ignore
@@ -192,34 +192,26 @@ const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (the
 });
 
 export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChange }) => {
-  const handleChange = useCallback(
-    (data: ObjectValue) => {
-      onChange(data);
-    },
-    [onChange]
-  );
+  const [parseError, setParseError] = useState();
   const updateRaw = useCallback(
     (raw) => {
       try {
-        onChange(JSON.parse(raw));
+        if (raw) onChange(JSON.parse(raw));
+        setParseError(undefined);
       } catch (e) {
-        // ignore
+        setParseError(e);
       }
     },
     [onChange]
   );
 
-  const theme = useTheme() as Theme;
-
-  const customStyleFunction = useMemo(() => getCustomStyleFunction(theme), [theme]);
-
   return (
     <Wrapper>
       <JsonTree
         data={value}
-        onFullyUpdate={handleChange}
-        rootName="root"
-        getStyle={customStyleFunction}
+        rootName={name}
+        onFullyUpdate={onChange}
+        getStyle={getCustomStyleFunction(useTheme())}
         cancelButtonElement={<Button type="button">Cancel</Button>}
         editButtonElement={<Button type="submit">Save</Button>}
         addButtonElement={
@@ -239,7 +231,8 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
             defaultValue={value}
             onBlur={(event) => updateRaw(event.target.value)}
             size="flex"
-            placeholder="JSON string"
+            placeholder="Enter JSON string"
+            valid={parseError ? 'error' : null}
           />
         }
       />
