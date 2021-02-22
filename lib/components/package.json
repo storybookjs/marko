@@ -51,6 +51,7 @@
     "memoizerific": "^1.11.3",
     "overlayscrollbars": "^1.13.1",
     "polished": "^3.6.7",
+    "prop-types": "^15.7.2",
     "react-color": "^2.19.3",
     "react-popper-tooltip": "^3.1.1",
     "react-syntax-highlighter": "^13.5.3",
