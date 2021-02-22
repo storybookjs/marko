@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useState, useEffect } from 'react';
 import { Args, ArgType } from './types';
 import {
-  ArrayControl,
   BooleanControl,
   ColorControl,
   DateControl,
