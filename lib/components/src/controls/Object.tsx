@@ -104,10 +104,11 @@ const Wrapper = styled.label(({ theme }) => ({
     margin: '1px 0',
     padding: '0 4px',
     cursor: 'text',
-    color: theme.color.darkest,
+    color: theme.color.defaultText,
   },
   '.rejt-value-node:hover > .rejt-value': {
-    borderColor: theme.color.border,
+    background: theme.background.app,
+    borderColor: theme.color.mediumdark,
   },
 }));
 
@@ -117,7 +118,7 @@ const Button = styled.button<{ primary?: boolean }>(({ theme, primary }) => ({
   margin: 1,
   borderRadius: 4,
   background: primary ? theme.color.secondary : 'transparent',
-  color: primary ? theme.color.lightest : theme.color.dark,
+  color: primary ? theme.color.lightest : theme.color.mediumdark,
   fontWeight: primary ? 'bold' : 'normal',
   cursor: 'pointer',
   order: primary ? 'initial' : 9,
@@ -148,6 +149,8 @@ const Input = styled.input(({ theme, placeholder }) => ({
   outline: 0,
   margin: placeholder ? '0 1px' : '1px 0',
   padding: placeholder ? '2px 4px' : '3px 4px',
+  color: theme.color.defaultText,
+  background: theme.background.app,
   border: `1px solid ${theme.color.secondary}`,
   borderRadius: 4,
   lineHeight: '14px',
