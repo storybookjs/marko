@@ -70,10 +70,6 @@ export default async ({
       aggregateTimeout: 2000,
       ignored: /node_modules/,
     },
-    stats: {
-      preset: 'none',
-      logging: 'error',
-    },
     plugins: [
       refs
         ? ((new VirtualModulePlugin({
@@ -162,7 +158,6 @@ export default async ({
         // Transparently resolve packages via PnP when needed; noop otherwise
         PnpWebpackPlugin,
       ],
-      fallback: { path: false },
     },
     resolveLoader: {
       plugins: [PnpWebpackPlugin.moduleLoader(module)],
