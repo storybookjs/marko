@@ -39,6 +39,7 @@ const inferControl = (argType: ArgType, name: string, matchers: ControlsMatchers
     case 'boolean':
       return { type: 'boolean' };
     case 'string':
+    case 'other':
       return { type: 'text' };
     case 'number':
       return { type: 'number' };
