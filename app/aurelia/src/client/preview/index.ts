@@ -1,6 +1,6 @@
 import { Constructable, CustomElement } from 'aurelia';
 /* eslint-disable prefer-destructuring */
-import { start } from '@storybook/core/client';
+import { RenderStoryFunction, start } from '@storybook/core/client';
 import { ClientStoryApi, Loadable } from '@storybook/addons';
 import { text, boolean, number, date } from '@storybook/addon-knobs';
 
@@ -21,7 +21,7 @@ interface ClientApi extends ClientStoryApi<Partial<StoryFnAureliaReturnType>> {
   load: (...args: any[]) => void;
 }
 
-const api = start(render);
+const api = start((render as any) as RenderStoryFunction);
 
 export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
   return (api.clientApi.storiesOf(kind, m) as ReturnType<ClientApi['storiesOf']>).addParameters({
@@ -32,8 +32,10 @@ export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
 export { StoryFnAureliaReturnType, addRegistries, addContainer, Component, addComponents };
 
 export const configure: ClientApi['configure'] = (...args) => api.configure(framework, ...args);
-export const addDecorator: ClientApi['addDecorator'] = api.clientApi.addDecorator;
-export const addParameters: ClientApi['addParameters'] = api.clientApi.addParameters;
+export const addDecorator: ClientApi['addDecorator'] = api.clientApi
+  .addDecorator as ClientApi['addDecorator'];
+export const addParameters: ClientApi['addParameters'] = api.clientApi
+  .addParameters as ClientApi['addParameters'];
 export const clearDecorators: ClientApi['clearDecorators'] = api.clientApi.clearDecorators;
 export const setAddon: ClientApi['setAddon'] = api.clientApi.setAddon;
 export const forceReRender: ClientApi['forceReRender'] = api.forceReRender;

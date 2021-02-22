@@ -26,16 +26,19 @@ export default {
   },
 };
 
-const Template = (args, { argTypes }) => {
+const Template = (args) => {
+  // Individual properties can be overridden by spreading the args
+  // and the replacing the key-values that need to be updated
+  args = { ...args, icon: icons[args.icon] }; // eslint-disable-line no-param-reassign
   return {
-    props: Object.keys(argTypes),
+    // Components used in your story `template` are defined in the `components` object
     components: { OverrideArgs },
-    template: '<override-args v-bind="$props" :icon="icon" />',
-    setup(props) {
-      return {
-        icon: icons[props.icon],
-      };
+    // Updated `args` need to be mapped into the template through the `setup()` method
+    setup() {
+      return { args };
     },
+    // And then the `args` are bound to your component with `v-bind="args"`
+    template: '<override-args v-bind="args" />',
   };
 };
 

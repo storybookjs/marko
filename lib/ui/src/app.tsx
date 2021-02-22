@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useMemo } from 'react';
-import sizeMe from 'react-sizeme';
+import sizeMe from '@hypnosphi/react-sizeme';
 
 import { State } from '@storybook/api';
 import { Symbols } from '@storybook/components';

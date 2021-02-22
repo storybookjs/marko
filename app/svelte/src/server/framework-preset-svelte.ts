@@ -1,10 +1,11 @@
-import { Configuration } from 'webpack'; // eslint-disable-line
-import type { StorybookOptions } from '@storybook/core/types';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Configuration } from 'webpack';
+import type { Options } from '@storybook/core-common';
 
-export async function webpack(config: Configuration, options: StorybookOptions) {
+export async function webpack(config: Configuration, options: Options): Promise<Configuration> {
   const { preprocess = undefined, loader = {} } = await options.presets.apply(
     'svelteOptions',
-    {},
+    {} as any,
     options
   );
 

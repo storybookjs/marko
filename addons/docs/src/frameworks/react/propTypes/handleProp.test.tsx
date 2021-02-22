@@ -1173,7 +1173,6 @@ describe('enhancePropTypesProp', () => {
 
     describe('fromRawDefaultProp', () => {
       [
-        { type: 'string', defaultProp: 'foo' },
         { type: 'number', defaultProp: 1 },
         { type: 'boolean', defaultProp: true },
         { type: 'symbol', defaultProp: Symbol('hey!') },
@@ -1186,6 +1185,15 @@ describe('enhancePropTypesProp', () => {
           expect(defaultValue.summary).toBe(x.defaultProp.toString());
           expect(defaultValue.detail).toBeUndefined();
         });
+      });
+
+      it('should support strings', () => {
+        const component = createTestComponent(null);
+
+        const { defaultValue } = extractPropDef(component, 'foo');
+
+        expect(defaultValue.summary).toBe('"foo"');
+        expect(defaultValue.detail).toBeUndefined();
       });
 
       it('should support array of primitives', () => {
@@ -1384,13 +1392,12 @@ describe('enhancePropTypesProp', () => {
         it(`should support inlined named React functional component with props for ${x}`, () => {
           const component = createTestComponent(null, x);
 
-          const { defaultValue } = extractPropDef(component, function InlinedFunctionalComponent({
-            foo,
-          }: {
-            foo: string;
-          }) {
-            return <div>{foo}</div>;
-          });
+          const { defaultValue } = extractPropDef(
+            component,
+            function InlinedFunctionalComponent({ foo }: { foo: string }) {
+              return <div>{foo}</div>;
+            }
+          );
 
           expect(defaultValue.summary).toBe('<InlinedFunctionalComponent />');
           expect(defaultValue.detail).toBeUndefined();
