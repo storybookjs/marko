@@ -30,7 +30,7 @@ const Wrapper = styled.label(({ theme }) => ({
     display: 'none',
   },
   '.rejt-add-form': {
-    marginLeft: '10px',
+    marginLeft: 10,
   },
   '.rejt-add-value-node': {
     display: 'inline-flex',
@@ -147,8 +147,8 @@ const ActionIcon = styled(Icons)(({ theme, icon, disabled }: ActionIconProps) =>
 
 const Input = styled.input(({ theme, placeholder }) => ({
   outline: 0,
-  margin: placeholder ? '0 1px' : '1px 0',
-  padding: placeholder ? '2px 4px' : '3px 4px',
+  margin: placeholder ? 1 : '1px 0',
+  padding: '3px 4px',
   color: theme.color.defaultText,
   background: theme.background.app,
   border: `1px solid ${theme.color.border}`,
