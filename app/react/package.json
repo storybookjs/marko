@@ -58,7 +58,7 @@
     "global": "^4.4.0",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
-    "react-dev-utils": "^11.0.1",
+    "react-dev-utils": "^11.0.3",
     "react-docgen-typescript-plugin": "^0.6.2",
     "react-refresh": "^0.8.3",
     "read-pkg-up": "^7.0.1",

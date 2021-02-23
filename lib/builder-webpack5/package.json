@@ -85,7 +85,7 @@
     "html-webpack-plugin": "^5.0.0",
     "pnp-webpack-plugin": "1.6.4",
     "raw-loader": "^4.0.2",
-    "react-dev-utils": "^11.0.1",
+    "react-dev-utils": "^11.0.3",
     "stable": "^0.1.8",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.0.3",
