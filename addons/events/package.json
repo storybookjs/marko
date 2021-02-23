@@ -70,7 +70,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "88c8da9b94f831ad177256ec58930ddaebe7d32b",
+  "gitHead": "409d897e6f20b02cec039db52c2d4aa31ee15a5c",
   "storybook": {
     "displayName": "Events",
     "unsupportedFrameworks": [
