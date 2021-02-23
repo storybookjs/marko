@@ -4,6 +4,7 @@ import { storiesOf, StoryContext } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
 import { Args } from '@storybook/api';
 import { inferControls } from '@storybook/client-api';
+import { useTheme, Theme } from '@storybook/theming';
 
 import { extractArgTypes } from './extractArgTypes';
 import { Component } from '../../blocks';
@@ -16,15 +17,20 @@ const argsTableProps = (component: Component) => {
 };
 
 function FormatArg({ arg }) {
+  const theme = useTheme<Theme>();
+  const badgeStyle = {
+    background: theme.background.hoverable,
+    border: `1px solid ${theme.background.hoverable}`,
+    borderRadius: 2,
+  };
   if (typeof arg !== 'undefined') {
     try {
       return <code>{JSON.stringify(arg, null, 2)}</code>;
     } catch (err) {
-      return <code style={{ backgroundColor: '#eee' }}>{arg.toString()}</code>;
+      return <code style={badgeStyle}>{arg.toString()}</code>;
     }
   }
-
-  return <code style={{ backgroundColor: '#eee' }}>undefined</code>;
+  return <code style={badgeStyle}>undefined</code>;
 }
 
 const ArgsStory = ({ component }: any) => {
