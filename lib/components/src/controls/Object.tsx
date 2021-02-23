@@ -229,8 +229,8 @@ const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (the
   },
 });
 
-export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChange }) => {
-  const data = useMemo(() => cloneDeep(value), [value]);
+export const ObjectControl: React.FC<ObjectProps> = ({ name, value, onChange }) => {
+  const data = useMemo(() => value && cloneDeep(value), [value]);
   const [showRaw, setShowRaw] = useState(false);
   const [parseError, setParseError] = useState();
   const updateRaw = useCallback(
@@ -248,7 +248,7 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
     <RawInput
       id={name}
       name={name}
-      defaultValue={JSON.stringify(value, null, 2)}
+      defaultValue={value === null ? '' : JSON.stringify(value, null, 2)}
       onBlur={(event) => updateRaw(event.target.value)}
       placeholder="Enter JSON string"
       valid={parseError ? 'error' : null}
