@@ -245,7 +245,7 @@ You can also reuse stories from the child `ListItem` in your `List` component. T
     'react/list-story-reuse-data.ts.mdx',
     'angular/list-story-reuse-data.ts.mdx',
     'vue/list-story-reuse-data.vue2.js.mdx',
-     'vue/list-story-reuse-data.vue3.js.mdx',
+    'vue/list-story-reuse-data.vue3.js.mdx',
   ]}
 />
 

@@ -34,11 +34,13 @@ const Template = (args) => {
   return {
     components: { YourComponent },
     setup() {
-      //👇 The args will now be passed down to the component
+      //👇 The args will now be passed down to the template
       return {
-        ...args,
-        //👇 Replaces arg variable with the override (without the need of mutation)
-        someProperty: functionResult,
+        args: {
+          ...args,
+          //👇 Replaces arg variable with the override (without the need of mutation)
+          someProperty: functionResult,
+        },
       };
     },
     template: '<YourComponent v-bind="args" />',

@@ -10,7 +10,7 @@ import { Unchecked } from './ListItem.stories';
 export const OneItem = (args) => ({
   components: { List, ListItem },
   setup() {
-    //👇 The args will now be passed down to the component
+    //👇 The args will now be passed down to the template
     return { args };
   },
   template: '<List v-bind="args"><ListItem v-bind="args"/></List>',

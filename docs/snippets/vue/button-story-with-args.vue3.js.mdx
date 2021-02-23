@@ -12,7 +12,7 @@ export default {
 const Template = (args) => ({
   components: { Button },
   setup() {
-    //👇 The args will now be passed down to the component
+    //👇 The args will now be passed down to the template
     return { args };
   },
   template: '<Button v-bind="args" />',

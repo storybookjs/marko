@@ -23,14 +23,16 @@ export default {
 };
 
 const Template = (args) => {
-  return {  
+  return {
     components: { YourComponent },
     setup() {
-      //👇 The args will now be passed down to the component
+      //👇 The args will now be passed down to the template
       return {
-        ...args,
-        //👇 Replaces the local variable with the override (without mutating it)
-        icon: iconMap[args.icon],
+        args: {
+          ...args,
+          //👇 Replaces the local variable with the override (without mutating it)
+          icon: iconMap[args.icon],
+        },
       };
     },
     template: '<YourComponent v-bind="args" />',

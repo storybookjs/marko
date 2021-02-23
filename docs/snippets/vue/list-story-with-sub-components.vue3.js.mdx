@@ -11,10 +11,9 @@ export default {
 };
 
 export const Empty = (args) => ({
-  props: Object.keys(argTypes),
   components: { List },
   setup() {
-    //👇 The args will now be passed down to the component
+    //👇 The args will now be passed down to the template
     return { args };
   }
   template: '<List v-bind="args"/>',
@@ -23,7 +22,7 @@ export const Empty = (args) => ({
 export const OneItem = (args) => ({
   components: { List, ListItem },
   setup() {
-    //👇 The args will now be passed down to the component
+    //👇 The args will now be passed down to the template
     return { args };
   }
   template: '<List v-bind="args"><ListItem /></List>',

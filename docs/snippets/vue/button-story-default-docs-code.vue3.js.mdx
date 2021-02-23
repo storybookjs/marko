@@ -23,11 +23,13 @@ export const ExampleStory = (args) => {
   return {
     components: { Button },
     setup() {
-      //👇 The args will now be passed down to the component
+      //👇 The args will now be passed down to the template
       return {
-        ...args,
-        //👇 Replaces arg variable with the override (without the need of mutation)
-        label: functionResult,
+        args: {
+          ...args,
+          //👇 Replaces arg variable with the override (without the need of mutation)
+          label: functionResult,
+        },
       };
     },
     template: '<Button v-bind="args" />',

@@ -6,7 +6,6 @@ export const Text = (args) => ({
   setup() {
     return {
       label: args.label,
-      onClick: action('clicked'),
     };
   },
   template: '<Button @onClick="onClick" :label="label" />',
