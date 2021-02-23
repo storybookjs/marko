@@ -8,23 +8,25 @@ import { JsonTree } from './react-editable-json-tree';
 import type { ControlProps, ObjectValue, ObjectConfig } from './types';
 import { Form } from '../form';
 import { Icons, IconsProps } from '../icon/icon';
+import { IconButton } from '../bar/button';
 
 type JsonTreeProps = ComponentProps<typeof JsonTree>;
 
 const Wrapper = styled.div(({ theme }) => ({
+  position: 'relative',
   display: 'flex',
 
   '.rejt-tree': {
     marginLeft: '1rem',
     fontSize: '13px',
   },
-  '.rejt-value-node, .rejt-object-node > .rejt-collapsed, .rejt-array-node > .rejt-collapsed, .rejt-object-node > .rejt-not-collapsed > span, .rejt-array-node > .rejt-not-collapsed > span': {
+  '.rejt-value-node, .rejt-object-node > .rejt-collapsed, .rejt-array-node > .rejt-collapsed, .rejt-object-node > .rejt-not-collapsed, .rejt-array-node > .rejt-not-collapsed': {
     '& > svg': {
       opacity: 0,
       transition: 'opacity 0.2s',
     },
   },
-  '.rejt-value-node:hover, .rejt-object-node:hover > .rejt-collapsed, .rejt-array-node:hover > .rejt-collapsed, .rejt-object-node:hover > .rejt-not-collapsed > span, .rejt-array-node:hover > .rejt-not-collapsed > span': {
+  '.rejt-value-node:hover, .rejt-object-node:hover > .rejt-collapsed, .rejt-array-node:hover > .rejt-collapsed, .rejt-object-node:hover > .rejt-not-collapsed, .rejt-array-node:hover > .rejt-not-collapsed': {
     '& > svg': {
       opacity: 1,
     },
@@ -163,6 +165,33 @@ const Input = styled.input(({ theme, placeholder }) => ({
   },
 }));
 
+const RawButton = styled(IconButton)(({ theme }) => ({
+  position: 'absolute',
+  zIndex: 2,
+  top: 2,
+  right: 2,
+  height: 21,
+  padding: '0 3px',
+  background: theme.background.bar,
+  border: `1px solid ${theme.color.border}`,
+  borderRadius: 3,
+  color: theme.color.mediumdark,
+  fontSize: '9px',
+  fontWeight: 'bold',
+  span: {
+    marginLeft: 3,
+    marginTop: 1,
+  },
+}));
+
+const RawInput = styled(Form.Textarea)(({ theme }) => ({
+  flex: 1,
+  padding: 8,
+  fontFamily: theme.typography.fonts.mono,
+  fontSize: '12px',
+  lineHeight: '18px',
+}));
+
 const ENTER_EVENT = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13 };
 const dispatchEnterKey = (event: SyntheticEvent<HTMLInputElement>) => {
   event.currentTarget.dispatchEvent(new window.KeyboardEvent('keydown', ENTER_EVENT));
@@ -195,6 +224,7 @@ const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (the
 
 export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChange }) => {
   const data = useMemo(() => cloneDeep(value), [value]);
+  const [showRaw, setShowRaw] = useState(false);
   const [parseError, setParseError] = useState();
   const updateRaw = useCallback(
     (raw) => {
@@ -208,12 +238,11 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
     [onChange]
   );
   const rawJSONForm = (
-    <Form.Textarea
+    <RawInput
       id={name}
       name={name}
-      defaultValue={value}
+      defaultValue={JSON.stringify(value, null, 2)}
       onBlur={(event) => updateRaw(event.target.value)}
-      size="flex"
       placeholder="Enter JSON string"
       valid={parseError ? 'error' : null}
     />
@@ -221,7 +250,11 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
 
   return (
     <Wrapper>
-      {data ? (
+      <RawButton onClick={() => setShowRaw((v) => !v)}>
+        <Icons icon={showRaw ? 'eyeclose' : 'eye'} />
+        <span>RAW</span>
+      </RawButton>
+      {data && !showRaw ? (
         <JsonTree
           data={data}
           rootName={name}
