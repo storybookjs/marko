@@ -230,8 +230,11 @@ const getCustomStyleFunction: (theme: Theme) => JsonTreeProps['getStyle'] = (the
 });
 
 export const ObjectControl: React.FC<ObjectProps> = ({ name, value, onChange }) => {
+  const theme = useTheme<Theme>();
   const data = useMemo(() => value && cloneDeep(value), [value]);
-  const [showRaw, setShowRaw] = useState(false);
+  const hasData = data !== null && data !== undefined;
+
+  const [showRaw, setShowRaw] = useState(!hasData);
   const [parseError, setParseError] = useState();
   const updateRaw = useCallback(
     (raw) => {
@@ -257,16 +260,18 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value, onChange }) 
 
   return (
     <Wrapper>
-      <RawButton onClick={() => setShowRaw((v) => !v)}>
-        <Icons icon={showRaw ? 'eyeclose' : 'eye'} />
-        <span>RAW</span>
-      </RawButton>
-      {data && !showRaw ? (
+      {hasData && (
+        <RawButton onClick={() => setShowRaw((v) => !v)}>
+          <Icons icon={showRaw ? 'eyeclose' : 'eye'} />
+          <span>RAW</span>
+        </RawButton>
+      )}
+      {hasData && !showRaw ? (
         <JsonTree
           data={data}
           rootName={name}
           onFullyUpdate={onChange}
-          getStyle={getCustomStyleFunction(useTheme())}
+          getStyle={getCustomStyleFunction(theme)}
           cancelButtonElement={<Button type="button">Cancel</Button>}
           editButtonElement={<Button type="submit">Save</Button>}
           addButtonElement={
