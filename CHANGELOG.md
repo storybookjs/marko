@@ -1,3 +1,9 @@
+## 6.1.19 (February 23, 2021)
+
+### Bug Fixes
+
+* Components: Add missing `regenerator-runtime` dependency ([#13991](https://github.com/storybookjs/storybook/pull/13991))
+
 ## 6.1.18 (February 15, 2021)
 
 ### Bug Fixes
