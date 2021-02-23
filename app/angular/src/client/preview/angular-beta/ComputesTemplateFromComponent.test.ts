@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { ArgTypes } from '@storybook/api';
 import { computesTemplateSourceFromComponent } from './ComputesTemplateFromComponent';
 import { ButtonAccent, InputComponent, ISomeInterface } from './__testfixtures__/input.component';
@@ -10,6 +11,24 @@ describe('angular source decorator', () => {
     const source = computesTemplateSourceFromComponent(component, props, argTypes);
     expect(source).toEqual('<doc-button></doc-button>');
   });
+
+  describe('with component without selector', () => {
+    @Component({
+      template: `The content`,
+    })
+    class WithoutSelectorComponent {}
+
+    it('should add component ng-container', async () => {
+      const component = WithoutSelectorComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(
+        `<ng-container *ngComponentOutlet="WithoutSelectorComponent"></ng-container>`
+      );
+    });
+  });
+
   describe('no argTypes', () => {
     it('should generate tag-only template with no props', () => {
       const component = InputComponent;

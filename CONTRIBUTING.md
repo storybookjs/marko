@@ -133,7 +133,7 @@ git commit -m "reproduction for issue #123"
 
 # fork the storybook repo to your account, then add the resulting remote
 git remote add <your-username> https://github.com/<your-username>/storybook.git
-git push -u <your-username> master
+git push -u <your-username> next
 ```
 
 If you follow that process, you can then link to the GitHub repository in the issue. See <https://github.com/storybookjs/storybook/issues/708#issuecomment-290589886> for an example.

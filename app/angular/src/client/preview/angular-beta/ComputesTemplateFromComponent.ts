@@ -39,6 +39,11 @@ export const computesTemplateFromComponent = (
   const ngComponentMetadata = getComponentDecoratorMetadata(component);
   const ngComponentInputsOutputs = getComponentInputsOutputs(component);
 
+  if (!ngComponentMetadata.selector) {
+    // Allow to add renderer component when NgComponent selector is undefined
+    return `<ng-container *ngComponentOutlet="storyComponent"></ng-container>`;
+  }
+
   const { inputs: initialInputs, outputs: initialOutputs } = separateInputsOutputsAttributes(
     ngComponentInputsOutputs,
     initialProps
@@ -93,6 +98,12 @@ export const computesTemplateSourceFromComponent = (
   if (!ngComponentMetadata) {
     return null;
   }
+
+  if (!ngComponentMetadata.selector) {
+    // Allow to add renderer component when NgComponent selector is undefined
+    return `<ng-container *ngComponentOutlet="${component.name}"></ng-container>`;
+  }
+
   const ngComponentInputsOutputs = getComponentInputsOutputs(component);
   const { inputs: initialInputs, outputs: initialOutputs } = separateInputsOutputsAttributes(
     ngComponentInputsOutputs,

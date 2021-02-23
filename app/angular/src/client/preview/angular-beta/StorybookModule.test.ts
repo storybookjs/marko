@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, NgModule, Output, Type } from '@angular/core';
 
 import { TestBed } from '@angular/core/testing';
+import { BrowserModule } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
 import { ICollection } from '../types';
 import { getStorybookModuleMetadata } from './StorybookModule';
@@ -208,13 +209,47 @@ describe('StorybookModule', () => {
         expect(fixture.nativeElement.querySelector('p#input').innerHTML).toEqual(newProps.input);
       });
     });
+
+    describe('with component without selector', () => {
+      @Component({
+        template: `The content`,
+      })
+      class WithoutSelectorComponent {}
+
+      it('should display the component', async () => {
+        const props = {};
+
+        const ngModule = getStorybookModuleMetadata(
+          {
+            storyFnAngular: {
+              props,
+              moduleMetadata: { entryComponents: [WithoutSelectorComponent] },
+            },
+            parameters: { component: WithoutSelectorComponent },
+          },
+          new BehaviorSubject<ICollection>(props)
+        );
+
+        const { fixture } = await configureTestingModule(ngModule);
+        fixture.detectChanges();
+
+        expect(fixture.nativeElement.innerHTML).toContain('The content');
+      });
+    });
   });
 
   async function configureTestingModule(ngModule: NgModule) {
     await TestBed.configureTestingModule({
       declarations: ngModule.declarations,
       providers: ngModule.providers,
-    }).compileComponents();
+    })
+      .overrideModule(BrowserModule, {
+        set: {
+          entryComponents: [...ngModule.entryComponents],
+        },
+      })
+      .compileComponents();
+
     const fixture = TestBed.createComponent(ngModule.bootstrap[0] as Type<unknown>);
 
     return {

@@ -187,11 +187,12 @@ describe('preview.story_store', () => {
           arg3: { defaultValue: { complex: { object: ['type'] } } },
           arg4: {},
           arg5: {},
+          arg6: { defaultValue: 0 }, // See https://github.com/storybookjs/storybook/issues/12767
         },
         args: {
           arg2: 3,
           arg4: 'foo',
-          arg6: false,
+          arg7: false,
         },
       });
       expect(store.getRawStory('a', '1').args).toEqual({
@@ -199,7 +200,8 @@ describe('preview.story_store', () => {
         arg2: 3,
         arg3: { complex: { object: ['type'] } },
         arg4: 'foo',
-        arg6: false,
+        arg6: 0,
+        arg7: false,
       });
     });
 
@@ -413,7 +415,7 @@ describe('preview.story_store', () => {
       });
     });
 
-    it('it sets session storage on initialization', () => {
+    it('sets session storage on initialization', () => {
       (store2.session.set as any).mockClear();
       const store = new StoryStore({ channel });
       addStoryToStore(store, 'a', '1', () => 0);
@@ -488,7 +490,7 @@ describe('preview.story_store', () => {
       });
     });
 
-    it('it sensibly re-initializes with memory based on session storage', () => {
+    it('sensibly re-initializes with memory based on session storage', () => {
       (store2.session.get as any).mockReturnValueOnce({
         globals: {
           arg1: 'arg1',

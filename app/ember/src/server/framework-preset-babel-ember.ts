@@ -1,5 +1,5 @@
+import { TransformOptions } from '@babel/core';
 import { precompile } from 'ember-source/dist/ember-template-compiler';
-import { Configuration } from 'webpack'; // eslint-disable-line
 
 let emberOptions: any;
 
@@ -12,7 +12,7 @@ function precompileWithPlugins(string: string, options: any) {
   return precompile(string, precompileOptions);
 }
 
-export function babel(config: Configuration, options: any) {
+export function babel(config: TransformOptions, options: any) {
   if (options && options.presetsList) {
     options.presetsList.forEach((e: any, index: number) => {
       if (e.preset && e.preset.emberOptions) {

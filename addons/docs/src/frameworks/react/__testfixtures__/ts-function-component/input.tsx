@@ -1,34 +1,52 @@
 import React from 'react';
 
-interface ButtonProps {
-  /**
-   * Simple click handler
-   */
-  onClick?: () => void;
+import { imported } from '../imported';
 
-  /**
-   * Is primary?
-   */
-  primary?: boolean;
+const local = 'local-value';
 
+interface PropsWriterProps {
   /**
-   * default is false
+   * Description
    */
-  secondary?: boolean;
+  numberRequired: number;
+  numberOptional?: number;
+  stringRequired: string;
+  stringOptional?: string;
+  booleanRequired: boolean;
+  booleanOptional?: boolean;
+  arrayRequired: string[];
+  arrayOptional?: string[];
+  objectRequired: Record<string, string>;
+  objectOptional?: Record<string, string>;
+  functionRequired: () => string;
+  functionOptional?: () => string;
+  dateRequired: Date;
+  dateOptional?: Date;
+  localReference?: string;
+  importedReference?: string;
+  globalReference?: any;
+  stringGlobalName?: string;
 }
 
 /**
- * The world's most _basic_ button
+ * A component that renders its props
  */
-export const Button: React.FC<ButtonProps> = ({ onClick }: ButtonProps) => (
-  <button onClick={onClick} type="button">
-    hello
-  </button>
+export const PropsWriter: React.FC<PropsWriterProps> = (props: PropsWriterProps) => (
+  <pre>{JSON.stringify(props)}</pre>
 );
 
-Button.defaultProps = {
-  primary: true,
-  secondary: false,
+PropsWriter.defaultProps = {
+  numberOptional: 1,
+  stringOptional: 'stringOptional',
+  booleanOptional: false,
+  arrayOptional: ['array', 'optional'],
+  objectOptional: { object: 'optional' },
+  functionOptional: () => 'foo',
+  dateOptional: new Date('20 Jan 1983'),
+  localReference: local,
+  importedReference: imported,
+  globalReference: Date,
+  stringGlobalName: 'top',
 };
 
-export const component = Button;
+export const component = PropsWriter;
