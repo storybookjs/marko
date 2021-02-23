@@ -12,8 +12,8 @@ const ListTemplate = (args, { argTypes }) => ({
   components: { List, ListItem },
   template: `
     <List v-bind="$props">
-        <div v-for="item in items" :key="item.someString">
-            <ListItem v-bind="$props"/>
+        <div v-for="item in items" :key="item.title">
+            <ListItem :item="item" />
         </div>
     </List>
     `,

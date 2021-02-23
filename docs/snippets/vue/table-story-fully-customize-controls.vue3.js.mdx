@@ -7,11 +7,13 @@ const TableStory = (args) => ({
     return { args };
   },
   template: `
-    <tr v-for="(row, idx1) in data">
+    <Table v-bind="args">
+      <tr v-for="(row, idx1) in data">
         <td v-for="(col, idx2) in row">
             {{ data[idx1][idx2] }}
         </td>
-    </tr>
+      </tr>
+    </Table>
   `,
 });
 
