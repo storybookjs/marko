@@ -186,10 +186,17 @@ const RawButton = styled(IconButton)(({ theme }) => ({
 
 const RawInput = styled(Form.Textarea)(({ theme }) => ({
   flex: 1,
-  padding: 8,
+  padding: 6,
   fontFamily: theme.typography.fonts.mono,
   fontSize: '12px',
   lineHeight: '18px',
+  '&::placeholder': {
+    fontFamily: theme.typography.fonts.base,
+    fontSize: '13px',
+  },
+  '&:placeholder-shown': {
+    padding: '6px 10px',
+  },
 }));
 
 const ENTER_EVENT = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13 };
