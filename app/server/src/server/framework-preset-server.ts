@@ -3,22 +3,11 @@ import { Configuration } from 'webpack';
 import path from 'path';
 
 export function webpack(config: Configuration) {
-  return {
-    ...config,
-    module: {
-      ...config.module,
-      rules: [
-        ...config.module.rules,
-        {
-          type: 'javascript/auto',
-          test: /\.stories\.json$/,
-          use: [
-            {
-              loader: path.resolve(__dirname, './loader.js'),
-            },
-          ],
-        },
-      ],
-    },
-  };
+  config.module.rules.push({
+    type: 'javascript/auto',
+    test: /\.stories\.json$/,
+    use: path.resolve(__dirname, './loader.js'),
+  });
+
+  return config;
 }

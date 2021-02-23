@@ -1,3 +1,91 @@
+## 6.2.0-beta.0 (February 22, 2021)
+
+Storybook 6.2 is in beta. 🎉🎉🎉
+
+Hundreds of improvements and fixes, including:
+
+- **Vue 3** - Official support for the latest version of Vue.
+- **Webpack 5** - Experimental support for the latest version of Webpack.
+- **Controls** - Controls improvements including URL sync, filtering, sorting, and more.
+- **Angular** - Overhauled Angular support.
+- **Svelte** - Overhauled Svelte support.
+
+Track the release in the Github: [Storybook 6.2 Release ⚡️](https://github.com/storybookjs/storybook/issues/13160)
+
+## 6.2.0-alpha.35 (February 22, 2021)
+
+### Bug Fixes
+
+- Webpack5: Fix progress plugin version conflict ([#14007](https://github.com/storybookjs/storybook/pull/14007))
+
+## 6.2.0-alpha.34 (February 22, 2021)
+
+### Maintenance
+
+- Core: Use webpack4 to build Manager UI instead of webpack5 ([#14001](https://github.com/storybookjs/storybook/pull/14001))
+- Yarn PnP: Add missing dependencies for Webpack 4/5 work ([#13992](https://github.com/storybookjs/storybook/pull/13992))
+
+### Dependency Upgrades
+
+- Core: Fix core/builder dependencies ([#13999](https://github.com/storybookjs/storybook/pull/13999))
+
+## 6.2.0-alpha.33 (February 22, 2021)
+
+### Features
+
+- Addon-docs: Support story.mdx, stories.mdx ([#13996](https://github.com/storybookjs/storybook/pull/13996))
+
+### Bug Fixes
+
+- Webpack5: Remove outdated html-webpack-plugin types ([#13986](https://github.com/storybookjs/storybook/pull/13986))
+
+### Dependency Upgrades
+
+- Move to a fork of react-sizeme with updated React peer dependency ([#13733](https://github.com/storybookjs/storybook/pull/13733))
+- Webpack4: Upgrade html-webpack-plugin and remove external types ([#13993](https://github.com/storybookjs/storybook/pull/13993))
+
+## 6.2.0-alpha.32 (February 21, 2021)
+
+### Breaking prerelease
+
+**NOTE:** this is a breaking change for users of `@storybook/vue3` which is currently in alpha prerelease:
+
+- Vue 3: Map args with setup hook & remove automatic props mapping ([#13981](https://github.com/storybookjs/storybook/pull/13981))
+
+### Bug Fixes
+
+- Webpack5: Fix compilation error display ([#13983](https://github.com/storybookjs/storybook/pull/13983))
+- Webpack5: Add semver to builder-webpack5 dependencies ([#13982](https://github.com/storybookjs/storybook/pull/13982))
+- CLI: Don't allow empty string as outputDir option ([#13969](https://github.com/storybookjs/storybook/pull/13969))
+
+## 6.2.0-alpha.31 (February 20, 2021)
+
+### Features
+
+- Angular: Support angular components without selector ([#13939](https://github.com/storybookjs/storybook/pull/13939))
+- Preact: Add CSF types ([#13963](https://github.com/storybookjs/storybook/pull/13963))
+
+### Bug Fixes
+
+- Addon-docs: Fix ArgsTable tab renamed to `Story` when using args ([#13845](https://github.com/storybookjs/storybook/pull/13845))
+- Angular: Correctly destroy angular application between each render ([#13956](https://github.com/storybookjs/storybook/pull/13956))
+- Webpack5: Fix warnings display in build-storybook ([#13975](https://github.com/storybookjs/storybook/pull/13975))
+
+## 6.2.0-alpha.30 (February 20, 2021)
+
+### Features
+
+- Core: Support webpack5 and webpack4 side by side ([#13808](https://github.com/storybookjs/storybook/pull/13808))
+
+### Bug Fixes
+
+- Args: Fix issues with string default values ([#13919](https://github.com/storybookjs/storybook/pull/13919))
+- Args: Prefer react runtime default values ([#13937](https://github.com/storybookjs/storybook/pull/13937))
+
+### Maintenance
+
+- Core: Improve preset handling test coverage ([#13951](https://github.com/storybookjs/storybook/pull/13951))
+
 ## 6.2.0-alpha.29 (February 18, 2021)
 
 ### Features

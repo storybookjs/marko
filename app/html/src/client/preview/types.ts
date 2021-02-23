@@ -1,4 +1,4 @@
-export { RenderContext } from '@storybook/core';
+export type { RenderContext } from '@storybook/core';
 
 export type StoryFnHtmlReturnType = string | Node;
 

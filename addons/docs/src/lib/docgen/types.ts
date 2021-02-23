@@ -32,6 +32,7 @@ export interface DocgenTypeScriptType extends DocgenType {}
 
 export interface DocgenPropDefaultValue {
   value: string;
+  computed?: boolean;
 }
 
 export interface DocgenInfo {

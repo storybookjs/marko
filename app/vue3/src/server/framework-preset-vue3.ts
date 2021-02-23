@@ -1,7 +1,7 @@
 import { VueLoaderPlugin } from 'vue-loader';
 import { Configuration, DefinePlugin } from 'webpack';
 
-export function webpack(config: Configuration) {
+export function webpack(config: Configuration): Configuration {
   return {
     ...config,
     plugins: [
