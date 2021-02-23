@@ -10,7 +10,7 @@ const TableStory = (args) => ({
     <Table v-bind="args">
       <tr v-for="(row, idx1) in data">
         <td v-for="(col, idx2) in row">
-            {{ data[idx1][idx2] }}
+          {{ data[idx1][idx2] }}
         </td>
       </tr>
     </Table>
