@@ -98,15 +98,17 @@ Args are useful when writing stories for composite components that are assembled
 
 <!-- prettier-ignore-end -->
 
-## Args can modify any aspect of your components
+## Args can modify any aspect of your component
 
-Args can be used in your story templates to configure your component just as you would in an application. Here’s an example of how a `footer` arg can be used to populate a named slot in a Vue component.
+Args can be used in your story templates to configure your component just as you would in an application. Here’s an example of how a `footer` arg can be used to populate a child component.
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/page-story-slots.js.mdx',
+    'react/page-story-slots.js.mdx',
+    'react/page-story-slots.ts.mdx',
+    'vue/page-story-slots.js.mdx',
   ]}
 />
 
