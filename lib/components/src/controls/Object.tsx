@@ -186,7 +186,7 @@ const RawButton = styled(IconButton)(({ theme }) => ({
 
 const RawInput = styled(Form.Textarea)(({ theme }) => ({
   flex: 1,
-  padding: 6,
+  padding: '7px 6px',
   fontFamily: theme.typography.fonts.mono,
   fontSize: '12px',
   lineHeight: '18px',
@@ -195,7 +195,7 @@ const RawInput = styled(Form.Textarea)(({ theme }) => ({
     fontSize: '13px',
   },
   '&:placeholder-shown': {
-    padding: '6px 10px',
+    padding: '7px 10px',
   },
 }));
 
