@@ -1,1 +1,1 @@
-{"version":"6.1.18","info":{"plain":"### Bug Fixes\n\n- UI: Fix theming for focused search bar ([#13895](https://github.com/storybookjs/storybook/pull/13895))\n- Storyshots: Support main.js usage ([#13842](https://github.com/storybookjs/storybook/pull/13842))"}}
+{"version":"6.1.19","info":{"plain":"### Bug Fixes\n\n* Components: Add missing `regenerator-runtime` dependency ([#13991](https://github.com/storybookjs/storybook/pull/13991))"}}
