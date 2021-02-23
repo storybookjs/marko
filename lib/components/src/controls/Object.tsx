@@ -207,38 +207,43 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value = {}, onChang
     },
     [onChange]
   );
+  const rawJSONForm = (
+    <Form.Textarea
+      id={name}
+      name={name}
+      defaultValue={value}
+      onBlur={(event) => updateRaw(event.target.value)}
+      size="flex"
+      placeholder="Enter JSON string"
+      valid={parseError ? 'error' : null}
+    />
+  );
 
   return (
     <Wrapper>
-      <JsonTree
-        data={data}
-        rootName={name}
-        onFullyUpdate={onChange}
-        getStyle={getCustomStyleFunction(useTheme())}
-        cancelButtonElement={<Button type="button">Cancel</Button>}
-        editButtonElement={<Button type="submit">Save</Button>}
-        addButtonElement={
-          <Button type="submit" primary>
-            Save
-          </Button>
-        }
-        plusMenuElement={<ActionIcon icon="add" />}
-        minusMenuElement={<ActionIcon icon="subtract" />}
-        inputElement={(_: any, __: any, ___: any, key: string) =>
-          key ? <Input onFocus={selectValue} onBlur={dispatchEnterKey} /> : <Input />
-        }
-        fallback={
-          <Form.Textarea
-            id={name}
-            name={name}
-            defaultValue={value}
-            onBlur={(event) => updateRaw(event.target.value)}
-            size="flex"
-            placeholder="Enter JSON string"
-            valid={parseError ? 'error' : null}
-          />
-        }
-      />
+      {data ? (
+        <JsonTree
+          data={data}
+          rootName={name}
+          onFullyUpdate={onChange}
+          getStyle={getCustomStyleFunction(useTheme())}
+          cancelButtonElement={<Button type="button">Cancel</Button>}
+          editButtonElement={<Button type="submit">Save</Button>}
+          addButtonElement={
+            <Button type="submit" primary>
+              Save
+            </Button>
+          }
+          plusMenuElement={<ActionIcon icon="add" />}
+          minusMenuElement={<ActionIcon icon="subtract" />}
+          inputElement={(_: any, __: any, ___: any, key: string) =>
+            key ? <Input onFocus={selectValue} onBlur={dispatchEnterKey} /> : <Input />
+          }
+          fallback={rawJSONForm}
+        />
+      ) : (
+        rawJSONForm
+      )}
     </Wrapper>
   );
 };
