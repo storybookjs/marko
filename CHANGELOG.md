@@ -1,3 +1,9 @@
+## 6.1.19 (February 23, 2021)
+
+### Bug Fixes
+
+- Components: Add missing `regenerator-runtime` dependency ([#13991](https://github.com/storybookjs/storybook/pull/13991))
+
 ## 6.2.0-beta.0 (February 22, 2021)
 
 Storybook 6.2 is in beta. 🎉🎉🎉
