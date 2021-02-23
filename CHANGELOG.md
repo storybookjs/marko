@@ -1,3 +1,13 @@
+## 6.2.0-beta.1 (February 23, 2021)
+
+### Bug Fixes
+
+- Core: Refactor ProgressPlugin handling ([#14016](https://github.com/storybookjs/storybook/pull/14016))
+
+### Dependency Upgrades
+
+- Deps: upgrade react-dev-utils to get newer immer ([#14015](https://github.com/storybookjs/storybook/pull/14015))
+
 ## 6.1.19 (February 23, 2021)
 
 ### Bug Fixes
