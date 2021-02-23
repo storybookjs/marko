@@ -1,6 +1,6 @@
 {
   "name": "@storybook/react",
-  "version": "6.2.0-beta.0",
+  "version": "6.2.0-beta.1",
   "description": "Storybook for React: Develop React Component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -45,10 +45,10 @@
     "@babel/preset-flow": "^7.12.1",
     "@babel/preset-react": "^7.12.10",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "@storybook/addons": "6.2.0-beta.0",
-    "@storybook/core": "6.2.0-beta.0",
-    "@storybook/core-common": "6.2.0-beta.0",
-    "@storybook/node-logger": "6.2.0-beta.0",
+    "@storybook/addons": "6.2.0-beta.1",
+    "@storybook/core": "6.2.0-beta.1",
+    "@storybook/core-common": "6.2.0-beta.1",
+    "@storybook/node-logger": "6.2.0-beta.1",
     "@storybook/semver": "^7.3.2",
     "@types/webpack-env": "^1.16.0",
     "babel-plugin-add-react-displayname": "^0.0.5",
@@ -58,7 +58,7 @@
     "global": "^4.4.0",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
-    "react-dev-utils": "^11.0.1",
+    "react-dev-utils": "^11.0.3",
     "react-docgen-typescript-plugin": "^0.6.2",
     "react-refresh": "^0.8.3",
     "read-pkg-up": "^7.0.1",
@@ -67,7 +67,7 @@
     "webpack": "4"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.2.0-beta.0",
+    "@storybook/client-api": "6.2.0-beta.1",
     "@types/node": "^14.14.20",
     "@types/prompts": "^2.0.9"
   },
@@ -90,5 +90,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "88c8da9b94f831ad177256ec58930ddaebe7d32b"
+  "gitHead": "409d897e6f20b02cec039db52c2d4aa31ee15a5c"
 }

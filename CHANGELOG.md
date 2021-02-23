@@ -1,3 +1,19 @@
+## 6.2.0-beta.1 (February 23, 2021)
+
+### Bug Fixes
+
+- Core: Refactor ProgressPlugin handling ([#14016](https://github.com/storybookjs/storybook/pull/14016))
+
+### Dependency Upgrades
+
+- Deps: upgrade react-dev-utils to get newer immer ([#14015](https://github.com/storybookjs/storybook/pull/14015))
+
+## 6.1.19 (February 23, 2021)
+
+### Bug Fixes
+
+- Components: Add missing `regenerator-runtime` dependency ([#13991](https://github.com/storybookjs/storybook/pull/13991))
+
 ## 6.2.0-beta.0 (February 22, 2021)
 
 Storybook 6.2 is in beta. 🎉🎉🎉

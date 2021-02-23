@@ -17,7 +17,6 @@ import * as managerBuilder from './manager/builder';
 
 import { getProdCli } from './cli';
 import { getPrebuiltDir } from './utils/prebuilt-manager';
-import { useProgressReporting } from './utils/progress-reporting';
 import { cache } from './utils/cache';
 import { copyAllStaticFiles } from './utils/copy-all-static-files';
 import { getPreviewBuilder } from './utils/get-preview-builder';
@@ -73,7 +72,6 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
     : managerBuilder.build({
         startTime,
         options: fullOptions,
-        useProgressReporting,
       });
 
   if (options.ignorePreview) {
@@ -85,7 +83,6 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
     : previewBuilder.build({
         startTime,
         options: fullOptions,
-        useProgressReporting,
       });
 
   await Promise.all([manager, preview]);

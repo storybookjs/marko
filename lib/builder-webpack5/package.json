@@ -1,6 +1,6 @@
 {
   "name": "@storybook/builder-webpack5",
-  "version": "6.2.0-beta.0",
+  "version": "6.2.0-beta.1",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -56,19 +56,19 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
-    "@storybook/addons": "6.2.0-beta.0",
-    "@storybook/api": "6.2.0-beta.0",
-    "@storybook/channel-postmessage": "6.2.0-beta.0",
-    "@storybook/channels": "6.2.0-beta.0",
-    "@storybook/client-api": "6.2.0-beta.0",
-    "@storybook/client-logger": "6.2.0-beta.0",
-    "@storybook/components": "6.2.0-beta.0",
-    "@storybook/core-common": "6.2.0-beta.0",
-    "@storybook/core-events": "6.2.0-beta.0",
-    "@storybook/node-logger": "6.2.0-beta.0",
-    "@storybook/router": "6.2.0-beta.0",
+    "@storybook/addons": "6.2.0-beta.1",
+    "@storybook/api": "6.2.0-beta.1",
+    "@storybook/channel-postmessage": "6.2.0-beta.1",
+    "@storybook/channels": "6.2.0-beta.1",
+    "@storybook/client-api": "6.2.0-beta.1",
+    "@storybook/client-logger": "6.2.0-beta.1",
+    "@storybook/components": "6.2.0-beta.1",
+    "@storybook/core-common": "6.2.0-beta.1",
+    "@storybook/core-events": "6.2.0-beta.1",
+    "@storybook/node-logger": "6.2.0-beta.1",
+    "@storybook/router": "6.2.0-beta.1",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-beta.0",
+    "@storybook/theming": "6.2.0-beta.1",
     "@types/node": "^14.0.10",
     "babel-loader": "^8.2.2",
     "babel-plugin-macros": "^3.0.1",
@@ -85,7 +85,7 @@
     "html-webpack-plugin": "^5.0.0",
     "pnp-webpack-plugin": "1.6.4",
     "raw-loader": "^4.0.2",
-    "react-dev-utils": "^11.0.1",
+    "react-dev-utils": "^11.0.3",
     "stable": "^0.1.8",
     "style-loader": "^2.0.0",
     "terser-webpack-plugin": "^5.0.3",
@@ -119,5 +119,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "88c8da9b94f831ad177256ec58930ddaebe7d32b"
+  "gitHead": "409d897e6f20b02cec039db52c2d4aa31ee15a5c"
 }
