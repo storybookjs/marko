@@ -9,6 +9,7 @@ built-storybooks
 lib/cli/test
 lib/core-server/prebuilt
 lib/codemod/src/transforms/__testfixtures__
+lib/components/src/controls/react-editable-json-tree
 scripts/storage
 *.bundle.js
 *.js.map

@@ -1,7 +1,6 @@
 import React, { FC, useCallback, useState, useEffect } from 'react';
 import { Args, ArgType } from './types';
 import {
-  ArrayControl,
   BooleanControl,
   ColorControl,
   DateControl,
@@ -51,7 +50,8 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
   const props = { name: key, argType: row, value: boxedValue.value, onChange, onBlur, onFocus };
   switch (control.type) {
     case 'array':
-      return <ArrayControl {...props} {...control} />;
+    case 'object':
+      return <ObjectControl {...props} {...control} />;
     case 'boolean':
       return <BooleanControl {...props} {...control} />;
     case 'color':
@@ -60,8 +60,6 @@ export const ArgControl: FC<ArgControlProps> = ({ row, arg, updateArgs }) => {
       return <DateControl {...props} {...control} />;
     case 'number':
       return <NumberControl {...props} {...control} />;
-    case 'object':
-      return <ObjectControl {...props} {...control} />;
     case 'check':
     case 'inline-check':
     case 'radio':
