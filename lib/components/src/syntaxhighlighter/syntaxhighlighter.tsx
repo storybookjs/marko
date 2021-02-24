@@ -56,7 +56,7 @@ const themedSyntax = memoize(2)((theme) =>
 
 let copyToClipboard: (text: string) => Promise<void>;
 
-if (navigator.clipboard) {
+if (navigator?.clipboard) {
   copyToClipboard = (text: string) => navigator.clipboard.writeText(text);
 } else {
   copyToClipboard = async (text: string) => {
