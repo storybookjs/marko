@@ -42,7 +42,9 @@ export async function storybookDevServer(options: Options) {
 
   await new Promise<void>((resolve, reject) => {
     server.listen({ port, host }, () => {
-      resolve();
+      // FIXME: Following line doesn't match TypeScript signature at all 🤔
+      // @ts-ignore
+      server.listen({ port, host }, (error: Error) => (error ? reject(error) : resolve()));
     });
   });
 
@@ -79,7 +81,7 @@ export async function storybookDevServer(options: Options) {
   ]);
 
   // TODO #13083 Remove this when compiling the preview is fast enough
-  if (!options.ci && !options.smokeTest) openInBrowser(networkAddress);
+  if (!options.ci && !options.smokeTest) openInBrowser(host ? networkAddress : address);
 
   return { previewResult, managerResult, address, networkAddress };
 }
