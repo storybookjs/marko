@@ -8,10 +8,12 @@ export default {
   component: App
 };
 
-const Template = (args, { argTypes }) => ({
-  props: Object.keys(argTypes),
+const Template = (args) => ({
   components: { App },
-  template: "<App />"
+  setup() {
+    return { args };
+  }
+  template: '<App v-bind="args"/>',
 });
 
 export const Success = Template.bind({});
