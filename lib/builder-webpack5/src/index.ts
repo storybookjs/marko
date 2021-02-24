@@ -1,8 +1,8 @@
-import webpack, { Stats, Configuration } from 'webpack';
+import webpack, { Stats, Configuration, ProgressPlugin } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
-import { Builder } from '@storybook/core-common';
+import { Builder, useProgressReporting } from '@storybook/core-common';
 
 let compilation: ReturnType<typeof webpackDevMiddleware>;
 let reject: (reason?: any) => void;
@@ -52,7 +52,8 @@ export const start: WebpackBuilder['start'] = async ({ startTime, options, route
     };
   }
 
-  // FIXME: await useProgressReporting(compiler, options, startTime);
+  const { handler, modulesCount } = await useProgressReporting(router, startTime, options);
+  new ProgressPlugin({ handler, modulesCount }).apply(compiler);
 
   const middlewareOptions: Parameters<typeof webpackDevMiddleware>[1] = {
     publicPath: config.output?.publicPath as string,

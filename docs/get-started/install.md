@@ -2,9 +2,8 @@
 title: 'Install Storybook'
 ---
 
-Inside your existing project's root directory, issue the following to add Storybook through our CLI:
-
 <!-- prettier-ignore-start -->
+
 <FeatureSnippets
   paths={[
    'get-started/installation-command-section/angular.mdx',
@@ -68,14 +67,6 @@ Now that you installed Storybook successfully, let’s take a look at a story th
 <summary><h4>Troubleshooting</h4></summary>
 
 Below is a curated list to get you unblocked while adding Storybook to your project.
-
-<!-- You can use the `--type` flag to tell Storybook to configure itself based on the flag.
-
-For instance you can use:
-
-- `--type react` to setup Storybook with the React configuration options.
-- `--type vue` to setup Storybook with the Vue configuration options.
-- `--type angular` to setup Storybook with the Angular configuration options. -->
 
 <!-- prettier-ignore-start -->
 

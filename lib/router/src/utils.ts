@@ -41,7 +41,7 @@ const deepDiff = (value: any, update: any): any => {
   if (deepEqual(value, update)) return undefined;
   if (typeof value !== typeof update) return update;
   if (Array.isArray(value)) return update;
-  if (typeof update === 'object') {
+  if (update && typeof update === 'object') {
     return Object.keys(update).reduce((acc, key) => {
       const diff = deepDiff(value[key], update[key]);
       return diff === undefined ? acc : Object.assign(acc, { [key]: diff });

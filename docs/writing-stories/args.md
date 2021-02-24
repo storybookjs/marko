@@ -22,7 +22,8 @@ To define the args of a single story, use the `args` CSF story key:
   paths={[
     'react/button-story-with-args.js.mdx',
     'react/button-story-with-args.ts.mdx',
-    'vue/button-story-with-args.js.mdx',
+    'vue/button-story-with-args.vue2.js.mdx',
+    'vue/button-story-with-args.vue3.js.mdx',
     'angular/button-story-with-args.ts.mdx',
     'svelte/button-story-with-args.js.mdx',
   ]}
@@ -91,7 +92,8 @@ Args are useful when writing stories for composite components that are assembled
     'react/page-story.js.mdx',
     'react/page-story.ts.mdx',
     'angular/page-story.ts.mdx',
-    'vue/page-story.js.mdx',
+    'vue/page-story.vue2.js.mdx',
+    'vue/page-story.vue3.js.mdx',
     'svelte/page-story.js.mdx',
   ]}
 />

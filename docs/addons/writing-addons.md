@@ -183,6 +183,7 @@ When Storybook was initialized it provided a small set of examples stories. Chan
 <CodeSnippets
   paths={[
     'react/button-story-with-addon-example.js.mdx',
+    'vue/button-story-with-addon-example.js.mdx',
     'angular/button-story-with-addon-example.ts.mdx',
   ]}
 />

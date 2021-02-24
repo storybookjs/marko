@@ -1,13 +1,11 @@
 import { Router } from 'express';
-import { Compiler, ProgressPlugin } from 'webpack';
+import { printDuration } from './print-duration';
 
 export const useProgressReporting = async (
-  compiler: Compiler,
-  options: any,
   router: Router,
-  printDuration: any,
-  startTime: [number, number]
-) => {
+  startTime: [number, number],
+  options: any
+): Promise<{ handler: any; modulesCount: number }> => {
   let value = 0;
   let totalModules: number;
   let reportProgress: (progress?: {
@@ -64,5 +62,5 @@ export const useProgressReporting = async (
   };
 
   const modulesCount = (await options.cache?.get('modulesCount').catch(() => {})) || 1000;
-  new ProgressPlugin({ handler, modulesCount }).apply(compiler);
+  return { handler, modulesCount };
 };

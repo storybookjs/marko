@@ -1,6 +1,6 @@
 {
   "name": "@storybook/web-components",
-  "version": "6.2.0-beta.0",
+  "version": "6.2.0-beta.2",
   "description": "Storybook for web-components: View web components snippets in isolation with Hot Reloading.",
   "keywords": [
     "lit-html",
@@ -46,10 +46,10 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-syntax-import-meta": "^7.10.4",
     "@babel/preset-env": "^7.12.11",
-    "@storybook/addons": "6.2.0-beta.0",
-    "@storybook/client-api": "6.2.0-beta.0",
-    "@storybook/core": "6.2.0-beta.0",
-    "@storybook/core-common": "6.2.0-beta.0",
+    "@storybook/addons": "6.2.0-beta.2",
+    "@storybook/client-api": "6.2.0-beta.2",
+    "@storybook/core": "6.2.0-beta.2",
+    "@storybook/core-common": "6.2.0-beta.2",
     "@types/webpack-env": "^1.16.0",
     "babel-plugin-bundled-import-meta": "^0.3.1",
     "core-js": "^3.8.2",
@@ -74,5 +74,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "88c8da9b94f831ad177256ec58930ddaebe7d32b"
+  "gitHead": "6836920db1cfc4bdfff3cead66265e03ec253eb6"
 }
