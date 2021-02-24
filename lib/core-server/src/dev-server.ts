@@ -41,11 +41,9 @@ export async function storybookDevServer(options: Options) {
   const { address, networkAddress } = getServerAddresses(port, host, proto);
 
   await new Promise<void>((resolve, reject) => {
-    server.listen({ port, host }, () => {
-      // FIXME: Following line doesn't match TypeScript signature at all 🤔
-      // @ts-ignore
-      server.listen({ port, host }, (error: Error) => (error ? reject(error) : resolve()));
-    });
+    // FIXME: Following line doesn't match TypeScript signature at all 🤔
+    // @ts-ignore
+    server.listen({ port, host }, (error: Error) => (error ? reject(error) : resolve()));
   });
 
   const previewBuilder: Builder<unknown, unknown> = await getPreviewBuilder(options.configDir);
