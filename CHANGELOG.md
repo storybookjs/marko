@@ -1,8 +1,12 @@
+## 6.1.20 (February 24, 2021)
+
+- Deps: upgrade react-dev-utils to get newer immer ([#14015](https://github.com/storybookjs/storybook/pull/14015))
+
 ## 6.1.19 (February 23, 2021)
 
 ### Bug Fixes
 
-* Components: Add missing `regenerator-runtime` dependency ([#13991](https://github.com/storybookjs/storybook/pull/13991))
+- Components: Add missing `regenerator-runtime` dependency ([#13991](https://github.com/storybookjs/storybook/pull/13991))
 
 ## 6.1.18 (February 15, 2021)
 
