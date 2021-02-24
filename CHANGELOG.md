@@ -1,3 +1,14 @@
+## 6.2.0-beta.2 (February 24, 2021)
+
+### Features
+
+* Addon-controls: Add JSON tree editor for Object/Array Type args ([#12824](https://github.com/storybookjs/storybook/pull/12824))
+
+### Bug Fixes
+
+* CLI: Fix opening localhost in browser by default ([#14032](https://github.com/storybookjs/storybook/pull/14032))
+* Addon-Docs: Do not create extra Vue instance for Dynamic source rendering ([#14002](https://github.com/storybookjs/storybook/pull/14002))
+
 ## 6.1.20 (February 24, 2021)
 
 - Deps: upgrade react-dev-utils to get newer immer ([#14015](https://github.com/storybookjs/storybook/pull/14015))
