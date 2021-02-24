@@ -80,6 +80,7 @@ export const buildArgsParam = (initialArgs: Args, args: Args): string => {
 
   return qs
     .stringify(object, QS_OPTIONS)
+    .replace(/ /g, '+')
     .split(';')
     .map((part: string) => part.replace('=', ':'))
     .join(';');

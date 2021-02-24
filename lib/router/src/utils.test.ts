@@ -127,6 +127,11 @@ describe('buildArgsParam', () => {
     expect(param).toEqual('arr[0].foo.bar:val');
   });
 
+  it('encodes space as +', () => {
+    const param = buildArgsParam({}, { key: 'foo bar baz' });
+    expect(param).toEqual('key:foo+bar+baz');
+  });
+
   describe('with initial state', () => {
     it('omits unchanged values', () => {
       const param = buildArgsParam({ one: 1 }, { one: 1, two: 2 });
