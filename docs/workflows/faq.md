@@ -239,3 +239,7 @@ npx http-server storybook-static
 <div class="aside">
 If you don't want to run the command above frequently. Add <code>http-server</code> as a development dependency and create a new script to preview your production build of Storybook.
 </div>
+
+### Can I use Storybook with Vue 3
+
+Yes, Storybook support for Vue 3 is currently being finalized and will be released in version 6.2. See the [install page](../get-started/install.md) for instructions.

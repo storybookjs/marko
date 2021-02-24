@@ -3,43 +3,37 @@
 
 import React from 'react';
 
-import { YourComponent } from './your-component'
+import { YourComponent } from './your-component';
 
-// a function to apply some computations
+//👇 Some function to demonstrate the behavior
 const someFunction = (valuePropertyA, valuePropertyB) => {
-  // makes some computations and returns something
+  // Makes some computations and returns something
 };
 
 export default {
   component: YourComponent,
   title: 'A complex case with a function',
-  // creates specific argTypes with options
+  //👇 Creates specific argTypes with options
   argTypes: {
     propertyA: {
       control: {
         type: 'select',
-        options: [
-          'Item One', 
-          'Item Two', 
-          'Item Three'
-        ],
+        options: ['Item One', 'Item Two', 'Item Three'],
       },
     },
     propertyB: {
       control: {
         type: 'select',
-        options: [
-          'Another Item One', 
-          'Another Item Two', 
-          'Another Item Three'
-        ],
+        options: ['Another Item One', 'Another Item Two', 'Another Item Three'],
       },
     },
   },
 };
 
 const Template = ({ propertyA, propertyB, ...rest }) => {
+  //👇 Assigns the function result to a variable
   const someFunctionResult = someFunction(propertyA, propertyB);
+
   return <YourComponent someProperty={someFunctionResult} {...rest} />;
 };
 ```
