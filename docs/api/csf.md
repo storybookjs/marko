@@ -84,8 +84,8 @@ Consider Storybook’s ["Button" example](../writing-stories/introduction.md#def
 <CodeSnippets
   paths={[
     'react/button-story-click-handler.js.mdx',
-    'vue/button-story-click-handler.vue2.js.mdx',
-    'vue/button-story-click-handler.vue3.js.mdx',
+    'vue/button-story-click-handler.2.js.mdx',
+    'vue/button-story-click-handler.3.js.mdx',
   ]}
 />
 
@@ -98,8 +98,8 @@ Now consider the same example, re-written with args:
 <CodeSnippets
   paths={[
     'react/button-story-click-handler-args.js.mdx',
-    'vue/button-story-click-handler-args.vue2.js.mdx',
-    'vue/button-story-click-handler-args.vue3.js.mdx',
+    'vue/button-story-click-handler-args.2.js.mdx',
+    'vue/button-story-click-handler-args.3.js.mdx',
   ]}
 />
 
@@ -113,8 +113,8 @@ At first blush this might seem no better than the original example. However, if 
 <CodeSnippets
   paths={[
     'react/button-story-click-handler-simple-docs.js.mdx',
-    'vue/button-story-click-handler-simple-docs.vue2.js.mdx',
-    'vue/button-story-click-handler-simple-docs.vue3.js.mdx',
+    'vue/button-story-click-handler-simple-docs.2.js.mdx',
+    'vue/button-story-click-handler-simple-docs.3.js.mdx',
   ]}
 />
 
