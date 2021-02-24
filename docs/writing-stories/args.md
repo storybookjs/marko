@@ -170,8 +170,8 @@ In Storybook 5 and before we passed the context as the first argument. If you’
 <!-- prettier-ignore-end -->
 
   <div class="aside">
-
-Note that `args` is still available as a key on the context.
-
+  
+  Note that `args` is still available as a key on the context.
+  
   </div>
 </details>
