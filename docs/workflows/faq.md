@@ -188,7 +188,7 @@ With the release of version 5.3 we've updated how you can write your stories to 
 ### What icons are available for my toolbar or my addon?
 
 With the [`@storybook/components`](https://www.npmjs.com/package/@storybook/components) package you get a set of icons that you can use to customize your own UI. Use the table below as a reference while writing your own addon or defining your own Storybook global types.
-Go through this [story](https://5a375b97f4b14f0020b0cda3-wbeulgbetj.chromatic.com/?path=/story/basics-icon--labels) to see how the icons look like.
+Go through this [story](https://5a375b97f4b14f0020b0cda3-wbeulgbetj.chromatic.com/?path=/story/basics-icon--labels) to see how the icons look.
 
 | accessibility  | accessibilityalt | add          | admin        | alert         |
 |----------------|------------------|--------------|--------------|---------------|
