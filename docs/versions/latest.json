@@ -1,1 +1,1 @@
-{"version":"6.1.19","info":{"plain":"### Bug Fixes\n\n* Components: Add missing `regenerator-runtime` dependency ([#13991](https://github.com/storybookjs/storybook/pull/13991))"}}
+{"version":"6.1.20","info":{"plain":"- Deps: upgrade react-dev-utils to get newer immer ([#14015](https://github.com/storybookjs/storybook/pull/14015))"}}
