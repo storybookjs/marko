@@ -50,7 +50,7 @@ export const Action = styled.button(({ theme }) => ({
   },
 }));
 
-const CollapseButton = styled.button<{ isExpanded: boolean }>(({ theme, isExpanded }) => ({
+const CollapseButton = styled.button(({ theme }) => ({
   // Reset button
   background: 'transparent',
   border: 'none',
@@ -77,12 +77,6 @@ const CollapseButton = styled.button<{ isExpanded: boolean }>(({ theme, isExpand
   'span:first-of-type': {
     marginTop: 4,
     marginRight: 7,
-    opacity: isExpanded ? 0 : 1,
-    transition: 'opacity 150ms',
-  },
-
-  '&:hover span:first-of-type, &:focus span:first-of-type': {
-    opacity: 1,
   },
 
   '&:focus': {
@@ -162,7 +156,6 @@ const Node = React.memo<NodeProps>(
           <CollapseButton
             type="button"
             data-action="collapse-root"
-            isExpanded={isExpanded}
             onClick={(event) => {
               event.preventDefault();
               setExpanded({ ids: [item.id], value: !isExpanded });
