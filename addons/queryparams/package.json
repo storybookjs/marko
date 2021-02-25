@@ -1,11 +1,12 @@
 {
   "name": "@storybook/addon-queryparams",
-  "version": "6.2.0-alpha.16",
+  "version": "6.2.0-beta.3",
   "description": "parameter addon for storybook",
   "keywords": [
     "addon",
     "query",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook#readme",
   "bugs": {
@@ -37,12 +38,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.16",
-    "@storybook/api": "6.2.0-alpha.16",
-    "@storybook/client-logger": "6.2.0-alpha.16",
-    "@storybook/components": "6.2.0-alpha.16",
-    "@storybook/core-events": "6.2.0-alpha.16",
-    "@storybook/theming": "6.2.0-alpha.16",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
+    "@storybook/client-logger": "6.2.0-beta.3",
+    "@storybook/components": "6.2.0-beta.3",
+    "@storybook/core-events": "6.2.0-beta.3",
+    "@storybook/theming": "6.2.0-beta.3",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
     "qs": "^6.9.5",
@@ -67,5 +68,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
+  "storybook": {
+    "displayName": "Query params",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

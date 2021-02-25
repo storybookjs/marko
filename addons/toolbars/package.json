@@ -1,13 +1,15 @@
 {
   "name": "@storybook/addon-toolbars",
-  "version": "6.2.0-alpha.16",
+  "version": "6.2.0-beta.3",
   "description": "Create your own toolbar items that control story rendering",
   "keywords": [
     "addon",
     "storybook",
     "theming",
     "i18n",
-    "internationalization"
+    "internationalization",
+    "test",
+    "essentials"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/next/addons/toolbars",
   "bugs": {
@@ -39,10 +41,10 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.16",
-    "@storybook/api": "6.2.0-alpha.16",
-    "@storybook/client-api": "6.2.0-alpha.16",
-    "@storybook/components": "6.2.0-alpha.16",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
+    "@storybook/client-api": "6.2.0-beta.3",
+    "@storybook/components": "6.2.0-beta.3",
     "core-js": "^3.8.2"
   },
   "peerDependencies": {
@@ -60,5 +62,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2cc64efa1dcb90b72806d4c88c295f38dd92e427"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
+  "storybook": {
+    "displayName": "Toolbars",
+    "icon": "https://user-images.githubusercontent.com/263385/101991677-48cdf300-3c7c-11eb-93b4-19b0e3366959.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

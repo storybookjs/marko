@@ -1,8 +1,6 @@
 import AngularSnapshotSerializer from 'jest-preset-angular/build/AngularSnapshotSerializer';
 import HTMLCommentSerializer from 'jest-preset-angular/build/HTMLCommentSerializer';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { TestBed } from '@angular/core/testing';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
 import { addSerializer } from 'jest-specific-snapshot';
 import { getStorybookModuleMetadata } from '@storybook/angular/renderer';

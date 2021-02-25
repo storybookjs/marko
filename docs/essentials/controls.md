@@ -44,43 +44,65 @@ By default, Storybook will choose a control for each arg based on the initial va
 
 <!-- prettier-ignore-end -->
 
-For instance, suppose you have a `backgroundColor` arg on your story:
+For instance, suppose you have a `variant` arg on your story that should be `primary` or `secondary`:
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/button-story-controls-red-input.js.mdx',
-    'common/button-story-controls-red-input.mdx.mdx',
+    'common/button-story-controls-primary-variant.js.mdx',
+    'common/button-story-controls-primary-variant.mdx.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-By default, Storybook will render a free text input for the `backgroundColor` arg:
+By default, Storybook will render a free text input for the `variant` arg:
 
-![Essential addon Controls using a string](./addon-controls-args-background-string.png)
+![Essential addon Controls using a string](addon-controls-args-variant-string.png)
 
-This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for picking a color. Let’s replace it with Storybook’s color picker component.
 
-We can specify which controls get used by declaring a custom [argType](../api/argtypes.md) for the `backgroundColor` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
+This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for our scenario, given that the component only accepts `primary` or `secondary` as variants. Let’s replace it with Storybook’s radio component.
 
-ArgTypes can also contain arbitrary annotations which can be overridden by the user. Since `backgroundColor` is a property of the component, let's put that annotation on the default export.
+We can specify which controls get used by declaring a custom [argType](../api/argtypes.md) for the `variant` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
+
+ArgTypes can also contain arbitrary annotations which can be overridden by the user. Since `variant` is a property of the component, let's put that annotation on the default export.
 
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
   paths={[
-    'common/button-story-controls-color-picker.js.mdx',
-    'common/button-story-controls-color-picker.mdx.mdx',
+    'common/button-story-controls-radio-group.js.mdx',
+    'common/button-story-controls-radio-group.mdx.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-This replaces the input with a color picker for a more intuitive developer experience.
+This replaces the input with a radio group for a more intuitive experience.
 
-![Essential Control addon with a color picker](./addon-controls-args-background-color.png)
+![Essential Control addon with a radio group](addon-controls-args-variant-optimized.png)
+
+## Custom control type matchers
+
+For a few types, Controls will automatically infer them by using [regex](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp). You can change the matchers for a regex that suits you better.
+
+| Data Type   | Default regex | Description |
+| :---------- | :----------: | :--------------------------------------------------------------------- |
+| **color**   | `/(background\|color)$/i` | will display a color picker UI for the args that match it |
+| **date**    | `/Date$/`                 | will display a date picker UI for the args that match it  |
+
+
+To do so, use the `matchers` property in `controls` parameter:
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'storybook-addon-controls-custom-matchers.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ## Fully custom args
 
@@ -92,7 +114,9 @@ Up until now, we only used auto-generated controls based on the component we're 
   paths={[
     'react/table-story-fully-customize-controls.js.mdx',
     'react/table-story-fully-customize-controls.mdx.mdx',
-    'vue/table-story-fully-customize-controls.js.mdx',
+    'vue/table-story-fully-customize-controls.2.js.mdx',
+    'vue/table-story-fully-customize-controls.3.js.mdx',
+    'angular/table-story-fully-customize-controls.ts.mdx',
   ]}
 />
 
@@ -115,12 +139,13 @@ As they can be complex cases:
     'react/component-story-custom-args-complex.js.mdx',
     'react/component-story-custom-args-complex.ts.mdx',
     'react/component-story-custom-args-complex.mdx.mdx',
-     'vue/component-story-custom-args-complex.js.mdx',
+    'vue/component-story-custom-args-complex.2.js.mdx',
+    'vue/component-story-custom-args-complex.3.js.mdx',
+    'angular/component-story-custom-args-complex.ts.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
-
 
 Or even with certain types of elements, such as icons:
 
@@ -131,7 +156,9 @@ Or even with certain types of elements, such as icons:
     'react/component-story-custom-args-icons.js.mdx',
     'react/component-story-custom-args-icons.ts.mdx',
     'react/component-story-custom-args-icons.mdx.mdx',
-    'vue/component-story-custom-args-icons.js.mdx',
+    'vue/component-story-custom-args-icons.2.js.mdx',
+    'vue/component-story-custom-args-icons.3.js.mdx',
+    'angular/component-story-custom-args-icons.ts.mdx',
   ]}
 />
 
@@ -153,6 +180,7 @@ Here is the full list of available controls you can use:
 | Data Type   | Control Type | Description                                                    |    Options     |
 | :---------- | :----------: | :------------------------------------------------------------- | :------------: |
 | **array**   |    array     | serialize array into a comma-separated string inside a textbox |   separator    |
+|             |     file     | a file input that gives you a array of urls                    |     accept     |
 | **boolean** |   boolean    | checkbox input                                                 |       -        |
 | **number**  |    number    | a numeric text box input                                       | min, max, step |
 |             |    range     | a range slider input                                           | min, max, step |
@@ -229,7 +257,7 @@ And here's what the resulting UI looks like:
 
 ### Disable controls for specific properties
 
-Asides from the features already documented here. Controls can also be disabled for individual properties. 
+Aside from the features already documented here, Controls can also be disabled for individual properties.
 
 Suppose you want to disable Controls for a property called `foo` in a component's story. The following example illustrates how:
 
@@ -253,9 +281,18 @@ Resulting in the following change in Storybook UI:
   />
 </video>
 
+The previous example also removed the prop documentation from the table. In some cases this is fine, however sometimes you might want to still render the prop documentation but without a control. The following example illustrates how:
+
+<CodeSnippets
+paths={[
+'common/component-story-disable-controls-alt.js.mdx',
+'common/component-story-disable-controls-alt.mdx.mdx'
+]}
+/>
+
 <div class="aside">
 
- As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
+As with other Storybook properties, such as [decorators](../writing-stories/decorators.md) the same principle can also be applied at a story-level for more granular cases.
 
 </div>
 
@@ -269,6 +306,25 @@ If you don't plan to handle the control args inside your Story, you can remove t
   paths={[
     'common/button-story-hide-nocontrols-warning.js.mdx',
   ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+## Filtering controls
+
+In some cases, you may want to either only present a few controls in the controls panel, or present all controls except a small set.
+
+To make this possible, you can use optional `include` and `exclude` configuration fields in the `controls` parameter, which can be set to either an array of strings, or a regular expression.
+
+Consider the following story snippets:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+paths={[
+'common/component-story-disable-controls-regex.js.mdx',
+'common/component-story-disable-controls-regex.mdx.mdx'
+]}
 />
 
 <!-- prettier-ignore-end -->

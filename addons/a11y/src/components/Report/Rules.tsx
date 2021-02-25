@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { styled } from '@storybook/theming';
 import { Badge } from '@storybook/components';
 import { CheckResult } from 'axe-core';
-import { SizeMe } from 'react-sizeme';
+import { SizeMe } from '@hypnosphi/react-sizeme';
 
 const List = styled.div({
   display: 'flex',

@@ -188,6 +188,7 @@ With the release of version 5.3 we've updated how you can write your stories to 
 ### What icons are available for my toolbar or my addon?
 
 With the [`@storybook/components`](https://www.npmjs.com/package/@storybook/components) package you get a set of icons that you can use to customize your own UI. Use the table below as a reference while writing your own addon or defining your own Storybook global types.
+Go through this [story](https://5a375b97f4b14f0020b0cda3-wbeulgbetj.chromatic.com/?path=/story/basics-icon--labels) to see how the icons look.
 
 | accessibility  | accessibilityalt | add          | admin        | alert         |
 |----------------|------------------|--------------|--------------|---------------|
@@ -223,8 +224,6 @@ With the [`@storybook/components`](https://www.npmjs.com/package/@storybook/comp
 | useradd        | useralt          | users        | video        | watch         |
 | wrench         | youtube          | zoom         | zoomout      | zoomreset     |
 
-Go through this [story](https://5a375b97f4b14f0020b0cda3-wbeulgbetj.chromatic.com/?path=/story/basics-icon--labels) to see how the icons look like.
-
 
 ### I see a "No Preview" error with a Storybook production build
 
@@ -239,3 +238,7 @@ npx http-server storybook-static
 <div class="aside">
 If you don't want to run the command above frequently. Add <code>http-server</code> as a development dependency and create a new script to preview your production build of Storybook.
 </div>
+
+### Can I use Storybook with Vue 3
+
+Yes, Storybook support for Vue 3 is currently being finalized and will be released in version 6.2. See the [install page](../get-started/install.md) for instructions.

@@ -67,6 +67,7 @@ function isStylingRule(rule: RuleSetRule) {
 }
 
 export function filterOutStylingRules(config: Configuration) {
+  // @ts-ignore
   return config.module.rules.filter((rule) => !isStylingRule(rule));
 }
 

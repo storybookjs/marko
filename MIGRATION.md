@@ -1,10 +1,14 @@
 <h1>Migration</h1>
 
 - [From version 6.1.x to 6.2.0](#from-version-61x-to-620)
+  - [MDX pattern tweaked](#mdx-pattern-tweaked)
   - [6.2 Angular overhaul](#62-angular-overhaul)
     - [New Angular storyshots format](#new-angular-storyshots-format)
     - [Deprecated Angular story component](#deprecated-angular-story-component)
     - [New Angular renderer](#new-angular-renderer)
+  - [6.2 Deprecations](#62-deprecations)
+    - [Deprecated implicit PostCSS loader](#deprecated-implicit-postcss-loader)
+    - [Deprecated default PostCSS plugins](#deprecated-default-postcss-plugins)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
@@ -146,6 +150,10 @@
 
 ## From version 6.1.x to 6.2.0
 
+### MDX pattern tweaked
+
+In 6.2 files ending in `stories.mdx` or `story.mdx` are now processed with Storybook's MDX compiler. Previously it only applied to files ending in `.stories.mdx` or `.story.mdx`. See more here: [#13996](https://github.com/storybookjs/storybook/pull/13996)
+
 ### 6.2 Angular overhaul
 
 #### New Angular storyshots format
@@ -190,6 +198,37 @@ export const parameters = {
 ```
 
 Please also file an issue if you need to opt out. We plan to remove the legacy renderer in 7.0.
+
+### 6.2 Deprecations
+
+#### Deprecated implicit PostCSS loader
+
+Previously, `@storybook/core` would automatically add the `postcss-loader` to your preview. This caused issues for consumers when PostCSS upgraded to v8 and tools, like Autoprefixer and Tailwind, starting requiring the new version. Implictly adding `postcss-loader` will be removed in Storybook 7.0.
+
+Instead of continuing to include PostCSS inside the core library, it has been moved to [`@storybook/addon-postcss`](https://github.com/storybookjs/addon-postcss). This addon provides more fine-grained customization and will be upgraded more flexibly to track PostCSS upgrades.
+
+If you require PostCSS support, please install `@storybook/addon-postcss` in your project, add it to your list of addons inside `.storybook/main.js`, and configure a `postcss.config.js` file.
+
+Further information is available at https://github.com/storybookjs/storybook/issues/12668 and https://github.com/storybookjs/storybook/pull/13669.
+
+#### Deprecated default PostCSS plugins
+
+When relying on the [implicit PostCSS loader](#deprecated-implicit-postcss-loader), it would also add [autoprefixer v9](https://www.npmjs.com/package/autoprefixer/v/9.8.6) and [postcss-flexbugs-fixes v4](https://www.npmjs.com/package/postcss-flexbugs-fixes/v/4.2.1) plugins to the `postcss-loader` configuration when you didn't have a PostCSS config file (such as `postcss.config.js`) within your project.
+
+They will no longer be applied when switching to `@storybook/addon-postcss` and the implicit PostCSS features will be removed in Storybook 7.0.
+
+If you depend upon these plugins being applied, install them and create a `postcss.config.js` file within your project that contains:
+
+```js
+module.exports = {
+  plugins: [
+    require('postcss-flexbugs-fixes'),
+    require('autoprefixer')({
+      flexbox: 'no-2009',
+    }),
+  ],
+};
+```
 
 ## From version 6.0.x to 6.1.0
 
@@ -906,13 +945,13 @@ We've deprecated the following in 6.0: `addon-info`, `addon-notes`, `addon-conte
 
 The info/notes addons have been replaced by [addon-docs](https://github.com/storybookjs/storybook/tree/next/addons/docs). We've documented a migration in the [docs recipes](https://github.com/storybookjs/storybook/blob/next/addons/docs/docs/recipes.md#migrating-from-notesinfo-addons).
 
-Both addons are still widely used, and their source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). We're looking for maintainers for both addons. If you're interested, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+Both addons are still widely used, and their source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). We're looking for maintainers for both addons. If you're interested, please get in touch on [our Discord](https://discord.gg/storybook).
 
 #### Deprecated addon-contexts
 
 The contexts addon has been replaced by [addon-toolbars](https://github.com/storybookjs/storybook/blob/next/addons/toolbars), which is simpler, more ergonomic, and compatible with all Storybook frameworks.
 
-The addon's source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). If you're interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+The addon's source code is still available in the [deprecated-addons repo](https://github.com/storybookjs/deprecated-addons). If you're interested in maintaining it, please get in touch on [our Discord](https://discord.gg/storybook).
 
 #### Removed addon-centered
 
@@ -931,7 +970,7 @@ Other possible values are: `padded` (default) and `fullscreen`.
 
 #### Deprecated polymer
 
-We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discordapp.com/invite/UUt2PJb).
+We've deprecated `@storybook/polymer` and are focusing on `@storybook/web-components`. If you use Polymer and are interested in maintaining it, please get in touch on [our Discord](https://discord.gg/storybook).
 
 #### Deprecated immutable options parameters
 

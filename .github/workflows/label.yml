@@ -5,10 +5,10 @@ jobs:
     name: Danger JS
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Danger JS
-      uses: danger/danger-js@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        args: --dangerfile .ci/danger/dangerfile.ts
+      - uses: actions/checkout@master
+      - name: Danger JS
+        uses: danger/danger-js@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: --dangerfile .ci/danger/dangerfile.ts

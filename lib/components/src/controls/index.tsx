@@ -20,3 +20,4 @@ export * from './options';
 export * from './Object';
 export * from './Range';
 export * from './Text';
+export * from './Files';

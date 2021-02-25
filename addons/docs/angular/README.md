@@ -206,6 +206,30 @@ And for `MDX` you can modify it as an attribute on the `Story` element:
 <Story name='basic' height='400px'>{...}</Story>
 ```
 
+## Inline Stories
+
+Storybook Docs renders all Angular stories inside IFrames by default. But it is possible to use an inline rendering:
+
+To get this, you'll first need to install Angular elements:
+
+```sh
+yarn add -D @angular/elements @webcomponents/custom-elements
+```
+
+Then update `.storybook/preview.js`:
+
+```js
+import { addParameters } from '@storybook/angular';
+import { prepareForInline } from '@storybook/addon-docs/angular/inline';
+
+addParameters({
+  docs: {
+    inlineStories: true,
+    prepareForInline,
+  },
+});
+```
+
 ## More resources
 
 Want to learn more? Here are some more articles on Storybook Docs:
