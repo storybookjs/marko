@@ -67,7 +67,7 @@ const CollapseButton = styled.button<{ isExpanded: boolean }>(({ theme, isExpand
 
   display: 'flex',
   flex: 1,
-  padding: '4px 12px 2px 2px',
+  padding: '2px 12px 2px 2px',
   margin: 0,
   marginLeft: -20,
   overflow: 'hidden',
@@ -87,11 +87,6 @@ const CollapseButton = styled.button<{ isExpanded: boolean }>(({ theme, isExpand
     borderColor: theme.color.secondary,
   },
 }));
-
-type DisplayableNode = {
-  id: string;
-  children?: string[];
-};
 
 interface NodeProps {
   item: Item;

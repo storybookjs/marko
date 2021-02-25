@@ -125,7 +125,7 @@ export const RootNode = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   padding: '0 20px',
-  marginTop: 14,
+  marginTop: 16,
   marginBottom: 4,
   fontSize: `${theme.typography.size.s1 - 1}px`,
   fontWeight: theme.typography.weight.black,
