@@ -20,33 +20,33 @@ export interface ExpandedProps {
   isBrowsing: boolean;
   refId: string;
   data: StoriesHash;
+  initialExpanded?: ExpandedState;
   rootIds: string[];
   highlightedRef: MutableRefObject<Highlight>;
   setHighlightedItemId: (storyId: string) => void;
   selectedStoryId: string | null;
   onSelectStoryId: (storyId: string) => void;
-  defaultCollapsedRootIds?: string[];
 }
 
 const initializeExpanded = ({
   refId,
   data,
+  initialExpanded,
   highlightedRef,
   rootIds,
-  defaultCollapsedRootIds,
 }: {
   refId: string;
   data: StoriesHash;
+  initialExpanded?: ExpandedState;
   highlightedRef: MutableRefObject<Highlight>;
   rootIds: string[];
-  defaultCollapsedRootIds: string[];
 }) => {
   const highlightedAncestors =
     highlightedRef.current?.refId === refId
       ? getAncestorIds(data, highlightedRef.current?.itemId)
       : [];
   return [...rootIds, ...highlightedAncestors].reduce<ExpandedState>(
-    (acc, id) => Object.assign(acc, { [id]: !defaultCollapsedRootIds.includes(id) }),
+    (acc, id) => Object.assign(acc, { [id]: id in initialExpanded ? initialExpanded[id] : true }),
     {}
   );
 };
@@ -58,13 +58,13 @@ export const useExpanded = ({
   isBrowsing,
   refId,
   data,
+  initialExpanded,
   rootIds,
   highlightedRef,
   setHighlightedItemId,
   selectedStoryId,
   onSelectStoryId,
-  defaultCollapsedRootIds,
-}: ExpandedProps): [Record<string, boolean>, Dispatch<ExpandAction>] => {
+}: ExpandedProps): [ExpandedState, Dispatch<ExpandAction>] => {
   const api = useStorybookApi();
 
   // Track the set of currently expanded nodes within this tree.
@@ -76,12 +76,12 @@ export const useExpanded = ({
       data: StoriesHash;
       highlightedRef: MutableRefObject<Highlight>;
       rootIds: string[];
-      defaultCollapsedRootIds: string[];
+      initialExpanded: ExpandedState;
     }
   >(
     (state, { ids, value }) =>
       ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
-    { refId, data, highlightedRef, rootIds, defaultCollapsedRootIds },
+    { refId, data, highlightedRef, rootIds, initialExpanded },
     initializeExpanded
   );
 

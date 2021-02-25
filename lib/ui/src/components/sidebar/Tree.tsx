@@ -2,7 +2,7 @@ import { Group, Story, StoriesHash, isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
-import React, { Fragment, MutableRefObject, useCallback, useMemo, useRef } from 'react';
+import React, { MutableRefObject, useCallback, useMemo, useRef } from 'react';
 
 import {
   ComponentNode,
@@ -12,7 +12,7 @@ import {
   StoryNode,
   CollapseIcon,
 } from './TreeNode';
-import { useExpanded, ExpandAction } from './useExpanded';
+import { useExpanded, ExpandAction, ExpandedState } from './useExpanded';
 import { Highlight, Item } from './types';
 import { createId, getAncestorIds, getDescendantIds, getLink } from './utils';
 
@@ -238,11 +238,6 @@ const Container = styled.div<{ hasOrphans: boolean }>((props) => ({
   marginBottom: 20,
 }));
 
-const Section = styled.div<{ expanded: boolean }>(({ expanded }) => ({
-  height: expanded ? 'auto' : 0,
-  overflow: expanded ? 'visible' : 'hidden',
-}));
-
 export const Tree = React.memo<{
   isBrowsing: boolean;
   isMain: boolean;
@@ -266,20 +261,17 @@ export const Tree = React.memo<{
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Find top-level nodes and group them so we can hoist any orphans and expand any roots.
-    const [rootIds, orphanIds, defaultCollapsedRootIds] = useMemo(
+    const [rootIds, orphanIds, initialExpanded] = useMemo(
       () =>
-        Object.keys(data).reduce<[string[], string[], string[]]>(
+        Object.keys(data).reduce<[string[], string[], ExpandedState]>(
           (acc, id) => {
             const item = data[id];
-            if (isRoot(item)) {
-              acc[0].push(id);
-              if (item.defaultCollapsed) {
-                acc[2].push(id);
-              }
-            } else if (!item.parent) acc[1].push(id);
+            if (isRoot(item)) acc[0].push(id);
+            else if (!item.parent) acc[1].push(id);
+            if (isRoot(item) && item.startCollapsed) acc[2][id] = false;
             return acc;
           },
-          [[], [], []]
+          [[], [], {}]
         ),
       [data]
     );
@@ -350,102 +342,50 @@ export const Tree = React.memo<{
       isBrowsing, // only enable keyboard shortcuts when tree is visible
       refId,
       data: collapsedData,
+      initialExpanded,
       rootIds,
       highlightedRef,
       setHighlightedItemId,
       selectedStoryId,
       onSelectStoryId,
-      defaultCollapsedRootIds,
     });
-
-    /**
-     * Build the array for
-     *  Single Story
-     *  Root
-     *    Story1
-     *    Story2
-     */
-    const itemsDisplayed = useMemo(() => {
-      return collapsedItems.reduce<DisplayableNode[]>((acc, itemId) => {
-        const item = collapsedData[itemId];
-        const latestRoot = acc.pop();
-        if (latestRoot && isRoot(collapsedData[latestRoot.id]) && !isRoot(item)) {
-          acc.push({
-            ...latestRoot,
-            children: [...latestRoot.children, itemId],
-          });
-        } else {
-          // an orphan or a root, we add the latest one back
-          if (latestRoot) {
-            acc.push(latestRoot);
-          }
-          acc.push({ id: itemId, children: [] });
-        }
-        return acc;
-      }, []);
-    }, [collapsedItems, collapsedData]);
 
     return (
       <Container ref={containerRef} hasOrphans={isMain && orphanIds.length > 0}>
-        {itemsDisplayed.map((itemDisplay) => {
-          const item = collapsedData[itemDisplay.id];
-
-          const id = createId(itemDisplay.id, refId);
+        {collapsedItems.map((itemId) => {
+          const item = collapsedData[itemId];
+          const id = createId(itemId, refId);
 
           if (isRoot(item)) {
             const descendants = expandableDescendants[item.id];
             const isFullyExpanded = descendants.every((d: string) => expanded[d]);
             return (
-              <Fragment key={id}>
-                <Root
-                  item={item}
-                  refId={refId}
-                  isOrphan={false}
-                  isDisplayed
-                  isSelected={selectedStoryId === item.id}
-                  isExpanded={!!expanded[item.id]}
-                  setExpanded={setExpanded}
-                  isFullyExpanded={isFullyExpanded}
-                  expandableDescendants={descendants}
-                  onSelectStoryId={onSelectStoryId}
-                />
-                <Section expanded={!!expanded[id]}>
-                  {itemDisplay.children?.map((childId) => {
-                    const child = collapsedData[childId] as Group | Story;
-
-                    const isDisplayed =
-                      !child.parent || ancestry[childId].every((a: string) => expanded[a]);
-                    return (
-                      <Node
-                        key={createId(childId, refId)}
-                        item={child}
-                        refId={refId}
-                        isOrphan={orphanIds.some(
-                          (oid) => childId === oid || childId.startsWith(`${oid}-`)
-                        )}
-                        isDisplayed={isDisplayed}
-                        isSelected={selectedStoryId === childId}
-                        isExpanded={!!expanded[childId]}
-                        setExpanded={setExpanded}
-                        onSelectStoryId={onSelectStoryId}
-                      />
-                    );
-                  })}
-                </Section>
-              </Fragment>
+              <Root
+                key={id}
+                item={item}
+                refId={refId}
+                isOrphan={false}
+                isDisplayed
+                isSelected={selectedStoryId === itemId}
+                isExpanded={!!expanded[itemId]}
+                setExpanded={setExpanded}
+                isFullyExpanded={isFullyExpanded}
+                expandableDescendants={descendants}
+                onSelectStoryId={onSelectStoryId}
+              />
             );
           }
 
-          const isDisplayed = !item.parent || ancestry[item.id].every((a: string) => expanded[a]);
+          const isDisplayed = !item.parent || ancestry[itemId].every((a: string) => expanded[a]);
           return (
             <Node
               key={id}
               item={item}
               refId={refId}
-              isOrphan={orphanIds.some((oid) => item.id === oid || item.id.startsWith(`${oid}-`))}
+              isOrphan={orphanIds.some((oid) => itemId === oid || itemId.startsWith(`${oid}-`))}
               isDisplayed={isDisplayed}
-              isSelected={selectedStoryId === item.id}
-              isExpanded={!!expanded[item.id]}
+              isSelected={selectedStoryId === itemId}
+              isExpanded={!!expanded[itemId]}
               setExpanded={setExpanded}
               onSelectStoryId={onSelectStoryId}
             />
