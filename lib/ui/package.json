@@ -1,6 +1,6 @@
 {
   "name": "@storybook/ui",
-  "version": "6.2.0-alpha.19",
+  "version": "6.2.0-beta.3",
   "description": "Core Storybook UI",
   "keywords": [
     "storybook"
@@ -37,15 +37,16 @@
   },
   "dependencies": {
     "@emotion/core": "^10.1.1",
-    "@storybook/addons": "6.2.0-alpha.19",
-    "@storybook/api": "6.2.0-alpha.19",
-    "@storybook/channels": "6.2.0-alpha.19",
-    "@storybook/client-logger": "6.2.0-alpha.19",
-    "@storybook/components": "6.2.0-alpha.19",
-    "@storybook/core-events": "6.2.0-alpha.19",
-    "@storybook/router": "6.2.0-alpha.19",
+    "@hypnosphi/react-sizeme": "^2.6.13",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
+    "@storybook/channels": "6.2.0-beta.3",
+    "@storybook/client-logger": "6.2.0-beta.3",
+    "@storybook/components": "6.2.0-beta.3",
+    "@storybook/core-events": "6.2.0-beta.3",
+    "@storybook/router": "6.2.0-beta.3",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-alpha.19",
+    "@storybook/theming": "6.2.0-beta.3",
     "@types/markdown-to-jsx": "^6.11.3",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.2",
@@ -57,27 +58,23 @@
     "lodash": "^4.17.20",
     "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
-    "polished": "^3.6.7",
+    "polished": "^4.0.5",
     "qs": "^6.9.5",
     "react-draggable": "^4.4.3",
     "react-helmet-async": "^1.0.7",
-    "react-sizeme": "^2.6.12",
     "regenerator-runtime": "^0.13.7",
     "resolve-from": "^5.0.0",
     "store2": "^2.12.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/addon-actions": "6.2.0-alpha.19",
-    "@storybook/addon-knobs": "6.2.0-alpha.19",
-    "@storybook/react": "6.2.0-alpha.19",
-    "@testing-library/react": "^10.4.9",
+    "@testing-library/react": "^11.2.2",
     "babel-loader": "^8.2.2",
     "chromatic": "^5.6.0",
     "enzyme": "^3.11.0",
     "flush-promises": "^1.0.2",
-    "terser-webpack-plugin": "^3.1.0",
-    "webpack": "^4.46.0"
+    "terser-webpack-plugin": "^5.0.3",
+    "webpack": "4"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -86,5 +83,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2a8f070c0c3ba56dc820cb04e96d9bf3f47a6a23"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000"
 }

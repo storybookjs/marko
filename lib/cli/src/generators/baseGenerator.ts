@@ -1,12 +1,13 @@
 import { NpmOptions } from '../NpmOptions';
-import { StoryFormat, SupportedLanguage, SupportedFrameworks } from '../project_types';
+import { StoryFormat, SupportedLanguage, SupportedFrameworks, Builder } from '../project_types';
 import { getBabelDependencies, copyComponents } from '../helpers';
 import { configure } from './configure';
-import { JsPackageManager } from '../js-package-manager';
+import { getPackageDetails, JsPackageManager } from '../js-package-manager';
 
 export type GeneratorOptions = {
   language: SupportedLanguage;
   storyFormat: StoryFormat;
+  builder: Builder;
 };
 
 export interface FrameworkOptions {
@@ -38,7 +39,7 @@ const defaultOptions: FrameworkOptions = {
 export async function baseGenerator(
   packageManager: JsPackageManager,
   npmOptions: NpmOptions,
-  { language }: GeneratorOptions,
+  { language, builder }: GeneratorOptions,
   framework: SupportedFrameworks,
   options: FrameworkOptions = defaultOptions
 ) {
@@ -64,21 +65,41 @@ export async function baseGenerator(
   const yarn2Dependencies =
     packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
 
+  const builderDependencies: Partial<Record<Builder, string>> = {
+    [Builder.Webpack5]: '@storybook/builder-webpack5',
+  };
+
+  const packageJson = packageManager.retrievePackageJson();
+  const installedDependencies = new Set(Object.keys(packageJson.dependencies));
+
   const packages = [
     `@storybook/${framework}`,
     ...addonPackages,
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,
-  ].filter(Boolean);
+    builderDependencies[builder],
+  ]
+    .filter(Boolean)
+    .filter(
+      (packageToInstall) => !installedDependencies.has(getPackageDetails(packageToInstall)[0])
+    );
+
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
-  configure(framework, [...addons, ...extraAddons]);
+  const extraMain =
+    builder !== Builder.Webpack4
+      ? {
+          core: {
+            builder,
+          },
+        }
+      : undefined;
+  configure(framework, [...addons, ...extraAddons], extraMain);
   if (addComponents) {
     copyComponents(framework, language);
   }
 
-  const packageJson = packageManager.retrievePackageJson();
   const babelDependencies = addBabel ? await getBabelDependencies(packageManager, packageJson) : [];
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,

@@ -2,13 +2,13 @@
 /* eslint-disable no-underscore-dangle */
 import {
   Component,
+  ElementRef,
   EventEmitter,
+  HostBinding,
+  HostListener,
   Input,
   Output,
   ViewChild,
-  HostListener,
-  HostBinding,
-  ElementRef,
 } from '@angular/core';
 
 export const exportedConstant = 'An exported constant';
@@ -19,6 +19,11 @@ export interface ISomeInterface {
   one: string;
   two: boolean;
   three: any[];
+}
+
+export enum ButtonAccent {
+  'Normal' = 'Normal',
+  'High' = 'High',
 }
 
 /**
@@ -49,6 +54,13 @@ export class DocButtonComponent<T> {
   /** Sets the button to a disabled state. */
   @Input()
   public isDisabled = false;
+
+  /** Specify the accent-type of the button */
+  @Input()
+  public accent: ButtonAccent = ButtonAccent.Normal;
+
+  /** Specifies some arbitrary object */
+  @Input() public someDataObject: ISomeInterface;
 
   /**
    * The inner text of the button.

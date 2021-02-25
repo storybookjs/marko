@@ -46,8 +46,9 @@ Then you can access this environment variable anywhere, even within your stories
     'react/my-component-with-env-variables.js.mdx',
     'react/my-component-with-env-variables.ts.mdx',
     'react/my-component-with-env-variables.mdx.mdx',
-    'vue/my-component-with-env-variables.js.mdx',
-    'angular/my-component-with-env-variables.ts.mdx'
+    'vue/my-component-with-env-variables.2.js.mdx',
+    'vue/my-component-with-env-variables.3.js.mdx',
+    'angular/my-component-with-env-variables.ts.mdx',
   ]}
 />
 

@@ -39,9 +39,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
           Learn Storybook
         </a>
         . Read more in the
-        <a href="https://storybook.js.org/docs" target="_blank" rel="noopener noreferrer">
-          docs
-        </a>
+        <a href="https://storybook.js.org/docs" target="_blank" rel="noopener noreferrer"> docs </a>
         .
       </p>
       <div class="tip-wrapper">

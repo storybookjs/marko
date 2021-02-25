@@ -1,13 +1,15 @@
 {
   "name": "@storybook/addon-controls",
-  "version": "6.2.0-alpha.19",
+  "version": "6.2.0-beta.3",
   "description": "Interact with component inputs dynamically in the Storybook UI",
   "keywords": [
     "addon",
     "storybook",
     "knobs",
     "controls",
-    "properties"
+    "properties",
+    "essentials",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/next/addons/controls",
   "bugs": {
@@ -39,12 +41,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.19",
-    "@storybook/api": "6.2.0-alpha.19",
-    "@storybook/client-api": "6.2.0-alpha.19",
-    "@storybook/components": "6.2.0-alpha.19",
-    "@storybook/node-logger": "6.2.0-alpha.19",
-    "@storybook/theming": "6.2.0-alpha.19",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
+    "@storybook/client-api": "6.2.0-beta.3",
+    "@storybook/components": "6.2.0-beta.3",
+    "@storybook/node-logger": "6.2.0-beta.3",
+    "@storybook/theming": "6.2.0-beta.3",
     "core-js": "^3.8.2",
     "ts-dedent": "^2.0.0"
   },
@@ -63,5 +65,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2a8f070c0c3ba56dc820cb04e96d9bf3f47a6a23"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
+  "storybook": {
+    "displayName": "Controls",
+    "icon": "https://user-images.githubusercontent.com/263385/101991669-479cc600-3c7c-11eb-93d9-38b67e8371f2.png",
+    "supportedFrameworks": [
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember"
+    ]
+  }
 }

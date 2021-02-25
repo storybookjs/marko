@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-graphql",
-  "version": "6.2.0-alpha.19",
+  "version": "6.2.0-beta.3",
   "description": "Storybook addon to display the GraphiQL IDE",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/graphql",
   "bugs": {
@@ -38,9 +39,8 @@
   "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-transform-classes": "^7.12.1",
-    "@storybook/addons": "6.2.0-alpha.19",
-    "@storybook/api": "6.2.0-alpha.19",
-    "@types/webpack": "^4.41.26",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
     "babel-loader": "^8.2.2",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
@@ -48,7 +48,7 @@
     "graphql": "^15.4.0",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.7",
-    "webpack": "^4.46.0"
+    "webpack": "4"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -65,5 +65,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2a8f070c0c3ba56dc820cb04e96d9bf3f47a6a23"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
+  "storybook": {
+    "displayName": "GraphiQL IDE",
+    "icon": "https://pbs.twimg.com/profile_images/618131103509909504/VQLBJ0TR_400x400.png",
+    "supportedFrameworks": [
+      "react",
+      "angular"
+    ]
+  }
 }

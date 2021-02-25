@@ -1,9 +1,12 @@
 ```js
 // Button.stories.js
 
-import Button from './Button';
+import Button from './Button.vue';
 
-export default { title: 'Components/Button' };
+export default {
+  component: Button,
+  title: 'Components/Button',
+};
 
 export const Primary = () => ({
   components: { Button },

@@ -107,7 +107,8 @@ Refine this pattern by defining a master template for a component’s stories th
   paths={[
     'react/button-story-using-args.js.mdx',
     'react/button-story-using-args.ts.mdx',
-    'vue/button-story-using-args.js.mdx',
+    'vue/button-story-using-args.2.js.mdx',
+    'vue/button-story-using-args.3.js.mdx',
     'angular/button-story-using-args.ts.mdx',
     'svelte/button-story-using-args.js.mdx',
   ]}
@@ -126,7 +127,8 @@ What’s more, you can import args to reuse when writing stories for other compo
     'react/button-group-story.js.mdx',
     'react/button-group-story.ts.mdx',
     'angular/button-group-story.ts.mdx',
-    'vue/button-group-story.js.mdx',
+    'vue/button-group-story.2.js.mdx',
+    'vue/button-group-story.3.js.mdx',
     'svelte/button-group-story.js.mdx',
   ]}
 />
@@ -210,7 +212,8 @@ When building design systems or component libraries, you may have two or more co
     'react/list-story-starter.js.mdx',
     'react/list-story-starter.ts.mdx',
     'angular/list-story-starter.ts.mdx',
-    'vue/list-story-starter.js.mdx'
+    'vue/list-story-starter.2.js.mdx',
+    'vue/list-story-starter.3.js.mdx',
   ]}
 />
 
@@ -225,7 +228,8 @@ In such cases, it makes sense to render a different function for each story:
     'react/list-story-expanded.js.mdx',
     'react/list-story-expanded.ts.mdx',
     'angular/list-story-expanded.ts.mdx',
-    'vue/list-story-expanded.js.mdx'
+    'vue/list-story-expanded.2.js.mdx',
+    'vue/list-story-expanded.3.js.mdx',
   ]}
 />
 
@@ -240,7 +244,8 @@ You can also reuse stories from the child `ListItem` in your `List` component. T
     'react/list-story-reuse-data.js.mdx',
     'react/list-story-reuse-data.ts.mdx',
     'angular/list-story-reuse-data.ts.mdx',
-    'vue/list-story-reuse-data.js.mdx'
+    'vue/list-story-reuse-data.2.js.mdx',
+    'vue/list-story-reuse-data.3.js.mdx',
   ]}
 />
 

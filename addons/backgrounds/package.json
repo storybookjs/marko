@@ -1,12 +1,14 @@
 {
   "name": "@storybook/addon-backgrounds",
-  "version": "6.2.0-alpha.19",
+  "version": "6.2.0-beta.3",
   "description": "Switch backgrounds to view components in different settings",
   "keywords": [
     "addon",
     "background",
     "react",
-    "storybook"
+    "storybook",
+    "essentials",
+    "design"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/backgrounds",
   "bugs": {
@@ -39,12 +41,12 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.19",
-    "@storybook/api": "6.2.0-alpha.19",
-    "@storybook/client-logger": "6.2.0-alpha.19",
-    "@storybook/components": "6.2.0-alpha.19",
-    "@storybook/core-events": "6.2.0-alpha.19",
-    "@storybook/theming": "6.2.0-alpha.19",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
+    "@storybook/client-logger": "6.2.0-beta.3",
+    "@storybook/components": "6.2.0-beta.3",
+    "@storybook/core-events": "6.2.0-beta.3",
+    "@storybook/theming": "6.2.0-beta.3",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
     "memoizerific": "^1.11.3",
@@ -70,5 +72,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2a8f070c0c3ba56dc820cb04e96d9bf3f47a6a23"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
+  "storybook": {
+    "displayName": "Backgrounds",
+    "icon": "https://user-images.githubusercontent.com/263385/101991667-479cc600-3c7c-11eb-96d3-410e936252e7.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

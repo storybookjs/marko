@@ -2,6 +2,7 @@
 // MyComponent.stories.js
 
 import React from 'react';
+
 import imageFile from './static/image.png';
 
 export default {
@@ -13,7 +14,5 @@ const image = {
   alt: 'my image',
 };
 
-export const withAnImage = () => (
-  <img src={image.src} alt={image.alt} />
-);
+export const withAnImage = () => <img src={image.src} alt={image.alt} />;
 ```
