@@ -124,8 +124,9 @@ export const Path = styled.span(({ theme }) => ({
 export const RootNode = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  padding: '8px 20px 4px 20px',
-  marginTop: 8,
+  padding: '0 20px',
+  marginTop: 14,
+  marginBottom: 4,
   fontSize: `${theme.typography.size.s1 - 1}px`,
   fontWeight: theme.typography.weight.black,
   lineHeight: '16px',

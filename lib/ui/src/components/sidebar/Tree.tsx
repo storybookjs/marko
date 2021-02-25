@@ -2,7 +2,7 @@ import { Group, Story, StoriesHash, isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
-import React, { MutableRefObject, useCallback, useMemo, useRef, useEffect } from 'react';
+import React, { Fragment, MutableRefObject, useCallback, useMemo, useRef } from 'react';
 
 import {
   ComponentNode,
@@ -50,7 +50,7 @@ export const Action = styled.button(({ theme }) => ({
   },
 }));
 
-const CollapseButton = styled.button(({ theme }) => ({
+const CollapseButton = styled.button<{ isExpanded: boolean }>(({ theme, isExpanded }) => ({
   // Reset button
   background: 'transparent',
   border: 'none',
@@ -67,22 +67,24 @@ const CollapseButton = styled.button(({ theme }) => ({
 
   display: 'flex',
   flex: 1,
-  padding: 3,
-  paddingLeft: 1,
-  paddingRight: 12,
+  padding: '4px 12px 2px 2px',
   margin: 0,
   marginLeft: -20,
   overflow: 'hidden',
 
   'span:first-of-type': {
-    marginTop: 5,
+    marginTop: 4,
+    marginRight: 7,
+    opacity: isExpanded ? 0 : 1,
+    transition: 'opacity 150ms',
+  },
+
+  '&:hover span:first-of-type': {
+    opacity: 1,
   },
 
   '&:focus': {
     borderColor: theme.color.secondary,
-    'span:first-of-type': {
-      borderLeftColor: theme.color.secondary,
-    },
   },
 }));
 
@@ -154,11 +156,11 @@ const Node = React.memo<NodeProps>(
           data-ref-id={refId}
           data-item-id={item.id}
           data-nodetype="root"
-          data-highlightable
           aria-expanded={isExpanded}
         >
           <CollapseButton
             type="button"
+            isExpanded={isExpanded}
             onClick={(event) => {
               event.preventDefault();
               setExpanded({ ids: [item.id], value: !isExpanded });
@@ -167,18 +169,20 @@ const Node = React.memo<NodeProps>(
             <CollapseIcon isExpanded={isExpanded} />
             {item.name}
           </CollapseButton>
-          <Action
-            type="button"
-            className="sidebar-subheading-action"
-            data-action="expand-all"
-            data-expanded={isFullyExpanded}
-            onClick={(event) => {
-              event.preventDefault();
-              setFullyExpanded();
-            }}
-          >
-            <Icons icon={isFullyExpanded ? 'collapse' : 'expandalt'} />
-          </Action>
+          {isExpanded && (
+            <Action
+              type="button"
+              className="sidebar-subheading-action"
+              data-action="expand-all"
+              data-expanded={isFullyExpanded}
+              onClick={(event) => {
+                event.preventDefault();
+                setFullyExpanded();
+              }}
+            >
+              <Icons icon={isFullyExpanded ? 'collapse' : 'expandalt'} />
+            </Action>
+          )}
         </RootNode>
       );
     }
@@ -213,17 +217,14 @@ const Node = React.memo<NodeProps>(
 );
 
 const Root = React.memo<NodeProps & { expandableDescendants: string[] }>(
-  ({ item, setExpanded, isFullyExpanded, expandableDescendants, ...props }) => {
-    const setFullyExpanded = useCallback(() => {
-      setExpanded({
-        ids: [!isFullyExpanded && item.id, ...expandableDescendants].filter(Boolean),
-        value: !isFullyExpanded,
-      });
-    }, [setExpanded, isFullyExpanded, expandableDescendants, item.id]);
+  ({ setExpanded, isFullyExpanded, expandableDescendants, ...props }) => {
+    const setFullyExpanded = useCallback(
+      () => setExpanded({ ids: expandableDescendants, value: !isFullyExpanded }),
+      [setExpanded, isFullyExpanded, expandableDescendants]
+    );
     return (
       <Node
         {...props}
-        item={item}
         setExpanded={setExpanded}
         isFullyExpanded={isFullyExpanded}
         setFullyExpanded={setFullyExpanded}
@@ -395,9 +396,8 @@ export const Tree = React.memo<{
             const descendants = expandableDescendants[item.id];
             const isFullyExpanded = descendants.every((d: string) => expanded[d]);
             return (
-              <>
+              <Fragment key={id}>
                 <Root
-                  key={id}
                   item={item}
                   refId={refId}
                   isOrphan={false}
@@ -432,7 +432,7 @@ export const Tree = React.memo<{
                     );
                   })}
                 </Section>
-              </>
+              </Fragment>
             );
           }
 
