@@ -53,7 +53,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "6836920db1cfc4bdfff3cead66265e03ec253eb6",
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
   "storybook": {
     "displayName": "Google Analytics",
     "icon": "https://pbs.twimg.com/profile_images/1021848775885651968/cU74ahCn_400x400.jpg",
