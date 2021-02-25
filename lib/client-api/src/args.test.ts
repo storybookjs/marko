@@ -1,4 +1,4 @@
-import { mapArgsToTypes } from './args';
+import { combineArgs, mapArgsToTypes } from './args';
 
 const stringType = { name: 'string' };
 const numberType = { name: 'number' };
@@ -95,5 +95,25 @@ describe('mapArgsToTypes', () => {
         },
       ],
     });
+  });
+});
+
+describe('combineArgs', () => {
+  it('merges args', () => {
+    expect(combineArgs({ foo: 1 }, { bar: 2 })).toStrictEqual({ foo: 1, bar: 2 });
+  });
+
+  it('replaces arrays', () => {
+    expect(combineArgs({ foo: [1, 2] }, { foo: [3] })).toStrictEqual({ foo: [3] });
+  });
+
+  it('deeply merges args', () => {
+    expect(combineArgs({ foo: { bar: [1, 2], baz: true } }, { foo: { bar: [3] } })).toStrictEqual({
+      foo: { bar: [3], baz: true },
+    });
+  });
+
+  it('omits keys with undefined value', () => {
+    expect(combineArgs({ foo: 1 }, { foo: undefined })).toStrictEqual({});
   });
 });

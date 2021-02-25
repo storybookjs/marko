@@ -1,7 +1,8 @@
-import deepEqual from 'fast-deep-equal';
-import qs from 'qs';
-import memoize from 'memoizerific';
 import { once } from '@storybook/client-logger';
+import deepEqual from 'fast-deep-equal';
+import isPlainObject from 'lodash/isPlainObject';
+import memoize from 'memoizerific';
+import qs from 'qs';
 
 export interface StoryData {
   viewMode?: string;
@@ -37,27 +38,48 @@ interface Args {
   [key: string]: any;
 }
 
-const deepDiff = (value: any, update: any): any => {
-  if (deepEqual(value, update)) return undefined;
+export const DEEPLY_EQUAL = Symbol('Deeply equal');
+export const deepDiff = (value: unknown, update: unknown): any => {
   if (typeof value !== typeof update) return update;
-  if (Array.isArray(value)) return update;
-  if (update && typeof update === 'object') {
-    return Object.keys(update).reduce((acc, key) => {
-      const diff = deepDiff(value[key], update[key]);
-      return diff === undefined ? acc : Object.assign(acc, { [key]: diff });
+  if (deepEqual(value, update)) return DEEPLY_EQUAL;
+  if (Array.isArray(value) && Array.isArray(update)) {
+    return value.length > update.length
+      ? [...new Array(value.length)].map((_, i) => update[i])
+      : update;
+  }
+  if (isPlainObject(value) && isPlainObject(update)) {
+    return Object.keys({ ...(value as any), ...(update as any) }).reduce((acc, key) => {
+      const diff = deepDiff((value as any)?.[key], (update as any)?.[key]);
+      return diff === DEEPLY_EQUAL ? acc : Object.assign(acc, { [key]: diff });
     }, {});
   }
   return update;
 };
 
+const encodeNullish = (value: unknown): any => {
+  if (value === undefined) return '!undefined';
+  if (value === null) return '!null';
+  if (Array.isArray(value)) return value.map(encodeNullish);
+  if (isPlainObject(value)) {
+    return Object.entries(value).reduce(
+      (acc, [key, val]) => Object.assign(acc, { [key]: encodeNullish(val) }),
+      {}
+    );
+  }
+  return value;
+};
+
 // Keep this in sync with validateArgs in @storybook/core
 const VALIDATION_REGEXP = /^[a-zA-Z0-9 _-]*$/;
-const validateArgs = (key = '', value: any = ''): boolean => {
-  if (key === null || value === null) return false;
+const validateArgs = (key = '', value: unknown): boolean => {
+  if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
+  if (key === null) return false;
   if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
+  if (typeof value === 'number') return true;
   if (typeof value === 'string') return VALIDATION_REGEXP.test(value);
-  if (Array.isArray(value)) return value.every((v) => validateArgs(key, v));
-  return Object.entries(value).every(([k, v]) => validateArgs(k, v));
+  if (Array.isArray(value)) return !value.some((v) => !validateArgs(key, v));
+  if (isPlainObject(value)) return !Object.entries(value).some(([k, v]) => !validateArgs(k, v));
+  return false;
 };
 
 const QS_OPTIONS = {
@@ -68,7 +90,7 @@ const QS_OPTIONS = {
 };
 export const buildArgsParam = (initialArgs: Args, args: Args): string => {
   const update = deepDiff(initialArgs, args);
-  if (!update) return '';
+  if (!update || update === DEEPLY_EQUAL) return '';
 
   const object = Object.entries(update).reduce((acc, [key, value]) => {
     if (validateArgs(key, value)) return Object.assign(acc, { [key]: value });
@@ -79,7 +101,7 @@ export const buildArgsParam = (initialArgs: Args, args: Args): string => {
   }, {} as Args);
 
   return qs
-    .stringify(object, QS_OPTIONS)
+    .stringify(encodeNullish(object), QS_OPTIONS)
     .replace(/ /g, '+')
     .split(';')
     .map((part: string) => part.replace('=', ':'))
