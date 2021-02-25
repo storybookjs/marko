@@ -66,11 +66,13 @@ const CollapseButton = styled.button<{ isExpanded: boolean }>(({ theme, isExpand
   textTransform: 'inherit',
 
   display: 'flex',
-  flex: 1,
-  padding: '2px 12px 2px 2px',
+  flex: '0 1 auto',
+  padding: '3px 10px 1px 1px',
   margin: 0,
-  marginLeft: -20,
+  marginLeft: -19,
   overflow: 'hidden',
+  borderRadius: 26,
+  transition: 'color 150ms, box-shadow 150ms',
 
   'span:first-of-type': {
     marginTop: 4,
@@ -79,12 +81,16 @@ const CollapseButton = styled.button<{ isExpanded: boolean }>(({ theme, isExpand
     transition: 'opacity 150ms',
   },
 
-  '&:hover span:first-of-type': {
+  '&:hover span:first-of-type, &:focus span:first-of-type': {
     opacity: 1,
   },
 
   '&:focus': {
-    borderColor: theme.color.secondary,
+    boxShadow: `0 0 0 1px ${theme.color.secondary}`,
+    color: theme.color.secondary,
+    'span:first-of-type': {
+      color: theme.color.secondary,
+    },
   },
 }));
 
@@ -155,6 +161,7 @@ const Node = React.memo<NodeProps>(
         >
           <CollapseButton
             type="button"
+            data-action="collapse-root"
             isExpanded={isExpanded}
             onClick={(event) => {
               event.preventDefault();

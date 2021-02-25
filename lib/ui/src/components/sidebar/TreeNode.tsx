@@ -11,9 +11,10 @@ export const CollapseIcon = styled.span<{ isExpanded: boolean }>(({ theme, isExp
   marginTop: 6,
   marginLeft: 8,
   marginRight: 5,
+  color: transparentize(0.4, theme.color.mediumdark),
   borderTop: '3px solid transparent',
   borderBottom: '3px solid transparent',
-  borderLeft: `3px solid ${transparentize(0.4, theme.color.mediumdark)}`,
+  borderLeft: `3px solid`,
   transform: isExpanded ? 'rotateZ(90deg)' : 'none',
   transition: 'transform .1s ease-out',
 }));
@@ -124,6 +125,7 @@ export const Path = styled.span(({ theme }) => ({
 export const RootNode = styled.div(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   padding: '0 20px',
   marginTop: 16,
   marginBottom: 4,
