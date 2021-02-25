@@ -1,8 +1,9 @@
 import ButtonView from './views/ButtonView.svelte';
+import Button from '../components/Button.svelte';
 
 export default {
   title: 'Button',
-  component: ButtonView,
+  component: Button,
 };
 
 const Template = (args) => ({
@@ -15,11 +16,11 @@ const Template = (args) => ({
 export const Rounded = Template.bind({});
 Rounded.args = {
   rounded: true,
-  message: 'Squared text',
+  text: 'Rounded',
 };
 
 export const Square = Template.bind({});
 Square.args = {
   rounded: false,
-  message: 'Squared text',
+  text: 'Square',
 };

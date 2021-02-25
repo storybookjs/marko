@@ -22,8 +22,10 @@ To define the args of a single story, use the `args` CSF story key:
   paths={[
     'react/button-story-with-args.js.mdx',
     'react/button-story-with-args.ts.mdx',
-    'vue/button-story-with-args.js.mdx',
+    'vue/button-story-with-args.2.js.mdx',
+    'vue/button-story-with-args.3.js.mdx',
     'angular/button-story-with-args.ts.mdx',
+    'svelte/button-story-with-args.js.mdx',
   ]}
 />
 
@@ -55,6 +57,7 @@ You can also define args at the component level; such args will apply to all sto
     'react/button-story-component-args-primary.ts.mdx',
     'vue/button-story-component-args-primary.js.mdx',
     'angular/button-story-component-args-primary.ts.mdx',
+    'svelte/button-story-component-args-primary.js.mdx',
   ]}
 />
 
@@ -89,11 +92,34 @@ Args are useful when writing stories for composite components that are assembled
     'react/page-story.js.mdx',
     'react/page-story.ts.mdx',
     'angular/page-story.ts.mdx',
-    'vue/page-story.js.mdx'
+    'vue/page-story.2.js.mdx',
+    'vue/page-story.3.js.mdx',
+    'svelte/page-story.js.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
+
+## Setting args through the URL
+
+Initial args for the currently active story can be overruled by setting the `args` query parameter on the URL. Typically, you would use the Controls addon to handle this automatically, but you can also manually tweak the URL if desired. An example of Storybook URL query params could look like this:
+
+```
+?path=/story/avatar--default&args=style:rounded;size:100
+```
+
+In order to protect against [XSS](https://owasp.org/www-community/attacks/xss/) attacks, keys and values of args specified through the URL are limited to alphanumeric characters, spaces, underscores and dashes. Any args that don't abide these restrictions will be ignored and stripped, but can still be used through code and manipulated through the Controls addon.
+
+The `args` param is always a set of `key:value` pairs delimited with a semicolon `;`. Note that values will always be interpreted as strings. Objects and arrays are supported. For example, `args=obj.key:val;arr[]:one;arr[]:two` will be interpreted as:
+
+```
+{
+  obj: { key: 'val' },
+  arr: ['one', 'two']
+}
+```
+
+Args specified through the URL will extend and override any default values of args specified on the story.
 
 <details>
 <summary>Using args in addons</summary>

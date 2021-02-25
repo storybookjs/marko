@@ -86,7 +86,7 @@ const Input = styled.input(({ theme }) => ({
   '&:focus, &:active': {
     outline: 0,
     borderColor: theme.color.secondary,
-    background: theme.barBg,
+    background: theme.input.background,
   },
   '&::placeholder': {
     color: theme.textMutedColor,
@@ -183,6 +183,7 @@ export const Search = React.memo<{
           matchesKeyCode('Slash', event)
         ) {
           inputRef.current.focus();
+          inputRef.current.select();
           event.preventDefault();
         }
       };

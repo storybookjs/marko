@@ -1,6 +1,6 @@
 {
   "name": "@storybook/client-api",
-  "version": "6.2.0-alpha.10",
+  "version": "6.2.0-beta.3",
   "description": "Storybook Client API",
   "keywords": [
     "storybook"
@@ -36,22 +36,22 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.10",
-    "@storybook/channel-postmessage": "6.2.0-alpha.10",
-    "@storybook/channels": "6.2.0-alpha.10",
-    "@storybook/client-logger": "6.2.0-alpha.10",
-    "@storybook/core-events": "6.2.0-alpha.10",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/channel-postmessage": "6.2.0-beta.3",
+    "@storybook/channels": "6.2.0-beta.3",
+    "@storybook/client-logger": "6.2.0-beta.3",
+    "@storybook/core-events": "6.2.0-beta.3",
     "@storybook/csf": "0.0.1",
-    "@types/qs": "^6.9.0",
-    "@types/webpack-env": "^1.15.3",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "lodash": "^4.17.15",
+    "@types/qs": "^6.9.5",
+    "@types/webpack-env": "^1.16.0",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "lodash": "^4.17.20",
     "memoizerific": "^1.11.3",
-    "qs": "^6.6.0",
+    "qs": "^6.9.5",
     "regenerator-runtime": "^0.13.7",
     "stable": "^0.1.8",
-    "store2": "^2.7.1",
+    "store2": "^2.12.0",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
@@ -62,5 +62,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000"
 }

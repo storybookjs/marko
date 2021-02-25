@@ -1,4 +1,4 @@
-import { UpdateNotifier, IPackage } from 'update-notifier';
+import { UpdateNotifier, Package } from 'update-notifier';
 import chalk from 'chalk';
 import prompts from 'prompts';
 import { detect, isStorybookInstalled, detectLanguage } from './detect';
@@ -7,6 +7,7 @@ import {
   ProjectType,
   StoryFormat,
   SupportedLanguage,
+  Builder,
 } from './project_types';
 import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
@@ -19,6 +20,7 @@ import reactScriptsGenerator from './generators/REACT_SCRIPTS';
 import sfcVueGenerator from './generators/SFC_VUE';
 import updateOrganisationsGenerator from './generators/UPDATE_PACKAGE_ORGANIZATIONS';
 import vueGenerator from './generators/VUE';
+import vue3Generator from './generators/VUE3';
 import webpackReactGenerator from './generators/WEBPACK_REACT';
 import mithrilGenerator from './generators/MITHRIL';
 import marionetteGenerator from './generators/MARIONETTE';
@@ -44,6 +46,7 @@ type CommandOptions = {
   storyFormat?: StoryFormat;
   parser?: string;
   yes?: boolean;
+  builder?: Builder;
 };
 
 const installStorybook = (projectType: ProjectType, options: CommandOptions): Promise<void> => {
@@ -64,6 +67,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
   const generatorOptions = {
     storyFormat: options.storyFormat || defaultStoryFormat,
     language,
+    builder: options.builder || Builder.Webpack4,
   };
 
   const end = () => {
@@ -162,6 +166,11 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(commandLog('Adding Storybook support to your "Vue" app'))
           .then(end);
 
+      case ProjectType.VUE3:
+        return vue3Generator(packageManager, npmOptions, generatorOptions)
+          .then(commandLog('Adding Storybook support to your "Vue 3" app'))
+          .then(end);
+
       case ProjectType.ANGULAR:
         return angularGenerator(packageManager, npmOptions, generatorOptions)
           .then(commandLog('Adding Storybook support to your "Angular" app'))
@@ -222,6 +231,17 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
           .then(commandLog('Adding Storybook support to your "Aurelia" app'))
           .then(end);
 
+      case ProjectType.UNSUPPORTED:
+        paddedLog(`We detected a project type that we don't support yet.`);
+        paddedLog(
+          `If you'd like your framework to be supported, please let use know about it at https://github.com/storybookjs/storybook/issues`
+        );
+
+        // Add a new line for the clear visibility.
+        logger.log();
+
+        return Promise.resolve();
+
       default:
         paddedLog(`We couldn't detect your project type. (code: ${projectType})`);
         paddedLog(
@@ -255,7 +275,7 @@ const projectTypeInquirer = async (options: { yes?: boolean }) => {
   if (manualAnswer !== true && manualAnswer.manual) {
     const frameworkAnswer = await prompts([
       {
-        type: 'list',
+        type: 'select',
         name: 'manualFramework',
         message: 'Please choose a project type from the following list:',
         choices: installableProjectTypes.map((type) => ({
@@ -269,7 +289,7 @@ const projectTypeInquirer = async (options: { yes?: boolean }) => {
   return Promise.resolve();
 };
 
-export default function (options: CommandOptions, pkg: IPackage): Promise<void> {
+export default function (options: CommandOptions, pkg: Package): Promise<void> {
   const welcomeMessage = 'sb init - the simplest way to add a Storybook to your project.';
   logger.log(chalk.inverse(`\n ${welcomeMessage} \n`));
 

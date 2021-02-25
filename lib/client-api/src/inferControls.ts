@@ -2,13 +2,29 @@ import mapValues from 'lodash/mapValues';
 import { ArgType } from '@storybook/addons';
 import { SBEnumType, ArgTypesEnhancer } from './types';
 import { combineParameters } from './parameters';
+import { filterArgTypes } from './filterArgTypes';
 
-const inferControl = (argType: ArgType): any => {
+type ControlsMatchers = {
+  date: RegExp;
+  color: RegExp;
+};
+
+const inferControl = (argType: ArgType, name: string, matchers: ControlsMatchers): any => {
   const { type } = argType;
   if (!type) {
-    // console.log('no sbtype', { argType });
     return null;
   }
+
+  // args that end with background or color e.g. iconColor
+  if (matchers.color && matchers.color.test(name)) {
+    return { type: 'color' };
+  }
+
+  // args that end with date e.g. purchaseDate
+  if (matchers.date && matchers.date.test(name)) {
+    return { type: 'date' };
+  }
+
   switch (type.name) {
     case 'array': {
       const { value } = type;
@@ -43,11 +59,18 @@ const inferControl = (argType: ArgType): any => {
 };
 
 export const inferControls: ArgTypesEnhancer = (context) => {
-  const { __isArgsStory, argTypes } = context.parameters;
+  const {
+    __isArgsStory,
+    argTypes,
+    controls: { include = null, exclude = null, matchers = {} } = {},
+  } = context.parameters;
   if (!__isArgsStory) return argTypes;
-  const withControls = mapValues(argTypes, (argType) => {
-    const control = argType && argType.type && inferControl(argType);
+
+  const filteredArgTypes = filterArgTypes(argTypes, include, exclude);
+  const withControls = mapValues(filteredArgTypes, (argType, name) => {
+    const control = argType?.type && inferControl(argType, name, matchers);
     return control ? { control } : undefined;
   });
-  return combineParameters(withControls, argTypes);
+
+  return combineParameters(withControls, filteredArgTypes);
 };

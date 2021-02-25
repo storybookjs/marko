@@ -10,7 +10,7 @@ Object {
           "getSignature": Object {
             "description": "<p>Getter for <code>inputValue</code>. </p>
 ",
-            "line": 102,
+            "line": 115,
             "name": "inputValue",
             "returnType": "",
             "type": "",
@@ -34,7 +34,7 @@ Object {
                 "type": "string",
               },
             ],
-            "line": 97,
+            "line": 110,
             "name": "inputValue",
             "returnType": "void",
             "type": "void",
@@ -58,7 +58,7 @@ Object {
                 "type": "[]",
               },
             ],
-            "line": 182,
+            "line": 195,
             "name": "item",
             "returnType": "void",
             "type": "void",
@@ -68,7 +68,7 @@ Object {
           "getSignature": Object {
             "description": "<p>Get the private value. </p>
 ",
-            "line": 141,
+            "line": 154,
             "name": "value",
             "returnType": "string | number",
             "type": "",
@@ -92,7 +92,7 @@ Object {
                 "type": "",
               },
             ],
-            "line": 136,
+            "line": 149,
             "name": "value",
             "returnType": "void",
             "type": "void",
@@ -113,7 +113,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
       "hostBindings": Array [
         Object {
           "defaultValue": "false",
-          "line": 111,
+          "line": 124,
           "name": "class.focused",
         },
       ],
@@ -128,25 +128,32 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "argsDecorator": Array [
             "$event.target",
           ],
-          "line": 107,
+          "line": 120,
           "name": "click",
         },
       ],
-      "id": "component-InputComponent-14bbde487c28642f97f1f6c94b65ab31",
+      "id": "component-InputComponent-568feeafa68e593b062061c27c4625a9",
       "inputs": Array [],
       "inputsClass": Array [
+        Object {
+          "description": "<p>Specify the accent-type of the button </p>
+",
+          "line": 56,
+          "name": "accent",
+          "type": "ButtonAccent",
+        },
         Object {
           "defaultValue": "'secondary'",
           "description": "<p>Appearance style of the button. </p>
 ",
-          "line": 46,
+          "line": 52,
           "name": "appearance",
           "type": "\\"primary\\" | \\"secondary\\"",
         },
         Object {
           "description": "<p>Setter for <code>inputValue</code> that is also an <code>@Input</code>. </p>
 ",
-          "line": 97,
+          "line": 110,
           "name": "inputValue",
           "type": "string",
         },
@@ -154,23 +161,23 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "false",
           "description": "<p>Sets the button to a disabled state. </p>
 ",
-          "line": 50,
+          "line": 60,
           "name": "isDisabled",
         },
         Object {
-          "line": 182,
+          "line": 195,
           "name": "item",
           "type": "[]",
         },
         Object {
           "description": "<p>The inner text of the button.</p>
 ",
-          "line": 58,
+          "line": 68,
           "name": "label",
           "type": "string",
         },
         Object {
-          "line": 179,
+          "line": 192,
           "name": "showKeyAlias",
           "type": "",
         },
@@ -178,93 +185,100 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'medium'",
           "description": "<p>Size of the button. </p>
 ",
-          "line": 62,
+          "line": 72,
           "name": "size",
           "type": "ButtonSize",
+        },
+        Object {
+          "description": "<p>Specifies some arbitrary object </p>
+",
+          "line": 75,
+          "name": "someDataObject",
+          "type": "ISomeInterface",
         },
         Object {
           "defaultValue": "false",
           "description": "<p>Some input you shouldn&#39;t use.</p>
 ",
-          "line": 70,
+          "line": 83,
           "name": "somethingYouShouldNotUse",
         },
       ],
       "jsdoctags": Array [
         Object {
           "atToken": Object {
-            "end": 787,
+            "end": 859,
             "flags": 0,
             "kind": 57,
-            "pos": 786,
+            "pos": 858,
           },
           "comment": "Hello world",
-          "end": 794,
+          "end": 866,
           "flags": 0,
           "kind": 288,
-          "pos": 786,
+          "pos": 858,
           "tagName": Object {
-            "end": 793,
+            "end": 865,
             "escapedText": "string",
             "flags": 0,
-            "pos": 787,
+            "pos": 859,
           },
         },
         Object {
           "atToken": Object {
-            "end": 810,
+            "end": 882,
             "flags": 0,
             "kind": 57,
-            "pos": 809,
+            "pos": 881,
           },
           "comment": "[Example](http://example.com)",
-          "end": 815,
+          "end": 887,
           "flags": 0,
           "kind": 288,
-          "pos": 809,
+          "pos": 881,
           "tagName": Object {
-            "end": 814,
+            "end": 886,
             "escapedText": "link",
             "flags": 0,
-            "pos": 810,
+            "pos": 882,
           },
         },
         Object {
           "atToken": Object {
-            "end": 849,
+            "end": 921,
             "flags": 0,
             "kind": 57,
-            "pos": 848,
+            "pos": 920,
           },
           "comment": "\`ThingThing\`",
-          "end": 854,
+          "end": 926,
           "flags": 0,
           "kind": 288,
-          "pos": 848,
+          "pos": 920,
           "tagName": Object {
-            "end": 853,
+            "end": 925,
             "escapedText": "code",
             "flags": 0,
-            "pos": 849,
+            "pos": 921,
           },
         },
         Object {
           "atToken": Object {
-            "end": 871,
+            "end": 943,
             "flags": 0,
             "kind": 57,
-            "pos": 870,
+            "pos": 942,
           },
           "comment": "<span class=\\"badge\\">aaa</span>",
-          "end": 876,
+          "end": 948,
           "flags": 0,
           "kind": 288,
-          "pos": 870,
+          "pos": 942,
           "tagName": Object {
-            "end": 875,
+            "end": 947,
             "escapedText": "html",
             "flags": 0,
-            "pos": 871,
+            "pos": 943,
           },
         },
       ],
@@ -287,16 +301,16 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some number you&#39;d like to use.</p>
 ",
               "name": Object {
-                "end": 3220,
+                "end": 3518,
                 "escapedText": "x",
                 "flags": 0,
-                "pos": 3219,
+                "pos": 3517,
               },
               "tagName": Object {
-                "end": 3218,
+                "end": 3516,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3213,
+                "pos": 3511,
               },
               "type": "number",
             },
@@ -304,21 +318,21 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some other number or string you&#39;d like to use, will have <code>parseInt()</code> applied before calculation.</p>
 ",
               "name": Object {
-                "end": 3265,
+                "end": 3563,
                 "escapedText": "y",
                 "flags": 0,
-                "pos": 3264,
+                "pos": 3562,
               },
               "tagName": Object {
-                "end": 3263,
+                "end": 3561,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3258,
+                "pos": 3556,
               },
               "type": "string | number",
             },
           ],
-          "line": 151,
+          "line": 164,
           "modifierKind": Array [
             114,
           ],
@@ -341,21 +355,21 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>password</code>.</p>
 ",
               "name": Object {
-                "end": 3781,
+                "end": 4079,
                 "escapedText": "password",
                 "flags": 0,
-                "pos": 3773,
+                "pos": 4071,
               },
               "tagName": Object {
-                "end": 3772,
+                "end": 4070,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3767,
+                "pos": 4065,
               },
               "type": "string",
             },
           ],
-          "line": 174,
+          "line": 187,
           "modifierKind": Array [
             112,
           ],
@@ -379,22 +393,22 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "comment": "<p>Some <code>id</code>.</p>
 ",
               "name": Object {
-                "end": 3640,
+                "end": 3938,
                 "escapedText": "id",
                 "flags": 0,
-                "pos": 3638,
+                "pos": 3936,
               },
               "optional": true,
               "tagName": Object {
-                "end": 3637,
+                "end": 3935,
                 "escapedText": "param",
                 "flags": 0,
-                "pos": 3632,
+                "pos": 3930,
               },
               "type": "number",
             },
           ],
-          "line": 165,
+          "line": 178,
           "modifierKind": Array [
             113,
           ],
@@ -421,7 +435,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
               "type": "ISomeInterface",
             },
           ],
-          "line": 156,
+          "line": 169,
           "modifierKind": Array [
             114,
           ],
@@ -439,7 +453,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "description": "<p>Handler to be called when the button is clicked by a user.</p>
 <p>Will also block the emission of the event if <code>isDisabled</code> is true.</p>
 ",
-          "line": 78,
+          "line": 91,
           "name": "onClick",
           "type": "EventEmitter",
         },
@@ -448,7 +462,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
         Object {
           "defaultValue": "'some value'",
           "description": "",
-          "line": 93,
+          "line": 106,
           "modifierKind": Array [
             112,
           ],
@@ -460,7 +474,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'Private hello'",
           "description": "<p>Private value. </p>
 ",
-          "line": 133,
+          "line": 146,
           "modifierKind": Array [
             112,
           ],
@@ -476,7 +490,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
             },
           ],
           "description": "",
-          "line": 42,
+          "line": 48,
           "name": "buttonRef",
           "optional": false,
           "type": "ElementRef",
@@ -485,7 +499,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
           "defaultValue": "'Public hello'",
           "description": "<p>Public value. </p>
 ",
-          "line": 130,
+          "line": 143,
           "modifierKind": Array [
             114,
           ],
@@ -495,7 +509,7 @@ like <strong>bold</strong>, <em>italic</em>, and <code>inline code</code>.</p>
         },
         Object {
           "description": "",
-          "line": 186,
+          "line": 199,
           "modifierKind": Array [
             114,
           ],
@@ -514,18 +528,23 @@ like **bold**, _italic_, and \`inline code\`.
       "selector": "doc-button",
       "sourceCode": "import {
   Component,
+  ElementRef,
   EventEmitter,
+  HostBinding,
+  HostListener,
   Input,
   Output,
   ViewChild,
-  HostListener,
-  HostBinding,
-  ElementRef,
 } from '@angular/core';
 
 export const exportedConstant = 'An exported constant';
 
 export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
+
+export enum ButtonAccent {
+  'Normal' = 'Normal',
+  'High' = 'High',
+}
 
 export interface ISomeInterface {
   one: string;
@@ -548,6 +567,7 @@ export interface ISomeInterface {
  */
 @Component({
   selector: 'doc-button',
+  template: '<button>{{ label }}</button>',
 })
 export class InputComponent<T> {
   @ViewChild('buttonRef', { static: false }) buttonRef: ElementRef;
@@ -555,6 +575,10 @@ export class InputComponent<T> {
   /** Appearance style of the button. */
   @Input()
   public appearance: 'primary' | 'secondary' = 'secondary';
+
+  /** Specify the accent-type of the button */
+  @Input()
+  public accent: ButtonAccent;
 
   /** Sets the button to a disabled state. */
   @Input()
@@ -571,6 +595,9 @@ export class InputComponent<T> {
   /** Size of the button. */
   @Input()
   public size?: ButtonSize = 'medium';
+
+  /** Specifies some arbitrary object */
+  @Input() public someDataObject: ISomeInterface;
 
   /**
    * Some input you shouldn't use.
@@ -701,17 +728,18 @@ export class InputComponent<T> {
       "styleUrlsData": "",
       "styles": Array [],
       "stylesData": "",
+      "template": "<button>{{ label }}</button>",
       "templateUrl": Array [],
       "type": "component",
       "viewProviders": Array [],
     },
   ],
   "coverage": Object {
-    "count": 22,
+    "count": 23,
     "files": Array [
       Object {
-        "coverageCount": "14/21",
-        "coveragePercent": 66,
+        "coverageCount": "16/23",
+        "coveragePercent": 69,
         "filePath": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
         "linktype": "component",
         "name": "InputComponent",
@@ -745,7 +773,7 @@ export class InputComponent<T> {
   "interfaces": Array [
     Object {
       "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
-      "id": "interface-ISomeInterface-14bbde487c28642f97f1f6c94b65ab31",
+      "id": "interface-ISomeInterface-568feeafa68e593b062061c27c4625a9",
       "indexSignatures": Array [],
       "kind": 150,
       "methods": Array [],
@@ -753,21 +781,21 @@ export class InputComponent<T> {
       "properties": Array [
         Object {
           "description": "",
-          "line": 20,
+          "line": 25,
           "name": "one",
           "optional": false,
           "type": "string",
         },
         Object {
           "description": "",
-          "line": 22,
+          "line": 27,
           "name": "three",
           "optional": false,
           "type": "any[]",
         },
         Object {
           "description": "",
-          "line": 21,
+          "line": 26,
           "name": "two",
           "optional": false,
           "type": "boolean",
@@ -775,18 +803,23 @@ export class InputComponent<T> {
       ],
       "sourceCode": "import {
   Component,
+  ElementRef,
   EventEmitter,
+  HostBinding,
+  HostListener,
   Input,
   Output,
   ViewChild,
-  HostListener,
-  HostBinding,
-  ElementRef,
 } from '@angular/core';
 
 export const exportedConstant = 'An exported constant';
 
 export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
+
+export enum ButtonAccent {
+  'Normal' = 'Normal',
+  'High' = 'High',
+}
 
 export interface ISomeInterface {
   one: string;
@@ -809,6 +842,7 @@ export interface ISomeInterface {
  */
 @Component({
   selector: 'doc-button',
+  template: '<button>{{ label }}</button>',
 })
 export class InputComponent<T> {
   @ViewChild('buttonRef', { static: false }) buttonRef: ElementRef;
@@ -816,6 +850,10 @@ export class InputComponent<T> {
   /** Appearance style of the button. */
   @Input()
   public appearance: 'primary' | 'secondary' = 'secondary';
+
+  /** Specify the accent-type of the button */
+  @Input()
+  public accent: ButtonAccent;
 
   /** Sets the button to a disabled state. */
   @Input()
@@ -832,6 +870,9 @@ export class InputComponent<T> {
   /** Size of the button. */
   @Input()
   public size?: ButtonSize = 'medium';
+
+  /** Specifies some arbitrary object */
+  @Input() public someDataObject: ISomeInterface;
 
   /**
    * Some input you shouldn't use.
@@ -962,9 +1003,47 @@ export class InputComponent<T> {
     },
   ],
   "miscellaneous": Object {
-    "enumerations": Array [],
+    "enumerations": Array [
+      Object {
+        "childs": Array [
+          Object {
+            "name": "Normal",
+            "value": "Normal",
+          },
+          Object {
+            "name": "High",
+            "value": "High",
+          },
+        ],
+        "ctype": "miscellaneous",
+        "description": "",
+        "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+        "name": "ButtonAccent",
+        "subtype": "enum",
+      },
+    ],
     "functions": Array [],
-    "groupedEnumerations": Object {},
+    "groupedEnumerations": Object {
+      "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts": Array [
+        Object {
+          "childs": Array [
+            Object {
+              "name": "Normal",
+              "value": "Normal",
+            },
+            Object {
+              "name": "High",
+              "value": "High",
+            },
+          ],
+          "ctype": "miscellaneous",
+          "description": "",
+          "file": "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts",
+          "name": "ButtonAccent",
+          "subtype": "enum",
+        },
+      ],
+    },
     "groupedFunctions": Object {},
     "groupedTypeAliases": Object {
       "addons/docs/src/frameworks/angular/__testfixtures__/doc-button/input.ts": Array [

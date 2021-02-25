@@ -1,6 +1,6 @@
 {
   "name": "@storybook/server",
-  "version": "6.2.0-alpha.10",
+  "version": "6.2.0-beta.3",
   "description": "Storybook for Server: View HTML snippets from a server in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -41,29 +41,30 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.10",
-    "@storybook/api": "6.2.0-alpha.10",
-    "@storybook/client-api": "6.2.0-alpha.10",
-    "@storybook/core": "6.2.0-alpha.10",
-    "@storybook/node-logger": "6.2.0-alpha.10",
-    "@types/webpack-env": "^1.15.3",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
+    "@storybook/client-api": "6.2.0-beta.3",
+    "@storybook/core": "6.2.0-beta.3",
+    "@storybook/core-common": "6.2.0-beta.3",
+    "@storybook/node-logger": "6.2.0-beta.3",
+    "@types/webpack-env": "^1.16.0",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "safe-identifier": "^0.4.1",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "fs-extra": "^9.0.0"
+    "fs-extra": "^9.0.1"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000"
 }

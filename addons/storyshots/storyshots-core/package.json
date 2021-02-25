@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-storyshots",
-  "version": "6.2.0-alpha.10",
+  "version": "6.2.0-beta.3",
   "description": "Take a code snapshot of every story automatically with Jest",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core",
   "bugs": {
@@ -39,52 +40,72 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
-    "@jest/transform": "^26.0.0",
-    "@storybook/addons": "6.2.0-alpha.10",
-    "@storybook/client-api": "6.2.0-alpha.10",
-    "@storybook/core": "6.2.0-alpha.10",
-    "@types/glob": "^7.1.1",
-    "@types/jest": "^25.1.1",
+    "@jest/transform": "^26.6.2",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/client-api": "6.2.0-beta.3",
+    "@storybook/core": "6.2.0-beta.3",
+    "@storybook/core-common": "6.2.0-beta.3",
+    "@types/glob": "^7.1.3",
+    "@types/jest": "^26.0.16",
     "@types/jest-specific-snapshot": "^0.5.3",
     "babel-plugin-require-context-hook": "^1.0.0",
-    "core-js": "^3.0.1",
-    "glob": "^7.1.3",
-    "global": "^4.3.2",
+    "core-js": "^3.8.2",
+    "glob": "^7.1.6",
+    "global": "^4.4.0",
     "jest-specific-snapshot": "^4.0.0",
-    "pretty-format": "^26.4.0",
+    "pretty-format": "^26.6.2",
     "react-test-renderer": "^16.8.0 || ^17.0.0",
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@storybook/addon-docs": "6.2.0-alpha.10",
-    "@storybook/angular": "6.2.0-alpha.10",
-    "@storybook/react": "6.2.0-alpha.10",
-    "babel-loader": "^8.0.6",
+    "@angular/core": "^11.2.0",
+    "@angular/platform-browser-dynamic": "^11.2.0",
+    "@storybook/addon-docs": "6.2.0-beta.3",
+    "@storybook/angular": "6.2.0-beta.3",
+    "@storybook/react": "6.2.0-beta.3",
+    "@storybook/vue": "6.2.0-beta.3",
+    "@storybook/vue3": "6.2.0-beta.3",
+    "babel-loader": "^8.2.2",
     "enzyme": "^3.11.0",
-    "enzyme-to-json": "^3.4.1",
-    "jest-emotion": "^10.0.17",
+    "enzyme-to-json": "^3.6.1",
+    "jest-emotion": "^10.0.32",
     "jest-preset-angular": "^8.3.2",
-    "jest-vue-preprocessor": "^1.5.0",
-    "rxjs": "^6.6.3"
+    "jest-vue-preprocessor": "^1.7.1",
+    "rxjs": "^6.6.3",
+    "vue-jest": "^5.0.0-alpha.8"
   },
   "peerDependencies": {
+    "@angular/core": ">=6.0.0",
+    "@angular/platform-browser-dynamic": ">=6.0.0",
     "@storybook/angular": "*",
     "@storybook/react": "*",
     "@storybook/vue": "*",
+    "@storybook/vue3": "*",
     "jest-preset-angular": "*",
     "jest-vue-preprocessor": "*",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
     "rxjs": "*",
-    "vue": "*"
+    "svelte": "*",
+    "vue": "*",
+    "vue-jest": "*"
   },
   "peerDependenciesMeta": {
+    "@angular/core": {
+      "optional": true
+    },
+    "@angular/platform-browser-dynamic": {
+      "optional": true
+    },
     "@storybook/angular": {
       "optional": true
     },
     "@storybook/vue": {
+      "optional": true
+    },
+    "@storybook/vue3": {
       "optional": true
     },
     "jest-preset-angular": {
@@ -109,5 +130,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
+  "storybook": {
+    "displayName": "Storyshots",
+    "icon": "https://user-images.githubusercontent.com/263385/101991676-48cdf300-3c7c-11eb-8aa1-944dab6ab29b.png",
+    "unsupportedFrameworks": [
+      "ember",
+      "mithril",
+      "marko"
+    ]
+  }
 }

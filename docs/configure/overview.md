@@ -31,6 +31,10 @@ The `main.js` configuration file is a [preset](../addons/addon-types.md) and as 
 - `webpackFinal` - custom [webpack configuration](./webpack.md#extending-storybooks-webpack-config).
 - `babel` - custom [babel configuration](./babel.md).
 
+<div class="aside">
+  Tip: Customize your default story by referencing it first in the `stories` array.
+</div>
+
 ## Configure story loading
 
 By default, Storybook will load stories from your project based on a glob (pattern matching string) in `.storybook/main.js` that matches all files in your project with extension `.stories.js`. The intention is you colocate a story file with the component it documents.

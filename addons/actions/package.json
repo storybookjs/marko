@@ -1,9 +1,11 @@
 {
   "name": "@storybook/addon-actions",
-  "version": "6.2.0-alpha.10",
+  "version": "6.2.0-beta.3",
   "description": "Get UI feedback when an action is performed on an interactive element",
   "keywords": [
-    "storybook"
+    "storybook",
+    "essentials",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/actions",
   "bugs": {
@@ -35,27 +37,27 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.10",
-    "@storybook/api": "6.2.0-alpha.10",
-    "@storybook/client-api": "6.2.0-alpha.10",
-    "@storybook/components": "6.2.0-alpha.10",
-    "@storybook/core-events": "6.2.0-alpha.10",
-    "@storybook/theming": "6.2.0-alpha.10",
-    "core-js": "^3.0.1",
-    "fast-deep-equal": "^3.1.1",
-    "global": "^4.3.2",
-    "lodash": "^4.17.15",
-    "polished": "^3.4.4",
+    "@storybook/addons": "6.2.0-beta.3",
+    "@storybook/api": "6.2.0-beta.3",
+    "@storybook/client-api": "6.2.0-beta.3",
+    "@storybook/components": "6.2.0-beta.3",
+    "@storybook/core-events": "6.2.0-beta.3",
+    "@storybook/theming": "6.2.0-beta.3",
+    "core-js": "^3.8.2",
+    "fast-deep-equal": "^3.1.3",
+    "global": "^4.4.0",
+    "lodash": "^4.17.20",
+    "polished": "^4.0.5",
     "prop-types": "^15.7.2",
-    "react-inspector": "^5.0.1",
+    "react-inspector": "^5.1.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2",
     "uuid-browser": "^3.1.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.150",
-    "@types/webpack-env": "^1.15.3"
+    "@types/lodash": "^4.14.167",
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -72,5 +74,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
+  "gitHead": "b215c5d3604658fbd70f9a12313a811902813000",
+  "storybook": {
+    "displayName": "Actions",
+    "unsupportedFrameworks": [
+      "react-native"
+    ],
+    "icon": "https://user-images.githubusercontent.com/263385/101991666-479cc600-3c7c-11eb-837b-be4e5ffa1bb8.png"
+  }
 }

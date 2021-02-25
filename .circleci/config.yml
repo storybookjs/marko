@@ -12,7 +12,7 @@ executors:
     docker:
       - image: circleci/node:10
         environment:
-          NODE_OPTIONS: --max_old_space_size=4096
+          NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
   sb_node_10_browsers:
     parameters:
@@ -25,7 +25,7 @@ executors:
     docker:
       - image: circleci/node:10-browsers
         environment:
-          NODE_OPTIONS: --max_old_space_size=4096
+          NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
   sb_node_12_browsers:
     parameters:
@@ -38,7 +38,7 @@ executors:
     docker:
       - image: circleci/node:12-browsers
         environment:
-          NODE_OPTIONS: --max_old_space_size=4096
+          NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
 
 orbs:
@@ -76,19 +76,15 @@ commands:
 jobs:
   build:
     executor:
-      class: medium
+      class: large
       name: sb_node_10_classic
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
-      - run:
-          name: Remove examples
-          command: rm -rf examples/
       - restore_cache:
           name: Restore Yarn cache
           keys:
             - build-yarn-cache-v4--{{ checksum "yarn.lock" }}
-            - build-yarn-cache-v4--
       - run:
           name: Install dependencies
           command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
@@ -103,61 +99,12 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
+            - examples
+            - node_modules
             - addons
             - dev-kits
             - app
             - lib
-  install-examples-deps:
-    executor:
-      class: medium
-      name: sb_node_10_classic
-    steps:
-      - git-shallow-clone/checkout_advanced:
-          clone_options: '--depth 1 --verbose'
-      - restore_cache:
-          name: Restore Yarn cache
-          keys:
-            - install-examples-deps-yarn-cache-v4--{{ checksum "yarn.lock" }}
-            - install-examples-deps-yarn-cache-v4--
-      - run:
-          name: Install dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
-      - save_cache:
-          name: Save Yarn cache
-          key: install-examples-deps-yarn-cache-v4--{{ checksum "yarn.lock" }}
-          paths:
-            - ~/.cache/yarn
-      - persist_to_workspace:
-          root: .
-          paths:
-            - examples
-            - node_modules
-  install-e2e-deps:
-    executor:
-      class: small
-      name: sb_node_10_classic
-    steps:
-      - git-shallow-clone/checkout_advanced:
-          clone_options: '--depth 1 --verbose'
-      - run:
-          name: Keep only root package
-          command: rm -rf examples/ && rm -rf addons/ && rm -rf app/ && rm -rf lib/
-      - restore_cache:
-          name: Restore cached node_modules
-          keys:
-            - install-e2e-deps-node_modules-cache-v1--{{ checksum "yarn.lock" }}
-      - run:
-          name: Install dependencies if cache wasn't hit
-          command: "[ ! -d \"node_modules/\" ] && yarn install --frozen-lockfile || echo \"Skipping yarn install\""
-      - save_cache:
-          name: Save node_modules
-          key: install-e2e-deps-node_modules-cache-v1--{{ checksum "yarn.lock" }}
-          paths:
-            - node_modules
-      - persist_to_workspace:
-          root: .
-          paths:
-            - node_modules
   chromatic:
     executor: sb_node_10_browsers
     parallelism: 4
@@ -218,7 +165,7 @@ jobs:
           root: .
           paths:
             - .verdaccio-cache
-  e2e-tests:
+  e2e-tests-node-10:
     executor:
       class: medium
       name: sb_node_10_browsers
@@ -257,7 +204,49 @@ jobs:
           command: yarn cypress install
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework
+          command: yarn test:e2e-framework --skip preact
+      - store_artifacts:
+          path: /tmp/storybook/cypress
+          destination: cypress
+  e2e-tests-node-12:
+    executor:
+      class: medium
+      name: sb_node_12_browsers
+    working_directory: /tmp/storybook
+    steps:
+      - when:
+          condition:
+            and:
+              - not:
+                  equal: [ master, << pipeline.git.branch >> ]
+              - not:
+                  equal: [ next, << pipeline.git.branch >> ]
+          steps:
+            - ensure-pr-is-labeled-with:
+                label: "run e2e extended test suite"
+      - git-shallow-clone/checkout_advanced:
+          clone_options: '--depth 1 --verbose'
+      - attach_workspace:
+          at: .
+      - run:
+          name: Running local registry
+          command: yarn local-registry --port 6000 --open
+          background: true
+      - run:
+          name: Wait for registry
+          command: yarn wait-on http://localhost:6000
+      - run:
+          name: Set registry
+          command: yarn config set registry http://localhost:6000/
+      - run:
+          name: Test local registry
+          command: yarn info @storybook/core
+      - run:
+          name: Install Cypress binary
+          command: yarn cypress install
+      - run:
+          name: Run E2E tests
+          command: yarn test:e2e-framework preact
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -293,7 +282,7 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  e2e-tests-yarn-2:
+  e2e-tests-yarn-2-pnp:
     executor:
       class: medium
       name: sb_node_10_browsers
@@ -321,14 +310,14 @@ jobs:
           command: yarn cypress install
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework --use-yarn-2 sfcVue cra
+          command: yarn test:e2e-framework --use-yarn-2-pnp sfcVue cra
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
   e2e-tests-examples:
     working_directory: /tmp/storybook
     docker:
-      - image: cypress/included:4.7.0
+      - image: cypress/included:4.12.1
         environment:
           TERM: xterm
     steps:
@@ -450,7 +439,7 @@ jobs:
           at: .
       - run:
           name: Test
-          command: yarn test --coverage --w2 --core
+          command: yarn test --coverage --runInBand --ci
       - persist_to_workspace:
           root: .
           paths:
@@ -472,30 +461,23 @@ workflows:
   test:
     jobs:
       - build
-      - install-e2e-deps
-      - install-examples-deps
       - lint:
           requires:
-            - install-examples-deps
             - build
       - examples:
           requires:
-            - install-examples-deps
             - build
       - e2e-tests-examples:
           requires:
             - examples
       - smoke-tests:
           requires:
-            - install-examples-deps
             - build
       - packtracker:
           requires:
-            - install-examples-deps
             - build
       - unit-tests:
           requires:
-            - install-examples-deps
             - build
       - coverage:
           requires:
@@ -505,12 +487,14 @@ workflows:
             - examples
       - publish:
           requires:
-            - install-e2e-deps
             - build
-      - e2e-tests:
+      - e2e-tests-node-10:
           requires:
             - publish
-      - e2e-tests-yarn-2:
+      - e2e-tests-node-12:
+          requires:
+            - publish
+      - e2e-tests-yarn-2-pnp:
           requires:
             - publish
       - e2e-tests-cra-bench:
