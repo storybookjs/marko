@@ -98,7 +98,7 @@ const map = ({ configDir }: { configDir: string }) => (item: any) => {
     return resolveAddonName(configDir, name);
   } catch (err) {
     logger.error(
-      `Addon value should end in /register OR it should be a valid preset https://storybook.js.org/docs/presets/introduction/\n${item}`
+      `Addon value should end in /register OR it should be a valid preset https://storybook.js.org/docs/react/addons/writing-presets/\n${item}`
     );
   }
   return undefined;
