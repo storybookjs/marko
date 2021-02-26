@@ -9,7 +9,7 @@ const validateArgs = (key = '', value: unknown): boolean => {
   if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
   if (key === null) return false;
   if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
-  if (typeof value === 'number') return true;
+  if (typeof value === 'number' || typeof value === 'boolean') return true;
   if (typeof value === 'string') return VALIDATION_REGEXP.test(value);
   if (Array.isArray(value)) return !value.some((v) => !validateArgs(key, v));
   if (isPlainObject(value)) return !Object.entries(value).some(([k, v]) => !validateArgs(k, v));
