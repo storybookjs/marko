@@ -1,3 +1,20 @@
+## 6.2.0-beta.4 (February 26, 2021)
+
+### Features
+
+- UI: Enable search for stories and fix `/` event listener ([#14062](https://github.com/storybookjs/storybook/pull/14062))
+- UI: Add collapse roots to sidebar navigation ([#13685](https://github.com/storybookjs/storybook/pull/13685))
+
+### Bug Fixes
+
+- Core: Support null and undefined in URL args ([#14049](https://github.com/storybookjs/storybook/pull/14049))
+- IE11: Transpile prettier down to ES5 ([#14047](https://github.com/storybookjs/storybook/pull/14047))
+- UI: Fix shortcut button focus border to support high contrast ([#13699](https://github.com/storybookjs/storybook/pull/13699))
+
+### Maintenance
+
+- Fix flaky color rendering ([#14054](https://github.com/storybookjs/storybook/pull/14054))
+
 ## 6.2.0-beta.3 (February 25, 2021)
 
 ### Features
