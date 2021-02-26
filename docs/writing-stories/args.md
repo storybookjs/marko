@@ -102,7 +102,7 @@ Args are useful when writing stories for composite components that are assembled
 
 ## Args can modify any aspect of your component
 
-Args can be used in your story templates to configure your component just as you would in an application. Here’s an example of how a `footer` arg can be used to populate a child component.
+Args are used in story templates to configure the component appearance just as you would in an application. Here’s an example of how a `footer` arg can be used to populate a child component.
 
 <!-- prettier-ignore-start -->
 
@@ -110,7 +110,8 @@ Args can be used in your story templates to configure your component just as you
   paths={[
     'react/page-story-slots.js.mdx',
     'react/page-story-slots.ts.mdx',
-    'vue/page-story-slots.js.mdx',
+    'vue/page-story-slots.2.js.mdx',
+    'vue/page-story-slots.3.js.mdx',
   ]}
 />
 
@@ -173,8 +174,8 @@ In Storybook 5 and before we passed the context as the first argument. If you’
 <!-- prettier-ignore-end -->
 
   <div class="aside">
-  
-  Note that `args` is still available as a key on the context.
-  
+
+Note that `args` is still available as a key on the context.
+
   </div>
 </details>

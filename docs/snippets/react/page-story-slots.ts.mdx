@@ -11,13 +11,13 @@ export default {
 } as Meta;
 
 const Template: Story<Page> = (args, { argTypes }) => (
-     <Page {...args}>
-       <footer>{args.footer}</footer
-     </Page>
+  <Page {...args}>
+    <footer>{args.footer}</footer
+  </Page>
 );
 
 export const CustomFooter = Template.bind({});
- CustomFooter.args = {
-   footer: 'Built with Storybook',
- };
+CustomFooter.args = {
+  footer: 'Built with Storybook',
+};
 ```
