@@ -33,7 +33,7 @@ import {
   StoreSelectionSpecifier,
   StoreSelection,
 } from './types';
-import { mapArgsToTypes } from './args';
+import { combineArgs, mapArgsToTypes } from './args';
 import { HooksContext } from './hooks';
 import { storySort } from './storySort';
 import { combineParameters } from './parameters';
@@ -241,7 +241,7 @@ export default class StoryStore {
       if (foundStory) {
         if (args && foundStory.args) {
           const mappedUrlArgs = mapArgsToTypes(args, foundStory.argTypes);
-          foundStory.args = combineParameters(foundStory.args, mappedUrlArgs);
+          foundStory.args = combineArgs(foundStory.args, mappedUrlArgs);
         }
         this.setSelection({ storyId: foundStory.id, viewMode });
         this._channel.emit(Events.STORY_SPECIFIED, { storyId: foundStory.id, viewMode });

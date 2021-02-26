@@ -10,9 +10,19 @@ describe('parseArgsParam', () => {
     expect(args).toEqual({ key: 'val' });
   });
 
-  it('parses a space', () => {
-    const args = parseArgsParam('key:one+two');
-    expect(args).toEqual({ key: 'one two' });
+  it('parses spaces', () => {
+    const args = parseArgsParam('key:one+two+three');
+    expect(args).toEqual({ key: 'one two three' });
+  });
+
+  it('parses null', () => {
+    const args = parseArgsParam('key:!null');
+    expect(args).toEqual({ key: null });
+  });
+
+  it('parses undefined', () => {
+    const args = parseArgsParam('key:!undefined');
+    expect(args).toEqual({ key: undefined });
   });
 
   it('parses multiple values', () => {
