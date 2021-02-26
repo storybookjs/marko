@@ -5,7 +5,7 @@ import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
 import { document } from 'global';
 import { transparentize } from 'polished';
-import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import React, { useMemo, useRef, useState, useCallback } from 'react';
 
 import { DEFAULT_REF_ID } from './data';
 import {
@@ -21,7 +21,6 @@ import {
   isCloseType,
 } from './types';
 import { searchItem } from './utils';
-import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 
 const DEFAULT_MAX_SEARCH_RESULTS = 50;
 
@@ -172,26 +171,6 @@ export const Search = React.memo<{
       },
       [api, inputRef, showAllComponents, DEFAULT_REF_ID]
     );
-
-    useEffect(() => {
-      const focusSearch = (event: KeyboardEvent) => {
-        if (!enableShortcuts || isLoading || event.repeat) return;
-        if (!inputRef.current || inputRef.current === document.activeElement) return;
-        if (
-          // Shift is required to type `/` on some keyboard layouts
-          matchesModifiers({ ctrl: false, alt: false, meta: false }, event) &&
-          matchesKeyCode('Slash', event)
-        ) {
-          inputRef.current.focus();
-          inputRef.current.select();
-          event.preventDefault();
-        }
-      };
-
-      // Keyup prevents slashes from ending up in the input field when held down
-      document.addEventListener('keyup', focusSearch);
-      return () => document.removeEventListener('keyup', focusSearch);
-    }, [inputRef, isLoading, enableShortcuts]);
 
     const list: SearchItem[] = useMemo(() => {
       return dataset.entries.reduce((acc: SearchItem[], [refId, { stories }]) => {
