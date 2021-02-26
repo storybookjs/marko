@@ -39,16 +39,14 @@ export const mapArgsToTypes = (args: Args, argTypes: ArgTypes): Args => {
 };
 
 export const combineArgs = (value: any, update: any): Args => {
-  if (isPlainObject(value) && isPlainObject(update)) {
-    return Object.keys({ ...value, ...update }).reduce((acc, key) => {
-      if (key in update) {
-        const combined = combineArgs(value[key], update[key]);
-        if (combined !== undefined) acc[key] = combined;
-      } else {
-        acc[key] = value[key];
-      }
-      return acc;
-    }, {} as any);
-  }
-  return update;
+  if (!isPlainObject(value) || !isPlainObject(update)) return update;
+  return Object.keys({ ...value, ...update }).reduce((acc, key) => {
+    if (key in update) {
+      const combined = combineArgs(value[key], update[key]);
+      if (combined !== undefined) acc[key] = combined;
+    } else {
+      acc[key] = value[key];
+    }
+    return acc;
+  }, {} as any);
 };
