@@ -13,7 +13,7 @@ There are many ways to build pages in Storybook. Here are common patterns and so
 
 Teams at the BBC, The Guardian, and the Storybook maintainers themselves build pure presentational pages. If you take this approach, you don't need to do anything special to render your pages in Storybook.
 
-It's straightforward to write components to be fully presentational all the way up to the screen level. That makes it easy to show in Storybook. The idea is you then do all the messy “connected” logic in a single wrapper component in your app outside of Storybook. You can see an example of this approach in the [Data](https://www.learnstorybook.com/intro-to-storybook/react/en/data/) chapter of Learn Storybook.
+It's straightforward to write components to be fully presentational all the way up to the screen level. That makes it easy to show in Storybook. The idea is you then do all the messy “connected” logic in a single wrapper component in your app outside of Storybook. You can see an example of this approach in the [Data](https://storybook.js.org/tutorials/intro-to-storybook/react/en/data/) chapter of the Intro to Storybook tutorial.
 
 The benefits:
 
@@ -70,7 +70,7 @@ If you need to render a connected component in Storybook, you can mock the netwo
 
 ### Mocking providers
 
-If you are using a provider that supplies data via the context, you can wrap your story in a decorator that supplies a mocked version of that provider. For example, in the [Screens](https://www.learnstorybook.com/intro-to-storybook/react/en/screen/) chapter of Learn Storybook we mock a Redux provider with mock data.
+If you are using a provider that supplies data via the context, you can wrap your story in a decorator that supplies a mocked version of that provider. For example, in the [Screens](https://storybook.js.org/tutorials/intro-to-storybook/react/en/screen/) chapter of the Intro to Storybook tutorial we mock a Redux provider with mock data.
 
 Additionally, there may be addons that supply such providers and nice APIs to set the data they provide. For instance [`storybook-addon-apollo-client`](https://www.npmjs.com/package/storybook-addon-apollo-client) provides this API:
 
