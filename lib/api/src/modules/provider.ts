@@ -6,6 +6,11 @@ import { API, State, ModuleFn } from '../index';
 import { StoryMapper, Refs } from './refs';
 import { UIOptions } from './layout';
 
+interface SidebarOptions {
+  showRoots?: boolean;
+  collapsedRoots?: string[];
+}
+
 type IframeRenderer = (
   storyId: string,
   viewMode: State['viewMode'],
@@ -20,6 +25,7 @@ export interface Provider {
   renderPreview?: IframeRenderer;
   handleAPI(api: API): void;
   getConfig(): {
+    sidebar?: SidebarOptions;
     theme?: ThemeVars;
     refs?: Refs;
     StoryMapper?: StoryMapper;

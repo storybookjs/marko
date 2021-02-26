@@ -22,11 +22,16 @@ The following table details how to use the API values:
 | **showNav**           | Boolean       |Display panel that shows a list of stories                     |`true`                                          |
 | **showPanel**         | Boolean       |Display panel that shows addon configurations                  |`true`                                          |
 | **panelPosition**     | String/Object |Where to show the addon panel                                  |`bottom` or `right`                             |
-| **sidebarAnimations** | Boolean       |Sidebar tree animations                                        |`true`                                          |
 | **enableShortcuts**   | Boolean       |Enable/disable shortcuts                                       |`true`                                          |
 | **isToolshown**       | String        |Show/hide tool bar                                             |`true`                                          |
 | **theme**             | Object        |Storybook Theme, see next section                              |`undefined`                                     |
 | **selectedPanel**     | String        |Id to select an addon panel                                    |`my-panel`                                      |
-| **initialActive**     | String        |Select the default active tab on Mobile.                       |`sidebar` or `canvas` or `addons`             |
-| **showRoots**         | Boolean       |Display the top-level grouping as a "root" in the sidebar      |`false`                                         |
+| **initialActive**     | String        |Select the default active tab on Mobile                        |`sidebar` or `canvas` or `addons`               |
+| **sidebar**           | Object        |Sidebar options, see below                                     |`{ showRoots: false }`                          |
 
+The following options are configurable under the `sidebar` namespace:
+
+| Name                  | Type          | Description                                                   | Example Value                                  |
+| ----------------------|:-------------:|:-------------------------------------------------------------:|:----------------------------------------------:|
+| **showRoots**         | Boolean       |Display the top-level nodes as a "root" in the sidebar         |`false`                                         |
+| **collapsedRoots**    | Array         |Set of root node IDs to visually collapse by default           |`['misc', 'other']`                             |
