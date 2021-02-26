@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-design-assets",
-  "version": "6.2.0-alpha.13",
+  "version": "6.2.0-beta.4",
   "description": "Design asset preview for storybook",
   "keywords": [
     "addon",
@@ -41,17 +41,17 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.13",
-    "@storybook/api": "6.2.0-alpha.13",
-    "@storybook/client-logger": "6.2.0-alpha.13",
-    "@storybook/components": "6.2.0-alpha.13",
-    "@storybook/core-events": "6.2.0-alpha.13",
-    "@storybook/theming": "6.2.0-alpha.13",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/addons": "6.2.0-beta.4",
+    "@storybook/api": "6.2.0-beta.4",
+    "@storybook/client-logger": "6.2.0-beta.4",
+    "@storybook/components": "6.2.0-beta.4",
+    "@storybook/core-events": "6.2.0-beta.4",
+    "@storybook/theming": "6.2.0-beta.4",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
-    "use-image": "^1.0.3"
+    "use-image": "^1.0.7"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -68,5 +68,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9de487fa7b79cef77fd8de0d0357e8cf962dc776"
+  "gitHead": "09707a9b0355643753e78a6dd49f047792efae45",
+  "storybook": {
+    "displayName": "Design assets",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

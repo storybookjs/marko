@@ -17,10 +17,16 @@ describe('Extracting Arguments', () => {
         function onClick(event) {
           rounded = !rounded;
 
+          /**
+           * Click Event 
+           */
           dispatch('click', event);
         }
 
         afterUpdate(() => {
+          /**
+           * After Update
+           */
           dispatch('afterUpdate');
         });
       </script>
@@ -47,7 +53,7 @@ describe('Extracting Arguments', () => {
         </strong>
         <br>
         {text}
-        <slot>
+        <slot {rounded}>
         </slot>
       </button>
     `);
@@ -60,6 +66,26 @@ describe('Extracting Arguments', () => {
 
     expect(results).toMatchInlineSnapshot(`
       Object {
+        "event_afterUpdate": Object {
+          "description": "After Update",
+          "name": "afterUpdate",
+          "table": Object {
+            "category": "events",
+          },
+          "type": Object {
+            "name": "void",
+          },
+        },
+        "event_click": Object {
+          "description": "Click Event",
+          "name": "click",
+          "table": Object {
+            "category": "events",
+          },
+          "type": Object {
+            "name": "void",
+          },
+        },
         "rounded": Object {
           "control": Object {
             "type": "boolean",
@@ -68,11 +94,30 @@ describe('Extracting Arguments', () => {
           "description": null,
           "name": "rounded",
           "table": Object {
+            "category": "properties",
             "defaultValue": Object {
               "summary": true,
             },
+            "type": Object {
+              "summary": "boolean",
+            },
           },
-          "type": Object {},
+          "type": Object {
+            "required": false,
+            "summary": "boolean",
+          },
+        },
+        "slot_default": Object {
+          "description": "Default Slot
+
+      \`{rounded}\`",
+          "name": "default",
+          "table": Object {
+            "category": "slots",
+          },
+          "type": Object {
+            "name": "void",
+          },
         },
         "text": Object {
           "control": Object {
@@ -82,11 +127,18 @@ describe('Extracting Arguments', () => {
           "description": null,
           "name": "text",
           "table": Object {
+            "category": "properties",
             "defaultValue": Object {
               "summary": "",
             },
+            "type": Object {
+              "summary": "string",
+            },
           },
-          "type": Object {},
+          "type": Object {
+            "required": false,
+            "summary": "string",
+          },
         },
       }
     `);

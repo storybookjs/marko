@@ -17,18 +17,17 @@ describe('actions parameter enhancers', () => {
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onFocus']);
     });
 
-    it('should prioritize pre-existing argTypes unless they are null', () => {
+    it('should override pre-existing argTypes', () => {
       const parameters = {
         ...baseParameters,
         argTypes: {
           onClick: { defaultValue: 'pre-existing value' },
-          onFocus: { defaultValue: null },
         },
       };
       const argTypes = inferActionsFromArgTypesRegex({ parameters } as StoryContext);
-      expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onFocus']);
-      expect(argTypes.onClick.defaultValue).toEqual('pre-existing value');
-      expect(argTypes.onFocus.defaultValue).not.toBeNull();
+      expect(withDefaultValue(argTypes)).toEqual(['onClick']);
+      expect(argTypes.onClick.defaultValue).not.toBeNull();
+      expect(argTypes.onClick.defaultValue).not.toEqual('pre-existing value');
     });
 
     it('should do nothing if actions are disabled', () => {
@@ -54,7 +53,7 @@ describe('actions parameter enhancers', () => {
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onBlur']);
     });
 
-    it('should prioritize pre-existing args', () => {
+    it('should override pre-existing args', () => {
       const parameters = {
         ...baseParameters,
         argTypes: {
@@ -64,7 +63,8 @@ describe('actions parameter enhancers', () => {
       };
       const argTypes = addActionsFromArgTypes({ parameters } as StoryContext);
       expect(withDefaultValue(argTypes)).toEqual(['onClick', 'onBlur']);
-      expect(argTypes.onClick.defaultValue).toEqual('pre-existing value');
+      expect(argTypes.onClick.defaultValue).not.toBeNull();
+      expect(argTypes.onClick.defaultValue).not.toEqual('pre-existing value');
     });
 
     it('should do nothing if actions are disabled', () => {

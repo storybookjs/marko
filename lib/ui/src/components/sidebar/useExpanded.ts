@@ -20,6 +20,7 @@ export interface ExpandedProps {
   isBrowsing: boolean;
   refId: string;
   data: StoriesHash;
+  initialExpanded?: ExpandedState;
   rootIds: string[];
   highlightedRef: MutableRefObject<Highlight>;
   setHighlightedItemId: (storyId: string) => void;
@@ -30,11 +31,13 @@ export interface ExpandedProps {
 const initializeExpanded = ({
   refId,
   data,
+  initialExpanded,
   highlightedRef,
   rootIds,
 }: {
   refId: string;
   data: StoriesHash;
+  initialExpanded?: ExpandedState;
   highlightedRef: MutableRefObject<Highlight>;
   rootIds: string[];
 }) => {
@@ -43,7 +46,7 @@ const initializeExpanded = ({
       ? getAncestorIds(data, highlightedRef.current?.itemId)
       : [];
   return [...rootIds, ...highlightedAncestors].reduce<ExpandedState>(
-    (acc, id) => Object.assign(acc, { [id]: true }),
+    (acc, id) => Object.assign(acc, { [id]: id in initialExpanded ? initialExpanded[id] : true }),
     {}
   );
 };
@@ -55,16 +58,17 @@ export const useExpanded = ({
   isBrowsing,
   refId,
   data,
+  initialExpanded,
   rootIds,
   highlightedRef,
   setHighlightedItemId,
   selectedStoryId,
   onSelectStoryId,
-}: ExpandedProps): [Record<string, boolean>, Dispatch<ExpandAction>] => {
+}: ExpandedProps): [ExpandedState, Dispatch<ExpandAction>] => {
   const api = useStorybookApi();
 
   // Track the set of currently expanded nodes within this tree.
-  // Root nodes are expanded by default (and cannot be collapsed).
+  // Root nodes are expanded by default.
   const [expanded, setExpanded] = useReducer<
     React.Reducer<ExpandedState, ExpandAction>,
     {
@@ -72,11 +76,12 @@ export const useExpanded = ({
       data: StoriesHash;
       highlightedRef: MutableRefObject<Highlight>;
       rootIds: string[];
+      initialExpanded: ExpandedState;
     }
   >(
     (state, { ids, value }) =>
       ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
-    { refId, data, highlightedRef, rootIds },
+    { refId, data, highlightedRef, rootIds, initialExpanded },
     initializeExpanded
   );
 

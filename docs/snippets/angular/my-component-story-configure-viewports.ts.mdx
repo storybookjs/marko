@@ -1,0 +1,32 @@
+```ts
+// MyComponent.stories.ts
+
+import { Story, Meta } from '@storybook/angular/types-6-0';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+
+import MyComponent from './MyComponent.component';
+
+export default {
+  title: 'Stories',
+  component: MyComponent, 
+  parameters: {
+    // the viewports object from the Essentials addon
+    viewport: {
+      // the viewports you want to use
+      viewports: INITIAL_VIEWPORTS,
+      // your own default viewport
+      defaultViewport: 'iphone6',
+    }
+  },
+} as Meta;
+
+export const myStory: Story<MyComponent> = () => ({
+  component: MyComponent,
+  template: '<div></div>'
+});
+myStory.parameters = {
+  viewport: {
+    defaultViewport: 'iphonex'
+  }
+};
+```

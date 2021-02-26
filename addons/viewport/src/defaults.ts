@@ -57,6 +57,38 @@ export const INITIAL_VIEWPORTS: ViewportMap = {
     },
     type: 'mobile',
   },
+  iphonese2: {
+    name: 'iPhone SE (2nd generation)',
+    styles: {
+      height: '667px',
+      width: '375px',
+    },
+    type: 'mobile',
+  },
+  iphone12mini: {
+    name: 'iPhone 12 mini',
+    styles: {
+      height: '812px',
+      width: '375px',
+    },
+    type: 'mobile',
+  },
+  iphone12: {
+    name: 'iPhone 12',
+    styles: {
+      height: '844px',
+      width: '390px',
+    },
+    type: 'mobile',
+  },
+  iphone12promax: {
+    name: 'iPhone 12 Pro Max',
+    styles: {
+      height: '926px',
+      width: '428px',
+    },
+    type: 'mobile',
+  },
   ipad: {
     name: 'iPad',
     styles: {

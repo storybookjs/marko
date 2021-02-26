@@ -26,6 +26,7 @@ addons.setConfig({
       hidden: true,
     },
   },
+  collapsedRoots: ['other'],
   sidebar: {
     storyLabel: ({ id, name }) => {
       const map = {

@@ -18,11 +18,20 @@ function createType(type: DocgenType) {
   return type != null ? createSummaryValue(type.name) : null;
 }
 
-function createDefaultValue(defaultValue: DocgenPropDefaultValue): PropDefaultValue {
+function createDefaultValue(
+  defaultValue: DocgenPropDefaultValue,
+  type: DocgenType
+): PropDefaultValue {
   if (defaultValue != null) {
-    const { value } = defaultValue;
+    const { value, computed } = defaultValue;
 
     if (!isDefaultValueBlacklisted(value)) {
+      // Work around a bug in `react-docgen-typescript-loader`, which returns 'string' for a string
+      // default, instead of "'string'" -- which is incorrect (PR to RDT to follow)
+      if (typeof computed === 'undefined' && type.name === 'string') {
+        return createSummaryValue(JSON.stringify(value));
+      }
+
       return createSummaryValue(value);
     }
   }
@@ -38,7 +47,7 @@ function createBasicPropDef(name: string, type: DocgenType, docgenInfo: DocgenIn
     type: createType(type),
     required,
     description,
-    defaultValue: createDefaultValue(defaultValue),
+    defaultValue: createDefaultValue(defaultValue, type),
   };
 }
 

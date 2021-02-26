@@ -1,6 +1,14 @@
-import { Configuration } from 'webpack'; // eslint-disable-line
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Configuration } from 'webpack';
+import type { Options } from '@storybook/core-common';
 
-export function webpack(config: Configuration) {
+export async function webpack(config: Configuration, options: Options): Promise<Configuration> {
+  const { preprocess = undefined, loader = {} } = await options.presets.apply(
+    'svelteOptions',
+    {} as any,
+    options
+  );
+
   return {
     ...config,
     module: {
@@ -10,7 +18,7 @@ export function webpack(config: Configuration) {
         {
           test: /\.(svelte|html)$/,
           loader: require.resolve('svelte-loader'),
-          options: {},
+          options: { preprocess, ...loader },
         },
       ],
     },

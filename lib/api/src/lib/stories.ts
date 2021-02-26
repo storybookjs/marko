@@ -20,6 +20,7 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
+  startCollapsed?: boolean;
   storyLabel?: React.ReactNode;
 }
 
@@ -63,6 +64,7 @@ export interface Story {
     [parameterName: string]: any;
   };
   args: Args;
+  initialArgs: Args;
 }
 
 export interface StoryInput {
@@ -82,6 +84,7 @@ export interface StoryInput {
   };
   isLeaf: boolean;
   args: Args;
+  initialArgs: Args;
 }
 
 export interface StoriesHash {
@@ -154,7 +157,7 @@ export const transformStoriesRawToStoriesHash = (
 
   const storiesHashOutOfOrder = values.reduce((acc, item) => {
     const { kind, parameters } = item;
-    const { showRoots, sidebar = {} } = provider.getConfig();
+    const { showRoots, collapsedRoots = [], sidebar = {} } = provider.getConfig();
 
     const setShowRoots = typeof showRoots !== 'undefined';
     if (usesOldHierarchySeparator && !setShowRoots) {
@@ -187,6 +190,7 @@ export const transformStoriesRawToStoriesHash = (
           isComponent: false,
           isLeaf: false,
           isRoot: true,
+          startCollapsed: collapsedRoots.includes(id),
         };
         list.push({ ...rootElement, storyLabel: sidebar.storyLabel?.(rootElement) });
       } else {

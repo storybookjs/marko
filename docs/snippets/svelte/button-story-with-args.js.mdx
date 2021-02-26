@@ -1,0 +1,13 @@
+```js
+// Button.stories.js
+
+import Button from './Button.svelte';
+const Template = (args) => ({ Component: Button, props: args });
+
+export const Primary = Template.bind({});
+
+Primary.args = {
+  primary: true,
+  label: 'Primary',
+};
+```

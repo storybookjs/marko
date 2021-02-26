@@ -1,6 +1,8 @@
 ```ts
 // ButtonGroup.stories.ts
 
+import { Story, Meta } from '@storybook/angular/types-6-0';
+
 import { moduleMetadata } from '@storybook/angular';
 import { CommonModule } from '@angular/common';
 
@@ -17,15 +19,19 @@ export default {
       imports: [CommonModule],
     }),
   ],
-};
+} as Meta;
 
-const Template = (args: ButtonGroup) => ({
+const Template: Story<ButtonGroup> = (args) => ({
+  component: ButtonGroup,
   props: args,
 });
 
 export const Pair = Template.bind({});
 Pair.args = {
-  buttons: [...ButtonStories.Primary.args, ...ButtonStories.Secondary.args],
+  buttons: [
+    { ...ButtonStories.Primary.args },
+    { ...ButtonStories.Secondary.args },
+  ],
   orientation: 'horizontal',
 };
 ```

@@ -1,7 +1,10 @@
 ```ts
 //Button.stories.ts
 
-const Template = (args: Button) => ({
+import { Story } from '@storybook/angular/types-6-0';
+
+const Template: Story<Button> = (args) => ({
+  component: Button,
   props: args,
 });
 

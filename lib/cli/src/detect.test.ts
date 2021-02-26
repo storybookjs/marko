@@ -53,6 +53,27 @@ const MOCK_FRAMEWORK_FILES = [
     },
   },
   {
+    name: ProjectType.VUE3,
+    files: {
+      'package.json': {
+        dependencies: {
+          vue: '^3.0.0',
+        },
+      },
+    },
+  },
+  {
+    name: ProjectType.VUE3,
+    files: {
+      'package.json': {
+        dependencies: {
+          // Testing the `next` tag too
+          vue: 'next',
+        },
+      },
+    },
+  },
+  {
     name: ProjectType.EMBER,
     files: {
       'package.json': {
@@ -315,6 +336,17 @@ describe('Detect', () => {
       expect(result).toBe(ProjectType.UNDETECTED);
     });
 
+    // TODO(blaine): Remove once Nuxt3 is supported
+    it(`UNSUPPORTED for Nuxt framework above version 3.0.0`, () => {
+      const result = detectFrameworkPreset({
+        dependencies: {
+          nuxt: '3.0.0',
+        },
+      });
+      expect(result).toBe(ProjectType.UNSUPPORTED);
+    });
+
+    // TODO: The mocking in this test causes tests after it to fail
     it('REACT_SCRIPTS for custom react scripts config', () => {
       const forkedReactScriptsConfig = {
         '/node_modules/.bin/react-scripts': 'file content',

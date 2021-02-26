@@ -1,12 +1,13 @@
 {
   "name": "@storybook/addon-cssresources",
-  "version": "6.2.0-alpha.13",
+  "version": "6.2.0-beta.4",
   "description": "A storybook addon to switch between css resources at runtime for your story",
   "keywords": [
     "addon",
     "cssresources",
     "react",
-    "storybook"
+    "storybook",
+    "style"
   ],
   "homepage": "https://storybook.js.org",
   "bugs": {
@@ -39,17 +40,17 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.13",
-    "@storybook/api": "6.2.0-alpha.13",
-    "@storybook/components": "6.2.0-alpha.13",
-    "@storybook/core-events": "6.2.0-alpha.13",
-    "@storybook/theming": "6.2.0-alpha.13",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/addons": "6.2.0-beta.4",
+    "@storybook/api": "6.2.0-beta.4",
+    "@storybook/components": "6.2.0-beta.4",
+    "@storybook/core-events": "6.2.0-beta.4",
+    "@storybook/theming": "6.2.0-beta.4",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -66,5 +67,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9de487fa7b79cef77fd8de0d0357e8cf962dc776"
+  "gitHead": "09707a9b0355643753e78a6dd49f047792efae45",
+  "storybook": {
+    "displayName": "CSS Resources",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

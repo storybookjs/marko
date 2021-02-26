@@ -23,6 +23,6 @@ module.exports = {
 Then, set an environment variable in `.storybook/manager.js`
 
 ```
-window.STORYBOOK_GA_ID = UA-000000-01
+window.STORYBOOK_GA_ID = "UA-000000-01"
 window.STORYBOOK_REACT_GA_OPTIONS = {}
 ```

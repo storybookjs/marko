@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-google-analytics",
-  "version": "6.2.0-alpha.13",
+  "version": "6.2.0-beta.4",
   "description": "Storybook addon for google analytics",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "code"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/google-analytics",
   "bugs": {
@@ -30,11 +31,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.13",
-    "@storybook/core-events": "6.2.0-alpha.13",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react-ga": "^2.5.7",
+    "@storybook/addons": "6.2.0-beta.4",
+    "@storybook/core-events": "6.2.0-beta.4",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "react-ga": "^2.7.0",
     "regenerator-runtime": "^0.13.7"
   },
   "peerDependencies": {
@@ -52,5 +53,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9de487fa7b79cef77fd8de0d0357e8cf962dc776"
+  "gitHead": "09707a9b0355643753e78a6dd49f047792efae45",
+  "storybook": {
+    "displayName": "Google Analytics",
+    "icon": "https://pbs.twimg.com/profile_images/1021848775885651968/cU74ahCn_400x400.jpg",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

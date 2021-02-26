@@ -1,4 +1,5 @@
 import { document } from 'global';
+import { set_current_component } from 'svelte/internal';
 
 /**
  * Provides functionality to convert your raw story to the resulting markup.
@@ -12,6 +13,9 @@ import { document } from 'global';
  * i.e. ({ Component, data }).
  */
 function getRenderedTree(story: any) {
+  // allow setContext to work
+  set_current_component({ $$: { context: new Map() } });
+
   const { Component, props } = story.render();
 
   const DefaultCompatComponent = Component.default || Component;

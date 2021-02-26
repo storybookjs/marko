@@ -1,24 +1,53 @@
-/* eslint-disable react/prefer-stateless-function */
 import React from 'react';
 import PropTypes from 'prop-types';
 
-/**
- * Component description
- */
-class ErrorBox extends React.Component {
-  render() {
-    const { children } = this.props;
+import { imported } from '../imported';
 
-    return <div className="error-box">{children}</div>;
+const local = 'local-value';
+
+/**
+ * A component that renders its props
+ */
+// eslint-disable-next-line react/prefer-stateless-function
+class PropsWriter extends React.Component {
+  render() {
+    return <pre>{JSON.stringify(this.props)}</pre>;
   }
 }
 
-ErrorBox.propTypes = {
-  /**
-   * PropTypes description
-   */
-  children: PropTypes.node.isRequired,
+PropsWriter.propTypes = {
+  numberRequired: PropTypes.number.isRequired,
+  numberOptional: PropTypes.number,
+  stringRequired: PropTypes.string.isRequired,
+  stringOptional: PropTypes.string,
+  booleanRequired: PropTypes.bool.isRequired,
+  booleanOptional: PropTypes.bool,
+  arrayRequired: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  arrayOptional: PropTypes.arrayOf(PropTypes.string.isRequired),
+  objectRequired: PropTypes.shape({}).isRequired,
+  objectOptional: PropTypes.shape({}),
+  functionRequired: PropTypes.func.isRequired,
+  functionOptional: PropTypes.func,
+  dateRequired: PropTypes.instanceOf(Date).isRequired,
+  dateOptional: PropTypes.instanceOf(Date),
+  localReference: PropTypes.string,
+  importedReference: PropTypes.string,
+  globalReference: PropTypes.any,
+  stringGlobalName: PropTypes.string,
 };
 
-export default ErrorBox;
-export const component = ErrorBox;
+PropsWriter.defaultProps = {
+  numberOptional: 1,
+  stringOptional: 'stringOptional',
+  booleanOptional: false,
+  arrayOptional: ['array', 'optional'],
+  objectOptional: { object: 'optional' },
+  functionOptional: () => 'foo',
+  dateOptional: new Date('20 Jan 1983'),
+  localReference: local,
+  importedReference: imported,
+  globalReference: Date,
+  stringGlobalName: 'top',
+};
+
+export const component = PropsWriter;
