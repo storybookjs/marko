@@ -20,8 +20,8 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
+  label?: React.ReactNode;
   startCollapsed?: boolean;
-  storyLabel?: React.ReactNode;
 }
 
 export interface Group {
@@ -34,7 +34,7 @@ export interface Group {
   isComponent: boolean;
   isRoot: false;
   isLeaf: false;
-  storyLabel?: React.ReactNode;
+  label?: React.ReactNode;
   // MDX docs-only stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
@@ -53,7 +53,7 @@ export interface Story {
   isComponent: boolean;
   isRoot: false;
   isLeaf: true;
-  storyLabel?: React.ReactNode;
+  label?: React.ReactNode;
   parameters?: {
     fileName: string;
     options: {
@@ -115,6 +115,14 @@ export type SetStoriesPayload =
       stories: StoriesRaw;
     } & Record<string, never>);
 
+const warnLegacyShowRoots = deprecate(
+  () => {},
+  dedent`
+    The 'showRoots' config option is deprecated and will be removed in Storybook 7.0. Use 'sidebar.showRoots' instead.
+    Read more about it in the migration guide: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md
+  `
+);
+
 const warnChangedDefaultHierarchySeparators = deprecate(
   () => {},
   dedent`
@@ -139,15 +147,6 @@ export const denormalizeStoryParameters = ({
   }));
 };
 
-// The client call can return undefined, let's return something by default
-const storyLabelSafe = (
-  item: Root | Group | Story,
-  fn?: (item: Root | Group | Story) => React.ReactNode
-) => {
-  const fnResult = fn(item);
-  return fnResult || item.name;
-};
-
 export const transformStoriesRawToStoriesHash = (
   input: StoriesRaw,
   { provider }: { provider: Provider }
@@ -157,7 +156,12 @@ export const transformStoriesRawToStoriesHash = (
 
   const storiesHashOutOfOrder = values.reduce((acc, item) => {
     const { kind, parameters } = item;
-    const { showRoots, collapsedRoots = [], sidebar = {} } = provider.getConfig();
+    const { sidebar = {}, showRoots: deprecatedShowRoots } = provider.getConfig();
+    const { showRoots = deprecatedShowRoots, collapsedRoots = [], renderLabel } = sidebar;
+
+    if (typeof deprecatedShowRoots !== 'undefined') {
+      warnLegacyShowRoots();
+    }
 
     const setShowRoots = typeof showRoots !== 'undefined';
     if (usesOldHierarchySeparator && !setShowRoots) {
@@ -192,7 +196,7 @@ export const transformStoriesRawToStoriesHash = (
           isRoot: true,
           startCollapsed: collapsedRoots.includes(id),
         };
-        list.push({ ...rootElement, storyLabel: sidebar.storyLabel?.(rootElement) });
+        list.push({ ...rootElement, label: renderLabel?.(rootElement) });
       } else {
         const groupElement: Group = {
           id,
@@ -210,7 +214,7 @@ export const transformStoriesRawToStoriesHash = (
         };
         list.push({
           ...groupElement,
-          storyLabel: sidebar.storyLabel?.(groupElement),
+          label: renderLabel?.(groupElement),
         });
       }
 
@@ -237,7 +241,7 @@ export const transformStoriesRawToStoriesHash = (
       isComponent: false,
       isRoot: false,
     };
-    acc[item.id] = { ...story, storyLabel: sidebar.storyLabel?.(story) };
+    acc[item.id] = { ...story, label: renderLabel?.(story) };
 
     return acc;
   }, {} as StoriesHash);

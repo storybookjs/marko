@@ -4,7 +4,7 @@ import deepEqual from 'fast-deep-equal';
 import { themes, ThemeVars } from '@storybook/theming';
 
 import merge from '../lib/merge';
-import { State, ModuleFn, Root, Group, Story } from '../index';
+import { State, ModuleFn } from '../index';
 
 export type PanelPositions = 'bottom' | 'right';
 export type ActiveTabsType = 'sidebar' | 'canvas' | 'addons';
@@ -27,7 +27,6 @@ export interface UI {
   name?: string;
   url?: string;
   enableShortcuts: boolean;
-  sidebarAnimations: boolean;
   docsMode: boolean;
 }
 
@@ -58,16 +57,11 @@ export interface UIOptions {
   addonPanelInRight: boolean;
   theme?: ThemeVars;
   selectedPanel?: string;
-  sidebar?: {
-    /** Used to render a custom label based on the current item */
-    storyLabel?: (item: Root | Group | Story) => React.ReactNode | undefined;
-  };
 }
 
 const defaultState: SubState = {
   ui: {
     enableShortcuts: true,
-    sidebarAnimations: true,
     docsMode: false,
   },
   layout: {

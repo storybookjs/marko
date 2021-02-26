@@ -77,7 +77,6 @@ interface Meta {
 }
 
 const deprecatedOptionsParameterWarnings: Record<string, () => void> = [
-  'sidebarAnimations',
   'enableShortcuts',
   'theme',
   'showRoots',
