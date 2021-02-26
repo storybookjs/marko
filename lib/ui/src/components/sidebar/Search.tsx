@@ -188,17 +188,20 @@ export const Search = React.memo<{
         if (!input) return [];
 
         let results: DownshiftItem[] = [];
-        const componentResults = (fuse.search(input) as SearchResult[]).filter(
-          ({ item }) => item.isComponent
-        );
+        const resultIds: string[] = [];
+        const distinctResults = (fuse.search(input) as SearchResult[]).filter(({ item }) => {
+          if (!(item.isComponent || item.isLeaf) || resultIds.includes(item.parent)) return false;
+          resultIds.push(item.id);
+          return true;
+        });
 
-        if (componentResults.length) {
-          results = componentResults.slice(0, allComponents ? 1000 : DEFAULT_MAX_SEARCH_RESULTS);
-          if (componentResults.length > DEFAULT_MAX_SEARCH_RESULTS && !allComponents) {
+        if (distinctResults.length) {
+          results = distinctResults.slice(0, allComponents ? 1000 : DEFAULT_MAX_SEARCH_RESULTS);
+          if (distinctResults.length > DEFAULT_MAX_SEARCH_RESULTS && !allComponents) {
             results.push({
               showAll: () => showAllComponents(true),
-              totalCount: componentResults.length,
-              moreCount: componentResults.length - DEFAULT_MAX_SEARCH_RESULTS,
+              totalCount: distinctResults.length,
+              moreCount: distinctResults.length - DEFAULT_MAX_SEARCH_RESULTS,
             });
           }
         }
