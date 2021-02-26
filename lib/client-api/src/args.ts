@@ -4,7 +4,7 @@ import { isPlainObject } from 'lodash';
 type ValueType = { name: string; value?: ObjectValueType | ValueType };
 type ObjectValueType = Record<string, ValueType>;
 
-export const INCOMPATIBLE = Symbol('incompatible');
+const INCOMPATIBLE = Symbol('incompatible');
 const map = (arg: unknown, type: ValueType): any => {
   if (arg === undefined || arg === null) return arg;
   switch (type?.name) {
