@@ -188,10 +188,10 @@ export const Search = React.memo<{
         if (!input) return [];
 
         let results: DownshiftItem[] = [];
-        const resultIds: string[] = [];
+        const resultIds: Set<string> = new Set();
         const distinctResults = (fuse.search(input) as SearchResult[]).filter(({ item }) => {
-          if (!(item.isComponent || item.isLeaf) || resultIds.includes(item.parent)) return false;
-          resultIds.push(item.id);
+          if (!(item.isComponent || item.isLeaf) || resultIds.has(item.parent)) return false;
+          resultIds.add(item.id);
           return true;
         });
 
