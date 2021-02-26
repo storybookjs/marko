@@ -1,6 +1,6 @@
 import { Component } from 'vue';
 
-export { RenderContext } from '@storybook/core';
+export type { RenderContext } from '@storybook/core';
 
 export interface ShowErrorArgs {
   title: string;

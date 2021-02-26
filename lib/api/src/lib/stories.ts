@@ -19,6 +19,7 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
+  startCollapsed?: boolean;
 }
 
 export interface Group {
@@ -143,7 +144,7 @@ export const transformStoriesRawToStoriesHash = (
 
   const storiesHashOutOfOrder = values.reduce((acc, item) => {
     const { kind, parameters } = item;
-    const { showRoots } = provider.getConfig();
+    const { showRoots, collapsedRoots = [] } = provider.getConfig();
 
     const setShowRoots = typeof showRoots !== 'undefined';
     if (usesOldHierarchySeparator && !setShowRoots) {
@@ -176,6 +177,7 @@ export const transformStoriesRawToStoriesHash = (
           isComponent: false,
           isLeaf: false,
           isRoot: true,
+          startCollapsed: collapsedRoots.includes(id),
         });
       } else {
         list.push({

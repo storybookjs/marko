@@ -2,9 +2,8 @@
 title: 'Install Storybook'
 ---
 
-Inside your existing project's root directory, issue the following to add Storybook through our CLI:
-
 <!-- prettier-ignore-start -->
+
 <FeatureSnippets
   paths={[
    'get-started/installation-command-section/angular.mdx',
@@ -28,7 +27,7 @@ Inside your existing project's root directory, issue the following to add Storyb
 
 <summary><code>sb init</code> is not made for empty projects</summary>
 
-Storybook needs to be installed into a project that is already setup with a framework. It will not work on an empty project. There are many ways to bootstrap an app in given framework including:
+Storybook needs to be installed into a project that is already setup with a framework. It will not work on an empty project. There are many ways to bootstrap an app in a given framework including:
 
 - 📦 [Create React App](https://reactjs.org/docs/create-a-new-react-app.html)
 - 📦 [Vue CLI](https://cli.vuejs.org/)
@@ -68,15 +67,6 @@ Now that you installed Storybook successfully, let’s take a look at a story th
 <summary><h4>Troubleshooting</h4></summary>
 
 Below is a curated list to get you unblocked while adding Storybook to your project.
-
-<!-- You can use the `--type` flag to tell Storybook to configure itself based on the flag.
-
-For instance you can use:
-
-- `--type react` to setup Storybook with the React configuration options.
-- `--type vue` to setup Storybook with the Vue configuration options.
-- `--type angular` to setup Storybook with the Angular configuration options. -->
-
 
 <!-- prettier-ignore-start -->
 

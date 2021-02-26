@@ -15,7 +15,8 @@ Afterwards you can use any asset in your stories:
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-with-import.js.mdx',
-    'vue/component-story-static-asset-with-import.js.mdx',
+    'vue/component-story-static-asset-with-import.2.js.mdx',
+    'vue/component-story-static-asset-with-import.3.js.mdx',
     'angular/component-story-static-asset-with-import.ts.mdx',
   ]}
 />

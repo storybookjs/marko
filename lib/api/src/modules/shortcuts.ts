@@ -167,7 +167,7 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
           }
 
           setTimeout(() => {
-            fullAPI.focusOnUIElement(focusableUIElements.storySearchField);
+            fullAPI.focusOnUIElement(focusableUIElements.storySearchField, true);
           }, 0);
           break;
         }

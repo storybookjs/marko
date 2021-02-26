@@ -4,8 +4,15 @@ import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
 import React, { MutableRefObject, useCallback, useMemo, useRef } from 'react';
 
-import { ComponentNode, DocumentNode, GroupNode, RootNode, StoryNode } from './TreeNode';
-import { useExpanded, ExpandAction } from './useExpanded';
+import {
+  ComponentNode,
+  DocumentNode,
+  GroupNode,
+  RootNode,
+  StoryNode,
+  CollapseIcon,
+} from './TreeNode';
+import { useExpanded, ExpandAction, ExpandedState } from './useExpanded';
 import { Highlight, Item } from './types';
 import { createId, getAncestorIds, getDescendantIds, getLink } from './utils';
 
@@ -16,6 +23,7 @@ export const Action = styled.button(({ theme }) => ({
   width: 20,
   height: 20,
   margin: 0,
+  marginLeft: 'auto',
   padding: 0,
   outline: 0,
   lineHeight: 'normal',
@@ -39,6 +47,44 @@ export const Action = styled.button(({ theme }) => ({
   svg: {
     width: 10,
     height: 10,
+  },
+}));
+
+const CollapseButton = styled.button(({ theme }) => ({
+  // Reset button
+  background: 'transparent',
+  border: 'none',
+  outline: 'none',
+  boxSizing: 'content-box',
+  cursor: 'pointer',
+  position: 'relative',
+  textAlign: 'left',
+  lineHeight: 'normal',
+  font: 'inherit',
+  color: 'inherit',
+  letterSpacing: 'inherit',
+  textTransform: 'inherit',
+
+  display: 'flex',
+  flex: '0 1 auto',
+  padding: '3px 10px 1px 1px',
+  margin: 0,
+  marginLeft: -19,
+  overflow: 'hidden',
+  borderRadius: 26,
+  transition: 'color 150ms, box-shadow 150ms',
+
+  'span:first-of-type': {
+    marginTop: 4,
+    marginRight: 7,
+  },
+
+  '&:focus': {
+    boxShadow: `0 0 0 1px ${theme.color.secondary}`,
+    color: theme.color.secondary,
+    'span:first-of-type': {
+      color: theme.color.secondary,
+    },
   },
 }));
 
@@ -105,20 +151,33 @@ const Node = React.memo<NodeProps>(
           data-ref-id={refId}
           data-item-id={item.id}
           data-nodetype="root"
+          aria-expanded={isExpanded}
         >
-          {item.name}
-          <Action
+          <CollapseButton
             type="button"
-            className="sidebar-subheading-action"
-            data-action="expand-all"
-            data-expanded={isFullyExpanded}
+            data-action="collapse-root"
             onClick={(event) => {
               event.preventDefault();
-              setFullyExpanded();
+              setExpanded({ ids: [item.id], value: !isExpanded });
             }}
           >
-            <Icons icon={isFullyExpanded ? 'collapse' : 'expandalt'} />
-          </Action>
+            <CollapseIcon isExpanded={isExpanded} />
+            {item.name}
+          </CollapseButton>
+          {isExpanded && (
+            <Action
+              type="button"
+              className="sidebar-subheading-action"
+              data-action="expand-all"
+              data-expanded={isFullyExpanded}
+              onClick={(event) => {
+                event.preventDefault();
+                setFullyExpanded();
+              }}
+            >
+              <Icons icon={isFullyExpanded ? 'collapse' : 'expandalt'} />
+            </Action>
+          )}
         </RootNode>
       );
     }
@@ -197,16 +256,17 @@ export const Tree = React.memo<{
     const containerRef = useRef<HTMLDivElement>(null);
 
     // Find top-level nodes and group them so we can hoist any orphans and expand any roots.
-    const [rootIds, orphanIds] = useMemo(
+    const [rootIds, orphanIds, initialExpanded] = useMemo(
       () =>
-        Object.keys(data).reduce<[string[], string[]]>(
+        Object.keys(data).reduce<[string[], string[], ExpandedState]>(
           (acc, id) => {
             const item = data[id];
             if (isRoot(item)) acc[0].push(id);
             else if (!item.parent) acc[1].push(id);
+            if (isRoot(item) && item.startCollapsed) acc[2][id] = false;
             return acc;
           },
-          [[], []]
+          [[], [], {}]
         ),
       [data]
     );
@@ -277,6 +337,7 @@ export const Tree = React.memo<{
       isBrowsing, // only enable keyboard shortcuts when tree is visible
       refId,
       data: collapsedData,
+      initialExpanded,
       rootIds,
       highlightedRef,
       setHighlightedItemId,

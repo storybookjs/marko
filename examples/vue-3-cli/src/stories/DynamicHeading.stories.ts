@@ -24,10 +24,11 @@ export default {
 /*
   You can return a Vue 3 functional component from a Story.
 
-  Make sure to specify the `props` the component expects to receive!
+  Make sure to pass the `args` the component expects  to receive as the props!
  */
 const Template: Story = (args, { argTypes }) => {
-  const component: FunctionalComponent<Props> = (props) => h(DynamicHeading, props, 'Hello World!');
+  const component: FunctionalComponent<Props> = () =>
+    h(DynamicHeading, args as Props, 'Hello World!');
   component.props = Object.keys(argTypes);
   return component;
 };
@@ -38,12 +39,12 @@ One.args = {
 };
 One.decorators = [
   // Vue 3 "ComponentOptions" component as decorator
-  () => ({
+  // Story Args can be destructured from the 2nd argument (`context`) to a decorator
+  (storyFn, { args }) => ({
     // The `story` component is always injected into a decorator
     template: '<div :style="{ color: activeColor }"><story /></div>',
     data() {
-      // Story Args can be accessed on `this.props`
-      switch (this.props.level) {
+      switch (args.level) {
         case 1:
           return { activeColor: 'purple' };
         case 2:

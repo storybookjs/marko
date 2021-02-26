@@ -1,4 +1,4 @@
-import { UpdateNotifier, IPackage } from 'update-notifier';
+import { UpdateNotifier, Package } from 'update-notifier';
 import chalk from 'chalk';
 import prompts from 'prompts';
 import { detect, isStorybookInstalled, detectLanguage } from './detect';
@@ -7,6 +7,7 @@ import {
   ProjectType,
   StoryFormat,
   SupportedLanguage,
+  Builder,
 } from './project_types';
 import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
@@ -45,6 +46,7 @@ type CommandOptions = {
   storyFormat?: StoryFormat;
   parser?: string;
   yes?: boolean;
+  builder?: Builder;
 };
 
 const installStorybook = (projectType: ProjectType, options: CommandOptions): Promise<void> => {
@@ -65,6 +67,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
   const generatorOptions = {
     storyFormat: options.storyFormat || defaultStoryFormat,
     language,
+    builder: options.builder || Builder.Webpack4,
   };
 
   const end = () => {
@@ -286,7 +289,7 @@ const projectTypeInquirer = async (options: { yes?: boolean }) => {
   return Promise.resolve();
 };
 
-export default function (options: CommandOptions, pkg: IPackage): Promise<void> {
+export default function (options: CommandOptions, pkg: Package): Promise<void> {
   const welcomeMessage = 'sb init - the simplest way to add a Storybook to your project.';
   logger.log(chalk.inverse(`\n ${welcomeMessage} \n`));
 

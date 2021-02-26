@@ -26,7 +26,8 @@ This is extremely useful, but it can be further expanded. Additional information
     'react/button-component-with-proptypes.js.mdx',
     'react/button-component-with-proptypes.ts.mdx',
     'angular/button-component-with-proptypes.ts.mdx',
-    'vue/button-component-with-proptypes.vue.mdx',
+    'vue/button-component-with-proptypes.2.mdx',
+    'vue/button-component-with-proptypes.3.mdx',
     'svelte/button-component-with-proptypes.js.mdx',
   ]}
 />
@@ -126,7 +127,8 @@ Looking at the following component:
     'react/button-implementation.js.mdx',
     'react/button-implementation.ts.mdx',
     'angular/button-implementation.ts.mdx',
-    'vue/button-implementation.vue.mdx'
+    'vue/button-implementation.2.mdx',
+    'vue/button-implementation.3.mdx',
   ]}
 />
 
@@ -242,7 +244,8 @@ As an example, if you had the following story:
   paths={[
     'react/button-story-default-docs-code.js.mdx',
     'react/button-story-default-docs-code.ts.mdx',
-    'vue/button-story-default-docs-code.js.mdx',
+    'vue/button-story-default-docs-code.2.js.mdx',
+    'vue/button-story-default-docs-code.3.js.mdx',
     'angular/button-story-default-docs-code.ts.mdx',
   ]}
 />

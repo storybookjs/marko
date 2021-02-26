@@ -13,7 +13,8 @@ Pick a simple component from your project, like a Button, and write a `.stories.
     'react/your-component.js.mdx',
     'react/your-component.ts.mdx',
     'angular/your-component.ts.mdx',
-    'vue/your-component.js.mdx',
+    'vue/your-component.2.js.mdx',
+    'vue/your-component.3.js.mdx',
     'svelte/your-component.js.mdx'
   ]}
 />
