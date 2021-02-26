@@ -39,7 +39,7 @@ interface Args {
 }
 
 export const DEEPLY_EQUAL = Symbol('Deeply equal');
-export const deepDiff = (value: unknown, update: unknown): any => {
+export const deepDiff = (value: any, update: any): any => {
   if (typeof value !== typeof update) return update;
   if (deepEqual(value, update)) return DEEPLY_EQUAL;
   if (Array.isArray(value) && Array.isArray(update)) {
@@ -47,8 +47,8 @@ export const deepDiff = (value: unknown, update: unknown): any => {
     return [...update, ...new Array(value.length - update.length)];
   }
   if (isPlainObject(value) && isPlainObject(update)) {
-    return Object.keys({ ...(value as any), ...(update as any) }).reduce((acc, key) => {
-      const diff = deepDiff((value as any)?.[key], (update as any)?.[key]);
+    return Object.keys({ ...value, ...update }).reduce((acc, key) => {
+      const diff = deepDiff(value?.[key], update?.[key]);
       return diff === DEEPLY_EQUAL ? acc : Object.assign(acc, { [key]: diff });
     }, {});
   }
