@@ -130,12 +130,12 @@ exports[`Storyshots Example/Page Logged In 1`] = `
       Get a guided tutorial on component-driven development at
       
       <a
-        href="https://www.learnstorybook.com"
+        href="https://storybook.js.org/tutorials/"
         rel="noopener noreferrer"
         target="_blank"
       >
         
-        Learn Storybook
+        Storybook tutorials
       
       </a>
       
@@ -340,12 +340,12 @@ exports[`Storyshots Example/Page Logged Out 1`] = `
       Get a guided tutorial on component-driven development at
       
       <a
-        href="https://www.learnstorybook.com"
+        href="https://storybook.js.org/tutorials/"
         rel="noopener noreferrer"
         target="_blank"
       >
         
-        Learn Storybook
+        Storybook tutorials
       
       </a>
       
