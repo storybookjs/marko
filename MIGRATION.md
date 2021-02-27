@@ -9,6 +9,7 @@
   - [6.2 Deprecations](#62-deprecations)
     - [Deprecated implicit PostCSS loader](#deprecated-implicit-postcss-loader)
     - [Deprecated default PostCSS plugins](#deprecated-default-postcss-plugins)
+    - [Deprecated showRoots config option](#deprecated-showroots-config-option)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
@@ -229,6 +230,21 @@ module.exports = {
   ],
 };
 ```
+
+#### Deprecated showRoots config option
+
+Config options for the sidebar are now under the `sidebar` namespace. The `showRoots` option should be set as follows:
+
+```js
+addons.setConfig({
+  sidebar: {
+    showRoots: false,
+  },
+  // showRoots: false   <- this is deprecated
+});
+```
+
+The top-level `showRoots` option will be removed in Storybook 7.0.
 
 ## From version 6.0.x to 6.1.0
 

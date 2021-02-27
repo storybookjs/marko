@@ -27,7 +27,6 @@ export interface UI {
   name?: string;
   url?: string;
   enableShortcuts: boolean;
-  sidebarAnimations: boolean;
   docsMode: boolean;
 }
 
@@ -63,7 +62,6 @@ export interface UIOptions {
 const defaultState: SubState = {
   ui: {
     enableShortcuts: true,
-    sidebarAnimations: true,
     docsMode: false,
   },
   layout: {
