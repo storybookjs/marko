@@ -35,3 +35,4 @@ The following options are configurable under the `sidebar` namespace:
 | ----------------------|:-------------:|:-------------------------------------------------------------:|:----------------------------------------------:|
 | **showRoots**         | Boolean       |Display the top-level nodes as a "root" in the sidebar         |`false`                                         |
 | **collapsedRoots**    | Array         |Set of root node IDs to visually collapse by default           |`['misc', 'other']`                             |
+| **renderLabel**       | Function      |Create a custom label for tree nodes; must return a ReactNode  |`(item) => <abbr title="...">{item.name}</abbr>`|

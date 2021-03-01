@@ -137,7 +137,7 @@ const Node = React.memo<NodeProps>(
             onSelectStoryId(item.id);
           }}
         >
-          {item.name}
+          {item.label || item.name}
         </LeafNode>
       );
     }
@@ -162,7 +162,7 @@ const Node = React.memo<NodeProps>(
             }}
           >
             <CollapseIcon isExpanded={isExpanded} />
-            {item.name}
+            {item.label || item.name}
           </CollapseButton>
           {isExpanded && (
             <Action
@@ -205,7 +205,7 @@ const Node = React.memo<NodeProps>(
           if (item.isComponent && !isExpanded) onSelectStoryId(item.id);
         }}
       >
-        {item.name}
+        {item.label || item.name}
       </BranchNode>
     );
   }
