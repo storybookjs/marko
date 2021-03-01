@@ -1,3 +1,17 @@
+## 6.2.0-beta.5 (March 1, 2021)
+
+### Features
+
+* Core: Add `prefix` customization for navigation items ([#13121](https://github.com/storybookjs/storybook/pull/13121))
+
+### Maintenance
+
+* Core: Namespace sidebar config options ([#14067](https://github.com/storybookjs/storybook/pull/14067))
+
+### Dependency Upgrades
+
+* Move back to the original react-sizeme package ([#14069](https://github.com/storybookjs/storybook/pull/14069))
+
 ## 6.2.0-beta.4 (February 26, 2021)
 
 ### Features
