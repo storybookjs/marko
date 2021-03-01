@@ -23,6 +23,6 @@ Storybook integrates with most popular JavaScript UI frameworks and (experimenta
 
 If you want to learn more about the component-driven approach that Storybook enables, this [site](http://componentdriven.org) is a good place to start.
 
-If you want a guided tutorial through building a simple application with Storybook in your framework and language, [LearnStorybook](https://www.learnstorybook.com/) has your back.
+If you want a guided tutorial through building a simple application with Storybook in your framework and language, our [tutorials](https://storybook.js.org/tutorials/) have your back.
 
 Read on to learn Storybook basics and API!

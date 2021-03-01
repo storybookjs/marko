@@ -43,8 +43,8 @@ export const createPage = ({ user, onLogout, onLogin, onCreateAccount }: PagePro
     </ul>
     <p>
       Get a guided tutorial on component-driven development at
-      <a href="https://www.learnstorybook.com" target="_blank" rel="noopener noreferrer">
-        Learn Storybook
+      <a href="https://storybook.js.org/tutorials/" target="_blank" rel="noopener noreferrer">
+        Storybook tutorials
       </a>
       . Read more in the
       <a href="https://storybook.js.org/docs" target="_blank" rel="noopener noreferrer">docs</a>

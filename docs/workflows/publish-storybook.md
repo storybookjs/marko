@@ -47,7 +47,7 @@ We also maintain [`storybook-deployer`](https://github.com/storybookjs/storybook
 
 ## Review with your team
 
-Publishing Storybook as part of the development process makes it quick and easy to [gather team feedback](https://www.learnstorybook.com/design-systems-for-developers/react/en/review/).
+Publishing Storybook as part of the development process makes it quick and easy to [gather team feedback](https://storybook.js.org/tutorials/design-systems-for-developers/react/en/review/).
 
 A common method to ask for review is to paste a link to the published Storybook in a pull request or Slack.
 

@@ -78,11 +78,11 @@ exports[`Storyshots Example/Page Logged In 1`] = `
     <p>
        Get a guided tutorial on component-driven development at 
       <a
-        href="https://www.learnstorybook.com"
+        href="https://storybook.js.org/tutorials/"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Learn Storybook
+        Storybook tutorials
       </a>
        . Read more in the 
       <a
@@ -209,11 +209,11 @@ exports[`Storyshots Example/Page Logged Out 1`] = `
     <p>
        Get a guided tutorial on component-driven development at 
       <a
-        href="https://www.learnstorybook.com"
+        href="https://storybook.js.org/tutorials/"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Learn Storybook
+        Storybook tutorials
       </a>
        . Read more in the 
       <a
