@@ -37,7 +37,7 @@ Click on the `Docs` tab to see it:
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/docs-tab.png" width="100%" />
 </center>
 
-For more information on how it works, see the [`DocsPage` reference](./docs/docspage.md).
+For more information on how it works, see the [`DocsPage` reference](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/docspage.md).
 
 ## MDX
 
@@ -73,7 +73,7 @@ And here's how that's rendered in Storybook:
   <img src="https://raw.githubusercontent.com/storybookjs/storybook/master/addons/docs/docs/media/mdx-simple.png" width="100%" />
 </center>
 
-For more information on `MDX`, see the [`MDX` reference](./docs/mdx.md).
+For more information on `MDX`, see the [`MDX` reference](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/mdx.md).
 
 ## Framework support
 
@@ -93,7 +93,7 @@ Storybook Docs supports all view layers that Storybook supports except for React
 
 **Note:** `#` = WIP support
 
-Want to add enhanced features to your favorite framework? Check out this [dev guide](./docs/multiframework.md)
+Want to add enhanced features to your favorite framework? Check out this [dev guide](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/multiframework.md)
 
 ## Installation
 
@@ -118,7 +118,7 @@ module.exports = {
 };
 ```
 
-If using in conjunction with the [storyshots add-on](../storyshots/storyshots-core/README.md), you will need to
+If using in conjunction with the [storyshots add-on](https://github.com/storybookjs/storybook/blob/next/addons/storyshots/storyshots-core/README.md), you will need to
 configure Jest to transform MDX stories into something Storyshots can understand:
 
 Add the following to your Jest configuration:
@@ -134,12 +134,12 @@ Add the following to your Jest configuration:
 
 ### Be sure to check framework specific installation needs
 
-- [React](./react) (covered here)
-- [Vue](./vue)
-- [Angular](./angular)
-- [Ember](./ember)
-- [Web Components](./web-components)
-- [Common setup (all other frameworks)](./common)
+- [React](https://github.com/storybookjs/storybook/tree/next/addons/docs/react) (covered here)
+- [Vue](https://github.com/storybookjs/storybook/tree/next/addons/docs/vue)
+- [Angular](https://github.com/storybookjs/storybook/tree/next/addons/docs/angular)
+- [Ember](https://github.com/storybookjs/storybook/tree/next/addons/docs/ember)
+- [Web Components](https://github.com/storybookjs/storybook/tree/next/addons/docs/web-components)
+- [Common setup (all other frameworks)](https://github.com/storybookjs/storybook/tree/next/addons/docs/common)
 
 ## Preset options
 
@@ -226,12 +226,12 @@ addParameters({
 
 ## TypeScript configuration
 
-As of SB6 [TypeScript is zero-config](https://storybook.js.org/docs/react/configure/typescript) and should work with SB Docs out of the box. For advanced configuration options, refer to the [Props documentation](./docs/props-tables.md).
+As of SB6 [TypeScript is zero-config](https://storybook.js.org/docs/react/configure/typescript) and should work with SB Docs out of the box. For advanced configuration options, refer to the [Props documentation](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/props-tables.md).
 
 ## More resources
 
 Want to learn more? Here are some more articles on Storybook Docs:
 
-- References: [DocsPage](./docs/docspage.md) / [MDX](./docs/mdx.md) / [FAQ](./docs/faq.md) / [Recipes](./docs/recipes.md) / [Theming](./docs/theming.md) / [Props](./docs/props-tables.md)
+- References: [DocsPage](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/docspage.md) / [MDX](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/mdx.md) / [FAQ](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/faq.md) / [Recipes](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/recipes.md) / [Theming](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/theming.md) / [Props](https://github.com/storybookjs/storybook/tree/next/addons/docs/docs/props-tables.md)
 - Announcements: [Vision](https://medium.com/storybookjs/storybook-docs-sneak-peak-5be78445094a) / [DocsPage](https://medium.com/storybookjs/storybook-docspage-e185bc3622bf) / [MDX](https://medium.com/storybookjs/rich-docs-with-storybook-mdx-61bc145ae7bc) / [Framework support](https://medium.com/storybookjs/storybook-docs-for-new-frameworks-b1f6090ee0ea)
 - Example: [Storybook Design System](https://github.com/storybookjs/design-system)
