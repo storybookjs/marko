@@ -30,6 +30,11 @@ Usage: start-storybook [options]
 | --no-dll                       | Do not use dll reference (no-op)                                                                                                               | `start-storybook --no-dll`                      |
 | --debug-webpack                | Display final webpack configurations for debugging purposes                                                                                    | `start-storybook --debug-webpack`               |
 | --docs                         | Starts Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#preview-storybooks-documentation) | `start-storybook --docs`                        |
+| --no-manager-cache             | Disables Storybook's manager caching mechanism. See note below.                                                                                 | `start-storybook --no-manager-cache`            |
+
+<div class="aside">
+💡 <strong>NOTE</strong>: Use the <code>--no-manager-cache</code> flag with caution. As it disables the internal caching mechanism and can severely impact your Storybook's loading time.
+</div>
 
 ## build-storybook
 
@@ -60,3 +65,7 @@ Usage: build-storybook [options]
 | --no-dll                       | Do not use dll reference (no-op)                                                                                                                | `build-storybook --no-dll`                  |
 | --debug-webpack                | Display final webpack configurations for debugging purposes                                                                                     | `build-storybook --debug-webpack`           |
 | --docs                         | Builds Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#publish-storybooks-documentation)) | `build-storybook --docs`                    |
+
+<div class="aside">
+💡 <strong>NOTE</strong>: If you're using npm instead of yarn to publish Storybook, the commands work slightly different. For example, <code>npm run build-storybook -- -o ./path/to/build</code>.
+</div>
