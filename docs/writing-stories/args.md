@@ -2,7 +2,7 @@
 title: 'Args'
 ---
 
-A story is a component with a set of arguments (props, slots, inputs, etc). “Args” are Storybook’s mechanism for defining those arguments as a first class entity that’s machine readable. This allows Storybook and its addons to live edit components. You _do not_ need to change your underlying component code to use args.
+A story is a component with a set of arguments that define how the component is to be rendered. “Args” are Storybook’s mechanism for defining those arguments in a single JavaScript object. Args can be used to dynamically change props, slots, styles, inputs, etc. This allows Storybook and its addons to live edit components. You _do not_ need to change your underlying component code to use args.
 
 When an arg’s value is changed, the component re-renders, allowing you to interact with components in Storybook’s UI via addons that affect args.
 
@@ -100,6 +100,23 @@ Args are useful when writing stories for composite components that are assembled
 
 <!-- prettier-ignore-end -->
 
+## Args can modify any aspect of your component
+
+Args are used in story templates to configure the component appearance just as you would in an application. Here’s an example of how a `footer` arg can be used to populate a child component.
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/page-story-slots.js.mdx',
+    'react/page-story-slots.ts.mdx',
+    'vue/page-story-slots.2.js.mdx',
+    'vue/page-story-slots.3.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 ## Setting args through the URL
 
 Initial args for the currently active story can be overruled by setting the `args` query parameter on the URL. Typically, you would use the Controls addon to handle this automatically, but you can also manually tweak the URL if desired. An example of Storybook URL query params could look like this:
@@ -148,7 +165,7 @@ In Storybook 5 and before we passed the context as the first argument. If you’
 
 <!-- prettier-ignore-start -->
 
-<CodeSnippets 
+<CodeSnippets
   paths={[
     'common/storybook-preview-parameters-old-format.js.mdx'
   ]}
@@ -157,8 +174,8 @@ In Storybook 5 and before we passed the context as the first argument. If you’
 <!-- prettier-ignore-end -->
 
   <div class="aside">
-  
-  Note that `args` is still available as a key on the context.
-  
+
+Note that `args` is still available as a key on the context.
+
   </div>
 </details>
