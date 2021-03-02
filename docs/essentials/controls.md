@@ -147,6 +147,18 @@ As they can be complex cases:
 
 <!-- prettier-ignore-end -->
 
+Use customized options: 
+
+<!-- <!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-custom-args-complex-object.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
 Or even with certain types of elements, such as icons:
 
 <!-- prettier-ignore-start -->

@@ -1,0 +1,22 @@
+```js
+// YourComponent.stories.js | YourComponent.stories.ts
+
+import { YourComponent } from './your-component';
+
+export default {
+  component: YourComponent,
+  title: 'A complex case with a complex options object',
+  //👇 Creates specific argTypes with options
+  argTypes: {
+    someProp: {
+      control: {
+        type: 'select',
+        options: {
+          label1: { item1: true, item2: 1 },
+          'label 2 with spaces': { item1: false, item2: 3 },
+        },
+      },
+    },
+  },
+};
+```
