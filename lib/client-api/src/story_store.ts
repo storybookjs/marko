@@ -384,6 +384,17 @@ export default class StoryStore {
 
     const finalStoryFn = (context: StoryContext) => {
       const { passArgsFirst = true } = context.parameters;
+      if (context.args) {
+        const mapped = {
+          ...context,
+          args: Object.entries(context.args).reduce((acc, [key, val]) => {
+            const { mapping } = context.argTypes?.[key] || {};
+            acc[key] = mapping && val in mapping ? mapping[val] : val;
+            return acc;
+          }, {} as Args),
+        };
+        return passArgsFirst ? (original as ArgsStoryFn)(mapped.args, mapped) : original(mapped);
+      }
       return passArgsFirst ? (original as ArgsStoryFn)(context.args, context) : original(context);
     };
 
