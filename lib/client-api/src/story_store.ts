@@ -9,7 +9,7 @@ import deprecate from 'util-deprecate';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
-import { logger } from '@storybook/client-logger';
+import { logger, once } from '@storybook/client-logger';
 import {
   Comparator,
   Parameters,
@@ -383,19 +383,32 @@ export default class StoryStore {
     const loaders = [...this._globalMetadata.loaders, ...kindMetadata.loaders, ...storyLoaders];
 
     const finalStoryFn = (context: StoryContext) => {
-      const { passArgsFirst = true } = context.parameters;
-      if (context.args) {
+      const { args, argTypes, parameters } = context;
+      if (
+        argTypes &&
+        Object.values(argTypes).some(({ control }) => {
+          if (!control?.options) return false;
+          return Object.values(control.options).some((v: any) => v && typeof v === 'object');
+        })
+      ) {
+        once.warn(
+          'Objects cannot be used as values in control options. Use a `mapping` instead.\n\nMore info: https://storybook.js.org/docs/react/writing-stories/args#mapping-to-complex-arg-values'
+        );
+      }
+
+      const { passArgsFirst = true } = parameters;
+      if (args) {
         const mapped = {
           ...context,
-          args: Object.entries(context.args).reduce((acc, [key, val]) => {
-            const { mapping } = context.argTypes?.[key] || {};
+          args: Object.entries(args).reduce((acc, [key, val]) => {
+            const { mapping } = argTypes?.[key] || {};
             acc[key] = mapping && val in mapping ? mapping[val] : val;
             return acc;
           }, {} as Args),
         };
         return passArgsFirst ? (original as ArgsStoryFn)(mapped.args, mapped) : original(mapped);
       }
-      return passArgsFirst ? (original as ArgsStoryFn)(context.args, context) : original(context);
+      return passArgsFirst ? (original as ArgsStoryFn)(args, context) : original(context);
     };
 
     // lazily decorate the story when it's loaded
