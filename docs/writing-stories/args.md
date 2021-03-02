@@ -131,17 +131,27 @@ argTypes: {
   label: {
     control: {
       type: 'select',
-      options: ['Normal', 'Bold', 'Italic'],
+      options: ['Normal', 'Bold', 'Italic']
     },
     mapping: {
       Bold: <b>Bold</b>,
-      Italic: <i>Italic</i>,
-    },
-  },
-},
+      Italic: <i>Italic</i>
+    }
+  }
+}
 ```
 
-Note that `mapping` does not have to be exhaustive. If the arg value is not a property of `mapping`, the value will be used directly. Keys in `mapping` always correspond to arg *values*, even when `options` is an object.
+Note that `mapping` does not have to be exhaustive. If the arg value is not a property of `mapping`, the value will be used directly. Keys in `mapping` always correspond to arg *values*, even when `options` is an object. Specifying `options` as an object (key-value pairs) is useful if you want to use special characters in the input label. For example:
+
+```
+{
+  control: {
+    type: 'select',
+    options: { да: 'yes', нет: 'no' }
+  },
+  mapping: { yes: 'да', no: 'нет' }
+}
+```
 
 <details>
 <summary>Using args in addons</summary>
