@@ -1,7 +1,8 @@
 <script>
-  export let storyFn;
-
-  let { Component: component, props } = storyFn();
+  export let storyContext;
+  export let unboundStoryFn;
+      
+  let { Component: component, props } = unboundStoryFn(storyContext);
 </script>
 
 <svelte:component this={component} {...props}/>
