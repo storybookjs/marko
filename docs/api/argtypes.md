@@ -87,7 +87,7 @@ In particular, this would render a row with a modified description, a type displ
 
 <div class="aside">
 
-NOTE: Just as it happens with other properties (such as `args`), `argTypes` can be overridden in a single story.
+As it happens with other properties such as `args`, `argTypes` can be overridden in a single story.
 
 </div>
 
