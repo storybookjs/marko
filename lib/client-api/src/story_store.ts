@@ -9,7 +9,7 @@ import deprecate from 'util-deprecate';
 
 import { Channel } from '@storybook/channels';
 import Events from '@storybook/core-events';
-import { logger, once } from '@storybook/client-logger';
+import { logger } from '@storybook/client-logger';
 import {
   Comparator,
   Parameters,
@@ -384,18 +384,6 @@ export default class StoryStore {
 
     const finalStoryFn = (context: StoryContext) => {
       const { args, argTypes, parameters } = context;
-      if (
-        argTypes &&
-        Object.values(argTypes).some(({ control }) => {
-          if (!control?.options) return false;
-          return Object.values(control.options).some((v: any) => v && typeof v === 'object');
-        })
-      ) {
-        once.warn(
-          'Objects cannot be used as values in control options. Use a `mapping` instead.\n\nMore info: https://storybook.js.org/docs/react/writing-stories/args#mapping-to-complex-arg-values'
-        );
-      }
-
       const { passArgsFirst = true } = parameters;
       if (args) {
         const mapped = {
