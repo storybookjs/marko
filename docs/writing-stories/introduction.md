@@ -58,6 +58,12 @@ Use the _named_ exports of a CSF file to define your component’s stories. We r
 
 <!-- prettier-ignore-end -->
 
+<div class="aside">
+
+💡 <strong>Note</strong>: Using framework specific elements such as [React Hooks](https://reactjs.org/docs/hooks-intro.html) alongside your stories is a perfectly valid approach, but should be used as an advanced use case. We <strong>recommend</strong> using [args](./args.md) as much as possible when writing your own stories.
+
+</div>
+
 ### Rename stories
 
 You can rename any particular story you need. For instance to give it a clearer name. Here's how you can change the name of the `Primary` story:
