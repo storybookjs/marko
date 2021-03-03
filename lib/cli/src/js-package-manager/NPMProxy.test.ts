@@ -22,26 +22,56 @@ describe('NPM Proxy', () => {
   });
 
   describe('installDependencies', () => {
-    it('should run `npm install`', () => {
-      const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('');
+    describe('npm6', () => {
+      it('should run `npm install`', () => {
+        const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('6.0.0');
 
-      npmProxy.installDependencies();
+        npmProxy.installDependencies();
 
-      expect(executeCommandSpy).toHaveBeenCalledWith('npm', ['install'], expect.any(String));
+        expect(executeCommandSpy).toHaveBeenLastCalledWith('npm', ['install'], expect.any(String));
+      });
+    });
+    describe('npm7', () => {
+      it('should run `npm install --legacy-peer-deps`', () => {
+        const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('7.1.0');
+
+        npmProxy.installDependencies();
+
+        expect(executeCommandSpy).toHaveBeenLastCalledWith(
+          'npm',
+          ['install', '--legacy-peer-deps'],
+          expect.any(String)
+        );
+      });
     });
   });
 
   describe('addDependencies', () => {
-    it('with devDep it should run `npm install -D @storybook/addons`', () => {
-      const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('');
+    describe('npm6', () => {
+      it('with devDep it should run `npm install -D @storybook/addons`', () => {
+        const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('6.0.0');
 
-      npmProxy.addDependencies({ installAsDevDependencies: true }, ['@storybook/addons']);
+        npmProxy.addDependencies({ installAsDevDependencies: true }, ['@storybook/addons']);
 
-      expect(executeCommandSpy).toHaveBeenCalledWith(
-        'npm',
-        ['install', '-D', '@storybook/addons'],
-        expect.any(String)
-      );
+        expect(executeCommandSpy).toHaveBeenLastCalledWith(
+          'npm',
+          ['install', '-D', '@storybook/addons'],
+          expect.any(String)
+        );
+      });
+    });
+    describe('npm7', () => {
+      it('with devDep it should run `npm install -D @storybook/addons`', () => {
+        const executeCommandSpy = jest.spyOn(npmProxy, 'executeCommand').mockReturnValue('7.0.0');
+
+        npmProxy.addDependencies({ installAsDevDependencies: true }, ['@storybook/addons']);
+
+        expect(executeCommandSpy).toHaveBeenLastCalledWith(
+          'npm',
+          ['install', '--legacy-peer-deps', '-D', '@storybook/addons'],
+          expect.any(String)
+        );
+      });
     });
   });
 
