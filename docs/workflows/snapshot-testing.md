@@ -106,6 +106,8 @@ Use this table as a reference for manually specifying the framework.
 | svelte         | vue  | vue3         |
 | web-components | rax  |              |
 
+<div class="aside">
+
 **Snapshot vs visual tests**
 
 [Visual tests](./visual-testing.md) take screenshots of stories and compare them against known baselines. When used to test appearance, visual tests are often a more robust solution than snapshot tests because verifying markup doesn’t test for visual changes.
