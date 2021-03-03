@@ -1,3 +1,11 @@
+## 6.1.21 (March 3, 2021)
+
+### Bug Fixes
+
+- IE11: Transpile prettier down to ES5 ([#14047](https://github.com/storybookjs/storybook/pull/14047))
+- CLI: Add `--legacy-peer-deps` for NPM7 install ([#14106](https://github.com/storybookjs/storybook/pull/14106))
+- SyntaxHighlighter: Safely access clipboard on global.navigator ([#14035](https://github.com/storybookjs/storybook/pull/14035))
+
 ## 6.2.0-beta.6 (March 3, 2021)
 
 ### Features
