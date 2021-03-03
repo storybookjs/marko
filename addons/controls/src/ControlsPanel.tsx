@@ -1,4 +1,5 @@
 import React, { FC, useEffect } from 'react';
+import dedent from 'ts-dedent';
 import { useArgs, useArgTypes, useParameter } from '@storybook/api';
 import { once } from '@storybook/client-logger';
 import { ArgsTable, NoControlsWarning } from '@storybook/components';
@@ -25,9 +26,11 @@ export const ControlsPanel: FC = () => {
         Object.values(options).some((v) => !['boolean', 'number', 'string'].includes(typeof v))
       )
     ) {
-      once.warn(
-        'Only primitives are supported as values in control options. Use a `mapping` for complex values.\n\nMore info: https://storybook.js.org/docs/react/writing-stories/args#mapping-to-complex-arg-values'
-      );
+      once.warn(dedent`
+        Only primitives are supported as values in control options. Use a 'mapping' for complex values.
+
+        More info: https://storybook.js.org/docs/react/writing-stories/args#mapping-to-complex-arg-values
+      `);
     }
   }, [rows]);
 

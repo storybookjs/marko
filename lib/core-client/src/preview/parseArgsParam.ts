@@ -1,4 +1,5 @@
 import qs from 'qs';
+import dedent from 'ts-dedent';
 import { Args } from '@storybook/addons';
 import { once } from '@storybook/client-logger';
 import isPlainObject from 'lodash/isPlainObject';
@@ -34,9 +35,11 @@ export const parseArgsParam = (argsString: string): Args => {
   const parts = argsString.split(';').map((part) => part.replace('=', '~').replace(':', '='));
   return Object.entries(qs.parse(parts.join(';'), QS_OPTIONS)).reduce((acc, [key, value]) => {
     if (validateArgs(key, value)) return Object.assign(acc, { [key]: value });
-    once.warn(
-      'Omitted potentially unsafe URL args.\n\nMore info: https://storybook.js.org/docs/react/writing-stories/args#setting-args-through-the-url'
-    );
+    once.warn(dedent`
+      Omitted potentially unsafe URL args.
+
+      More info: https://storybook.js.org/docs/react/writing-stories/args#setting-args-through-the-url
+    `);
     return acc;
   }, {} as Args);
 };
