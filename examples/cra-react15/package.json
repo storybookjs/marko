@@ -1,6 +1,6 @@
 {
   "name": "cra-react15",
-  "version": "6.2.0-beta.5",
+  "version": "6.2.0-beta.6",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -18,13 +18,13 @@
     "react-scripts": "3.4.4"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "6.2.0-beta.5",
-    "@storybook/addon-links": "6.2.0-beta.5",
-    "@storybook/addons": "6.2.0-beta.5",
-    "@storybook/builder-webpack4": "6.2.0-beta.5",
+    "@storybook/addon-actions": "6.2.0-beta.6",
+    "@storybook/addon-links": "6.2.0-beta.6",
+    "@storybook/addons": "6.2.0-beta.6",
+    "@storybook/builder-webpack4": "6.2.0-beta.6",
     "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
-    "@storybook/react": "6.2.0-beta.5",
-    "@storybook/theming": "6.2.0-beta.5",
+    "@storybook/react": "6.2.0-beta.6",
+    "@storybook/theming": "6.2.0-beta.6",
     "babel-core": "6",
     "babel-runtime": "6",
     "webpack": "4"
