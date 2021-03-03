@@ -49,6 +49,7 @@ Use the _named_ exports of a CSF file to define your component’s stories. We r
   paths={[
     'react/button-story.js.mdx',
     'react/button-story.ts.mdx',
+    'react/button-story.with-hooks.js.mdx',
     'vue/button-story.js.mdx',
     'angular/button-story.ts.mdx',
     'svelte/button-story.js.mdx',
@@ -56,6 +57,12 @@ Use the _named_ exports of a CSF file to define your component’s stories. We r
 />
 
 <!-- prettier-ignore-end -->
+
+<div class="aside">
+
+💡 <strong>Note</strong>: Using framework specific elements such as [React Hooks](https://reactjs.org/docs/hooks-intro.html) alongside your stories is a perfectly valid approach, but should be used as an advanced use case. We <strong>recommend</strong> using [args](./args.md) as much as possible when writing your own stories.
+
+</div>
 
 ### Rename stories
 
