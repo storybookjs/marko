@@ -12,6 +12,8 @@ export default {
 const Template = (args, { argTypes }) => ({
   components: { Button },
   props: Object.keys(argTypes),
+  // Storybook provides all the args in a $props variable.
+  // Each arg is also available as their own name.
   template: '<Button v-bind="$props" v-on="$props" />',
 });
 

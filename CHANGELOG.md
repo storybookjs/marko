@@ -1,16 +1,39 @@
+## 6.1.21 (March 3, 2021)
+
+### Bug Fixes
+
+- IE11: Transpile prettier down to ES5 ([#14047](https://github.com/storybookjs/storybook/pull/14047))
+- CLI: Add `--legacy-peer-deps` for NPM7 install ([#14106](https://github.com/storybookjs/storybook/pull/14106))
+- SyntaxHighlighter: Safely access clipboard on global.navigator ([#14035](https://github.com/storybookjs/storybook/pull/14035))
+
+## 6.2.0-beta.6 (March 3, 2021)
+
+### Features
+
+- Svelte: Fix async loaders in docs panel ([#14080](https://github.com/storybookjs/storybook/pull/14080))
+
+### Bug Fixes
+
+- CLI: Add `--legacy-peer-deps` for NPM7 install ([#14106](https://github.com/storybookjs/storybook/pull/14106))
+
+### Dependency Upgrades
+
+- [Security] Bump pug from 3.0.0 to 3.0.1 ([#14104](https://github.com/storybookjs/storybook/pull/14104))
+- [Security] Bump pug-code-gen from 3.0.1 to 3.0.2 ([#14105](https://github.com/storybookjs/storybook/pull/14105))
+
 ## 6.2.0-beta.5 (March 1, 2021)
 
 ### Features
 
-* Core: Add `prefix` customization for navigation items ([#13121](https://github.com/storybookjs/storybook/pull/13121))
+- Core: Add `prefix` customization for navigation items ([#13121](https://github.com/storybookjs/storybook/pull/13121))
 
 ### Maintenance
 
-* Core: Namespace sidebar config options ([#14067](https://github.com/storybookjs/storybook/pull/14067))
+- Core: Namespace sidebar config options ([#14067](https://github.com/storybookjs/storybook/pull/14067))
 
 ### Dependency Upgrades
 
-* Move back to the original react-sizeme package ([#14069](https://github.com/storybookjs/storybook/pull/14069))
+- Move back to the original react-sizeme package ([#14069](https://github.com/storybookjs/storybook/pull/14069))
 
 ## 6.2.0-beta.4 (February 26, 2021)
 

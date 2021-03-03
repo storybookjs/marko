@@ -31,9 +31,19 @@ Configure a directory (or a list of directories) where your assets live when sta
 
 ```json
 {
-    "scripts": {
-        "start-storybook": "start-storybook -s ./public -p 9001"
-    }
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public -p 9001"
+  }
+}
+```
+
+Or when building your Storybook with `build-storybook`:
+
+```json
+{
+  "scripts": {
+    "build-storybook": "build-storybook -s public"
+  }
 }
 ```
 
@@ -55,9 +65,18 @@ You can also pass a list of directories separated by commas without spaces inste
 
 ```json
 {
-    "scripts": {
-        "start-storybook": "start-storybook -s ./public,./static -p 9001"
-    }
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public,./static -p 9001"
+  }
+}
+```
+The same can be applied when you're building your Storybook.
+
+```json
+{
+  "scripts": {
+    "build-storybook": "build-storybook -s ./public,./static -p 9001"
+  }
 }
 ```
 

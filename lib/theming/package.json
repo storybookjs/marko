@@ -1,6 +1,6 @@
 {
   "name": "@storybook/theming",
-  "version": "6.2.0-beta.5",
+  "version": "6.2.0-beta.6",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -39,7 +39,7 @@
     "@emotion/core": "^10.1.1",
     "@emotion/is-prop-valid": "^0.8.6",
     "@emotion/styled": "^10.0.27",
-    "@storybook/client-logger": "6.2.0-beta.5",
+    "@storybook/client-logger": "6.2.0-beta.6",
     "core-js": "^3.8.2",
     "deep-object-diff": "^1.1.0",
     "emotion-theming": "^10.0.27",
@@ -56,5 +56,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47c4c3c9da9ba875521d21048feddc5245fecb58"
+  "gitHead": "22e2b232d5b087f1eaebd4b41484c23eeda7ad2a"
 }
