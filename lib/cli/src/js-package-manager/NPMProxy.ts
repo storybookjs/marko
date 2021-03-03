@@ -22,7 +22,7 @@ export class NPMProxy extends JsPackageManager {
     if (!this.installArgs) {
       const version = this.executeCommand('npm', ['--version']);
       this.installArgs = semver.gte(version, '7.0.0')
-        ? ['--legacy-peer-deps', 'install']
+        ? ['install', '--legacy-peer-deps']
         : ['install'];
     }
     return this.installArgs;
