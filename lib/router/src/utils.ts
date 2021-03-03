@@ -3,6 +3,7 @@ import deepEqual from 'fast-deep-equal';
 import isPlainObject from 'lodash/isPlainObject';
 import memoize from 'memoizerific';
 import qs from 'qs';
+import dedent from 'ts-dedent';
 
 export interface StoryData {
   viewMode?: string;
@@ -93,9 +94,11 @@ export const buildArgsParam = (initialArgs: Args, args: Args): string => {
 
   const object = Object.entries(update).reduce((acc, [key, value]) => {
     if (validateArgs(key, value)) return Object.assign(acc, { [key]: value });
-    once.warn(
-      'Omitted potentially unsafe URL args.\n\nMore info: https://storybook.js.org/docs/react/writing-stories/args#setting-args-through-the-url'
-    );
+    once.warn(dedent`
+      Omitted potentially unsafe URL args.
+
+      More info: https://storybook.js.org/docs/react/writing-stories/args#setting-args-through-the-url
+    `);
     return acc;
   }, {} as Args);
 
