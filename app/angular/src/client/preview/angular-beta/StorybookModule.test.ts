@@ -236,6 +236,24 @@ describe('StorybookModule', () => {
         expect(fixture.nativeElement.innerHTML).toContain('The content');
       });
     });
+
+    it('should keep template with an empty value', async () => {
+      @Component({
+        selector: 'foo',
+        template: `Should not be displayed`,
+      })
+      class FooComponent {}
+
+      const ngModule = getStorybookModuleMetadata(
+        { storyFnAngular: { template: '' }, parameters: { component: FooComponent } },
+        new BehaviorSubject({})
+      );
+
+      const { fixture } = await configureTestingModule(ngModule);
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.innerHTML).toEqual('');
+    });
   });
 
   async function configureTestingModule(ngModule: NgModule) {
