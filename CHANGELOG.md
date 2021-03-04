@@ -1,3 +1,10 @@
+## 6.2.0-beta.9 (March 4, 2021)
+
+### Bug Fixes
+
+* Core: Fix standalone API ([#14122](https://github.com/storybookjs/storybook/pull/14122))
+* Core: Fix main.ts/preview.ts handling ([#14123](https://github.com/storybookjs/storybook/pull/14123))
+
 ## 6.2.0-beta.8 (March 4, 2021)
 
 ### Features
