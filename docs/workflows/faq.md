@@ -246,3 +246,8 @@ If you don't want to run the command above frequently. Add <code>http-server</co
 ### Can I use Storybook with Vue 3
 
 Yes, Storybook support for Vue 3 is currently being finalized and will be released in version 6.2. See the [install page](../get-started/install.md) for instructions.
+
+
+### Why are my MDX stories not working in IE11?
+
+Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [writing documentation with MDX](../writing-docs/mdx.md#documentation-only-mdx) or [DocsPage](../writing-docs/docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
