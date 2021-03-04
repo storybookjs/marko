@@ -19,7 +19,7 @@ npm run build-storybook -- -o ./path/to/build
 ```
 
 <div class="aside">
-💡 <strong>Note</strong>: Be careful when running the  <code>build-storybook</code> in with the <code>-o</code> flag as you might unknowingly overwrite essential files and folders. For instance <strong>avoid</strong> running <code>build-storybook -o ./</code> as this will replace the root project contents with the output of the command. 
+💡 <strong>Note</strong>: Be careful when running the <code>build-storybook</code> command with the <code>-o</code> flag as you might unknowingly overwrite essential files and folders. For instance <strong>avoid</strong> running <code>build-storybook -o ./</code> as this will replace the root project contents with the output of the command. 
 </div>
 
 Storybook will create a static web application at the path you specify. This can be served by any web server. Try it out locally by running:

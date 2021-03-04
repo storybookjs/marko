@@ -47,9 +47,16 @@ The command above will make the following changes to your local environment:
 
 Depending on your framework, first build your app and then check that everything worked by running:
 
-```shell
-npm run storybook
-```
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-run-dev.npm.js.mdx',
+    'common/storybook-run-dev.yarn.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 It will start Storybook locally and output the address. Depending on your system configuration, it will automatically open the address in a new browser tab and you'll be greeted by a welcome screen.
 

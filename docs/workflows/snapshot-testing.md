@@ -14,6 +14,10 @@ Install the addon. **Make sure** the version of Storyshots and your project’s 
 npm i -D @storybook/addon-storyshots
 ```
 
+<div class="aside">
+💡 <strong>Note</strong>: If you're using <a href="https://yarnpkg.com/">yarn</a> as a package manager, you'll need to adjust the command accordingly. 
+</div>
+
 Configure Storyshots by adding the following test file to your project:
 
 <!-- prettier-ignore-start -->
@@ -63,6 +67,11 @@ You'll need to include the `@storybook/addon-storyshots-puppeteer` and `puppetee
 ```shell
 npm i -D @storybook/addon-storyshots-puppeteer puppeteer
 ```
+
+<div class="aside">
+💡 <strong>Note</strong>: If you're using <a href="https://yarnpkg.com/">yarn</a> as a package manager, you'll need to adjust the command accordingly. 
+</div>
+
 
 Then you'll need to change your `storybook.test.js` file to the following:
 
