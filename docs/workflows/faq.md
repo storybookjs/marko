@@ -250,4 +250,4 @@ Yes, Storybook support for Vue 3 is currently being finalized and will be releas
 
 ### Why are my MDX stories not working in IE11?
 
-Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [writing documentation with MDX](../writing-docs/mdx.md#documentation-only-mdx) or [DocsPage](../writing-docs/docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
+Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [DocsPage](../writing-docs/docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
