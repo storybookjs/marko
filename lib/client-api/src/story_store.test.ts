@@ -248,6 +248,24 @@ describe('preview.story_store', () => {
       );
     });
 
+    it('mapping changes arg values that are passed to the story in the context', () => {
+      const storyFn = jest.fn();
+      const store = new StoryStore({ channel });
+      addStoryToStore(store, 'a', '1', storyFn, {
+        argTypes: {
+          one: { mapping: { 1: 'mapped' } },
+          two: { mapping: { 1: 'no match' } },
+        },
+        args: { one: 1, two: 2, three: 3 },
+      });
+      store.getRawStory('a', '1').storyFn();
+
+      expect(storyFn).toHaveBeenCalledWith(
+        { one: 'mapped', two: 2, three: 3 },
+        expect.objectContaining({ args: { one: 'mapped', two: 2, three: 3 } })
+      );
+    });
+
     it('updateStoryArgs emits STORY_ARGS_UPDATED', () => {
       const onArgsChangedChannel = jest.fn();
       const testChannel = mockChannel();

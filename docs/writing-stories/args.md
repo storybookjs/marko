@@ -139,6 +139,37 @@ The `args` param is always a set of `key:value` pairs delimited with a semicolon
 
 Args specified through the URL will extend and override any default values of args specified on the story.
 
+## Mapping to complex arg values
+
+Complex values such as JSX elements cannot be serialized to the manager (e.g. the Controls addon) or synced with the URL. To work around this limitation, arg values can be "mapped" from a simple string to a complex type using the `mapping` property in `argTypes`. This works on any type of arg, but makes most sense when used with the 'select' control.
+
+```
+argTypes: {
+  label: {
+    control: {
+      type: 'select',
+      options: ['Normal', 'Bold', 'Italic']
+    },
+    mapping: {
+      Bold: <b>Bold</b>,
+      Italic: <i>Italic</i>
+    }
+  }
+}
+```
+
+Note that `mapping` does not have to be exhaustive. If the arg value is not a property of `mapping`, the value will be used directly. Keys in `mapping` always correspond to arg *values*, even when `options` is an object. Specifying `options` as an object (key-value pairs) is useful if you want to use special characters in the input label. For example:
+
+```
+{
+  control: {
+    type: 'select',
+    options: { да: 'yes', нет: 'no' }
+  },
+  mapping: { yes: 'да', no: 'нет' }
+}
+```
+
 <details>
 <summary>Using args in addons</summary>
 

@@ -42,16 +42,6 @@ Usage: start-storybook [options]
 Usage: build-storybook [options]
 ```
 
-<details>
-
-    <summary><h4>Troubleshooting routing issues with Storybook 6.0</h4></summary>
-
-    If you are building your Storybook and you encounter an issue where you cannot change the route in the sidebar, try building Storybook with the `--no-dll` flag and see if it solves the problem. If so, adjust your `build-storybook` script accordingly to include this flag. We would like to point out that your build process will run slower than usual when using this flag.
-
-    If you want, you can take a look at the following <a href="https://github.com/storybookjs/storybook/issues/11958"> issue </a> to get an in depth description of what is currently happening with your built Storybook.
-
-</details>
-
 | Options                        | Description                                                                                                                                     | Example                                     |
 | ------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
 | -h, --help                     | Output usage information                                                                                                                        | `build-storybook --help`                    |

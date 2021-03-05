@@ -2,6 +2,12 @@
 title: 'Doc Blocks'
 ---
 
+<div class="aside">
+
+💡 <strong>NOTE</strong>: Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [DocsPage](./docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
+
+</div>
+
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
 Custom [addons](../addons/writing-addons.md) can also provide their own doc blocks.

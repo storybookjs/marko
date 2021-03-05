@@ -21,9 +21,7 @@ npm install --save-dev @storybook/addon-essentials
 ```
 
 <div class="aside">
-  
-If you're using <a href="https://yarnpkg.com/">yarn</a>, you'll need to adjust the command accordingly.
-
+💡 <strong>Note</strong>: If you're using <a href="https://yarnpkg.com/">yarn</a> as a package manager, you'll need to adjust the command accordingly. 
 </div>
 
 Update your Storybook configuration (in `.storybook/main.js`) to include the essentials addon.

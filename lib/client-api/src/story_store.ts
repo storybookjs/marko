@@ -383,8 +383,17 @@ export default class StoryStore {
     const loaders = [...this._globalMetadata.loaders, ...kindMetadata.loaders, ...storyLoaders];
 
     const finalStoryFn = (context: StoryContext) => {
-      const { passArgsFirst = true } = context.parameters;
-      return passArgsFirst ? (original as ArgsStoryFn)(context.args, context) : original(context);
+      const { args = {}, argTypes = {}, parameters } = context;
+      const { passArgsFirst = true } = parameters;
+      const mapped = {
+        ...context,
+        args: Object.entries(args).reduce((acc, [key, val]) => {
+          const { mapping } = argTypes[key] || {};
+          acc[key] = mapping && val in mapping ? mapping[val] : val;
+          return acc;
+        }, {} as Args),
+      };
+      return passArgsFirst ? (original as ArgsStoryFn)(mapped.args, mapped) : original(mapped);
     };
 
     // lazily decorate the story when it's loaded
