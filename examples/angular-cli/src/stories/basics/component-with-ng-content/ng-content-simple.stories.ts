@@ -4,14 +4,17 @@ import { Story, Meta } from '@storybook/angular/types-6-0';
 
 @Component({
   selector: 'storybook-with-ng-content',
-  template: ` <div style="color: #1e88e5;"><ng-content></ng-content></div> `,
+  template: `Content value:
+    <div style="color: #1e88e5;"><ng-content></ng-content></div>`,
 })
 class WithNgContentComponent {}
 
 export default {
-  title: 'Basics / Component / With ng-content',
+  title: 'Basics / Component / With ng-content / Simple',
   component: WithNgContentComponent,
 } as Meta;
+
+export const OnlyComponent: Story = () => ({});
 
 export const Default: Story = () => ({
   template: `<storybook-with-ng-content><h1>This is rendered in ng-content</h1></storybook-with-ng-content>`,
