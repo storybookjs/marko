@@ -1,9 +1,16 @@
+## 6.2.0-beta.10 (March 5, 2021)
+
+### Bug Fixes
+
+- Angular: Keep story templates with an empty value ([#14113](https://github.com/storybookjs/storybook/pull/14113))
+- Core: Fix standalone API ... again ([#14140](https://github.com/storybookjs/storybook/pull/14140))
+
 ## 6.2.0-beta.9 (March 4, 2021)
 
 ### Bug Fixes
 
-* Core: Fix standalone API ([#14122](https://github.com/storybookjs/storybook/pull/14122))
-* Core: Fix main.ts/preview.ts handling ([#14123](https://github.com/storybookjs/storybook/pull/14123))
+- Core: Fix standalone API ([#14122](https://github.com/storybookjs/storybook/pull/14122))
+- Core: Fix main.ts/preview.ts handling ([#14123](https://github.com/storybookjs/storybook/pull/14123))
 
 ## 6.2.0-beta.8 (March 4, 2021)
 
