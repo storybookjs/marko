@@ -10,6 +10,7 @@
     - [Deprecated implicit PostCSS loader](#deprecated-implicit-postcss-loader)
     - [Deprecated default PostCSS plugins](#deprecated-default-postcss-plugins)
     - [Deprecated showRoots config option](#deprecated-showroots-config-option)
+    - [Deprecated control.options](#deprecated-controloptions)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
@@ -245,6 +246,33 @@ addons.setConfig({
 ```
 
 The top-level `showRoots` option will be removed in Storybook 7.0.
+
+#### Deprecated control.options
+
+Possible `options` for a radio/check/select controls has been moved up to the argType level, and no longer accepts an object. Instead, you should specify `options` as an array. You can use `control.labels` to customize labels. Additionally, you can use a `mapping` to deal with complex values.
+
+```js
+argTypes: {
+  answer:
+    options: ['yes', 'no'],
+    mapping: {
+      yes: <Check />,
+      no: <Cross />,
+    },
+    control: {
+      type: 'radio',
+      labels: {
+        yes: 'да',
+        no: 'нет',
+      }
+    }
+  }
+}
+```
+
+Keys in `control.labels` as well as in `mapping` should match the values in `options`. Neither object has to be exhaustive, in case of a missing property, the option value will be used directly.
+
+If you are currently using an object as value for `control.options`, be aware that the key and value are reversed in `control.labels`.
 
 ## From version 6.0.x to 6.1.0
 

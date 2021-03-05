@@ -21,15 +21,11 @@ export const ControlsPanel: FC = () => {
   );
 
   useEffect(() => {
-    if (
-      Object.values(rows).some(({ control: { options = {} } = {} }) =>
-        Object.values(options).some((v) => !['boolean', 'number', 'string'].includes(typeof v))
-      )
-    ) {
+    if (Object.values(rows).some(({ control }) => control?.options)) {
       once.warn(dedent`
-        Only primitives are supported as values in control options. Use a 'mapping' for complex values.
+        'control.options' is deprecated and will be removed in Storybook 7.0. Define 'options' directly on the argType instead, and use 'control.labels' for custom labels.
 
-        More info: https://storybook.js.org/docs/react/writing-stories/args#mapping-to-complex-arg-values
+        More info: https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-controloptions
       `);
     }
   }, [rows]);
