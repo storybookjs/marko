@@ -53,6 +53,3 @@ Or even apply it to specific stories like so:
 />
 
 <!-- prettier-ignore-end -->
-
-
-If you want to use your own styles, or require a more granular approach we recommend using [decorators](../writing-stories/decorators.md) instead.
