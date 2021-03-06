@@ -584,7 +584,31 @@ initStoryshots({
 
 ### `framework`
 
-If you are running tests from outside of your app's directory, storyshots' detection of which framework you are using may fail. Pass `"react"` or `"react-native"` to short-circuit this.
+If you are running tests from outside of your app's directory, storyshots' detection of which framework you are using may fail. Pass `"react"` or `"react-native"` to short-circuit this. 
+
+For example:
+```js
+// storybook.test.js
+
+import path from 'path';
+import initStoryshots from '@storybook/addon-storyshots';
+
+initStoryshots({
+  framework: 'react', // Manually specify the project's framework
+  configPath: path.join(__dirname, '.storybook'),
+  integrityOptions: { cwd: path.join(__dirname, 'src', 'stories') },
+  // Other configurations
+});
+```
+
+Use this table as a reference for manually specifying the framework.
+
+| angular        | html | preact       |
+|----------------|------|--------------|
+| react          | riot | react-native |
+| svelte         | vue  | vue3         |
+| web-components | rax  |              |
+
 
 ### `test`
 

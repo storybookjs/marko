@@ -243,10 +243,24 @@ npx http-server storybook-static
 If you don't want to run the command above frequently. Add <code>http-server</code> as a development dependency and create a new script to preview your production build of Storybook.
 </div>
 
-### Can I use Storybook with Vue 3
+### Can I use Storybook with Vue 3?
 
 Yes, Storybook support for Vue 3 is currently being finalized and will be released in version 6.2. See the [install page](../get-started/install.md) for instructions.
 
+
+### Is snapshot testing with Storyshots supported for Vue 3?
+
+Yes, if you're using Vue 3 in your project you can use the [`Storyshots addon`](https://www.npmjs.com/package/@storybook/addon-storyshots). You'll need to adjust your `config` object and manually specify the framework. 
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-storyshots-custom-framework.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
 
 ### Why are my MDX stories not working in IE11?
 
