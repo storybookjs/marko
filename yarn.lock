@@ -31556,10 +31556,10 @@ svelte@^3.31.2:
   resolved "https://registry.yarnpkg.com/svelte/-/svelte-3.32.3.tgz#db0c50c65573ecffe4e2f4924e4862d8f9feda74"
   integrity sha512-5etu/wDwtewhnYO/631KKTjSmFrKohFLWNm1sWErVHXqGZ8eJLqrW0qivDSyYTcN8GbUqsR4LkIhftNFsjNehg==
 
-sveltedoc-parser@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/sveltedoc-parser/-/sveltedoc-parser-3.0.5.tgz#f3d9fe73f3dc9bc07c3dae75318e11cce814c063"
-  integrity sha512-oGBtSvmOGYSfFHYMWOvubjygcXdTxDDToxURYXLJwUcjPMMIgxApi4hwi7DOKz/l68Gl52VaYjSdCNAnRKWaWg==
+sveltedoc-parser@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/sveltedoc-parser/-/sveltedoc-parser-4.1.0.tgz#4fddfcd917ae11e2f05bcabbc38c8de63124461e"
+  integrity sha512-m+NUJaKvVIySRnI19ujYEptxIOHwVvTU2GLKZBVqVQ+zZCrOv/H2F4VtRcjhNKQ/Vd+r7WakxfuUTGxNNdMU3A==
   dependencies:
     eslint "7.6.0"
     espree "7.2.0"

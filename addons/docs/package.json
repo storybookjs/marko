@@ -138,7 +138,7 @@
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
     "svelte": "^3.31.2",
-    "sveltedoc-parser": "^3.0.4",
+    "sveltedoc-parser": "^4.1.0",
     "vue": "^2.6.10 || ^3.0.0",
     "webpack": "*"
   },
