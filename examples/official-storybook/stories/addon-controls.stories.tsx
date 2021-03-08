@@ -11,7 +11,8 @@ export default {
     imageUrls: { control: { type: 'file', accept: '.png' }, name: 'Image Urls' },
     label: {
       name: 'Label',
-      control: { type: 'select', options: ['Plain', 'Bold'] },
+      options: ['Plain', 'Bold'],
+      control: { type: 'select', labels: { Bold: 'BOLD' } },
       mapping: { Bold: <b>Bold</b> },
     },
   },
