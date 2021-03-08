@@ -1,3 +1,13 @@
+## 6.2.0-beta.11 (March 9, 2021)
+
+### Bug Fixes
+
+* React: Fix fast refresh socket connection error ([#14165](https://github.com/storybookjs/storybook/pull/14165))
+
+### Dependency Upgrades
+
+* Update sveltedoc-parser to 4.1.0 ([#14164](https://github.com/storybookjs/storybook/pull/14164))
+
 ## 6.2.0-beta.10 (March 5, 2021)
 
 ### Bug Fixes
@@ -49,7 +59,7 @@ Failed publish
 
 ### Features
 
-- Core: Add `prefix` customization for navigation items ([#13121](https://github.com/storybookjs/storybook/pull/13121))
+- Core: Add `renderLabel` to customize sidebar tree labels ([#13121](https://github.com/storybookjs/storybook/pull/13121))
 
 ### Maintenance
 
