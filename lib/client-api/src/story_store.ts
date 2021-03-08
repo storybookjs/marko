@@ -33,7 +33,7 @@ import {
   StoreSelectionSpecifier,
   StoreSelection,
 } from './types';
-import { combineArgs, mapArgsToTypes } from './args';
+import { combineArgs, mapArgsToTypes, validateOptions } from './args';
 import { HooksContext } from './hooks';
 import { storySort } from './storySort';
 import { combineParameters } from './parameters';
@@ -220,7 +220,7 @@ export default class StoryStore {
     const stories = this.sortedStories();
     let foundStory;
     if (this._selectionSpecifier && !this._selection) {
-      const { storySpecifier, viewMode, args } = this._selectionSpecifier;
+      const { storySpecifier, viewMode, args: urlArgs } = this._selectionSpecifier;
 
       if (storySpecifier === '*') {
         // '*' means select the first story. If there is none, we have no selection.
@@ -239,10 +239,11 @@ export default class StoryStore {
       }
 
       if (foundStory) {
-        if (args && foundStory.args) {
-          const mappedUrlArgs = mapArgsToTypes(args, foundStory.argTypes);
+        if (urlArgs) {
+          const mappedUrlArgs = mapArgsToTypes(urlArgs, foundStory.argTypes);
           foundStory.args = combineArgs(foundStory.args, mappedUrlArgs);
         }
+        foundStory.args = validateOptions(foundStory.args, foundStory.argTypes);
         this.setSelection({ storyId: foundStory.id, viewMode });
         this._channel.emit(Events.STORY_SPECIFIED, { storyId: foundStory.id, viewMode });
       }
