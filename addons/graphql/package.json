@@ -65,7 +65,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "50cd75edcdf233ac05231f8f0a95643e6e2b52a3",
+  "gitHead": "8a25609d3080e5d1ba14d8e7111626d4770d5740",
   "storybook": {
     "displayName": "GraphiQL IDE",
     "icon": "https://pbs.twimg.com/profile_images/618131103509909504/VQLBJ0TR_400x400.png",
