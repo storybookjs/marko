@@ -59,7 +59,7 @@ Failed publish
 
 ### Features
 
-- Core: Add `prefix` customization for navigation items ([#13121](https://github.com/storybookjs/storybook/pull/13121))
+- Core: Add `renderLabel` to customize sidebar tree labels ([#13121](https://github.com/storybookjs/storybook/pull/13121))
 
 ### Maintenance
 
