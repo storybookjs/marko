@@ -27,4 +27,4 @@ You can also create free-form pages for each component using [MDX](./mdx.md), a 
 
 In both cases, you’ll use [Doc Blocks](./doc-blocks.md) as the building blocks to create full featured documentation.
 
-Docs is autoconfigured to work out of the box in most use cases. In some cases you may need or want to tweak the configuration. Read more about it in the [readme](../../addons/docs/README.md).
+Docs is autoconfigured to work out of the box in most use cases. In some cases you may need or want to tweak the configuration. Read more about it [here](https://storybook.js.org/addons/@storybook/addon-docs).
