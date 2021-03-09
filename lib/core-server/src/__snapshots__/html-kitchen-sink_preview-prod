@@ -14,7 +14,6 @@ Object {
     "ROOT/addons/actions/dist/esm/preset/addArgs.js-generated-other-entry.js",
     "ROOT/addons/backgrounds/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/addons/backgrounds/dist/esm/preset/addParameter.js-generated-other-entry.js",
-    "ROOT/addons/controls/dist/esm/preset/addParameter.js-generated-other-entry.js",
     "ROOT/addons/knobs/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/addons/links/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/examples/html-kitchen-sink/.storybook/preview.js-generated-config-entry.js",
