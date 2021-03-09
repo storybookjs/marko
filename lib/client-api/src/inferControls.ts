@@ -26,18 +26,8 @@ const inferControl = (argType: ArgType, name: string, matchers: ControlsMatchers
   }
 
   switch (type.name) {
-    case 'array': {
-      const { value } = type;
-      if (value?.name && ['object', 'other'].includes(value.name)) {
-        return {
-          control: {
-            type: 'object',
-            validator: (obj: any) => Array.isArray(obj),
-          },
-        };
-      }
-      return { control: { type: 'array' } };
-    }
+    case 'array':
+      return { control: { type: 'object' } };
     case 'boolean':
       return { control: { type: 'boolean' } };
     case 'string':
