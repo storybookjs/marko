@@ -1,25 +1,27 @@
 ```js
-// YourComponent.stories.js
+// Button.stories.js
 
-import startCase from 'lodash/startCase';
+import { Button } from './button';
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from './icons';
 
-import { YourComponent } from './your-component';
-import * as icons from './icons';
+const arrows = { ArrowUp, ArrowDown, ArrowLeft, ArrowRight };
 
 export default {
-  component: YourComponent,
-  title: 'My Story with Icons',
+  component: Button,
+  title: 'Button',
   argTypes: {
-    icon: {
-      // 'options' is an array of serializable values
-      options: Object.keys(icons),
-      // 'mapping' maps serializable option values to complex arg values (which can be anything)
-      mapping: icons,
+    arrow: {
+      options: Object.keys(arrows), // an array of serializable values
+      mapping: arrows, // maps serializable option values to complex arg values
       control: {
-        // type 'select' is automatically inferred when 'options' is defined
-        type: 'select',
-        // 'labels' maps option values to string labels
-        labels: Object.fromEntries(Object.keys(icons).map(key => [key, startCase(key)]))
+        type: 'select', // type 'select' is automatically inferred when 'options' is defined
+        labels: {
+          // 'labels' maps option values to string labels
+          ArrowUp: 'Up',
+          ArrowDown: 'Down',
+          ArrowLeft: 'Left',
+          ArrowRight: 'Right',
+        }
       }
     },
   },
