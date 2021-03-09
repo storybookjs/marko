@@ -2,25 +2,25 @@
 
 ### Features
 
-* Core: Hoist 'control.options', validate them in core and introduce 'control.labels' ([#14169](https://github.com/storybookjs/storybook/pull/14169))
+- Core: Hoist 'control.options', validate them in core and introduce 'control.labels' ([#14169](https://github.com/storybookjs/storybook/pull/14169))
 
 ### Bug Fixes
 
-* UI: Fix React unique key warning when using renderLabel ([#14172](https://github.com/storybookjs/storybook/pull/14172))
+- UI: Fix React unique key warning when using renderLabel ([#14172](https://github.com/storybookjs/storybook/pull/14172))
 
 ### Maintenance
 
-* Controls: Remove auto inference and add to CLI template ([#14182](https://github.com/storybookjs/storybook/pull/14182))
+- Controls: Remove auto inference and add to CLI template ([#14182](https://github.com/storybookjs/storybook/pull/14182))
 
 ## 6.2.0-beta.11 (March 9, 2021)
 
 ### Bug Fixes
 
-* React: Fix fast refresh socket connection error ([#14165](https://github.com/storybookjs/storybook/pull/14165))
+- React: Fix fast refresh socket connection error ([#14165](https://github.com/storybookjs/storybook/pull/14165))
 
 ### Dependency Upgrades
 
-* Update sveltedoc-parser to 4.1.0 ([#14164](https://github.com/storybookjs/storybook/pull/14164))
+- Update sveltedoc-parser to 4.1.0 ([#14164](https://github.com/storybookjs/storybook/pull/14164))
 
 ## 6.2.0-beta.10 (March 5, 2021)
 
