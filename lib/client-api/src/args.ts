@@ -81,16 +81,21 @@ export const validateOptions = (args: Args, argTypes: ArgTypes): Args => {
       return acc;
     }
 
-    if (args[key] === undefined || options.includes(args[key])) {
+    const isArray = Array.isArray(args[key]);
+    const invalidIndex = isArray && args[key].findIndex((val: any) => !options.includes(val));
+    const isValidArray = isArray && invalidIndex === -1;
+
+    if (args[key] === undefined || options.includes(args[key]) || isValidArray) {
       acc[key] = args[key];
       return acc;
     }
 
-    once.warn(
-      `Received illegal value for '${key}'. Supported options: ${options
-        .map((opt: any) => (typeof opt === 'string' ? `'${opt}'` : String(opt)))
-        .join(', ')}`
-    );
+    const field = isArray ? `${key}[${invalidIndex}]` : key;
+    const supportedOptions = options
+      .map((opt: any) => (typeof opt === 'string' ? `'${opt}'` : String(opt)))
+      .join(', ');
+    once.warn(`Received illegal value for '${field}'. Supported options: ${supportedOptions}`);
+
     return acc;
   }, {} as Args);
 };

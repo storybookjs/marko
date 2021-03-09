@@ -163,4 +163,14 @@ describe('validateOptions', () => {
     );
     expect(once.warn).not.toHaveBeenCalled();
   });
+
+  it('supports arrays', () => {
+    expect(validateOptions({ a: [1, 2] }, { a: { options: [1, 2, 3] } })).toStrictEqual({
+      a: [1, 2],
+    });
+    expect(validateOptions({ a: [1, 2, 4] }, { a: { options: [2, 3] } })).toStrictEqual({});
+    expect(once.warn).toHaveBeenCalledWith(
+      "Received illegal value for 'a[0]'. Supported options: 2, 3"
+    );
+  });
 });
