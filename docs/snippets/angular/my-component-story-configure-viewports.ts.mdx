@@ -10,18 +10,18 @@ export default {
   title: 'Stories',
   component: MyComponent, 
   parameters: {
-    // the viewports object from the Essentials addon
+    //👇 The viewports object from the Essentials addon
     viewport: {
-      // the viewports you want to use
+      /👇 The viewports you want to use
       viewports: INITIAL_VIEWPORTS,
-      // your own default viewport
+
+      //👇 Your own default viewport
       defaultViewport: 'iphone6',
     }
   },
 } as Meta;
 
 export const myStory: Story<MyComponent> = () => ({
-  component: MyComponent,
   template: '<div></div>'
 });
 myStory.parameters = {
