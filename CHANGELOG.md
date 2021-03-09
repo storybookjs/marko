@@ -1,3 +1,17 @@
+## 6.2.0-beta.12 (March 10, 2021)
+
+### Features
+
+* Core: Hoist 'control.options', validate them in core and introduce 'control.labels' ([#14169](https://github.com/storybookjs/storybook/pull/14169))
+
+### Bug Fixes
+
+* UI: Fix React unique key warning when using renderLabel ([#14172](https://github.com/storybookjs/storybook/pull/14172))
+
+### Maintenance
+
+* Controls: Remove auto inference and add to CLI template ([#14182](https://github.com/storybookjs/storybook/pull/14182))
+
 ## 6.2.0-beta.11 (March 9, 2021)
 
 ### Bug Fixes
