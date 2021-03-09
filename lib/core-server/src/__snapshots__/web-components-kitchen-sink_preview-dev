@@ -8,7 +8,6 @@ Object {
     "ROOT/examples/web-components-kitchen-sink/.storybook/storybook-init-framework-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/web-components/config.js-generated-other-entry.js",
-    "ROOT/addons/controls/dist/esm/preset/addParameter.js-generated-other-entry.js",
     "ROOT/addons/a11y/dist/esm/a11yRunner.js-generated-other-entry.js",
     "ROOT/addons/a11y/dist/esm/a11yHighlight.js-generated-other-entry.js",
     "ROOT/addons/actions/dist/esm/preset/addDecorator.js-generated-other-entry.js",

@@ -9,7 +9,6 @@ Object {
     "ROOT/addons/docs/dist/esm/frameworks/common/config.js-generated-other-entry.js",
     "ROOT/addons/docs/dist/esm/frameworks/vue3/config.js-generated-other-entry.js",
     "ROOT/addons/links/dist/esm/preset/addDecorator.js-generated-other-entry.js",
-    "ROOT/addons/controls/dist/esm/preset/addParameter.js-generated-other-entry.js",
     "ROOT/addons/actions/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/addons/actions/dist/esm/preset/addArgs.js-generated-other-entry.js",
     "ROOT/addons/backgrounds/dist/esm/preset/addDecorator.js-generated-other-entry.js",
