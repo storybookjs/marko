@@ -1,0 +1,27 @@
+```js
+// YourComponent.stories.js
+
+import startCase from 'lodash/startCase';
+
+import { YourComponent } from './your-component';
+import * as icons from './icons';
+
+export default {
+  component: YourComponent,
+  title: 'My Story with Icons',
+  argTypes: {
+    icon: {
+      // 'options' is an array of serializable values
+      options: Object.keys(icons),
+      // 'mapping' maps serializable option values to complex arg values (which can be anything)
+      mapping: icons,
+      control: {
+        // type 'select' is automatically inferred when 'options' is defined
+        type: 'select',
+        // 'labels' maps option values to string labels
+        labels: Object.fromEntries(Object.keys(icons).map(key => [key, startCase(key)]))
+      }
+    },
+  },
+};
+```
