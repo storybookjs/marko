@@ -23,24 +23,18 @@ export const Template = ({propertyA,propertyB,...rest})=>{
     name="A complex case with a function"
     argTypes={{
       propertyA: {
-        control: {
-          type: 'select',
-          options: [
-            'Item One', 
-            'Item Two', 
-            'Item Three'
-          ],
-        },
+        options: [
+          'Item One',
+          'Item Two',
+          'Item Three'
+        ],
       },
       propertyB: {
-        control: {
-          type: 'select',
-          options: [
-            'Another Item One',
-            'Another Item Two',
-            'Another Item Three'
-          ],
-        },
+        options: [
+          'Another Item One',
+          'Another Item Two',
+          'Another Item Three'
+        ],
       },
     }}
     args={{

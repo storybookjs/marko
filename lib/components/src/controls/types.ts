@@ -54,6 +54,7 @@ export type OptionsControlType =
   | 'multi-select';
 
 export interface OptionsConfig {
+  labels: Record<any, string>;
   options: Options;
   type: OptionsControlType;
 }

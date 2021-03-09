@@ -18,16 +18,11 @@ export default {
   //👇 Creates specific argTypes with options
   argTypes: {
     propertyA: {
-      control: {
-        type: 'select',
-        options: ['Item One', 'Item Two', 'Item Three'],
-      },
+      options: ['Item One', 'Item Two', 'Item Three'],
+      control: { type: 'select' } // automatically inferred when 'options' is defined
     },
     propertyB: {
-      control: {
-        type: 'select',
-        options: ['Another Item One', 'Another Item Two', 'Another Item Three'],
-      },
+      options: ['Another Item One', 'Another Item Two', 'Another Item Three'],
     },
   },
 } as Meta;

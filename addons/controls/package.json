@@ -44,7 +44,6 @@
     "@storybook/addons": "6.2.0-beta.11",
     "@storybook/api": "6.2.0-beta.11",
     "@storybook/client-api": "6.2.0-beta.11",
-    "@storybook/client-logger": "6.2.0-beta.11",
     "@storybook/components": "6.2.0-beta.11",
     "@storybook/node-logger": "6.2.0-beta.11",
     "@storybook/theming": "6.2.0-beta.11",
