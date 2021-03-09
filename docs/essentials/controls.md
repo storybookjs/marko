@@ -180,12 +180,12 @@ Here is the full list of available controls you can use:
 
 | Data Type   | Control Type | Description                                                    |    Options     |
 | :---------- | :----------: | :------------------------------------------------------------- | :------------: |
-| **array**   |    array     | serialize array into a comma-separated string inside a textbox |   separator    |
-|             |     file     | a file input that gives you a array of urls                    |     accept     |
 | **boolean** |   boolean    | checkbox input                                                 |       -        |
 | **number**  |    number    | a numeric text box input                                       | min, max, step |
 |             |    range     | a range slider input                                           | min, max, step |
 | **object**  |    object    | json editor text input                                         |       -        |
+| **array**   |    object    | json editor text input                                         |       -        |
+|             |     file     | a file input that gives you a array of urls                    |     accept     |
 | **enum**    |    radio     | radio buttons input                                            |       -        |
 |             | inline-radio | inline radio buttons input                                     |       -        |
 |             |    check     | multi-select checkbox input                                    |       -        |
