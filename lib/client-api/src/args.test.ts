@@ -147,20 +147,20 @@ describe('validateOptions', () => {
     expect(validateOptions({ a: 1 }, { a: {} })).toStrictEqual({ a: 1 });
   });
 
-  it('ignores options and warns if options is not an array', () => {
+  it('ignores options and logs an error if options is not an array', () => {
     expect(validateOptions({ a: 1 }, { a: { options: { 2: 'two' } } })).toStrictEqual({ a: 1 });
-    expect(once.warn).toHaveBeenCalledWith(
+    expect(once.error).toHaveBeenCalledWith(
       expect.stringContaining("Invalid argType: 'a.options' should be an array")
     );
   });
 
-  it('warns if options contains non-primitive values', () => {
-    validateOptions({ a: { one: 1 } }, { a: { options: [{ one: 1 }, { two: 2 }] } });
-    expect(once.warn).toHaveBeenCalledWith(
+  it('logs an error if options contains non-primitive values', () => {
+    expect(
+      validateOptions({ a: { one: 1 } }, { a: { options: [{ one: 1 }, { two: 2 }] } })
+    ).toStrictEqual({ a: { one: 1 } });
+    expect(once.error).toHaveBeenCalledWith(
       expect.stringContaining("Invalid argType: 'a.options' should only contain primitives")
     );
-    expect(once.warn).toHaveBeenCalledWith(
-      "Received illegal value for 'a'. Supported options: [object Object], [object Object]"
-    );
+    expect(once.warn).not.toHaveBeenCalled();
   });
 });

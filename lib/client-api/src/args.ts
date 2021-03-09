@@ -62,7 +62,7 @@ export const validateOptions = (args: Args, argTypes: ArgTypes): Args => {
     }
 
     if (!Array.isArray(options)) {
-      once.warn(dedent`
+      once.error(dedent`
         Invalid argType: '${key}.options' should be an array.
 
         More info: https://storybook.js.org/docs/react/api/argtypes
@@ -72,11 +72,13 @@ export const validateOptions = (args: Args, argTypes: ArgTypes): Args => {
     }
 
     if (options.some((opt) => opt && ['object', 'function'].includes(typeof opt))) {
-      once.warn(dedent`
+      once.error(dedent`
         Invalid argType: '${key}.options' should only contain primitives. Use a 'mapping' for complex values.
 
         More info: https://storybook.js.org/docs/react/writing-stories/args#mapping-to-complex-arg-values
       `);
+      acc[key] = args[key];
+      return acc;
     }
 
     if (args[key] === undefined || options.includes(args[key])) {
