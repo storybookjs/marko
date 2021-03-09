@@ -20,7 +20,7 @@ export interface Root {
   isComponent: false;
   isRoot: true;
   isLeaf: false;
-  label?: React.ReactNode;
+  renderLabel?: (item: Root) => React.ReactNode;
   startCollapsed?: boolean;
 }
 
@@ -34,7 +34,7 @@ export interface Group {
   isComponent: boolean;
   isRoot: false;
   isLeaf: false;
-  label?: React.ReactNode;
+  renderLabel?: (item: Group) => React.ReactNode;
   // MDX docs-only stories are "Group" type
   parameters?: {
     docsOnly?: boolean;
@@ -53,7 +53,7 @@ export interface Story {
   isComponent: boolean;
   isRoot: false;
   isLeaf: true;
-  label?: React.ReactNode;
+  renderLabel?: (item: Story) => React.ReactNode;
   parameters?: {
     fileName: string;
     options: {
@@ -186,7 +186,7 @@ export const transformStoriesRawToStoriesHash = (
       }
 
       if (root.length && index === 0) {
-        const rootElement: Root = {
+        list.push({
           id,
           name,
           depth: index,
@@ -194,11 +194,11 @@ export const transformStoriesRawToStoriesHash = (
           isComponent: false,
           isLeaf: false,
           isRoot: true,
+          renderLabel,
           startCollapsed: collapsedRoots.includes(id),
-        };
-        list.push({ ...rootElement, label: renderLabel?.(rootElement) });
+        });
       } else {
-        const groupElement: Group = {
+        list.push({
           id,
           name,
           parent,
@@ -207,14 +207,11 @@ export const transformStoriesRawToStoriesHash = (
           isComponent: false,
           isLeaf: false,
           isRoot: false,
+          renderLabel,
           parameters: {
             docsOnly: parameters?.docsOnly,
             viewMode: parameters?.viewMode,
           },
-        };
-        list.push({
-          ...groupElement,
-          label: renderLabel?.(groupElement),
         });
       }
 
@@ -233,15 +230,15 @@ export const transformStoriesRawToStoriesHash = (
       });
     });
 
-    const story: Story = {
+    acc[item.id] = {
       ...item,
       depth: rootAndGroups.length,
       parent: rootAndGroups[rootAndGroups.length - 1].id,
       isLeaf: true,
       isComponent: false,
       isRoot: false,
+      renderLabel,
     };
-    acc[item.id] = { ...story, label: renderLabel?.(story) };
 
     return acc;
   }, {} as StoriesHash);
