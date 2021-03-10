@@ -5,7 +5,7 @@ import {
   getPreviewMainTemplate,
   loadCustomBabelConfig,
   babelConfig,
-  loadEnv,
+  loadEnvs,
   Options,
 } from '@storybook/core-common';
 
@@ -26,7 +26,7 @@ export const previewHeadTemplate = async (base: any, { configDir, presets }: Opt
 };
 
 export const env = async () => {
-  return loadEnv({ production: true }).raw;
+  return loadEnvs({ production: true }).raw;
 };
 
 export const previewBodyTemplate = async (base: any, { configDir, presets }: Options) => {
