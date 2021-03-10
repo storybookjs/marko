@@ -15,8 +15,8 @@ Pick a simple component from your project, like a Button, and write a `.stories.
     'angular/your-component.ts.mdx',
     'vue/your-component.2.js.mdx',
     'vue/your-component.3.js.mdx',
-    'svelte/your-component.js.mdx'
-    'web-components/your-component.js.mdx'
+    'svelte/your-component.js.mdx',
+    'web-components/your-component.js.mdx',
   ]}
 />
 
