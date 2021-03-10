@@ -14,7 +14,7 @@ import uiPaths from '@storybook/ui/paths';
 import readPackage from 'read-pkg-up';
 import {
   resolvePathInStorybookCache,
-  loadEnv,
+  stringifyEnvs,
   es6Transpiler,
   getManagerHeadTemplate,
   getManagerMainTemplate,
@@ -36,7 +36,7 @@ export default async ({
   releaseNotesData,
   presets,
 }: Options & ManagerWebpackOptions): Promise<Configuration> => {
-  const { raw, stringified } = loadEnv();
+  const envs = await presets.apply<Record<string, string>>('env');
   const logLevel = await presets.apply('logLevel', undefined);
   const template = await presets.apply('managerMainTemplate', getManagerMainTemplate());
 
@@ -106,8 +106,8 @@ export default async ({
       (new Dotenv({ silent: true }) as any) as WebpackPluginInstance,
       // graphql sources check process variable
       new DefinePlugin({
-        'process.env': stringified,
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        'process.env': stringifyEnvs(envs),
+        NODE_ENV: JSON.stringify(envs.NODE_ENV),
       }) as WebpackPluginInstance,
       // isProd &&
       //   BundleAnalyzerPlugin &&
@@ -148,7 +148,7 @@ export default async ({
     },
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.json', '.cjs', '.ts', '.tsx'],
-      modules: ['node_modules'].concat((raw.NODE_PATH as string[]) || []),
+      modules: ['node_modules'].concat(envs.NODE_PATH || []),
       mainFields: ['module', 'main'],
       alias: {
         ...themingPaths,
