@@ -13,6 +13,7 @@ import reactOptions from '../../../app/react/src/server/options';
 import vue3Options from '../../../app/vue3/src/server/options';
 import htmlOptions from '../../../app/html/src/server/options';
 import webComponentsOptions from '../../../app/web-components/src/server/options';
+import { outputStats } from './utils/output-stats';
 
 // this only applies to this file
 jest.setTimeout(10000);
@@ -53,6 +54,8 @@ jest.mock('@storybook/node-logger', () => ({
 jest.mock('./utils/output-startup-information', () => ({
   outputStartupInformation: jest.fn(),
 }));
+
+jest.mock('./utils/output-stats');
 
 const cache = Cache({
   basePath: resolvePathInStorybookCache('dev-server'),
@@ -183,6 +186,18 @@ describe('dev cli flags', () => {
     expect(progressPlugin(config)).toBeFalsy();
   });
 
+  it('--webpack-stats-json calls output-stats', async () => {
+    await buildDevStandalone(cliOptions);
+    expect(outputStats).not.toHaveBeenCalled();
+
+    await buildDevStandalone({ ...cliOptions, webpackStatsJson: '/tmp/dir' });
+    expect(outputStats).toHaveBeenCalledWith(
+      '/tmp/dir',
+      expect.objectContaining({}),
+      expect.objectContaining({})
+    );
+  });
+
   describe.each([
     ['root directory /', '/', "Won't remove directory '/'. Check your outputDir!"],
     ['empty string ""', '', "Won't remove current directory. Check your outputDir!"],
@@ -201,5 +216,25 @@ describe('dev cli flags', () => {
         expectedErrorMessage
       );
     });
+  });
+});
+
+describe('build cli flags', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    cache.clear();
+  });
+  const cliOptions = { ...reactOptions, ...baseOptions };
+
+  it('--webpack-stats-json calls output-stats', async () => {
+    await buildStaticStandalone(cliOptions);
+    expect(outputStats).not.toHaveBeenCalled();
+
+    await buildStaticStandalone({ ...cliOptions, webpackStatsJson: '/tmp/dir' });
+    expect(outputStats).toHaveBeenCalledWith(
+      '/tmp/dir',
+      expect.objectContaining({}),
+      expect.objectContaining({})
+    );
   });
 });

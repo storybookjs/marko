@@ -1,7 +1,7 @@
 import program, { CommanderStatic } from 'commander';
 import chalk from 'chalk';
 import { logger } from '@storybook/node-logger';
-import { CLIOptions } from '@storybook/core-common';
+import { CLIOptions, resolvePathInStorybookCache } from '@storybook/core-common';
 import { parseList, getEnvConfig, checkDeprecatedFlags } from './utils';
 
 export async function getDevCli(packageJson: {
@@ -42,6 +42,11 @@ export async function getDevCli(packageJson: {
     .option('--docs-dll', 'Use Docs dll reference (legacy)')
     .option('--ui-dll', 'Use UI dll reference (legacy)')
     .option('--debug-webpack', 'Display final webpack configurations for debugging purposes')
+    .option(
+      '--webpack-stats-json [directory]',
+      'Write Webpack Stats JSON to disk',
+      resolvePathInStorybookCache(`public/`)
+    )
     .option(
       '--preview-url [string]',
       'Disables the default storybook preview and lets your use your own'

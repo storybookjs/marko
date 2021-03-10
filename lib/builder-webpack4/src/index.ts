@@ -120,7 +120,7 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
     return;
   }
 
-  await new Promise<void>((succeed, fail) => {
+  await new Promise<Stats>((succeed, fail) => {
     compiler.run((error, stats) => {
       if (error || !stats || stats.hasErrors()) {
         logger.error('=> Failed to build the preview');
@@ -145,7 +145,7 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         stats.toJson(config.stats).warnings.forEach((e: string) => logger.warn(e));
       }
 
-      return succeed();
+      return succeed(stats);
     });
   });
 };

@@ -142,6 +142,7 @@ export interface CLIOptions {
   docsDll?: boolean;
   uiDll?: boolean;
   debugWebpack?: boolean;
+  webpackStatsJson?: string;
   outputDir?: string;
 }
 
@@ -173,7 +174,10 @@ export interface Builder<Config, Stats> {
     totalTime: ReturnType<typeof process.hrtime>;
     bail: (e?: Error) => Promise<void>;
   }>;
-  build: (arg: { options: Options; startTime: ReturnType<typeof process.hrtime> }) => Promise<void>;
+  build: (arg: {
+    options: Options;
+    startTime: ReturnType<typeof process.hrtime>;
+  }) => Promise<void | Stats>;
   bail: (e?: Error) => Promise<void>;
   corePresets?: string[];
   overridePresets?: string[];
