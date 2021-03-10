@@ -196,10 +196,12 @@ describe('presets', () => {
     expect(mockPresetFooExtendWebpack).toHaveBeenCalledWith(expect.anything(), {
       foo: 1,
       presetsList: expect.anything(),
+      presets: expect.anything(),
     });
     expect(mockPresetBarExtendBabel).toHaveBeenCalledWith(expect.anything(), {
       bar: 'a',
       presetsList: expect.anything(),
+      presets: expect.anything(),
     });
   });
 
@@ -245,6 +247,7 @@ describe('presets', () => {
         expect.objectContaining({ name: 'preset-foo' }),
         expect.objectContaining({ name: 'preset-bar' }),
       ]),
+      presets: expect.anything(),
     });
   });
 
@@ -273,6 +276,7 @@ describe('presets', () => {
                 expect.objectContaining({ name: 'preset-foo' }),
                 expect.objectContaining({ name: 'preset-bar' }),
               ]),
+              presets: expect.anything(),
             },
           },
         ],
@@ -294,6 +298,7 @@ describe('presets', () => {
         expect.objectContaining({ name: 'preset-foo' }),
         expect.objectContaining({ name: 'preset-bar' }),
       ]),
+      presets: expect.anything(),
     });
   });
 
