@@ -193,7 +193,7 @@ export default async ({
     },
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.cjs'],
-      modules: ['node_modules'].concat((raw.NODE_PATH as string[]) || []),
+      modules: ['node_modules'].concat(raw.NODE_PATH || []),
       mainFields: ['browser', 'main'],
       alias: {
         ...themingPaths,
