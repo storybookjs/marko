@@ -5,7 +5,7 @@ import { nodePathsToArray } from './paths';
 
 export function loadEnv(
   options: { production?: boolean } = {}
-): { stringified: Record<string, string>; raw: Record<string, object> } {
+): { stringified: Record<string, string>; raw: Record<string, string> } {
   const defaultNodeEnv = options.production ? 'production' : 'development';
 
   const env: Record<string, string> = {
