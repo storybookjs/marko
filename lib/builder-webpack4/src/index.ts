@@ -39,12 +39,12 @@ export const executor = {
   get: webpack,
 };
 
-export const makeStatsFromError = (err: string) =>
-  (({
+export const makeStatsFromError: (err: string) => Stats = (err) =>
+  ({
     hasErrors: () => true,
     hasWarnings: () => false,
     toJson: () => ({ warnings: [] as any[], errors: [err] }),
-  } as any) as Stats);
+  } as any);
 
 export const start: WebpackBuilder['start'] = async ({ startTime, options, router }) => {
   const config = await getConfig(options);
