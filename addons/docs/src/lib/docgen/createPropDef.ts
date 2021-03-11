@@ -25,7 +25,6 @@ function createDefaultValue(
   if (defaultValue != null) {
     const { value, computed, func } = defaultValue;
 
-    console.log(defaultValue);
 
     if (!isDefaultValueBlacklisted(value)) {
       // Work around a bug in `react-docgen-typescript-loader`, which returns 'string' for a string
