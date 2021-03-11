@@ -1,7 +1,7 @@
 import program, { CommanderStatic } from 'commander';
 import chalk from 'chalk';
 import { logger } from '@storybook/node-logger';
-import { CLIOptions, resolvePathInStorybookCache } from '@storybook/core-common';
+import { CLIOptions } from '@storybook/core-common';
 import { parseList, getEnvConfig, checkDeprecatedFlags } from './utils';
 
 export async function getDevCli(packageJson: {
