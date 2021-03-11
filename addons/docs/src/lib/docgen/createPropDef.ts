@@ -23,12 +23,17 @@ function createDefaultValue(
   type: DocgenType
 ): PropDefaultValue {
   if (defaultValue != null) {
-    const { value, computed } = defaultValue;
+    const { value, computed, func } = defaultValue;
+
 
     if (!isDefaultValueBlacklisted(value)) {
       // Work around a bug in `react-docgen-typescript-loader`, which returns 'string' for a string
       // default, instead of "'string'" -- which is incorrect (PR to RDT to follow)
-      if (typeof computed === 'undefined' && type.name === 'string') {
+      if (
+        typeof computed === 'undefined' &&
+        typeof func === 'undefined' &&
+        type.name === 'string'
+      ) {
         return createSummaryValue(JSON.stringify(value));
       }
 

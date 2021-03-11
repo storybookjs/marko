@@ -1,5 +1,7 @@
 <template>
-  <button type="button" :class="classes" @click="onClick" :style="style">{{ label }}</button>
+  <button type="button" :class="classes" @click="onClick" :style="style">
+    {{ label }} - {{ sublabel }}
+  </button>
 </template>
 
 <script lang="typescript">
@@ -13,6 +15,10 @@ export default {
     label: {
       type: String,
       required: true,
+    },
+    sublabel: {
+      type: String,
+      default: 'sublabel',
     },
     primary: {
       type: Boolean,
