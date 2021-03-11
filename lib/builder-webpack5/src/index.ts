@@ -130,7 +130,7 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
         stats.toJson({ warnings: true }).warnings.forEach((e) => logger.warn(e.message));
       }
 
-      return succeed();
+      return succeed(stats);
     });
   });
 };

@@ -17,9 +17,10 @@ import themingPaths from '@storybook/theming/paths';
 import {
   toRequireContextString,
   es6Transpiler,
-  loadEnv,
+  stringifyEnvs,
   nodeModulesPaths,
   interpolate,
+  Options,
 } from '@storybook/core-common';
 import { createBabelLoader } from './babel-loader-preview';
 
@@ -60,15 +61,15 @@ export default async ({
   frameworkPath,
   presets,
   typescriptOptions,
-}: any): Promise<Configuration> => {
+}: Options & Record<string, any>): Promise<Configuration> => {
+  const envs = await presets.apply<Record<string, string>>('env');
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {});
 
   const headHtmlSnippet = await presets.apply('previewHeadTemplate');
   const bodyHtmlSnippet = await presets.apply('previewBodyTemplate');
-  const template = await presets.apply('previewMainTemplate');
+  const template = await presets.apply<string>('previewMainTemplate');
 
-  const { raw, stringified } = loadEnv({ production: true });
   const babelLoader = createBabelLoader(babelOptions, framework);
   const isProd = configType === 'PRODUCTION';
   // TODO FIX ME - does this need to be ESM?
@@ -167,7 +168,7 @@ export default async ({
         template,
       }),
       new DefinePlugin({
-        'process.env': stringified,
+        'process.env': stringifyEnvs(envs),
         NODE_ENV: JSON.stringify(process.env.NODE_ENV),
       }),
       isProd ? null : new WatchMissingNodeModulesPlugin(nodeModulesPaths),
@@ -193,7 +194,7 @@ export default async ({
     },
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.cjs'],
-      modules: ['node_modules'].concat((raw.NODE_PATH as string[]) || []),
+      modules: ['node_modules'].concat(envs.NODE_PATH || []),
       mainFields: ['browser', 'main'],
       alias: {
         ...themingPaths,

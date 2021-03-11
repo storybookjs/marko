@@ -18,7 +18,7 @@ import themingPaths from '@storybook/theming/paths';
 
 import {
   toRequireContextString,
-  loadEnv,
+  stringifyEnvs,
   es6Transpiler,
   interpolate,
   nodeModulesPaths,
@@ -70,9 +70,8 @@ export default async ({
   const headHtmlSnippet = await presets.apply('previewHeadTemplate');
   const bodyHtmlSnippet = await presets.apply('previewBodyTemplate');
   const template = await presets.apply<string>('previewMainTemplate');
+  const envs = await presets.apply<Record<string, string>>('env');
 
-  // TODO: envs should come rom presets
-  const { raw, stringified } = loadEnv({ production: true });
   const babelLoader = createBabelLoader(babelOptions, framework);
   const isProd = configType === 'PRODUCTION';
   // TODO FIX ME - does this need to be ESM?
@@ -168,8 +167,8 @@ export default async ({
         template,
       }),
       new DefinePlugin({
-        'process.env': stringified,
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        'process.env': stringifyEnvs(envs),
+        NODE_ENV: JSON.stringify(envs.NODE_ENV),
       }),
       isProd ? null : new WatchMissingNodeModulesPlugin(nodeModulesPaths),
       isProd ? null : new HotModuleReplacementPlugin(),
@@ -194,7 +193,7 @@ export default async ({
     },
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.cjs'],
-      modules: ['node_modules'].concat((raw.NODE_PATH as string[]) || []),
+      modules: ['node_modules'].concat(envs.NODE_PATH || []),
       mainFields: isProd ? undefined : ['browser', 'main'],
       alias: {
         ...themingPaths,

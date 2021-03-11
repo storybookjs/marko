@@ -1,6 +1,6 @@
 {
   "name": "@storybook/codemod",
-  "version": "6.2.0-beta.12",
+  "version": "6.2.0-beta.13",
   "description": "A collection of codemod scripts written with JSCodeshift",
   "keywords": [
     "storybook"
@@ -39,7 +39,7 @@
   "dependencies": {
     "@mdx-js/mdx": "^1.6.22",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.2.0-beta.12",
+    "@storybook/node-logger": "6.2.0-beta.13",
     "core-js": "^3.8.2",
     "cross-spawn": "^7.0.3",
     "globby": "^11.0.2",
@@ -56,5 +56,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "2151d99b4ea5e2bdd9634055f55e05e46ab50c74"
+  "gitHead": "9b7aad4bda5a705ae6faaaaae64c0eaee4cf99c5"
 }

@@ -242,7 +242,16 @@ function applyPresets(
       const extensionFn = change;
       const context = {
         preset,
-        combinedOptions: { ...storybookOptions, ...args, ...options, presetsList: presets },
+        combinedOptions: {
+          ...storybookOptions,
+          ...args,
+          ...options,
+          presetsList: presets,
+          presets: {
+            apply: async (ext: string, c: any, a = {}) =>
+              applyPresets(presets, ext, c, a, storybookOptions),
+          },
+        },
       };
 
       return accumulationPromise.then((newConfig) =>
