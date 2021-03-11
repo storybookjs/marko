@@ -29,7 +29,7 @@ Usage: start-storybook [options]
 | --quiet                            | Suppress verbose build output                                                                                                                  | `start-storybook --quiet`                                 |
 | --no-dll                           | Do not use dll reference (no-op)                                                                                                               | `start-storybook --no-dll`                                |
 | --debug-webpack                    | Display final webpack configurations for debugging purposes                                                                                    | `start-storybook --debug-webpack`                         |
-| `--webpack-stats-json [directory]` | Write Webpack Stats JSON to disk                                                                                                               | `start-storybook --webpack-stats-json /tmp/webpack-stats` |
+| `--webpack-stats-json <directory>` | Write Webpack Stats JSON to disk                                                                                                               | `start-storybook --webpack-stats-json /tmp/webpack-stats` |
 | --docs                             | Starts Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#preview-storybooks-documentation) | `start-storybook --docs`                                  |
 | --no-manager-cache                 | Disables Storybook's manager caching mechanism. See note below.                                                                                | `start-storybook --no-manager-cache`                      |
 
@@ -55,7 +55,7 @@ Usage: build-storybook [options]
 | --quiet                            | Suppress verbose build output                                                                                                                   | `build-storybook --quiet`                                 |
 | --no-dll                           | Do not use dll reference (no-op)                                                                                                                | `build-storybook --no-dll`                                |
 | --debug-webpack                    | Display final webpack configurations for debugging purposes                                                                                     | `build-storybook --debug-webpack`                         |
-| `--webpack-stats-json [directory]` | Write Webpack Stats JSON to disk                                                                                                                | `start-storybook --webpack-stats-json /tmp/webpack-stats` |
+| `--webpack-stats-json <directory>` | Write Webpack Stats JSON to disk                                                                                                                | `start-storybook --webpack-stats-json /tmp/webpack-stats` |
 | --docs                             | Builds Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#publish-storybooks-documentation)) | `build-storybook --docs`                                  |
 
 <div class="aside">
