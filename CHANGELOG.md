@@ -1,3 +1,12 @@
+## 6.2.0-beta.14 (March 11, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Vue: Fix string docgen ([#14200](https://github.com/storybookjs/storybook/pull/14200))
+- Controls: Fix width of Select control ([#14154](https://github.com/storybookjs/storybook/pull/14154))
+- Source-loader: Revert sourcemaps ([#14199](https://github.com/storybookjs/storybook/pull/14199))
+- Core: Fix webpack stats ([#14198](https://github.com/storybookjs/storybook/pull/14198))
+
 ## 6.2.0-beta.13 (March 11, 2021)
 
 ### Features
