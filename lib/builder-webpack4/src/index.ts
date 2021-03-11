@@ -39,6 +39,13 @@ export const executor = {
   get: webpack,
 };
 
+export const makeStatsFromError: (err: string) => Stats = (err) =>
+  ({
+    hasErrors: () => true,
+    hasWarnings: () => false,
+    toJson: () => ({ warnings: [] as any[], errors: [err] }),
+  } as any);
+
 export const start: WebpackBuilder['start'] = async ({ startTime, options, router }) => {
   const config = await getConfig(options);
   const compiler = executor.get(config);
@@ -48,11 +55,7 @@ export const start: WebpackBuilder['start'] = async ({ startTime, options, route
     return {
       bail,
       totalTime: process.hrtime(startTime),
-      stats: ({
-        hasErrors: () => true,
-        hasWarngins: () => false,
-        toJson: () => ({ warnings: [] as any[], errors: [err] }),
-      } as any) as Stats,
+      stats: makeStatsFromError(err),
     };
   }
 
@@ -117,10 +120,10 @@ export const build: WebpackBuilder['build'] = async ({ options, startTime }) => 
   if (!compiler) {
     const err = `${config.name}: missing webpack compiler at runtime!`;
     logger.error(err);
-    return;
+    return Promise.resolve(makeStatsFromError(err));
   }
 
-  await new Promise<Stats>((succeed, fail) => {
+  return new Promise((succeed, fail) => {
     compiler.run((error, stats) => {
       if (error || !stats || stats.hasErrors()) {
         logger.error('=> Failed to build the preview');
