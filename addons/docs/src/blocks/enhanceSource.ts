@@ -20,6 +20,9 @@ const extract = (targetId: string, { source, locationsMap }: StorySource) => {
 
   const sanitizedStoryName = storyIdToSanitizedStoryName(targetId);
   const location = locationsMap[sanitizedStoryName];
+  if (!location) {
+    return source;
+  }
   const lines = source.split('\n');
 
   return extractSource(location, lines);
