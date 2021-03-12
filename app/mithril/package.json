@@ -1,6 +1,6 @@
 {
   "name": "@storybook/mithril",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-beta.14",
   "description": "Storybook for Mithril: Develop Mithril Component in isolation.",
   "keywords": [
     "storybook"
@@ -15,12 +15,13 @@
     "directory": "app/mithril"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
-  "types": "dist/client/index.d.ts",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -34,38 +35,39 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-transform-react-jsx": "^7.12.1",
-    "@storybook/addons": "6.2.0-alpha.5",
-    "@storybook/core": "6.2.0-alpha.5",
-    "@types/mithril": "^2.0.0",
-    "@types/webpack-env": "^1.15.3",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-transform-react-jsx": "^7.12.12",
+    "@storybook/addons": "6.2.0-beta.14",
+    "@storybook/core": "6.2.0-beta.14",
+    "@storybook/core-common": "6.2.0-beta.14",
+    "@types/mithril": "^2.0.6",
+    "@types/webpack-env": "^1.16.0",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "mithril": "^1.1.6"
+    "mithril": "^1.1.7"
   },
   "peerDependencies": {
     "@babel/core": "*",
     "mithril": "^1.1.6 || ^2.0.0"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }

@@ -8,10 +8,16 @@
   function onClick(event) {
     rounded = !rounded;
 
+    /**
+     * Click Event 
+     */
     dispatch('click', event);
   }
 
   afterUpdate(() => {
+    /**
+     * After Update
+     */
     dispatch('afterUpdate');
   });
 </script>
@@ -34,5 +40,6 @@
   <strong>{rounded ? 'Round' : 'Square'} corners</strong>
   <br />
   {text}
-  <slot />
+  <!-- Default Slot -->
+  <slot {rounded}/>
 </button>

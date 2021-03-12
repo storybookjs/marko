@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  stories: ['../src/**/*.stories.tsx'],
+  stories: ['../src/**/*.stories.@(tsx|mdx)'],
   logLevel: 'debug',
   addons: [
     '@storybook/preset-create-react-app',
@@ -20,5 +20,8 @@ module.exports = {
       }
     });
     return config;
+  },
+  core: {
+    builder: 'webpack4',
   },
 };

@@ -3,14 +3,14 @@ import path from 'path';
 import chalk from 'chalk';
 import envinfo from 'envinfo';
 import leven from 'leven';
+import { sync } from 'read-pkg-up';
 import initiate from './initiate';
 import { add } from './add';
 import { migrate } from './migrate';
 import { extract } from './extract';
 import { upgrade } from './upgrade';
 
-// Cannot be `import` as it's not under TS root dir
-const pkg = require('../package.json');
+const pkg = sync({ cwd: __dirname }).packageJson;
 
 const logger = console;
 
@@ -24,6 +24,7 @@ program
   .option('-t --type <type>', 'Add Storybook for a specific project type')
   .option('--story-format <csf | csf-ts | mdx >', 'Generate stories in a specified format')
   .option('-y --yes', 'Answer yes to all prompts')
+  .option('-b --builder <webpack4 | webpack5>', 'Builder library')
   .action((options) => initiate(options, pkg));
 
 program

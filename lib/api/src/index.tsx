@@ -23,7 +23,8 @@ import { Listener } from '@storybook/channels';
 import { createContext } from './context';
 import Store, { Options } from './store';
 import getInitialState from './initial-state';
-import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
+import type { StoriesHash, Story, Root, Group } from './lib/stories';
+import { isGroup, isRoot, isStory } from './lib/stories';
 
 import * as provider from './modules/provider';
 import * as addons from './modules/addons';
@@ -41,7 +42,9 @@ import * as globals from './modules/globals';
 
 const { ActiveTabs } = layout;
 
-export { Options as StoreOptions, Listener as ChannelListener, ActiveTabs };
+export { default as merge } from './lib/merge';
+export type { Options as StoreOptions, Listener as ChannelListener };
+export { ActiveTabs };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
 
@@ -323,17 +326,8 @@ export function useStorybookApi(): API {
   return api;
 }
 
-export {
-  ManagerConsumer as Consumer,
-  ManagerProvider as Provider,
-  StoriesHash,
-  Story,
-  Root,
-  Group,
-  isGroup,
-  isRoot,
-  isStory,
-};
+export type { StoriesHash, Story, Root, Group };
+export { ManagerConsumer as Consumer, ManagerProvider as Provider, isGroup, isRoot, isStory };
 
 export interface EventMap {
   [eventId: string]: Listener;
@@ -438,7 +432,7 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
   return useSharedState<S>(addonId, defaultState);
 }
 
-export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: [string]) => void] {
+export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: string[]) => void] {
   const { getCurrentStoryData, updateStoryArgs, resetStoryArgs } = useStorybookApi();
 
   const data = getCurrentStoryData();
@@ -447,7 +441,7 @@ export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: [string])
   return [
     args,
     (newArgs: Args) => updateStoryArgs(data as Story, newArgs),
-    (argNames?: [string]) => resetStoryArgs(data as Story, argNames),
+    (argNames?: string[]) => resetStoryArgs(data as Story, argNames),
   ];
 }
 

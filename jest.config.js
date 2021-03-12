@@ -34,6 +34,9 @@ module.exports = {
     '<rootDir>/examples/angular-cli',
     '<rootDir>/examples/preact-kitchen-sink',
     '<rootDir>/examples/rax-kitchen-sink',
+    // This is explicitly commented out because having vue 2 & 3 in the
+    // dependency graph makes it impossible to run storyshots on both examples
+    // '<rootDir>/examples/vue-3-cli',
   ],
   roots: [
     '<rootDir>/addons',
@@ -52,7 +55,6 @@ module.exports = {
     '/dist/',
     '/prebuilt/',
     'addon-jest.test.js',
-    '/cli/test/',
     '/app/angular/*',
     '/examples/cra-kitchen-sink/src/*',
     '/examples/cra-react15/src/*',

@@ -33,6 +33,7 @@ import {
   StoreSelectionSpecifier,
   StoreSelection,
 } from './types';
+import { combineArgs, mapArgsToTypes, validateOptions } from './args';
 import { HooksContext } from './hooks';
 import { storySort } from './storySort';
 import { combineParameters } from './parameters';
@@ -219,7 +220,8 @@ export default class StoryStore {
     const stories = this.sortedStories();
     let foundStory;
     if (this._selectionSpecifier && !this._selection) {
-      const { storySpecifier, viewMode } = this._selectionSpecifier;
+      const { storySpecifier, viewMode, args: urlArgs } = this._selectionSpecifier;
+
       if (storySpecifier === '*') {
         // '*' means select the first story. If there is none, we have no selection.
         [foundStory] = stories;
@@ -237,6 +239,11 @@ export default class StoryStore {
       }
 
       if (foundStory) {
+        if (urlArgs) {
+          const mappedUrlArgs = mapArgsToTypes(urlArgs, foundStory.argTypes);
+          foundStory.args = combineArgs(foundStory.args, mappedUrlArgs);
+        }
+        foundStory.args = validateOptions(foundStory.args, foundStory.argTypes);
         this.setSelection({ storyId: foundStory.id, viewMode });
         this._channel.emit(Events.STORY_SPECIFIED, { storyId: foundStory.id, viewMode });
       }
@@ -377,8 +384,17 @@ export default class StoryStore {
     const loaders = [...this._globalMetadata.loaders, ...kindMetadata.loaders, ...storyLoaders];
 
     const finalStoryFn = (context: StoryContext) => {
-      const { passArgsFirst = true } = context.parameters;
-      return passArgsFirst ? (original as ArgsStoryFn)(context.args, context) : original(context);
+      const { args = {}, argTypes = {}, parameters } = context;
+      const { passArgsFirst = true } = parameters;
+      const mapped = {
+        ...context,
+        args: Object.entries(args).reduce((acc, [key, val]) => {
+          const { mapping } = argTypes[key] || {};
+          acc[key] = mapping && val in mapping ? mapping[val] : val;
+          return acc;
+        }, {} as Args),
+      };
+      return passArgsFirst ? (original as ArgsStoryFn)(mapped.args, mapped) : original(mapped);
     };
 
     // lazily decorate the story when it's loaded
@@ -457,7 +473,9 @@ export default class StoryStore {
     const defaultArgs: Args = Object.entries(
       argTypes as Record<string, { defaultValue: any }>
     ).reduce((acc, [arg, { defaultValue }]) => {
-      if (defaultValue) acc[arg] = defaultValue;
+      if (typeof defaultValue !== 'undefined') {
+        acc[arg] = defaultValue;
+      }
       return acc;
     }, {} as Args);
 

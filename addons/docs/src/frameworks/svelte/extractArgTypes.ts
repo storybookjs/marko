@@ -1,44 +1,26 @@
 import { ArgTypes } from '@storybook/api';
 import { logger } from '@storybook/client-logger';
+import type {
+  SvelteComponentDoc,
+  JSDocType,
+  JSDocKeyword,
+  JSDocTypeConst,
+} from 'sveltedoc-parser/typings';
 
 import { ArgTypesExtractor } from '../../lib/docgen';
 
 type ComponentWithDocgen = {
-  __docgen: Docgen;
+  __docgen: SvelteComponentDoc;
 };
 
-type Docgen = {
-  components: [];
-  computed: [];
-  data: [
-    {
-      defaultValue: any;
-      description: string;
-      keywords: [];
-      kind: string;
-      name: string;
-      readonly: boolean;
-      static: boolean;
-      type: { kind: string; text: string; type: string };
-      visibility: string;
-    }
-  ];
-  description: null;
-  events: [];
-  keywords: [];
-  methods: [];
-  name: string;
-  refs: [];
-  slots: [];
-  version: number;
-};
+function hasKeyword(keyword: string, keywords: JSDocKeyword[]): boolean {
+  return keywords ? keywords.find((k) => k.name === keyword) != null : false;
+}
 
-export const extractArgTypes: ArgTypesExtractor = (component) => {
+export const extractArgTypes: ArgTypesExtractor = (component: ComponentWithDocgen) => {
   try {
-    // eslint-disable-next-line new-cap
-    const comp: ComponentWithDocgen = new component({ props: {} });
     // eslint-disable-next-line no-underscore-dangle
-    const docgen = comp.__docgen;
+    const docgen = component.__docgen;
     if (docgen) {
       return createArgTypes(docgen);
     }
@@ -48,19 +30,50 @@ export const extractArgTypes: ArgTypesExtractor = (component) => {
   return {};
 };
 
-export const createArgTypes = (docgen: Docgen) => {
+export const createArgTypes = (docgen: SvelteComponentDoc) => {
   const results: ArgTypes = {};
   docgen.data.forEach((item) => {
     results[item.name] = {
-      control: { type: parseType(item.type.type) },
+      control: parseTypeToControl(item.type),
       name: item.name,
       description: item.description,
-      type: {},
+      type: {
+        required: hasKeyword('required', item.keywords),
+        summary: item.type?.text,
+      },
       defaultValue: item.defaultValue,
       table: {
+        type: {
+          summary: item.type?.text,
+        },
         defaultValue: {
           summary: item.defaultValue,
         },
+        category: 'properties',
+      },
+    };
+  });
+
+  docgen.events.forEach((item) => {
+    results[`event_${item.name}`] = {
+      name: item.name,
+      description: item.description,
+      type: { name: 'void' },
+      table: {
+        category: 'events',
+      },
+    };
+  });
+
+  docgen.slots.forEach((item) => {
+    results[`slot_${item.name}`] = {
+      name: item.name,
+      description: [item.description, item.params?.map((p) => `\`${p.name}\``).join(' ')]
+        .filter((p) => p)
+        .join('\n\n'),
+      type: { name: 'void' },
+      table: {
+        category: 'slots',
       },
     };
   });
@@ -73,16 +86,31 @@ export const createArgTypes = (docgen: Docgen) => {
  * @param typeName
  * @returns string
  */
-const parseType = (typeName: string) => {
-  switch (typeName) {
-    case 'string':
-      return 'text';
-
-    case 'enum':
-      return 'radio';
-    case 'any':
-      return 'object';
-    default:
-      return typeName;
+const parseTypeToControl = (type: JSDocType): any => {
+  if (!type) {
+    return null;
   }
+
+  if (type.kind === 'type') {
+    switch (type.type) {
+      case 'string':
+        return { type: 'text' };
+
+      case 'enum':
+        return { type: 'radio' };
+      case 'any':
+        return { type: 'object' };
+      default:
+        return { type: type.type };
+    }
+  } else if (type.kind === 'union') {
+    if (Array.isArray(type.type) && !type.type.find((t) => t.type !== 'string')) {
+      return {
+        type: 'radio',
+        options: type.type.filter((t) => t.kind === 'const').map((t: JSDocTypeConst) => t.value),
+      };
+    }
+  }
+
+  return null;
 };

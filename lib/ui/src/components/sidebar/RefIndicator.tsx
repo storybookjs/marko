@@ -200,7 +200,7 @@ export const RefIndicator = React.memo(
               </MessageWrapper>
             }
           >
-            <IndicatorClickTarget>
+            <IndicatorClickTarget data-action="toggle-indicator">
               <Icons icon="globe" />
             </IndicatorClickTarget>
           </WithTooltip>

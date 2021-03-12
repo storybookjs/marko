@@ -1,6 +1,6 @@
 {
   "name": "cra-kitchen-sink",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-beta.14",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -11,27 +11,31 @@
     "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
-    "global": "^4.3.2",
+    "@storybook/client-logger": "6.2.0-beta.14",
+    "global": "^4.4.0",
     "prop-types": "^15.7.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-lifecycles-compat": "^3.0.4"
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "react-lifecycles-compat": "^3.0.4",
+    "react-scripts": "^4.0.2"
   },
   "devDependencies": {
-    "@storybook/addon-a11y": "6.2.0-alpha.5",
-    "@storybook/addon-actions": "6.2.0-alpha.5",
-    "@storybook/addon-backgrounds": "6.2.0-alpha.5",
-    "@storybook/addon-docs": "6.2.0-alpha.5",
-    "@storybook/addon-events": "6.2.0-alpha.5",
-    "@storybook/addon-jest": "6.2.0-alpha.5",
-    "@storybook/addon-knobs": "6.2.0-alpha.5",
-    "@storybook/addon-links": "6.2.0-alpha.5",
-    "@storybook/addon-storyshots": "6.2.0-alpha.5",
-    "@storybook/addons": "6.2.0-alpha.5",
-    "@storybook/client-logger": "6.2.0-alpha.5",
-    "@storybook/react": "6.2.0-alpha.5",
-    "@storybook/theming": "6.2.0-alpha.5",
-    "react-scripts": "^3.0.1"
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@storybook/addon-a11y": "6.2.0-beta.14",
+    "@storybook/addon-actions": "6.2.0-beta.14",
+    "@storybook/addon-backgrounds": "6.2.0-beta.14",
+    "@storybook/addon-docs": "6.2.0-beta.14",
+    "@storybook/addon-events": "6.2.0-beta.14",
+    "@storybook/addon-jest": "6.2.0-beta.14",
+    "@storybook/addon-knobs": "6.2.0-beta.14",
+    "@storybook/addon-links": "6.2.0-beta.14",
+    "@storybook/addon-storyshots": "6.2.0-beta.14",
+    "@storybook/addons": "6.2.0-beta.14",
+    "@storybook/builder-webpack4": "6.2.0-beta.14",
+    "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
+    "@storybook/react": "6.2.0-beta.14",
+    "@storybook/theming": "6.2.0-beta.14",
+    "webpack": "4"
   },
   "storybook": {
     "chromatic": {

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-beta.14",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -17,50 +17,50 @@
     "directory": "addons/essentials"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
   "files": [
     "dist/**/*",
-    "README.md",
-    "ts3.4/**/*"
+    "README.md"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-actions": "6.2.0-alpha.5",
-    "@storybook/addon-backgrounds": "6.2.0-alpha.5",
-    "@storybook/addon-controls": "6.2.0-alpha.5",
-    "@storybook/addon-docs": "6.2.0-alpha.5",
-    "@storybook/addon-toolbars": "6.2.0-alpha.5",
-    "@storybook/addon-viewport": "6.2.0-alpha.5",
-    "@storybook/addons": "6.2.0-alpha.5",
-    "@storybook/api": "6.2.0-alpha.5",
-    "@storybook/node-logger": "6.2.0-alpha.5",
-    "core-js": "^3.0.1",
+    "@storybook/addon-actions": "6.2.0-beta.14",
+    "@storybook/addon-backgrounds": "6.2.0-beta.14",
+    "@storybook/addon-controls": "6.2.0-beta.14",
+    "@storybook/addon-docs": "6.2.0-beta.14",
+    "@storybook/addon-toolbars": "6.2.0-beta.14",
+    "@storybook/addon-viewport": "6.2.0-beta.14",
+    "@storybook/addons": "6.2.0-beta.14",
+    "@storybook/api": "6.2.0-beta.14",
+    "@storybook/node-logger": "6.2.0-beta.14",
+    "core-js": "^3.8.2",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.2.0-alpha.5",
-    "@types/jest": "^25.1.1",
-    "@types/webpack-env": "^1.15.3"
+    "@babel/core": "^7.12.10",
+    "@storybook/vue": "6.2.0-beta.14",
+    "@types/jest": "^26.0.16",
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.2.0-alpha.5",
+    "@storybook/vue": "6.2.0-beta.14",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
-    "webpack": ">=4"
+    "webpack": "*"
   },
   "peerDependenciesMeta": {
     "@storybook/vue": {
@@ -79,5 +79,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }

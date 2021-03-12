@@ -336,6 +336,11 @@ module.exports = {
           type: 'link',
         },
         {
+          pathSegment: 'addon-catalog',
+          title: 'Add to catalog',
+          type: 'link',
+        },
+        {
           pathSegment: 'addon-types',
           title: 'Types of addons',
           type: 'link',

@@ -1,5 +1,5 @@
 import { Component, ReactElement } from 'react';
-import { browserSupportsCssZoom } from './Zoom';
+import { browserSupportsCssZoom } from './browserSupportsCssZoom';
 
 export type IZoomIFrameProps = {
   scale: number;

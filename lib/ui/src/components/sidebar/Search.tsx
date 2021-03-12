@@ -1,12 +1,11 @@
-/* eslint-env browser */
-
 import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import Downshift, { DownshiftState, StateChangeOptions } from 'downshift';
 import Fuse, { FuseOptions } from 'fuse.js';
+import { document } from 'global';
 import { transparentize } from 'polished';
-import React, { useEffect, useMemo, useRef, useState, useCallback } from 'react';
+import React, { useMemo, useRef, useState, useCallback } from 'react';
 
 import { DEFAULT_REF_ID } from './data';
 import {
@@ -22,7 +21,6 @@ import {
   isCloseType,
 } from './types';
 import { searchItem } from './utils';
-import { matchesKeyCode, matchesModifiers } from './keybinding';
 
 const DEFAULT_MAX_SEARCH_RESULTS = 50;
 
@@ -87,7 +85,7 @@ const Input = styled.input(({ theme }) => ({
   '&:focus, &:active': {
     outline: 0,
     borderColor: theme.color.secondary,
-    background: theme.barBg,
+    background: theme.input.background,
   },
   '&::placeholder': {
     color: theme.textMutedColor,
@@ -174,25 +172,6 @@ export const Search = React.memo<{
       [api, inputRef, showAllComponents, DEFAULT_REF_ID]
     );
 
-    useEffect(() => {
-      const focusSearch = (event: KeyboardEvent) => {
-        if (!enableShortcuts || isLoading || event.repeat) return;
-        if (!inputRef.current || inputRef.current === document.activeElement) return;
-        if (
-          // Shift is required to type `/` on some keyboard layouts
-          matchesModifiers({ ctrl: false, alt: false, meta: false }, event) &&
-          matchesKeyCode('Slash', event)
-        ) {
-          inputRef.current.focus();
-          event.preventDefault();
-        }
-      };
-
-      // Keyup prevents slashes from ending up in the input field when held down
-      document.addEventListener('keyup', focusSearch);
-      return () => document.removeEventListener('keyup', focusSearch);
-    }, [inputRef, isLoading, enableShortcuts]);
-
     const list: SearchItem[] = useMemo(() => {
       return dataset.entries.reduce((acc: SearchItem[], [refId, { stories }]) => {
         if (stories) {
@@ -209,17 +188,20 @@ export const Search = React.memo<{
         if (!input) return [];
 
         let results: DownshiftItem[] = [];
-        const componentResults = (fuse.search(input) as SearchResult[]).filter(
-          ({ item }) => item.isComponent
-        );
+        const resultIds: Set<string> = new Set();
+        const distinctResults = (fuse.search(input) as SearchResult[]).filter(({ item }) => {
+          if (!(item.isComponent || item.isLeaf) || resultIds.has(item.parent)) return false;
+          resultIds.add(item.id);
+          return true;
+        });
 
-        if (componentResults.length) {
-          results = componentResults.slice(0, allComponents ? 1000 : DEFAULT_MAX_SEARCH_RESULTS);
-          if (componentResults.length > DEFAULT_MAX_SEARCH_RESULTS && !allComponents) {
+        if (distinctResults.length) {
+          results = distinctResults.slice(0, allComponents ? 1000 : DEFAULT_MAX_SEARCH_RESULTS);
+          if (distinctResults.length > DEFAULT_MAX_SEARCH_RESULTS && !allComponents) {
             results.push({
               showAll: () => showAllComponents(true),
-              totalCount: componentResults.length,
-              moreCount: componentResults.length - DEFAULT_MAX_SEARCH_RESULTS,
+              totalCount: distinctResults.length,
+              moreCount: distinctResults.length - DEFAULT_MAX_SEARCH_RESULTS,
             });
           }
         }

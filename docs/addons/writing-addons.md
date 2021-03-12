@@ -183,6 +183,8 @@ When Storybook was initialized it provided a small set of examples stories. Chan
 <CodeSnippets
   paths={[
     'react/button-story-with-addon-example.js.mdx',
+    'vue/button-story-with-addon-example.js.mdx',
+    'angular/button-story-with-addon-example.ts.mdx',
   ]}
 />
 
@@ -217,7 +219,7 @@ This auto-registers the addon without any additional configuration from the user
 
 Now that you've seen how to create a bare-bones addon, let's see how to share it with the community. Before we begin, make sure your addon meets the following requirements:
 
-- `package.json file` with metadata about the addon
+- `package.json` file with metadata about the addon
 - Peer dependencies of `react` and `@storybook/addons`
 - `preset.js` file at the root level written as an ES5 module
 - `src` directory containing the ES6 addon code
@@ -225,13 +227,15 @@ Now that you've seen how to create a bare-bones addon, let's see how to share it
 - [GitHub](https://github.com/) account to host your code
 - [NPM](https://www.npmjs.com/) account to publish the addon
 
-For example, check out [storybook-addon-outline](https://www.npmjs.com/package/storybook-addon-outline) to see a project that meets these requirements.
+Reference the [storybook-addon-outline](https://www.npmjs.com/package/storybook-addon-outline) to see a project that meets these requirements.
+
+Learn how to [add to the addon catalog](./addon-catalog.md).
 
 ### More guides and tutorials
 
 In the previous example, we introduced the structure of an addon, but barely scratched the surface of what addons can do.
 
-To dive deeper we recommend [Learn Storybook’s “creating addons”](https://www.learnstorybook.com/intro-to-storybook/react/en/creating-addons/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon.
+To dive deeper we recommend Storybook's [creating an addon](https://storybook.js.org/tutorials/create-an-addon/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon.
 
 [How to build a Storybook addon](https://www.chromatic.com/blog/how-to-build-a-storybook-addon/) shows you how to create a standalone addon in great detail.
 

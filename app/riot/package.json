@@ -1,6 +1,6 @@
 {
   "name": "@storybook/riot",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-beta.14",
   "description": "Storybook for riot.js: View riot snippets in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,11 +15,13 @@
     "directory": "app/riot"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -34,27 +36,29 @@
     "README.md",
     "standalone.js",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.2.0-alpha.5",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "raw-loader": "^4.0.1",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "@storybook/core": "6.2.0-beta.14",
+    "@storybook/core-common": "6.2.0-beta.14",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "raw-loader": "^4.0.2",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
-    "@babel/preset-env": "^7.12.1",
-    "@babel/preset-flow": "^7.12.1",
-    "@babel/preset-react": "^7.12.1"
+    "@types/riot": "^3.6.2",
+    "riot": "^3.13.2",
+    "riot-compiler": "^3.6.0",
+    "riot-hot-reload": "^1.0.0",
+    "riot-tag-loader": "^2.1.0"
   },
   "peerDependencies": {
     "@babel/core": "*",
@@ -65,10 +69,10 @@
     "webpack": "*"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }

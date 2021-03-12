@@ -1,6 +1,6 @@
 {
   "name": "@storybook/rax",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-beta.14",
   "description": "Storybook for Rax: Develop Rax Component in isolation.",
   "keywords": [
     "rax",
@@ -16,11 +16,13 @@
     "directory": "app/rax"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -34,25 +36,27 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.2.0-alpha.5",
+    "@storybook/core": "6.2.0-beta.14",
+    "@storybook/core-common": "6.2.0-beta.14",
     "babel-preset-rax": "^1.0.0-beta.0",
-    "core-js": "^3.0.1",
-    "driver-dom": "^2.0.0",
-    "global": "^4.3.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "core-js": "^3.8.2",
+    "driver-dom": "^2.2.0",
+    "global": "^4.4.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "rax": "^1.1.0"
+    "@types/rax": "^1.0.2",
+    "rax": "^1.2.0"
   },
   "peerDependencies": {
     "@babel/core": "*",
@@ -61,5 +65,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }

@@ -14,6 +14,10 @@ Install the addon. **Make sure** the version of Storyshots and your project’s 
 npm i -D @storybook/addon-storyshots
 ```
 
+<div class="aside">
+💡 <strong>Note</strong>: If you're using <a href="https://yarnpkg.com/">yarn</a> as a package manager, you'll need to adjust the command accordingly. 
+</div>
+
 Configure Storyshots by adding the following test file to your project:
 
 <!-- prettier-ignore-start -->
@@ -64,6 +68,11 @@ You'll need to include the `@storybook/addon-storyshots-puppeteer` and `puppetee
 npm i -D @storybook/addon-storyshots-puppeteer puppeteer
 ```
 
+<div class="aside">
+💡 <strong>Note</strong>: If you're using <a href="https://yarnpkg.com/">yarn</a> as a package manager, you'll need to adjust the command accordingly. 
+</div>
+
+
 Then you'll need to change your `storybook.test.js` file to the following:
 
 <!-- prettier-ignore-start -->
@@ -83,6 +92,28 @@ Don't forget to change the <code>your-custom-directory</code> to the one you're 
 When you run `npx test storybook.test.js`, your snapshots will be placed in the proper directory.
 
 Storyshots has many other options for advanced use cases such as this one. You can read more about them in the [addon’s documentation](https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core).
+
+### Configure the framework
+ 
+By default the [`Storyshots addon`](https://www.npmjs.com/package/@storybook/addon-storyshots) will detect which framework currently being used by your project. If you run into a situation where this is not the case, you can adjust the `config` object and manually specify the framework that you're currently working with. For example if you were working with a Vue 3 project:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-storyshots-custom-framework.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Use this table as a reference for manually specifying the framework.
+
+| angular        | html | preact       |
+|----------------|------|--------------|
+| react          | riot | react-native |
+| svelte         | vue  | vue3         |
+| web-components | rax  |              |
 
 <div class="aside">
 

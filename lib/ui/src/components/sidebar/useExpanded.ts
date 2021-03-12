@@ -3,7 +3,7 @@ import { STORIES_COLLAPSE_ALL, STORIES_EXPAND_ALL } from '@storybook/core-events
 import { document } from 'global';
 import throttle from 'lodash/throttle';
 import React, { Dispatch, MutableRefObject, useCallback, useEffect, useReducer } from 'react';
-import { matchesKeyCode, matchesModifiers } from './keybinding';
+import { matchesKeyCode, matchesModifiers } from '../../keybinding';
 import { Highlight } from './types';
 
 import { isAncestor, getAncestorIds, getDescendantIds, scrollIntoView } from './utils';
@@ -20,6 +20,7 @@ export interface ExpandedProps {
   isBrowsing: boolean;
   refId: string;
   data: StoriesHash;
+  initialExpanded?: ExpandedState;
   rootIds: string[];
   highlightedRef: MutableRefObject<Highlight>;
   setHighlightedItemId: (storyId: string) => void;
@@ -30,11 +31,13 @@ export interface ExpandedProps {
 const initializeExpanded = ({
   refId,
   data,
+  initialExpanded,
   highlightedRef,
   rootIds,
 }: {
   refId: string;
   data: StoriesHash;
+  initialExpanded?: ExpandedState;
   highlightedRef: MutableRefObject<Highlight>;
   rootIds: string[];
 }) => {
@@ -43,7 +46,7 @@ const initializeExpanded = ({
       ? getAncestorIds(data, highlightedRef.current?.itemId)
       : [];
   return [...rootIds, ...highlightedAncestors].reduce<ExpandedState>(
-    (acc, id) => Object.assign(acc, { [id]: true }),
+    (acc, id) => Object.assign(acc, { [id]: id in initialExpanded ? initialExpanded[id] : true }),
     {}
   );
 };
@@ -55,16 +58,17 @@ export const useExpanded = ({
   isBrowsing,
   refId,
   data,
+  initialExpanded,
   rootIds,
   highlightedRef,
   setHighlightedItemId,
   selectedStoryId,
   onSelectStoryId,
-}: ExpandedProps): [Record<string, boolean>, Dispatch<ExpandAction>] => {
+}: ExpandedProps): [ExpandedState, Dispatch<ExpandAction>] => {
   const api = useStorybookApi();
 
   // Track the set of currently expanded nodes within this tree.
-  // Root nodes are expanded by default (and cannot be collapsed).
+  // Root nodes are expanded by default.
   const [expanded, setExpanded] = useReducer<
     React.Reducer<ExpandedState, ExpandAction>,
     {
@@ -72,17 +76,17 @@ export const useExpanded = ({
       data: StoriesHash;
       highlightedRef: MutableRefObject<Highlight>;
       rootIds: string[];
+      initialExpanded: ExpandedState;
     }
   >(
     (state, { ids, value }) =>
       ids.reduce((acc, id) => Object.assign(acc, { [id]: value }), { ...state }),
-    { refId, data, highlightedRef, rootIds },
+    { refId, data, highlightedRef, rootIds, initialExpanded },
     initializeExpanded
   );
 
   const getElementByDataItemId = useCallback(
-    (id: string) =>
-      containerRef.current && containerRef.current.querySelector(`[data-item-id="${id}"]`),
+    (id: string) => containerRef.current?.querySelector(`[data-item-id="${id}"]`),
     [containerRef]
   );
 
@@ -98,7 +102,7 @@ export const useExpanded = ({
     ({ ids, value }) => {
       setExpanded({ ids, value });
       if (ids.length === 1) {
-        const element = containerRef.current.querySelector(
+        const element = containerRef.current?.querySelector(
           `[data-item-id="${ids[0]}"][data-ref-id="${refId}"]`
         );
         if (element) highlightElement(element);

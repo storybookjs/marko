@@ -1,5 +1,5 @@
 /* eslint-disable global-require */
 module.exports = {
-  Welcome: require('./dist/demo/Welcome').default,
-  Button: require('./dist/demo/Button').default,
+  Welcome: require('./dist/esm/demo/Welcome').default,
+  Button: require('./dist/esm/demo/Button').default,
 };

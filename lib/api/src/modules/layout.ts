@@ -27,7 +27,6 @@ export interface UI {
   name?: string;
   url?: string;
   enableShortcuts: boolean;
-  sidebarAnimations: boolean;
   docsMode: boolean;
 }
 
@@ -63,7 +62,6 @@ export interface UIOptions {
 const defaultState: SubState = {
   ui: {
     enableShortcuts: true,
-    sidebarAnimations: true,
     docsMode: false,
   },
   layout: {
@@ -202,13 +200,14 @@ export const init: ModuleFn = ({ store, provider }) => {
       );
     },
 
-    focusOnUIElement(elementId?: string) {
+    focusOnUIElement(elementId?: string, select?: boolean) {
       if (!elementId) {
         return;
       }
       const element = document.getElementById(elementId);
       if (element) {
         element.focus();
+        if (select) element.select();
       }
     },
 

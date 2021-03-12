@@ -201,6 +201,8 @@ Let's say you've got a story like this:
 <CodeSnippets
   paths={[
     'react/button-story-with-addon-example.js.mdx',
+    'vue/button-story-with-addon-example.js.mdx',
+    'angular/button-story-with-addon-example.ts.mdx',
   ]}
 />
 

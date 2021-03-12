@@ -1,13 +1,15 @@
 {
   "name": "@storybook/addon-controls",
-  "version": "6.2.0-alpha.5",
-  "description": "Controls for component properties",
+  "version": "6.2.0-beta.14",
+  "description": "Interact with component inputs dynamically in the Storybook UI",
   "keywords": [
     "addon",
     "storybook",
     "knobs",
     "controls",
-    "properties"
+    "properties",
+    "essentials",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/next/addons/controls",
   "bugs": {
@@ -19,7 +21,16 @@
     "directory": "addons/controls"
   },
   "license": "MIT",
-  "main": "dist/register.js",
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -30,13 +41,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.5",
-    "@storybook/api": "6.2.0-alpha.5",
-    "@storybook/client-api": "6.2.0-alpha.5",
-    "@storybook/components": "6.2.0-alpha.5",
-    "@storybook/node-logger": "6.2.0-alpha.5",
-    "@storybook/theming": "6.2.0-alpha.5",
-    "core-js": "^3.0.1",
+    "@storybook/addons": "6.2.0-beta.14",
+    "@storybook/api": "6.2.0-beta.14",
+    "@storybook/client-api": "6.2.0-beta.14",
+    "@storybook/components": "6.2.0-beta.14",
+    "@storybook/node-logger": "6.2.0-beta.14",
+    "@storybook/theming": "6.2.0-beta.14",
+    "core-js": "^3.8.2",
     "ts-dedent": "^2.0.0"
   },
   "peerDependencies": {
@@ -54,5 +65,16 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6",
+  "storybook": {
+    "displayName": "Controls",
+    "icon": "https://user-images.githubusercontent.com/263385/101991669-479cc600-3c7c-11eb-93d9-38b67e8371f2.png",
+    "supportedFrameworks": [
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember"
+    ]
+  }
 }

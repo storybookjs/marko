@@ -1,8 +1,8 @@
 ---
-title: 'Images and assets'
+title: 'Images, fonts, and assets'
 ---
 
-Components often rely on images, videos, and other assets to render as the user expects. There are many ways to use these assets in your story files.
+Components often rely on images, videos, fonts, and other assets to render as the user expects. There are many ways to use these assets in your story files.
 
 ### Import assets into stories
 
@@ -15,6 +15,9 @@ Afterwards you can use any asset in your stories:
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-with-import.js.mdx',
+    'vue/component-story-static-asset-with-import.2.js.mdx',
+    'vue/component-story-static-asset-with-import.3.js.mdx',
+    'angular/component-story-static-asset-with-import.ts.mdx',
   ]}
 />
 
@@ -22,15 +25,25 @@ Afterwards you can use any asset in your stories:
 
 ### Serving static files via Storybook
 
-We recommend serving static files via Storybook to ensure that your components always have the assets they need to load.
+We recommend serving static files via Storybook to ensure that your components always have the assets they need to load. This technique is recommended for assets that your components often use like logos, fonts, and icons.
 
 Configure a directory (or a list of directories) where your assets live when starting Storybook. Use the`-s` flag in your npm script like so:
 
 ```json
 {
-    "scripts": {
-        "start-storybook": "start-storybook -s ./public -p 9001"
-    }
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public -p 9001"
+  }
+}
+```
+
+Or when building your Storybook with `build-storybook`:
+
+```json
+{
+  "scripts": {
+    "build-storybook": "build-storybook -s public"
+  }
 }
 ```
 
@@ -41,6 +54,8 @@ Here `./public` is your static directory. Now use it in a component or story lik
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-without-import.js.mdx',
+    'vue/component-story-static-asset-without-import.js.mdx',
+    'angular/component-story-static-asset-without-import.ts.mdx',
   ]}
 />
 
@@ -50,9 +65,18 @@ You can also pass a list of directories separated by commas without spaces inste
 
 ```json
 {
-    "scripts": {
-        "start-storybook": "start-storybook -s ./public,./static -p 9001"
-    }
+  "scripts": {
+    "start-storybook": "start-storybook -s ./public,./static -p 9001"
+  }
+}
+```
+The same can be applied when you're building your Storybook.
+
+```json
+{
+  "scripts": {
+    "build-storybook": "build-storybook -s ./public,./static -p 9001"
+  }
 }
 ```
 
@@ -65,6 +89,8 @@ Upload your files to an online CDN and reference them. In this example we’re u
 <CodeSnippets
   paths={[
     'react/component-story-static-asset-cdn.js.mdx',
+    'vue/component-story-static-asset-cdn.js.mdx',
+    'angular/component-story-static-asset-cdn.ts.mdx',
   ]}
 />
 

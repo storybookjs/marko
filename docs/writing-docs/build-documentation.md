@@ -2,6 +2,12 @@
 title: 'Preview and build docs'
 ---
 
+<div class="aside">
+
+💡 <strong>NOTE</strong>: Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [DocsPage](./docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
+
+</div>
+
 Storybook allows you to create rich and extensive [documentation](./introduction.md) that will help you and any other stakeholder involved in the development process. Out of the box you have the tooling required to not only write it but also to preview it and build it.
 
 ## Preview Storybook's documentation
@@ -11,10 +17,14 @@ At any point during your development, you can preview the documentation you've w
 ```json
 {
   "scripts": {
-    "storybook-docs": "start-storybook --docs",
+    "storybook-docs": "start-storybook --docs --no-manager-cache",
   }
 }
 ```
+
+<div class="aside">
+💡 <strong>Note</strong>: The <code>--no-manager-cache</code> flag is required to generate a successful preview of the documentation. But it comes with a cost as you're disabling Storybook's internal caching mechanism which can lead to increased loading times.
+</div>
 
 Depending on your configuration, when you execute the `storybook-docs` script. Storybook will be put into documentation mode and will generate a different build.
 

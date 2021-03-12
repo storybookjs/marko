@@ -1,0 +1,31 @@
+```ts
+// List.stories.ts
+
+import { Story } from '@storybook/angular/types-6-0';
+
+import ListComponent from './List.component';
+import ListItemComponent from './ListItem.component';
+
+import { Unchecked } from './ListItem.stories';
+
+const ListTemplate: Story<ListComponent> = (args) => ({
+  component: ListComponent,
+  moduleMetadata: {
+    declarations: [ListComponent, ListItemComponent],
+  },
+  props: args,
+  template: `
+    <list-component>
+        <div *ngFor="let item of items">
+            <listitem-component [item]="item"></listitem-component>
+        </div>
+    </list-component>`,
+});
+
+export const EmptyWithTemplate = ListTemplate.bind({});
+Empty.args = { items: [] };
+
+
+export const OneItemWithTemplate = ListTemplate.bind({});
+OneItemWithTemplate.args = { items: [Unchecked.args.item] };
+```

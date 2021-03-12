@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channels",
-  "version": "6.2.0-alpha.5",
+  "version": "6.2.0-beta.14",
   "description": "",
   "keywords": [
     "storybook"
@@ -15,12 +15,14 @@
     "directory": "lib/channels"
   },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
   "typesVersions": {
     "<3.8": {
       "*": [
-        "ts3.4/*"
+        "dist/ts3.4/*"
       ]
     }
   },
@@ -28,19 +30,18 @@
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "core-js": "^3.0.1",
+    "core-js": "^3.8.2",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "850a0d8b98f2ddab1cd4d652e9beac11e21a369c"
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }

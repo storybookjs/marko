@@ -154,10 +154,23 @@ export const vue: Parameters = {
   generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
 };
 
+export const vue3: Parameters = {
+  name: 'vue3',
+  version: 'next',
+  // Vue CLI v4 utilizes webpack 4, and the 5-alpha uses webpack 5 so we force ^4 here
+  generator: `npx @vue/cli@^4 create {{name}}-{{version}} --preset=__default_vue_3__ --packageManager=yarn --no-git --force`,
+};
+
 export const web_components: Parameters = {
   name: 'web_components',
   version: 'latest',
   generator: fromDeps('lit-html', 'lit-element'),
+};
+
+export const web_components_typescript: Parameters = {
+  ...web_components,
+  name: 'web_components_typescript',
+  typescript: true,
 };
 
 export const webpack_react: Parameters = {

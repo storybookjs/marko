@@ -1,0 +1,34 @@
+```js
+// .storybook/main.js
+
+module.exports = {
+  // Your existing Storybook configuration
+  refs: (config) => {
+    //👇 Retrieves the current environment from the config object
+    const { configType } = config; 
+
+    if (configType === 'DEVELOPMENT') {
+      return {
+        react: {
+          title: 'Composed React Storybook running in development mode',
+          url: 'http://localhost:7007',
+        },
+        angular: {
+          title: 'Composed Angular Storybook running in development mode',
+          url: 'http://localhost:7008',
+        },
+      };
+    }
+    return {
+      react: {
+        title: 'Composed React Storybook running in production',
+        url: 'https://your-production-react-storybook-url',
+      },
+      angular: {
+        title: 'Composed Angular Storybook running in production',
+        url: 'https://your-production-angular-storybook-url',
+      },
+    };
+  },
+};
+```

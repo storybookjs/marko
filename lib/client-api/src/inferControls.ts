@@ -2,52 +2,63 @@ import mapValues from 'lodash/mapValues';
 import { ArgType } from '@storybook/addons';
 import { SBEnumType, ArgTypesEnhancer } from './types';
 import { combineParameters } from './parameters';
+import { filterArgTypes } from './filterArgTypes';
 
-const inferControl = (argType: ArgType): any => {
-  const { type } = argType;
-  if (!type) {
-    // console.log('no sbtype', { argType });
-    return null;
+type ControlsMatchers = {
+  date: RegExp;
+  color: RegExp;
+};
+
+const inferControl = (argType: ArgType, name: string, matchers: ControlsMatchers): any => {
+  const { type, options } = argType;
+  if (!type && !options) {
+    return undefined;
   }
+
+  // args that end with background or color e.g. iconColor
+  if (matchers.color && matchers.color.test(name)) {
+    return { control: { type: 'color' } };
+  }
+
+  // args that end with date e.g. purchaseDate
+  if (matchers.date && matchers.date.test(name)) {
+    return { control: { type: 'date' } };
+  }
+
   switch (type.name) {
-    case 'array': {
-      const { value } = type;
-      if (value?.name && ['object', 'other'].includes(value.name)) {
-        return {
-          type: 'object',
-          validator: (obj: any) => Array.isArray(obj),
-        };
-      }
-      return { type: 'array' };
-    }
+    case 'array':
+      return { control: { type: 'object' } };
     case 'boolean':
-      return { type: 'boolean' };
+      return { control: { type: 'boolean' } };
     case 'string':
-      return { type: 'text' };
+      return { control: { type: 'text' } };
     case 'number':
-      return { type: 'number' };
+      return { control: { type: 'number' } };
     case 'enum': {
       const { value } = type as SBEnumType;
-      if (value?.length <= 5) {
-        return { type: 'radio', options: value };
-      }
-      return { type: 'select', options: value };
+      return { control: { type: value?.length <= 5 ? 'radio' : 'select' }, options: value };
     }
     case 'function':
     case 'symbol':
     case 'void':
       return null;
     default:
-      return { type: 'object' };
+      return { control: { type: options ? 'select' : 'object' } };
   }
 };
 
 export const inferControls: ArgTypesEnhancer = (context) => {
-  const { __isArgsStory, argTypes } = context.parameters;
+  const {
+    __isArgsStory,
+    argTypes,
+    controls: { include = null, exclude = null, matchers = {} } = {},
+  } = context.parameters;
   if (!__isArgsStory) return argTypes;
-  const withControls = mapValues(argTypes, (argType) => {
-    const control = argType && argType.type && inferControl(argType);
-    return control ? { control } : undefined;
+
+  const filteredArgTypes = filterArgTypes(argTypes, include, exclude);
+  const withControls = mapValues(filteredArgTypes, (argType, name) => {
+    return argType?.type && inferControl(argType, name, matchers);
   });
-  return combineParameters(withControls, argTypes);
+
+  return combineParameters(withControls, filteredArgTypes);
 };

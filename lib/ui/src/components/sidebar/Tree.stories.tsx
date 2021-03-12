@@ -44,6 +44,7 @@ const singleStoryComponent = {
     isComponent: true,
     isLeaf: false,
     isRoot: false,
+    label: <span>🔥 Single</span>,
   },
   'single--single': {
     id: 'single--single',
@@ -58,6 +59,7 @@ const singleStoryComponent = {
     isLeaf: true,
     isComponent: false,
     isRoot: false,
+    label: <span>🔥 Single</span>,
   },
 };
 

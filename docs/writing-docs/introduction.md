@@ -2,6 +2,12 @@
 title: 'How to document components'
 ---
 
+<div class="aside">
+
+💡 <strong>NOTE</strong>: Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [DocsPage](./docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
+
+</div>
+
 When you write component stories during development, you also create basic documentation to revisit later.
 
 Storybook gives you tools to expand this basic documentation with prose and layout that feature your components and stories prominently. That allows you to create UI library usage guidelines, design system sites, and more.
@@ -21,4 +27,4 @@ You can also create free-form pages for each component using [MDX](./mdx.md), a 
 
 In both cases, you’ll use [Doc Blocks](./doc-blocks.md) as the building blocks to create full featured documentation.
 
-Docs is autoconfigured to work out of the box in most use cases. In some cases you may need or want to tweak the configuration. Read more about it in the [readme](../../addons/docs/README.md).
+Docs is autoconfigured to work out of the box in most use cases. In some cases you may need or want to tweak the configuration. Read more about it [here](https://storybook.js.org/addons/@storybook/addon-docs).

@@ -1,8 +1,8 @@
+export type { DecoratorFn } from './preview';
 export {
   storiesOf,
   setAddon,
   addDecorator,
-  DecoratorFn,
   addParameters,
   configure,
   getStorybook,
