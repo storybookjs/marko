@@ -87,16 +87,13 @@ Once you add a reference to a Storybook deployed using this method, almost immed
 If required, you can also add additional arguments to this command. You can use the following to generate the `stories.json` file to a custom directory:
 
 ```shell
-npx sb extract my-built-storybook-directory my-other-directory
+npx sb extract my-built-storybook-directory my-other-directory/stories.json
 ```
 
-Once the command executes it will look for a built Storybook in the `my-built-storybook-directory` and create the file in `my-other-directory`.
+Once the command executes it will look for a built Storybook in the `my-built-storybook-directory` and create the `stories.json` file in `my-other-directory`.
 
 <div class="aside">
 
 If you need to use arguments, you'll need to use both of them, or the command will not be executed properly.
 
 </div>
-
-
- 
