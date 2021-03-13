@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Basics / Component / With Complex Selectors attribute selectors 1`] = `
+<storybook-wrapper>
+  <storybook-attribute-selector
+    foo=""
+  >
+    <p>
+      Attribute selector
+    </p>
+  </storybook-attribute-selector>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Basics / Component / With Complex Selectors attribute value selectors 1`] = `
+<storybook-wrapper>
+  <storybook-attribute-value-selector
+    foo="bar"
+  >
+    <p>
+      Attribute with value
+    </p>
+  </storybook-attribute-value-selector>
+</storybook-wrapper>
+`;
+
+exports[`Storyshots Basics / Component / With Complex Selectors multiple selectors 1`] = `
+<storybook-wrapper>
+  <storybook-multiple-selector>
+    <p>
+      Multiple selector
+    </p>
+  </storybook-multiple-selector>
+</storybook-wrapper>
+`;

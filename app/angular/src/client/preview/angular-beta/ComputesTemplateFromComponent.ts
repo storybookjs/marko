@@ -56,7 +56,8 @@ export const computesTemplateFromComponent = (
       ? ` ${initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ')}`
       : '';
 
-  return `<${ngComponentMetadata.selector}${templateInputs}${templateOutputs}>${innerTemplate}</${ngComponentMetadata.selector}>`;
+  const template = buildTemplate(ngComponentMetadata.selector);
+  return `<${template.openTag}${templateInputs}${templateOutputs}>${innerTemplate}</${template.closeTag}>`;
 };
 
 const createAngularInputProperty = ({
@@ -127,5 +128,55 @@ export const computesTemplateSourceFromComponent = (
       ? ` ${initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ')}`
       : '';
 
-  return `<${ngComponentMetadata.selector}${templateInputs}${templateOutputs}></${ngComponentMetadata.selector}>`;
+  const template = buildTemplate(ngComponentMetadata.selector);
+  return `<${template.openTag}${templateInputs}${templateOutputs}></${template.closeTag}>`;
+};
+
+const buildTemplate = (
+  selector: string
+): {
+  openTag?: string;
+  closeTag?: string;
+} => {
+  const templates = [
+    {
+      // Match element selectors with optional chained attributes or classes
+      re: /^([\w\d-_]+)(?:(?:\[([\w\d-_]+)(?:=(.+))?\])|\.([\w\d-_]+))?/,
+      openTag: (matched: string[]) => {
+        let template = matched[1];
+        if (matched[2]) {
+          template += ` ${matched[2]}`;
+        }
+        if (matched[3]) {
+          template += `="${matched[3]}"`;
+        }
+        if (matched[4]) {
+          template += ` class="${matched[4]}"`;
+        }
+        return template;
+      },
+      closeTag: (matched: string[]) => `${matched[1]}`,
+    },
+    {
+      re: /^\.(.+)/,
+      openTag: (matched: string[]) => `div class="${matched[1]}"`,
+      closeTag: (matched: string[]) => `div`,
+    },
+    {
+      re: /^\[([\w\d-_]+)(?:=(.+))?\]/,
+      openTag: (matched: string[]) => `div ${matched[1]} ${matched[2] ? `="${matched[2]}"` : ''}`,
+      closeTag: (matched: string[]) => `div`,
+    },
+  ];
+
+  return templates.reduce((acc, template) => {
+    const matched = selector.match(template.re);
+    if (matched) {
+      return {
+        openTag: template.openTag(matched).trim(),
+        closeTag: template.closeTag(matched),
+      };
+    }
+    return acc;
+  }, {});
 };
