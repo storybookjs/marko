@@ -192,10 +192,7 @@ describe('dev cli flags', () => {
       ...cliOptions,
       outputDir,
     };
-    beforeEach(() => {
-      jest.clearAllMocks();
-      cache.clear();
-    });
+
     it('production mode', async () => {
       expect.assertions(1);
       await expect(buildStaticStandalone(optionsWithInvalidDir)).rejects.toThrow(
@@ -209,10 +206,7 @@ describe('dev cli flags', () => {
       ...cliOptions,
       staticDir: ['/'],
     };
-    beforeEach(() => {
-      jest.clearAllMocks();
-      cache.clear();
-    });
+
     it('production mode', async () => {
       expect.assertions(1);
       await expect(buildStaticStandalone(optionsWithInvalidStaticDir)).rejects.toThrow(
