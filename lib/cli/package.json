@@ -1,6 +1,6 @@
 {
   "name": "@storybook/cli",
-  "version": "6.1.0-rc.2",
+  "version": "6.2.0-beta.14",
   "description": "Storybook's CLI - easiest method of adding storybook to your projects",
   "keywords": [
     "cli",
@@ -18,6 +18,13 @@
   },
   "license": "MIT",
   "author": "Storybook Team",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "bin": {
     "getstorybook": "./bin/index.js",
     "sb": "./bin/index.js"
@@ -28,47 +35,51 @@
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.4/**/*",
     "versions.json"
   ],
   "scripts": {
-    "prepare": "node ../../scripts/prepare.js && node ./scripts/generate-sb-packages-versions.js",
-    "test": "cd test && ./run_tests.sh",
+    "prepare": "node ./scripts/generate-sb-packages-versions.js && node ../../scripts/prepare.js",
+    "test": "jest test/**/*.test.js",
     "postversion": "node ./scripts/generate-sb-packages-versions.js"
   },
   "dependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
-    "@storybook/codemod": "6.1.0-rc.2",
-    "@storybook/node-logger": "6.1.0-rc.2",
+    "@babel/core": "^7.12.10",
+    "@babel/preset-env": "^7.12.11",
+    "@storybook/codemod": "6.2.0-beta.14",
+    "@storybook/node-logger": "6.2.0-beta.14",
     "@storybook/semver": "^7.3.2",
-    "chalk": "^4.0.0",
-    "commander": "^5.0.0",
-    "core-js": "^3.0.1",
-    "cross-spawn": "^7.0.0",
-    "envinfo": "^7.5.1",
+    "chalk": "^4.1.0",
+    "commander": "^6.2.1",
+    "core-js": "^3.8.2",
+    "cross-spawn": "^7.0.3",
+    "envinfo": "^7.7.3",
     "express": "^4.17.1",
-    "find-up": "^4.1.0",
-    "fs-extra": "^9.0.0",
+    "find-up": "^5.0.0",
+    "fs-extra": "^9.0.1",
     "get-port": "^5.1.1",
-    "globby": "^11.0.0",
+    "globby": "^11.0.2",
     "inquirer": "^7.0.0",
-    "jscodeshift": "^0.6.3",
-    "json5": "^2.1.1",
+    "jscodeshift": "^0.11.0",
+    "json5": "^2.1.3",
     "leven": "^3.1.0",
-    "puppeteer-core": "^2.0.0",
+    "prompts": "^2.4.0",
+    "puppeteer-core": "^2.1.1",
+    "read-pkg-up": "^7.0.1",
     "shelljs": "^0.8.4",
     "strip-json-comments": "^3.0.1",
-    "update-notifier": "^4.0.0"
+    "update-notifier": "^5.0.1"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.1.0-rc.2",
-    "@types/cross-spawn": "^6.0.1",
-    "@types/inquirer": "^6.5.0",
-    "@types/puppeteer-core": "^2.0.0",
-    "@types/semver": "^7.2.0",
+    "@storybook/client-api": "6.2.0-beta.14",
+    "@types/cross-spawn": "^6.0.2",
+    "@types/inquirer": "^7.3.1",
+    "@types/prompts": "^2.0.9",
+    "@types/puppeteer-core": "^2.1.0",
+    "@types/semver": "^7.3.4",
     "@types/shelljs": "^0.8.7",
-    "@types/update-notifier": "^0.0.30"
+    "@types/update-notifier": "^5.0.0",
+    "strip-json-comments": "^3.1.1",
+    "update-notifier": "^4.1.3"
   },
   "peerDependencies": {
     "jest": "*"
@@ -76,12 +87,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
-  }
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }

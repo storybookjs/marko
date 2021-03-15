@@ -1,12 +1,14 @@
 {
   "name": "@storybook/addon-backgrounds",
-  "version": "6.1.0-rc.2",
-  "description": "A storybook addon to show different backgrounds for your preview",
+  "version": "6.2.0-beta.14",
+  "description": "Switch backgrounds to view components in different settings",
   "keywords": [
     "addon",
     "background",
     "react",
-    "storybook"
+    "storybook",
+    "essentials",
+    "design"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/backgrounds",
   "bugs": {
@@ -19,34 +21,41 @@
   },
   "license": "MIT",
   "author": "jbaxleyiii",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.4/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.1.0-rc.2",
-    "@storybook/api": "6.1.0-rc.2",
-    "@storybook/client-logger": "6.1.0-rc.2",
-    "@storybook/components": "6.1.0-rc.2",
-    "@storybook/core-events": "6.1.0-rc.2",
-    "@storybook/theming": "6.1.0-rc.2",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/addons": "6.2.0-beta.14",
+    "@storybook/api": "6.2.0-beta.14",
+    "@storybook/client-logger": "6.2.0-beta.14",
+    "@storybook/components": "6.2.0-beta.14",
+    "@storybook/core-events": "6.2.0-beta.14",
+    "@storybook/theming": "6.2.0-beta.14",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "memoizerific": "^1.11.3",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -63,12 +72,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
-  "typesVersions": {
-    "<3.8": {
-      "*": [
-        "ts3.4/*"
-      ]
-    }
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6",
+  "storybook": {
+    "displayName": "Backgrounds",
+    "icon": "https://user-images.githubusercontent.com/263385/101991667-479cc600-3c7c-11eb-96d3-410e936252e7.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
   }
 }

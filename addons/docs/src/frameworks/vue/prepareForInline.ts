@@ -1,4 +1,3 @@
-/* eslint-disable react/no-this-in-sfc */
 import React from 'react';
 import Vue from 'vue';
 import { StoryFn, StoryContext } from '@storybook/addons';

@@ -19,7 +19,7 @@ function setupAngularJestPreset() {
   // for emission of the TS decorations like 'design:paramtypes'
   try {
     jest.requireActual('jest-preset-angular/build/setupJest');
-  } catch(e) {
+  } catch (e) {
     jest.requireActual('jest-preset-angular/build/setup-jest');
   }
 }

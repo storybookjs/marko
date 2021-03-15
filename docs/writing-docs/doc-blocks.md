@@ -2,9 +2,15 @@
 title: 'Doc Blocks'
 ---
 
+<div class="aside">
+
+💡 <strong>NOTE</strong>: Currently there's an issue when using MDX stories with IE11. This issue does <strong>not</strong> apply to [DocsPage](./docs-page.md). If you're interested in helping us fix this issue, read our <a href="https://github.com/storybookjs/storybook/blob/next/CONTRIBUTING.md">Contribution guidelines</a> and submit a pull request.
+
+</div>
+
 Doc Blocks are the building blocks of Storybook documentation pages. By default, [DocsPage](./docs-page.md) uses a combination of the blocks below to build a page for each of your components automatically.
 
-Custom [addons](../api/addons.md) can also provide their own doc blocks.
+Custom [addons](../addons/writing-addons.md) can also provide their own doc blocks.
 
 ## ArgsTable
 
@@ -25,7 +31,10 @@ This is extremely useful, but it can be further expanded. Additional information
   paths={[
     'react/button-component-with-proptypes.js.mdx',
     'react/button-component-with-proptypes.ts.mdx',
-    'angular/button-component-with-proptypes.ts.mdx'
+    'angular/button-component-with-proptypes.ts.mdx',
+    'vue/button-component-with-proptypes.2.mdx',
+    'vue/button-component-with-proptypes.3.mdx',
+    'svelte/button-component-with-proptypes.js.mdx',
   ]}
 />
 
@@ -83,9 +92,9 @@ The API documentation of `ArgTypes` is detailed in a [separate section](../api/a
 | **type.required**              |                         The stories to be show, ordered by supplied name                         |
 | **description**                |                             A Markdown description for the property                              |
 | **table.type.summary**         |                                   A short version of the type                                    |
-| **table.type.detail**          |                                   A short version of the type                                    |
-| **table.defaultValue.summary** |                                   A short version of the type                                    |
-| **table.defaultValue.detail**  |                                   A short version of the type                                    |
+| **table.type.detail**          |                                    A long version of the type                                    |
+| **table.defaultValue.summary** |                               A short version of the default value                               |
+| **table.defaultValue.detail**  |                               A long version of the default value                                |
 | **control**                    | See [addon-controls README ](https://github.com/storybookjs/storybook/tree/next/addons/controls) |
 
 For instance:
@@ -124,26 +133,24 @@ Looking at the following component:
     'react/button-implementation.js.mdx',
     'react/button-implementation.ts.mdx',
     'angular/button-implementation.ts.mdx',
-    'vue/button-implementation.js.mdx'
+    'vue/button-implementation.2.mdx',
+    'vue/button-implementation.3.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
-
 Similar properties could be grouped together to allow better structuring and organization.
 
 We could use the following pattern to group them:
 
-| Field                          |                                           Category                                               |
-| :----------------------------- | :----------------------------------------------------------------------------------------------: |
-| **backgroundColor**            |                                           Colors                                                 |
-| **primary**                    |                                           Colors                                                 |
-| **label**                      |                                           Text                                                   |
-| **onClick**                    |                                           Events                                                 |
-| **size**                       |                                           Sizes                                                  |
-
-
+| Field               | Category |
+| :------------------ | :------: |
+| **backgroundColor** |  Colors  |
+| **primary**         |  Colors  |
+| **label**           |   Text   |
+| **onClick**         |  Events  |
+| **size**            |  Sizes   |
 
 Which will result in the following story implementation:
 
@@ -161,20 +168,17 @@ And the following change in the Storybook UI:
 
 ![button story with args grouped into categories](./button-args-grouped-categories.png)
 
-
 The formula used above can be improved even further and include subcategories.
 
 Turning the table above into:
 
-
-| Field                          |                                           Category                                               |                                            Subcategory                                        |
-| :----------------------------- | :----------------------------------------------------------------------------------------------: |:----------------------------------------------------------------------------------------------:
-| **backgroundColor**            |                                           Colors                                                 |                                            Button colors                                      |
-| **primary**                    |                                           Colors                                                 |                                            Button style                                       |
-| **label**                      |                                           Text                                                   |                                            Button contents                                    |
-| **onClick**                    |                                           Events                                                 |                                            Button Events                                      |
-| **size**                       |                                           Sizes                                                  |                                                                                               |
-
+| Field               | Category |   Subcategory   |
+| :------------------ | :------: | :-------------: |
+| **backgroundColor** |  Colors  |  Button colors  |
+| **primary**         |  Colors  |  Button style   |
+| **label**           |   Text   | Button contents |
+| **onClick**         |  Events  |  Button Events  |
+| **size**            |  Sizes   |                 |
 
 Leading to the following change in the story implementation and UI:
 
@@ -189,7 +193,6 @@ Leading to the following change in the story implementation and UI:
 <!-- prettier-ignore-end -->
 
 ![button story with args grouped into categories](./button-args-grouped-subcategories.png)
-
 
 #### MDX
 
@@ -219,7 +222,7 @@ Storybook Docs displays a story’s source code using the `Source` block. The sn
 
 In DocsPage, the `Source` block appears automatically within each story’s [Canvas](#canvas) block.
 
-To customize the source snippet that’s displayed for a story, set the `docs.source.code` parameter:
+To customize the source snippet that’s displayed for a story, set the `docs.source.code` and optionally the `docs.source.language` parameters:
 
 <!-- prettier-ignore-start -->
 
@@ -247,6 +250,9 @@ As an example, if you had the following story:
   paths={[
     'react/button-story-default-docs-code.js.mdx',
     'react/button-story-default-docs-code.ts.mdx',
+    'vue/button-story-default-docs-code.2.js.mdx',
+    'vue/button-story-default-docs-code.3.js.mdx',
+    'angular/button-story-default-docs-code.ts.mdx',
   ]}
 />
 
@@ -285,7 +291,7 @@ The pattern described will be applied to all the stories for the component. If y
 
 ### MDX
 
-You can also use the `Source` block in MDX. It accepts either a story ID or `code` snippet. Use the `language` for syntax highlighting.
+You can also use the `Source` block in MDX. It accepts either a story ID or `code` snippet. Use the `language` for syntax highlighting. It supports the following languages: `javascript`, `jsx`, `json`, `yml`, ,`md`, `bash`, `css`, `html`, `tsx`, `typescript`, `graphql`.
 
 <!-- prettier-ignore-start -->
 

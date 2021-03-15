@@ -1,10 +1,12 @@
 ```ts
 // Button.stories.ts
 
+import { Meta } from '@storybook/angular/types-6-0';
+
 import Button from './button.component';
 
 export default {
-  title: "Button",
+  title: 'Button',
   component: Button,
   argTypes: {
     backgroundColor: { control: 'color' },
@@ -13,6 +15,5 @@ export default {
     // Now all Button stories will be primary.
     primary: true,
   },
-}
-
+} as Meta;
 ```

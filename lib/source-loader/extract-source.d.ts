@@ -1,1 +1,1 @@
-export * from './dist/extract-source.d';
+export * from './dist/ts3.9/extract-source.d';

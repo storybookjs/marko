@@ -2,7 +2,7 @@
 title: 'Args'
 ---
 
-A story is a component with a set of arguments (props, slots, inputs, etc). “Args” are Storybook’s mechanism for defining those arguments as a first class entity that’s machine readable. This allows Storybook and its addons to live edit components. You _do not_ need to change your underlying component code to use args.
+A story is a component with a set of arguments that define how the component is to be rendered. “Args” are Storybook’s mechanism for defining those arguments in a single JavaScript object. Args can be used to dynamically change props, slots, styles, inputs, etc. This allows Storybook and its addons to live edit components. You _do not_ need to change your underlying component code to use args.
 
 When an arg’s value is changed, the component re-renders, allowing you to interact with components in Storybook’s UI via addons that affect args.
 
@@ -22,8 +22,11 @@ To define the args of a single story, use the `args` CSF story key:
   paths={[
     'react/button-story-with-args.js.mdx',
     'react/button-story-with-args.ts.mdx',
-    'vue/button-story-with-args.js.mdx',
+    'vue/button-story-with-args.2.js.mdx',
+    'vue/button-story-with-args.3.js.mdx',
     'angular/button-story-with-args.ts.mdx',
+    'svelte/button-story-with-args.js.mdx',
+    'web-components/button-story-with-args.js.mdx',
   ]}
 />
 
@@ -55,6 +58,8 @@ You can also define args at the component level; such args will apply to all sto
     'react/button-story-component-args-primary.ts.mdx',
     'vue/button-story-component-args-primary.js.mdx',
     'angular/button-story-component-args-primary.ts.mdx',
+    'svelte/button-story-component-args-primary.js.mdx',
+    'web-components/button-story-component-args-primary.js.mdx',
   ]}
 />
 
@@ -89,16 +94,88 @@ Args are useful when writing stories for composite components that are assembled
     'react/page-story.js.mdx',
     'react/page-story.ts.mdx',
     'angular/page-story.ts.mdx',
-    'vue/page-story.js.mdx'
+    'vue/page-story.2.js.mdx',
+    'vue/page-story.3.js.mdx',
+    'svelte/page-story.js.mdx',
   ]}
 />
 
 <!-- prettier-ignore-end -->
 
+## Args can modify any aspect of your component
+
+Args are used in story templates to configure the component appearance just as you would in an application. Here’s an example of how a `footer` arg can be used to populate a child component.
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'react/page-story-slots.js.mdx',
+    'react/page-story-slots.ts.mdx',
+    'vue/page-story-slots.2.js.mdx',
+    'vue/page-story-slots.3.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+## Setting args through the URL
+
+Initial args for the currently active story can be overruled by setting the `args` query parameter on the URL. Typically, you would use the Controls addon to handle this automatically, but you can also manually tweak the URL if desired. An example of Storybook URL query params could look like this:
+
+```
+?path=/story/avatar--default&args=style:rounded;size:100
+```
+
+In order to protect against [XSS](https://owasp.org/www-community/attacks/xss/) attacks, keys and values of args specified through the URL are limited to alphanumeric characters, spaces, underscores and dashes. Any args that don't abide these restrictions will be ignored and stripped, but can still be used through code and manipulated through the Controls addon.
+
+The `args` param is always a set of `key:value` pairs delimited with a semicolon `;`. Values will be coerced (cast) to their respective `argTypes` (which may have been automatically inferred). Objects and arrays are supported. Special values `null` and `undefined` can be set by prefixing with a bang `!`. For example, `args=obj.key:val;arr[0]:one;arr[1]:two;nil:!null` will be interpreted as:
+
+```
+{
+  obj: { key: 'val' },
+  arr: ['one', 'two'],
+  nil: null
+}
+```
+
+Args specified through the URL will extend and override any default values of args specified on the story.
+
+## Mapping to complex arg values
+
+Complex values such as JSX elements cannot be serialized to the manager (e.g. the Controls addon) or synced with the URL. To work around this limitation, arg values can be "mapped" from a simple string to a complex type using the `mapping` property in `argTypes`. This works on any type of arg, but makes most sense when used with the 'select' control.
+
+```
+argTypes: {
+  label: {
+    control: {
+      type: 'select',
+      options: ['Normal', 'Bold', 'Italic']
+    },
+    mapping: {
+      Bold: <b>Bold</b>,
+      Italic: <i>Italic</i>
+    }
+  }
+}
+```
+
+Note that `mapping` does not have to be exhaustive. If the arg value is not a property of `mapping`, the value will be used directly. Keys in `mapping` always correspond to arg *values*, even when `options` is an object. Specifying `options` as an object (key-value pairs) is useful if you want to use special characters in the input label. For example:
+
+```
+{
+  control: {
+    type: 'select',
+    options: { да: 'yes', нет: 'no' }
+  },
+  mapping: { yes: 'да', no: 'нет' }
+}
+```
+
 <details>
 <summary>Using args in addons</summary>
 
-If you are [writing an addon](../api/addons.md) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
+If you are [writing an addon](../addons/writing-addons.md) that wants to read or update args, use the `useArgs` hook exported by `@storybook/api`:
 
 <!-- prettier-ignore-start -->
 
@@ -121,7 +198,7 @@ In Storybook 5 and before we passed the context as the first argument. If you’
 
 <!-- prettier-ignore-start -->
 
-<CodeSnippets 
+<CodeSnippets
   paths={[
     'common/storybook-preview-parameters-old-format.js.mdx'
   ]}
@@ -130,8 +207,8 @@ In Storybook 5 and before we passed the context as the first argument. If you’
 <!-- prettier-ignore-end -->
 
   <div class="aside">
-  
-  Note that `args` is still available as a key on the context.
-  
+
+Note that `args` is still available as a key on the context.
+
   </div>
 </details>

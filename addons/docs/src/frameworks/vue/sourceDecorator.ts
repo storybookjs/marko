@@ -4,7 +4,7 @@ import { addons, StoryContext } from '@storybook/addons';
 import { logger } from '@storybook/client-logger';
 import prettier from 'prettier/standalone';
 import prettierHtml from 'prettier/parser-html';
-import Vue from 'vue';
+import type Vue from 'vue';
 
 import { SourceType, SNIPPET_RENDERED } from '../../shared';
 
@@ -30,52 +30,51 @@ export const sourceDecorator = (storyFn: any, context: StoryContext) => {
     return story;
   }
 
-  try {
-    // Creating a Vue instance each time is very costly. But we need to do it
-    // in order to access VNode, otherwise vm.$vnode will be undefined.
-    // Also, I couldn't see any notable difference from the implementation with
-    // per-story-cache.
-    // But if there is a more performant way, we should replace it with that ASAP.
-    const vm = new Vue({
-      data() {
-        return {
-          STORYBOOK_VALUES: context.args,
-        };
-      },
-      render(h) {
-        return h(story);
-      },
-    }).$mount();
+  const channel = addons.getChannel();
 
-    const channel = addons.getChannel();
+  const storyComponent = getStoryComponent(story.options.STORYBOOK_WRAPS);
 
-    const storyComponent = getStoryComponent(story.options.STORYBOOK_WRAPS);
+  return {
+    components: {
+      Story: story,
+    },
+    // We need to wait until the wrapper component to be mounted so Vue runtime
+    // struct VNode tree. We get `this._vnode == null` if switch to `created`
+    // lifecycle hook.
+    mounted() {
+      // Theoretically this does not happens but we need to check it.
+      if (!this._vnode) {
+        return;
+      }
 
-    const storyNode = lookupStoryInstance(vm, storyComponent);
+      try {
+        const storyNode = lookupStoryInstance(this, storyComponent);
 
-    const code = vnodeToString(storyNode._vnode);
+        const code = vnodeToString(storyNode._vnode);
 
-    channel.emit(
-      SNIPPET_RENDERED,
-      (context || {}).id,
-      prettier.format(`<template>${code}</template>`, {
-        parser: 'vue',
-        plugins: [prettierHtml],
-        // Because the parsed vnode missing spaces right before/after the surround tag,
-        // we always get weird wrapped code without this option.
-        htmlWhitespaceSensitivity: 'ignore',
-      })
-    );
-  } catch (e) {
-    logger.warn(`Failed to generate dynamic story source: ${e}`);
-  }
-
-  return story;
+        channel.emit(
+          SNIPPET_RENDERED,
+          (context || {}).id,
+          prettier.format(`<template>${code}</template>`, {
+            parser: 'vue',
+            plugins: [prettierHtml],
+            // Because the parsed vnode missing spaces right before/after the surround tag,
+            // we always get weird wrapped code without this option.
+            htmlWhitespaceSensitivity: 'ignore',
+          })
+        );
+      } catch (e) {
+        logger.warn(`Failed to generate dynamic story source: ${e}`);
+      }
+    },
+    template: '<story />',
+  };
 };
 
 export function vnodeToString(vnode: Vue.VNode): string {
   const attrString = [
     ...(vnode.data?.slot ? ([['slot', vnode.data.slot]] as [string, any][]) : []),
+    ['class', stringifyClassAttribute(vnode)],
     ...(vnode.componentOptions?.propsData ? Object.entries(vnode.componentOptions.propsData) : []),
     ...(vnode.data?.attrs ? Object.entries(vnode.data.attrs) : []),
   ]
@@ -122,8 +121,45 @@ export function vnodeToString(vnode: Vue.VNode): string {
     .join('')}</${tag}>`;
 }
 
+function stringifyClassAttribute(vnode: Vue.VNode): string | undefined {
+  if (!vnode.data || (!vnode.data.staticClass && !vnode.data.class)) {
+    return undefined;
+  }
+
+  return (
+    [...(vnode.data.staticClass?.split(' ') ?? []), ...normalizeClassBinding(vnode.data.class)]
+      .filter(Boolean)
+      .join(' ') || undefined
+  );
+}
+
+// https://vuejs.org/v2/guide/class-and-style.html#Binding-HTML-Classes
+function normalizeClassBinding(binding: unknown): readonly string[] {
+  if (!binding) {
+    return [];
+  }
+
+  if (typeof binding === 'string') {
+    return [binding];
+  }
+
+  if (binding instanceof Array) {
+    // To handle an object-in-array binding smartly, we use recursion
+    return binding.map(normalizeClassBinding).reduce((a, b) => [...a, ...b], []);
+  }
+
+  if (typeof binding === 'object') {
+    return Object.entries(binding)
+      .filter(([, active]) => !!active)
+      .map(([className]) => className);
+  }
+
+  // Unknown class binding
+  return [];
+}
+
 function stringifyAttr(attrName: string, value?: any): string | null {
-  if (typeof value === 'undefined') {
+  if (typeof value === 'undefined' || typeof value === 'function') {
     return null;
   }
 

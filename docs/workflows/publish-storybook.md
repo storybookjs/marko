@@ -6,23 +6,27 @@ Storybook is more than a UI component development tool. Teams also publish Story
 
 ## Build Storybook as a static web application
 
-First, we’ll need to build Storybook as a static web application using `build-storybook`, a command that’s installed by default.
+First, we’ll need to build Storybook as a static web application using `build-storybook`, a command that’s installed by default. If you're using Yarn run the following command:
 
 ```shell
 yarn build-storybook -o ./path/to/build
 ```
+
+If you're using npm run the following command:
+
+```shell
+npm run build-storybook -- -o ./path/to/build
+```
+
+<div class="aside">
+💡 <strong>Note</strong>: Be careful when running the <code>build-storybook</code> command with the <code>-o</code> flag as you might unknowingly overwrite essential files and folders. For instance <strong>avoid</strong> running <code>build-storybook -o ./</code> as this will replace the root project contents with the output of the command. 
+</div>
 
 Storybook will create a static web application at the path you specify. This can be served by any web server. Try it out locally by running:
 
 ```shell
 npx http-server ./path/to/build
 ```
-
-<details>
-    <summary><h4>Troubleshooting routing issues with Storybook 6.0</h4></summary>
-
-    After you've built your Storybook following the instructions outlined above, you encounter an issue where you cannot change the route in the sidebar, try building your Storybook with the `--no-dll` flag and see if it solves the problem. If so adjust your `build-storybook` script accordingly to include this flag. Be advised that the build process will run slower than usual.
-</details>
 
 <div class="aside">
 
@@ -47,7 +51,7 @@ We also maintain [`storybook-deployer`](https://github.com/storybookjs/storybook
 
 ## Review with your team
 
-Publishing Storybook as part of the development process makes it quick and easy to [gather team feedback](https://www.learnstorybook.com/design-systems-for-developers/react/en/review/).
+Publishing Storybook as part of the development process makes it quick and easy to [gather team feedback](https://storybook.js.org/tutorials/design-systems-for-developers/react/en/review/).
 
 A common method to ask for review is to paste a link to the published Storybook in a pull request or Slack.
 

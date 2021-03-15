@@ -1,6 +1,6 @@
 {
   "name": "@storybook/marionette",
-  "version": "6.1.0-rc.2",
+  "version": "6.2.0-beta.14",
   "description": "Storybook for Marionette: Develop Marionette.js component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -15,7 +15,16 @@
     "directory": "app/marionette"
   },
   "license": "MIT",
-  "main": "dist/client/index.js",
+  "main": "dist/cjs/client/index.js",
+  "module": "dist/esm/client/index.js",
+  "types": "dist/ts3.9/client/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "bin": {
     "build-storybook": "./bin/build.js",
     "start-storybook": "./bin/index.js",
@@ -25,16 +34,20 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.1.0-rc.2",
+    "@storybook/core": "6.2.0-beta.14",
+    "@storybook/core-common": "6.2.0-beta.14",
     "common-tags": "^1.8.0",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "html-loader": "^1.0.0",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "html-loader": "^1.3.2",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
+    "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
+    "@types/backbone.marionette": "^3.3.12",
+    "@types/common-tags": "^1.8.0",
     "backbone.marionette": "*"
   },
   "peerDependencies": {
@@ -44,10 +57,10 @@
     "underscore": "*"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.13.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0"
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }

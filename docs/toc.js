@@ -311,6 +311,53 @@ module.exports = {
       ],
     },
     {
+      title: '🔧 Addons',
+      pathSegment: 'addons',
+      type: 'menu',
+      children: [
+        {
+          pathSegment: 'introduction',
+          title: 'Introduction',
+          type: 'link',
+        },
+        {
+          pathSegment: 'install-addons',
+          title: 'Install',
+          type: 'link',
+        },
+        {
+          pathSegment: 'writing-addons',
+          title: 'Write',
+          type: 'link',
+        },
+        {
+          pathSegment: 'writing-presets',
+          title: 'Write a preset',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addon-catalog',
+          title: 'Add to catalog',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addon-types',
+          title: 'Types of addons',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addon-knowledge-base',
+          title: 'Knowledge base',
+          type: 'link',
+        },
+        {
+          pathSegment: 'addons-api',
+          title: 'Addon API',
+          type: 'link',
+        },
+      ],
+    },
+    {
       title: '🔌 API',
       pathSegment: 'api',
       type: 'menu',
@@ -333,33 +380,6 @@ module.exports = {
             {
               pathSegment: 'argtypes',
               title: 'ArgTypes',
-              type: 'link',
-            },
-          ],
-        },
-        {
-          title: 'Addons',
-          pathSegment: '',
-          type: 'menu',
-          children: [
-            {
-              pathSegment: 'addons',
-              title: 'Introduction',
-              type: 'link',
-            },
-            {
-              pathSegment: 'presets',
-              title: 'Presets',
-              type: 'link',
-            },
-            {
-              pathSegment: 'writing-presets',
-              title: 'Writing Presets',
-              type: 'link',
-            },
-            {
-              pathSegment: 'addons-api',
-              title: 'Addons API',
               type: 'link',
             },
           ],

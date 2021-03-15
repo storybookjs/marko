@@ -142,7 +142,7 @@ export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => 
           aria-label={`${isExpanded ? 'Hide' : 'Show'} ${title} stories`}
           aria-expanded={isExpanded}
         >
-          <CollapseButton onClick={handleClick}>
+          <CollapseButton data-action="collapse-ref" onClick={handleClick}>
             <CollapseIcon isExpanded={isExpanded} />
             <RefTitle title={title}>{title}</RefTitle>
           </CollapseButton>

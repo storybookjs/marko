@@ -41,7 +41,9 @@ export function webpack(
             {
               loader: require.resolve('postcss-loader'),
               options: {
-                plugins: [autoprefixer()],
+                postcssOptions: {
+                  plugins: [autoprefixer()],
+                },
               },
             },
             { loader: require.resolve('sass-loader') },
@@ -59,7 +61,7 @@ export function webpack(
         /@angular(\\|\/)core(\\|\/)(fesm5|bundles)/,
         path.resolve(__dirname, '..')
       ),
-      createForkTsCheckerInstance(tsLoaderOptions),
+      (createForkTsCheckerInstance(tsLoaderOptions) as any) as Configuration['plugins'][0],
     ],
   };
 }

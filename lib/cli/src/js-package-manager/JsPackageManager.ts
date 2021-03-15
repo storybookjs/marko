@@ -4,10 +4,27 @@ import { sync as spawnSync } from 'cross-spawn';
 import { commandLog } from '../helpers';
 import { PackageJson, PackageJsonWithDepsAndDevDeps } from './PackageJson';
 import { readPackageJson, writePackageJson } from './PackageJsonHelper';
+import storybookPackagesVersions from '../versions.json';
 
 const logger = console;
-// Cannot be `import` as it's not under TS root dir
-const storybookPackagesVersions = require('../../versions.json');
+
+/**
+ * Extract package name and version from input
+ *
+ * @param pkg A string like `@storybook/cli`, `react` or `react@^16`
+ * @return A tuple of 2 elements: [packageName, packageVersion]
+ */
+export function getPackageDetails(pkg: string): [string, string?] {
+  const idx = pkg.lastIndexOf('@');
+  // If the only `@` is the first character, it is a scoped package
+  // If it isn't in the string, it will be -1
+  if (idx <= 0) {
+    return [pkg, undefined];
+  }
+  const packageName = pkg.slice(0, idx);
+  const packageVersion = pkg.slice(idx + 1);
+  return [packageName, packageVersion];
+}
 
 export abstract class JsPackageManager {
   public abstract readonly type: 'npm' | 'yarn1' | 'yarn2';
@@ -82,10 +99,7 @@ export abstract class JsPackageManager {
       const { packageJson } = options;
 
       const dependenciesMap = dependencies.reduce((acc, dep) => {
-        const idx = dep.lastIndexOf('@');
-        const packageName = dep.slice(0, idx);
-        const packageVersion = dep.slice(idx + 1);
-
+        const [packageName, packageVersion] = getPackageDetails(dep);
         return { ...acc, [packageName]: packageVersion };
       }, {});
 
@@ -116,13 +130,14 @@ export abstract class JsPackageManager {
   /**
    * Return an array of strings matching following format: `<package_name>@<package_latest_version>`
    *
-   * @param packageNames
+   * @param packages
    */
-  public getVersionedPackages(...packageNames: string[]): Promise<string[]> {
+  public getVersionedPackages(...packages: string[]): Promise<string[]> {
     return Promise.all(
-      packageNames.map(
-        async (packageName) => `${packageName}@${await this.getVersion(packageName)}`
-      )
+      packages.map(async (pkg) => {
+        const [packageName, packageVersion] = getPackageDetails(pkg);
+        return `${packageName}@${await this.getVersion(packageName, packageVersion)}`;
+      })
     );
   }
 
@@ -137,9 +152,10 @@ export abstract class JsPackageManager {
   }
 
   public async getVersion(packageName: string, constraint?: string): Promise<string> {
-    let current;
+    let current: string;
 
     if (/@storybook/.test(packageName)) {
+      // @ts-ignore
       current = storybookPackagesVersions[packageName];
     }
 
@@ -195,10 +211,29 @@ export abstract class JsPackageManager {
       ? `build-storybook -s ${options.staticFolder}`
       : `build-storybook`;
 
-    const preCommand = options.preCommand ? this.getRunCommand(options.preCommand) : undefined;
+    const preCommand = options?.preCommand ? this.getRunCommand(options.preCommand) : undefined;
     this.addScripts({
       storybook: [preCommand, storybookCmd].filter(Boolean).join(' && '),
       'build-storybook': [preCommand, buildStorybookCmd].filter(Boolean).join(' && '),
+    });
+  }
+
+  public addESLintConfig() {
+    const packageJson = this.retrievePackageJson();
+    writePackageJson({
+      ...packageJson,
+      eslintConfig: {
+        ...packageJson.eslintConfig,
+        overrides: [
+          ...(packageJson.eslintConfig?.overrides || []),
+          {
+            files: ['**/*.stories.*'],
+            rules: {
+              'import/no-anonymous-default-export': 'off',
+            },
+          },
+        ],
+      },
     });
   }
 

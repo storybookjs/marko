@@ -2,7 +2,7 @@ import { ComponentType } from 'react';
 import { Args as DefaultArgs, Annotations, BaseMeta, BaseStory } from '@storybook/addons';
 import { StoryFnReactReturnType } from './types';
 
-export { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
+export type { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
 
 type ReactComponent = ComponentType<any>;
 type ReactReturnType = StoryFnReactReturnType;

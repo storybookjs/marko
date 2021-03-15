@@ -1,6 +1,9 @@
 module.exports = {
   root: true,
   extends: ['@storybook/eslint-config-storybook'],
+  rules: {
+    '@typescript-eslint/ban-ts-comment': 'warn',
+  },
   overrides: [
     {
       files: [
@@ -10,8 +13,6 @@ module.exports = {
         '**/*.test.*',
         '**/*.stories.*',
         '**/storyshots/**/stories/**',
-        'docs/src/new-components/lib/StoryLinkWrapper.js',
-        'docs/src/stories/**',
       ],
       rules: {
         '@typescript-eslint/no-empty-function': 'off',
@@ -37,7 +38,9 @@ module.exports = {
     {
       files: ['**/*.tsx', '**/*.ts'],
       rules: {
+        'react/require-default-props': 'off',
         'react/prop-types': 'off', // we should use types
+        'react/forbid-prop-types': 'off', // we should use types
         'no-dupe-class-members': 'off', // this is called overloads in typescript
       },
     },

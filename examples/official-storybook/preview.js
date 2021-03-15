@@ -12,6 +12,7 @@ import {
 } from '@storybook/theming';
 import { withCssResources } from '@storybook/addon-cssresources';
 import { DocsPage } from '@storybook/addon-docs/blocks';
+import { Symbols } from '@storybook/components';
 
 import addHeadWarning from './head-warning';
 
@@ -92,16 +93,17 @@ export const decorators = [
       case 'side-by-side': {
         return (
           <Fragment>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.light)}>
-              <ThemeBlock side="left">
+              <ThemeBlock side="left" data-side="left">
                 <StoryFn />
               </ThemeBlock>
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.dark)}>
-              <ThemeBlock side="right">
+              <ThemeBlock side="right" data-side="right">
                 <StoryFn />
               </ThemeBlock>
             </ThemeProvider>
@@ -111,16 +113,17 @@ export const decorators = [
       case 'stacked': {
         return (
           <Fragment>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <ThemeProvider theme={convert(themes.light)}>
               <Global styles={createReset} />
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.light)}>
-              <ThemeStack side="left">
+              <ThemeStack side="left" data-side="left">
                 <StoryFn />
               </ThemeStack>
             </ThemeProvider>
             <ThemeProvider theme={convert(themes.dark)}>
-              <ThemeStack side="right">
+              <ThemeStack side="right" data-side="right">
                 <StoryFn />
               </ThemeStack>
             </ThemeProvider>
@@ -130,6 +133,7 @@ export const decorators = [
       default: {
         return (
           <ThemeProvider theme={convert(themes[theme])}>
+            <Symbols icons={['folder', 'component', 'document', 'bookmarkhollow']} />
             <Global styles={createReset} />
             <ThemedSetRoot />
             <StoryFn />

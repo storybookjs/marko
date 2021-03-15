@@ -1,6 +1,6 @@
 {
   "name": "@storybook/codemod",
-  "version": "6.1.0-rc.2",
+  "version": "6.2.0-beta.14",
   "description": "A collection of codemod scripts written with JSCodeshift",
   "keywords": [
     "storybook"
@@ -15,45 +15,46 @@
     "directory": "lib/codemod"
   },
   "license": "MIT",
-  "main": "dist/index.js",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "jsnext:main": "src/index.js",
-  "files": [
-    "dist/**/*",
-    "README.md",
-    "*.js",
-    "*.d.ts",
-    "ts3.4/**/*",
-    "!__testfixtures__"
-  ],
-  "scripts": {
-    "prepare": "node ../../scripts/prepare.js"
-  },
-  "dependencies": {
-    "@mdx-js/mdx": "^1.6.19",
-    "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.1.0-rc.2",
-    "core-js": "^3.0.1",
-    "cross-spawn": "^7.0.0",
-    "globby": "^11.0.0",
-    "jscodeshift": "^0.7.0",
-    "lodash": "^4.17.15",
-    "prettier": "~2.0.5",
-    "recast": "^0.19.0",
-    "regenerator-runtime": "^0.13.7"
-  },
-  "devDependencies": {
-    "jest": "^26.0.0",
-    "jest-specific-snapshot": "^4.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
-  },
-  "gitHead": "38bb07161a72720766a1e9b2c9a1661bd3d819b0",
   "typesVersions": {
     "<3.8": {
       "*": [
         "ts3.4/*"
       ]
     }
-  }
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "*.js",
+    "*.d.ts",
+    "!__testfixtures__"
+  ],
+  "scripts": {
+    "prepare": "node ../../scripts/prepare.js"
+  },
+  "dependencies": {
+    "@mdx-js/mdx": "^1.6.22",
+    "@storybook/csf": "0.0.1",
+    "@storybook/node-logger": "6.2.0-beta.14",
+    "core-js": "^3.8.2",
+    "cross-spawn": "^7.0.3",
+    "globby": "^11.0.2",
+    "jscodeshift": "^0.7.0",
+    "lodash": "^4.17.20",
+    "prettier": "~2.2.1",
+    "recast": "^0.19.0",
+    "regenerator-runtime": "^0.13.7"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "jest-specific-snapshot": "^4.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "45957443c70b308214c9eb52cb048e7e488153c6"
 }
