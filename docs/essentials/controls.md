@@ -61,7 +61,6 @@ By default, Storybook will render a free text input for the `variant` arg:
 
 ![Essential addon Controls using a string](addon-controls-args-variant-string.png)
 
-
 This works as long as you type a valid string into the auto-generated text control, but it's not the best UI for our scenario, given that the component only accepts `primary` or `secondary` as variants. Let’s replace it with Storybook’s radio component.
 
 We can specify which controls get used by declaring a custom [argType](../api/argtypes.md) for the `variant` property. ArgTypes encode basic metadata for args, such as name, description, defaultValue for an arg. These get automatically filled in by Storybook Docs.
@@ -87,13 +86,13 @@ This replaces the input with a radio group for a more intuitive experience.
 
 For a few types, Controls will automatically infer them by using [regex](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/RegExp). You can change the matchers for a regex that suits you better.
 
-| Data type   | Default regex             | Description                                               |
-| :---------: | :-----------------------: | :-------------------------------------------------------: |
-| **color**   | `/(background\|color)$/i` | Will display a color picker UI for the args that match it |
-| **date**    | `/Date$/`                 | Will display a date picker UI for the args that match it  |
-
+| Data type |       Default regex       |                        Description                        |
+| :-------: | :-----------------------: | :-------------------------------------------------------: |
+| **color** | `/(background\|color)$/i` | Will display a color picker UI for the args that match it |
+| **date**  |         `/Date$/`         | Will display a date picker UI for the args that match it  |
 
 To do so, use the `matchers` property in `controls` parameter:
+
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
@@ -178,23 +177,23 @@ As shown above, you can configure individual controls with the “control" annot
 
 Here is the full list of available controls you can use:
 
-| Data Type   | Control Type | Description                                                    |    Options     |
-| :---------- | :----------: | :------------------------------------------------------------- | :------------: |
-| **boolean** |   boolean    | checkbox input                                                 |       -        |
-| **number**  |    number    | a numeric text box input                                       | min, max, step |
-|             |    range     | a range slider input                                           | min, max, step |
-| **object**  |    object    | json editor text input                                         |       -        |
-| **array**   |    object    | json editor text input                                         |       -        |
-|             |     file     | a file input that gives you a array of urls                    |     accept     |
-| **enum**    |    radio     | radio buttons input                                            |       -        |
-|             | inline-radio | inline radio buttons input                                     |       -        |
-|             |    check     | multi-select checkbox input                                    |       -        |
-|             | inline-check | multi-select inline checkbox input                             |       -        |
-|             |    select    | select dropdown input                                          |       -        |
-|             | multi-select | multi-select dropdown input                                    |       -        |
-| **string**  |     text     | simple text input                                              |       -        |
-|             |    color     | color picker input that assumes strings are color values       |       -        |
-|             |     date     | date picker input                                              |       -        |
+| Data Type   | Control Type | Description                                              |    Options     |
+| :---------- | :----------: | :------------------------------------------------------- | :------------: |
+| **boolean** |   boolean    | checkbox input                                           |       -        |
+| **number**  |    number    | a numeric text box input                                 | min, max, step |
+|             |    range     | a range slider input                                     | min, max, step |
+| **object**  |    object    | json editor text input                                   |       -        |
+| **array**   |    object    | json editor text input                                   |       -        |
+|             |     file     | a file input that gives you a array of urls              |     accept     |
+| **enum**    |    radio     | radio buttons input                                      |       -        |
+|             | inline-radio | inline radio buttons input                               |       -        |
+|             |    check     | multi-select checkbox input                              |       -        |
+|             | inline-check | multi-select inline checkbox input                       |       -        |
+|             |    select    | select dropdown input                                    |       -        |
+|             | multi-select | multi-select dropdown input                              |       -        |
+| **string**  |     text     | simple text input                                        |       -        |
+|             |    color     | color picker input that assumes strings are color values |       -        |
+|             |     date     | date picker input                                        |       -        |
 
 If you need to customize a control for a number data type in your story, you can do it like so:
 
@@ -303,10 +302,27 @@ Consider the following story snippets:
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
-paths={[
-'common/component-story-disable-controls-regex.js.mdx',
-'common/component-story-disable-controls-regex.mdx.mdx'
-]}
+  paths={[
+    'common/component-story-disable-controls-regex.js.mdx',
+    'common/component-story-disable-controls-regex.mdx.mdx'
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+## Sorting controls
+
+By default, controls are unsorted and use whatever order the args data is processed in (`none`). It can also be configured to sort alphabetically by arg name (`alpha`) or alphabetically required args first (`requiredFirst`).
+
+Consider the following snippet to force required args first:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/component-story-sort-controls.js.mdx',
+    'common/component-story-sort-controls.mdx.mdx'
+  ]}
 />
 
 <!-- prettier-ignore-end -->
