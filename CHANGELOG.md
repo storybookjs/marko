@@ -1,3 +1,9 @@
+## 6.2.0-rc.0 (March 15, 2021)
+
+### Features
+
+- Svelte: Improve default webpack config ([#14235](https://github.com/storybookjs/storybook/pull/14235))
+
 ## 6.2.0-beta.15 (March 15, 2021)
 
 ### Features
