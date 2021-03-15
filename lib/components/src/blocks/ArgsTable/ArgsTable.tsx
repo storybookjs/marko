@@ -346,7 +346,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     compact,
     inAddonPanel,
     initialExpandedArgs,
-    sort = 'alpha',
+    sort = 'none',
   } = props as ArgsTableRowProps;
 
   const groups = groupRows(

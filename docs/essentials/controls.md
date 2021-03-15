@@ -312,7 +312,7 @@ Consider the following story snippets:
 
 ## Sorting controls
 
-By default, controls are sorted alphabetically by arg name (`alpha`). This can be configured to sort alphabetically required args first (`requiredFirst`), or to not sort at all and use whatever order the args data is processed in (`none`).
+By default, controls are unsorted and use whatever order the args data is processed in (`none`). It can also be configured to sort alphabetically by arg name (`alpha`) or alphabetically required args first (`requiredFirst`).
 
 Consider the following snippet to force required args first:
 
