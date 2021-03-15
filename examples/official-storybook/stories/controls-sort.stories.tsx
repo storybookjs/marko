@@ -1,5 +1,4 @@
 import React from 'react';
-import Button from '../components/TsButton';
 
 export default {
   title: 'Addons/Controls-Sort',
