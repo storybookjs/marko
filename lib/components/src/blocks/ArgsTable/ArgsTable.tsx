@@ -226,8 +226,15 @@ export enum ArgsTableError {
   ARGS_UNSUPPORTED = 'Args unsupported. See Args documentation for your framework.',
 }
 
-type SortType = 'ascending' | 'descending' | 'requiredFirst';
+export type SortType = 'alpha' | 'requiredFirst' | 'none';
+type SortFn = (a: ArgType, b: ArgType) => number;
 
+const sortFns: Record<SortType, SortFn | null> = {
+  alpha: (a: ArgType, b: ArgType) => a.name.localeCompare(b.name),
+  requiredFirst: (a: ArgType, b: ArgType) =>
+    Number(!!b.type?.required) - Number(!!a.type?.required) || a.name.localeCompare(b.name),
+  none: undefined,
+};
 export interface ArgsTableRowProps {
   rows: ArgTypes;
   args?: Args;
@@ -283,20 +290,10 @@ const groupRows = (rows: ArgType, sort: SortType) => {
   });
 
   // apply sort
-  const sortFn = (a: ArgType, b: ArgType) => {
-    const sortFns: Record<SortType, () => number> = {
-      ascending: () => a.name.localeCompare(b.name),
-      descending: () => b.name.localeCompare(a.name),
-      requiredFirst: () => {
-        return (
-          Number(!!b.type?.required) - Number(!!a.type?.required) || a.name.localeCompare(b.name)
-        );
-      },
-    };
-    return sortFns[sort]();
-  };
+  const sortFn = sortFns[sort];
 
   const sortSubsection = (record: Record<string, Subsection>) => {
+    if (!sortFn) return record;
     return Object.keys(record).reduce<Record<string, Subsection>>(
       (acc, cur) => ({
         ...acc,
@@ -349,7 +346,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     compact,
     inAddonPanel,
     initialExpandedArgs,
-    sort = 'ascending',
+    sort = 'requiredFirst',
   } = props as ArgsTableRowProps;
 
   const groups = groupRows(
