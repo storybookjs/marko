@@ -9,6 +9,8 @@ export async function webpack(config: Configuration, options: Options): Promise<
     options
   );
 
+  const mainFields = (config.resolve.mainFields as string[]) || ['browser', 'module', 'main'];
+
   return {
     ...config,
     module: {
@@ -26,6 +28,7 @@ export async function webpack(config: Configuration, options: Options): Promise<
       ...config.resolve,
       extensions: [...config.resolve.extensions, '.svelte'],
       alias: config.resolve.alias,
+      mainFields: ['svelte', ...mainFields],
     },
   };
 }
