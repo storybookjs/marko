@@ -209,7 +209,6 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const { story } = props as StoryProps;
 
   const sort = sortProp || controls?.sort;
-  console.log('preparing', { sort });
 
   const main = getComponent(props, context);
   if (story) {
