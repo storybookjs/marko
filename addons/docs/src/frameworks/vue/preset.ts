@@ -1,19 +1,9 @@
-interface Preset {
-  readonly name: string;
-  readonly options: any;
-}
+import type { Options } from '@storybook/core-common';
 
-interface PresetOptions {
-  readonly presetsList: Preset[];
-}
-
-export function webpackFinal(
-  webpackConfig: any = {},
-  options: PresetOptions = { presetsList: [] }
-) {
+export function webpackFinal(webpackConfig: any = {}, options: Options) {
   let vueDocgenOptions = {};
 
-  options.presetsList.forEach((preset) => {
+  options.presetsList?.forEach((preset) => {
     if (preset.name.includes('addon-docs') && preset.options.vueDocgenOptions) {
       const appendableOptions = preset.options.vueDocgenOptions;
       vueDocgenOptions = {
