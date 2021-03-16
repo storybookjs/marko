@@ -1,1 +1,1 @@
-{"version":"6.2.0-rc.0","info":{"plain":"### Features\n\n- Svelte: Improve default webpack config ([#14235](https://github.com/storybookjs/storybook/pull/14235))"}}
+{"version":"6.2.0-rc.1","info":{"plain":"### Features\n\n- CLI: Improve init for svelte ([#14161](https://github.com/storybookjs/storybook/pull/14161))"}}
