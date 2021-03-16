@@ -1,3 +1,9 @@
+## 6.2.0-rc.1 (March 16, 2021)
+
+### Features
+
+- CLI: Improve init for svelte ([#14161](https://github.com/storybookjs/storybook/pull/14161))
+
 ## 6.2.0-rc.0 (March 15, 2021)
 
 ### Features
