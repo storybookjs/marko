@@ -3,10 +3,8 @@
 
 module.exports = {
   // Your existing Storybook configuration
-  refs: (config) => {
-    //👇 Retrieves the current environment from the config object
-    const { configType } = config; 
-
+  // 👇 Retrieve the current environment from the configType argument
+  refs: (config, { configType }) => {
     if (configType === 'DEVELOPMENT') {
       return {
         react: {
