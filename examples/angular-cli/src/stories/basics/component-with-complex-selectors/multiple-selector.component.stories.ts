@@ -1,6 +1,6 @@
 import { MultipleSelectorComponent } from './multiple-selector.component';
 import { AttributeSelectorComponent } from './attribute-selector.component';
-import { AttributeWithValueSelectorComponent } from './attributewithvalue-selector.component';
+import { ClassSelectorComponent } from './class-selector.component';
 
 export default {
   title: 'Basics / Component / With Complex Selectors',
@@ -20,9 +20,9 @@ AttributeSelectors.parameters = {
   component: AttributeSelectorComponent,
 };
 
-export const AttributeValueSelectors = () => ({});
+export const ClassSelectors = () => ({});
 
-AttributeValueSelectors.storyName = 'attribute value selectors';
-AttributeValueSelectors.parameters = {
-  component: AttributeWithValueSelectorComponent,
+ClassSelectors.storyName = 'class selectors';
+ClassSelectors.parameters = {
+  component: ClassSelectorComponent,
 };
