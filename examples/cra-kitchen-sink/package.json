@@ -1,6 +1,6 @@
 {
   "name": "cra-kitchen-sink",
-  "version": "6.2.0-rc.0",
+  "version": "6.2.0-rc.1",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -11,7 +11,7 @@
     "test": "react-scripts test --env=jsdom"
   },
   "dependencies": {
-    "@storybook/client-logger": "6.2.0-rc.0",
+    "@storybook/client-logger": "6.2.0-rc.1",
     "global": "^4.4.0",
     "prop-types": "^15.7.2",
     "react": "16.14.0",
@@ -21,20 +21,20 @@
   },
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "@storybook/addon-a11y": "6.2.0-rc.0",
-    "@storybook/addon-actions": "6.2.0-rc.0",
-    "@storybook/addon-backgrounds": "6.2.0-rc.0",
-    "@storybook/addon-docs": "6.2.0-rc.0",
-    "@storybook/addon-events": "6.2.0-rc.0",
-    "@storybook/addon-jest": "6.2.0-rc.0",
-    "@storybook/addon-knobs": "6.2.0-rc.0",
-    "@storybook/addon-links": "6.2.0-rc.0",
-    "@storybook/addon-storyshots": "6.2.0-rc.0",
-    "@storybook/addons": "6.2.0-rc.0",
-    "@storybook/builder-webpack4": "6.2.0-rc.0",
+    "@storybook/addon-a11y": "6.2.0-rc.1",
+    "@storybook/addon-actions": "6.2.0-rc.1",
+    "@storybook/addon-backgrounds": "6.2.0-rc.1",
+    "@storybook/addon-docs": "6.2.0-rc.1",
+    "@storybook/addon-events": "6.2.0-rc.1",
+    "@storybook/addon-jest": "6.2.0-rc.1",
+    "@storybook/addon-knobs": "6.2.0-rc.1",
+    "@storybook/addon-links": "6.2.0-rc.1",
+    "@storybook/addon-storyshots": "6.2.0-rc.1",
+    "@storybook/addons": "6.2.0-rc.1",
+    "@storybook/builder-webpack4": "6.2.0-rc.1",
     "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
-    "@storybook/react": "6.2.0-rc.0",
-    "@storybook/theming": "6.2.0-rc.0",
+    "@storybook/react": "6.2.0-rc.1",
+    "@storybook/theming": "6.2.0-rc.1",
     "webpack": "4"
   },
   "storybook": {

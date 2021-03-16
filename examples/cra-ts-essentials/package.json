@@ -1,6 +1,6 @@
 {
   "name": "cra-ts-essentials",
-  "version": "6.2.0-rc.0",
+  "version": "6.2.0-rc.1",
   "private": true,
   "scripts": {
     "build": "react-scripts build",
@@ -34,11 +34,11 @@
     "typescript": "^3.9.7"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "6.2.0-rc.0",
-    "@storybook/addons": "6.2.0-rc.0",
-    "@storybook/builder-webpack4": "6.2.0-rc.0",
+    "@storybook/addon-essentials": "6.2.0-rc.1",
+    "@storybook/addons": "6.2.0-rc.1",
+    "@storybook/builder-webpack4": "6.2.0-rc.1",
     "@storybook/preset-create-react-app": "^3.1.6-alpha.0",
-    "@storybook/react": "6.2.0-rc.0",
+    "@storybook/react": "6.2.0-rc.1",
     "webpack": "4"
   },
   "storybook": {
