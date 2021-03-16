@@ -1,5 +1,5 @@
 import React, { FC, useState, MouseEvent, KeyboardEvent } from 'react';
-import { SketchPicker, ColorResult } from 'react-color';
+import { RgbaStringColorPicker } from 'react-colorful';
 
 import { styled } from '@storybook/theming';
 import { Form } from '../form';
@@ -25,9 +25,6 @@ const Popover = styled.div({
   position: 'absolute',
   zIndex: 2,
 });
-
-const format = (color: ColorResult) =>
-  `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
 
 export type ColorProps = ControlProps<ColorValue> & ColorConfig;
 export const ColorControl: FC<ColorProps> = ({
@@ -64,9 +61,9 @@ export const ColorControl: FC<ColorProps> = ({
             }
           }}
         >
-          <SketchPicker
+          <RgbaStringColorPicker
             color={value}
-            onChange={(color: ColorResult) => onChange(format(color))}
+            onChange={onChange}
             {...{ onFocus, onBlur, presetColors }}
           />
         </Popover>

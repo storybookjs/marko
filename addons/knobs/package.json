@@ -52,7 +52,7 @@
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "qs": "^6.9.5",
-    "react-color": "^2.19.3",
+    "react-colorful": "^5.0.1",
     "react-lifecycles-compat": "^3.0.4",
     "react-select": "^3.2.0",
     "regenerator-runtime": "^0.13.7"
@@ -60,7 +60,6 @@
   "devDependencies": {
     "@types/enzyme": "^3.10.8",
     "@types/escape-html": "1.0.0",
-    "@types/react-color": "^3.0.4",
     "@types/react-lifecycles-compat": "^3.0.1",
     "@types/react-select": "^3.1.2",
     "@types/webpack-env": "^1.16.0",

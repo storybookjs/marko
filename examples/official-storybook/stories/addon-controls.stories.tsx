@@ -15,6 +15,7 @@ export default {
       control: { type: 'select', labels: { Bold: 'BOLD' } },
       mapping: { Bold: <b>Bold</b> },
     },
+    color: { control: 'color', name: 'Color' },
   },
   parameters: { chromatic: { disable: true } },
 };
