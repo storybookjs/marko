@@ -1,6 +1,7 @@
 export * from './presets';
 
 export * from './utils/babel';
+export * from './utils/check-webpack-version';
 export * from './utils/envs';
 export * from './utils/es6Transpiler';
 export * from './utils/interpret-files';
