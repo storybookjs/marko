@@ -4,7 +4,7 @@ import webpack4, { Stats, Configuration } from '@types/webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
-import { Builder, useProgressReporting } from '@storybook/core-common';
+import { Builder, useProgressReporting, checkWebpackVersion } from '@storybook/core-common';
 
 let compilation: ReturnType<typeof webpackDevMiddleware>;
 let reject: (reason?: any) => void;
@@ -12,6 +12,9 @@ let reject: (reason?: any) => void;
 type WebpackBuilder = Builder<Configuration, Stats>;
 
 const webpack = (webpackReal as any) as typeof webpack4;
+
+const checkWebpackVersion4 = (webpackInstance: { version?: string }) =>
+  checkWebpackVersion(webpackInstance, '4.x', 'builder-webpack4');
 
 export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
   const { presets } = options;
@@ -47,6 +50,8 @@ export const makeStatsFromError: (err: string) => Stats = (err) =>
   } as any);
 
 export const start: WebpackBuilder['start'] = async ({ startTime, options, router }) => {
+  checkWebpackVersion4(executor.get);
+
   const config = await getConfig(options);
   const compiler = executor.get(config);
   if (!compiler) {
@@ -113,6 +118,8 @@ export const bail: WebpackBuilder['bail'] = (e: Error) => {
 };
 
 export const build: WebpackBuilder['build'] = async ({ options, startTime }) => {
+  checkWebpackVersion4(executor.get);
+
   logger.info('=> Compiling preview..');
   const config = await getConfig(options);
 
