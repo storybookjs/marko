@@ -8,7 +8,7 @@ import { createDefaultWebpackConfig } from '../preview/base-webpack.config';
 export async function webpack(config: Configuration, options: Options) {
   // @ts-ignore
   const { configDir, configType, presets, webpackConfig } = options;
-  const defaultConfig = await createDefaultWebpackConfig(config, options);
+  const defaultConfig = await createDefaultWebpackConfig(config, options, configType);
   const finalDefaultConfig = await presets.apply('webpackFinal', defaultConfig, options);
 
   // through standalone webpackConfig option

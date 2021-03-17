@@ -124,7 +124,7 @@ export default async ({
     // stats: 'errors-only',
     output: {
       path: path.resolve(process.cwd(), outputDir),
-      filename: '[name].[hash].bundle.js',
+      filename: isProd ? '[name].[contenthash:8].bundle.js' : '[name].bundle.js',
       publicPath: '',
     },
     // watchOptions: {
