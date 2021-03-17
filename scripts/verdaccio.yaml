@@ -51,6 +51,10 @@ packages:
     access: $all
     publish: $all
     proxy: npmjs
+  '@storybook/addon-svelte-csf':
+    access: $all
+    publish: $all
+    proxy: npmjs
 
   # storybook packages are NOT proxied to global registry
   # allowing us to republish any version during tests
