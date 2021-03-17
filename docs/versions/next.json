@@ -1,1 +1,1 @@
-{"version":"6.2.0-rc.1","info":{"plain":"### Features\n\n- CLI: Improve init for svelte ([#14161](https://github.com/storybookjs/storybook/pull/14161))"}}
+{"version":"6.2.0-rc.2","info":{"plain":"### Bug Fixes\n\n- Addon-docs/Vue,Vue3: Fix preset options for vue-docgen-api ([#14227](https://github.com/storybookjs/storybook/pull/14227))\n- Webpack5: Fix hash => fullhash ([#14255](https://github.com/storybookjs/storybook/pull/14255))\n\n### Maintenance\n\n- Core: Check webpack version ([#14256](https://github.com/storybookjs/storybook/pull/14256))"}}
