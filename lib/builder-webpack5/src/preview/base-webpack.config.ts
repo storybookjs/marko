@@ -27,7 +27,7 @@ export async function createDefaultWebpackConfig(
       test: /\.css$/,
       sideEffects: true,
       use: [
-        // TODO(blaine): Decide if we want to keep style-loader & css-loader in core
+        // TODO: Decide if we want to keep style-loader & css-loader in core
         // Trying to apply style-loader or css-loader to files that already have been
         // processed by them causes webpack to crash, so no one else can add similar
         // loader configurations to the `.css` extension.
