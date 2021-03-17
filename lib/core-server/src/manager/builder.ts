@@ -13,7 +13,7 @@ let reject: (reason?: any) => void;
 
 type WebpackBuilder = Builder<Configuration, Stats>;
 
-const checkWebpackVersion4 = (webpackInstance: any) =>
+const checkWebpackVersion4 = (webpackInstance: { version?: string }) =>
   checkWebpackVersion(webpackInstance, '4.x', 'manager-builder');
 
 export const getConfig: WebpackBuilder['getConfig'] = getManagerWebpackConfig;

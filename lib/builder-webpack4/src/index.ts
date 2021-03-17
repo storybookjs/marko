@@ -13,7 +13,7 @@ type WebpackBuilder = Builder<Configuration, Stats>;
 
 const webpack = (webpackReal as any) as typeof webpack4;
 
-const checkWebpackVersion4 = (webpackInstance: any) =>
+const checkWebpackVersion4 = (webpackInstance: { version?: string }) =>
   checkWebpackVersion(webpackInstance, '4.x', 'builder-webpack4');
 
 export const getConfig: WebpackBuilder['getConfig'] = async (options) => {

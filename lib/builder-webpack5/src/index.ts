@@ -9,7 +9,7 @@ let reject: (reason?: any) => void;
 
 type WebpackBuilder = Builder<Configuration, Stats>;
 
-const checkWebpackVersion5 = (webpackInstance: any) =>
+const checkWebpackVersion5 = (webpackInstance: { version?: string }) =>
   checkWebpackVersion(webpackInstance, '5.x', 'builder-webpack5');
 
 export const getConfig: WebpackBuilder['getConfig'] = async (options) => {

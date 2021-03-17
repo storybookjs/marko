@@ -2,7 +2,11 @@ import semver from '@storybook/semver';
 import { logger } from '@storybook/node-logger';
 import dedent from 'ts-dedent';
 
-export const checkWebpackVersion = (webpack: any, specifier: string, caption: string) => {
+export const checkWebpackVersion = (
+  webpack: { version?: string },
+  specifier: string,
+  caption: string
+) => {
   if (!webpack.version) {
     logger.info('Skipping webpack version check, no version available');
     return;
