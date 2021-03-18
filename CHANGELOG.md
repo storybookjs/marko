@@ -1,3 +1,18 @@
+## 6.2.0-rc.3 (March 18, 2021)
+
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below.
+
+### Bug Fixes
+
+- Addon-docs/Angular: Fix inline rendering setup ([#14270](https://github.com/storybookjs/storybook/pull/14270))
+- Addon-docs: Fix table dark mode ([#14251](https://github.com/storybookjs/storybook/pull/14251))
+- Webpack5: Replace fullhash with contenthash ([#14261](https://github.com/storybookjs/storybook/pull/14261))
+
+### Maintenance
+
+- CLI: Don't allow root directory as static dir ([#14068](https://github.com/storybookjs/storybook/pull/14068))
+- WebComponents: Fix types and improve CLI detection ([#14258](https://github.com/storybookjs/storybook/pull/14258))
+
 ## 6.2.0-rc.2 (March 17, 2021)
 
 ### Bug Fixes
