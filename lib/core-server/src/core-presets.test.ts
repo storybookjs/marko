@@ -206,14 +206,25 @@ describe('dev cli flags', () => {
       ...cliOptions,
       outputDir,
     };
-    beforeEach(() => {
-      jest.clearAllMocks();
-      cache.clear();
-    });
+
     it('production mode', async () => {
       expect.assertions(1);
       await expect(buildStaticStandalone(optionsWithInvalidDir)).rejects.toThrow(
         expectedErrorMessage
+      );
+    });
+  });
+
+  describe('Invalid staticDir must throw: root directory /', () => {
+    const optionsWithInvalidStaticDir = {
+      ...cliOptions,
+      staticDir: ['/'],
+    };
+
+    it('production mode', async () => {
+      expect.assertions(1);
+      await expect(buildStaticStandalone(optionsWithInvalidStaticDir)).rejects.toThrow(
+        "Won't copy root directory. Check your staticDirs!"
       );
     });
   });
