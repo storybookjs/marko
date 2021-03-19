@@ -2,7 +2,7 @@ import { AnyComponent } from 'preact';
 import { Args as DefaultArgs, Annotations, BaseMeta, BaseStory } from '@storybook/addons';
 import { StoryFnPreactReturnType } from './types';
 
-export { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
+export type { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
 
 type PreactComponent = AnyComponent<any, any>;
 type PreactReturnType = StoryFnPreactReturnType;
