@@ -150,7 +150,7 @@ const Input = styled(Form.Input)({
   paddingRight: 30,
 });
 
-const ToggleIcon = styled(Icons)({
+const ToggleIcon = styled(Icons)(({ theme }) => ({
   position: 'absolute',
   zIndex: 1,
   top: 6,
@@ -159,7 +159,8 @@ const ToggleIcon = styled(Icons)({
   height: 20,
   padding: 4,
   cursor: 'pointer',
-});
+  color: theme.input.color,
+}));
 
 const SmartPicker: FC<{ value: string; colorSpace: ColorSpace }> = React.memo(
   ({ value, colorSpace, ...props }) => {

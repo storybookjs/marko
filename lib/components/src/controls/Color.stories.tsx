@@ -27,16 +27,7 @@ export const Basic = () => Template('#ff0');
 export const Undefined = () => Template(undefined);
 
 export const WithPresetColors = () =>
-  Template('#ff0', [
-    { color: '#333', title: 'Darkest' },
-    { color: '#444', title: 'Darker' },
-    { color: '#666', title: 'Dark' },
-    { color: '#999', title: 'Mediumdark' },
-    { color: '#ddd', title: 'Medium' },
-    { color: '#EEE', title: 'Mediumlight' },
-    { color: '#F3F3F3', title: 'Light' },
-    { color: '#F8F8F8', title: 'Lighter' },
-    { color: '#FFFFFF', title: 'Lightest' },
+  Template('tan', [
     { color: '#ff4785', title: 'Coral' },
     { color: '#1EA7FD', title: 'Ocean' },
     { color: 'rgb(252, 82, 31)', title: 'Orange' },
@@ -46,6 +37,15 @@ export const WithPresetColors = () =>
     { color: '#6F2CAC', title: 'Purple' },
     { color: '#2A0481', title: 'Ultraviolet' },
     { color: 'black' },
+    { color: '#333', title: 'Darkest' },
+    { color: '#444', title: 'Darker' },
+    { color: '#666', title: 'Dark' },
+    { color: '#999', title: 'Mediumdark' },
+    { color: '#ddd', title: 'Medium' },
+    { color: '#EEE', title: 'Mediumlight' },
+    { color: '#F3F3F3', title: 'Light' },
+    { color: '#F8F8F8', title: 'Lighter' },
+    { color: '#FFFFFF', title: 'Lightest' },
     '#fe4a49',
     '#FED766',
     'rgba(0, 159, 183, 1)',
