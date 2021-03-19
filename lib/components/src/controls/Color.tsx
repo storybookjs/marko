@@ -35,7 +35,7 @@ const stringToArgs = (value: string) => {
 };
 
 const expandShorthand = (value: string) => {
-  if (value && !value.startsWith('#')) return `#${convert.keyword.hex(value)}`;
+  if (value && !value.startsWith('#')) return `#${convert.keyword.hex(value as any)}`;
   if (!value || value.length > 4) return value || '#000000';
   const match = value.match(HEX_REGEXP);
   if (!match) return value;
@@ -48,31 +48,31 @@ const parseValue = (value: string): ParsedColor => {
 
   if (value.startsWith('rgb')) {
     const [r, g, b, a] = stringToArgs(value);
-    const [h, s, l] = convert.rgb.hsl(r, g, b) || [0, 0, 0];
+    const [h, s, l] = convert.rgb.hsl([r, g, b]) || [0, 0, 0];
     return {
       value,
       colorSpace: ColorSpace.RGBA,
       [ColorSpace.RGBA]: value,
       [ColorSpace.HSLA]: `hsla(${h}, ${s}, ${l}, ${a})`,
-      [ColorSpace.HEX]: `#${convert.rgb.hex(r, g, b)}`,
+      [ColorSpace.HEX]: `#${convert.rgb.hex([r, g, b])}`,
     };
   }
 
   if (value.startsWith('hsl')) {
     const [h, s, l, a] = stringToArgs(value);
-    const [r, g, b] = convert.hsl.rgb(h, s, l) || [0, 0, 0];
+    const [r, g, b] = convert.hsl.rgb([h, s, l]) || [0, 0, 0];
     return {
       value,
       colorSpace: ColorSpace.HSLA,
       [ColorSpace.RGBA]: `rgba(${r}, ${g}, ${b}, ${a})`,
       [ColorSpace.HSLA]: value,
-      [ColorSpace.HEX]: `#${convert.hsl.hex(h, s, l)}`,
+      [ColorSpace.HEX]: `#${convert.hsl.hex([h, s, l])}`,
     };
   }
 
   const convertTo = value.startsWith('#') ? convert.hex : convert.keyword;
-  const [r, g, b] = convertTo.rgb(value.replace('#', '')) || [0, 0, 0];
-  const [h, s, l] = convert.rgb.hsl(r, g, b) || [0, 0, 0];
+  const [r, g, b] = convertTo.rgb(value.replace('#', '') as any) || [0, 0, 0];
+  const [h, s, l] = convert.rgb.hsl([r, g, b]) || [0, 0, 0];
   return {
     value,
     colorSpace: ColorSpace.HEX,
