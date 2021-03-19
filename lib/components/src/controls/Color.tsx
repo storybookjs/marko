@@ -20,12 +20,12 @@ const COLOR_SPACES = Object.values(ColorSpace);
 const COLOR_REGEXP = /\(([0-9]+),\s*([0-9]+)%?,\s*([0-9]+)%?,?\s*([0-9.]+)?\)/;
 const RGB_REGEXP = /^\s*rgba?\(([0-9]+),\s*([0-9]+),\s*([0-9]+),?\s*([0-9.]+)?\)\s*$/i;
 const HSL_REGEXP = /^\s*hsla?\(([0-9]+),\s*([0-9]+)%,\s*([0-9]+)%,?\s*([0-9.]+)?\)\s*$/i;
-const HEX_REGEXP = /^\s*#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})\s*$/i;
+const HEX_REGEXP = /^\s*#([0-9a-f]{1,2})([0-9a-f]{1,2})([0-9a-f]{1,2})\s*$/i;
 const SHORTHEX_REGEXP = /^\s*#([0-9a-f])([0-9a-f])([0-9a-f])\s*$/i;
 
 type ParsedColor = {
   value: string;
-  keyword: string;
+  title: string;
   colorSpace: ColorSpace;
   [ColorSpace.RGBA]: string;
   [ColorSpace.HSLA]: string;
@@ -55,51 +55,52 @@ const expandShorthand = (value: string) => {
   return `#${r}${r}${g}${g}${b}${b}`;
 };
 
-const parseValue = (value: string): ParsedColor => {
-  if (!value) return undefined;
+const parseValue = (input: string | { color: string; title?: string }): ParsedColor => {
+  const { color, title } = typeof input === 'object' ? input : { color: input, title: undefined };
+  if (!color) return undefined;
 
-  if (RGB_REGEXP.test(value)) {
-    const [r, g, b, a] = stringToArgs(value);
+  if (RGB_REGEXP.test(color)) {
+    const [r, g, b, a] = stringToArgs(color);
     const [h, s, l] = convert.rgb.hsl([r, g, b]) || [0, 0, 0];
     return {
-      value,
-      keyword: convert.rgb.keyword([r, g, b]) || value,
+      value: color,
+      title: title || convert.rgb.keyword([r, g, b]) || color,
       colorSpace: ColorSpace.RGBA,
-      [ColorSpace.RGBA]: value,
+      [ColorSpace.RGBA]: color,
       [ColorSpace.HSLA]: `hsla(${h}, ${s}%, ${l}%, ${a})`,
       [ColorSpace.HEX]: `#${convert.rgb.hex([r, g, b])}`,
     };
   }
 
-  if (HSL_REGEXP.test(value)) {
-    const [h, s, l, a] = stringToArgs(value);
+  if (HSL_REGEXP.test(color)) {
+    const [h, s, l, a] = stringToArgs(color);
     const [r, g, b] = convert.hsl.rgb([h, s, l]) || [0, 0, 0];
     return {
-      value,
-      keyword: convert.rgb.keyword([r, g, b]) || value,
+      value: color,
+      title: title || convert.rgb.keyword([r, g, b]) || color,
       colorSpace: ColorSpace.HSLA,
       [ColorSpace.RGBA]: `rgba(${r}, ${g}, ${b}, ${a})`,
-      [ColorSpace.HSLA]: value,
+      [ColorSpace.HSLA]: color,
       [ColorSpace.HEX]: `#${convert.hsl.hex([h, s, l])}`,
     };
   }
 
-  const convertTo = HEX_REGEXP.test(value) ? convert.hex : convert.keyword;
-  const rgb = convertTo.rgb(value.replace('#', '') as any);
+  const convertTo = HEX_REGEXP.test(color) ? convert.hex : convert.keyword;
+  const rgb = convertTo.rgb(color.replace('#', '') as any);
   const hsl = rgb && convert.rgb.hsl(rgb);
   return {
-    value,
-    keyword: convert.rgb.keyword(rgb) || value,
+    value: color,
+    title: title || convert.rgb.keyword(rgb) || color,
     colorSpace: ColorSpace.HEX,
     [ColorSpace.RGBA]: rgb && `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
     [ColorSpace.HSLA]: hsl && `hsla(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%, 1)`,
-    [ColorSpace.HEX]: value,
+    [ColorSpace.HEX]: color,
   };
 };
 
 const Wrapper = styled.div({
   position: 'relative',
-  maxWidth: 230,
+  maxWidth: 250,
 });
 
 const PickerTooltip = styled(WithTooltip)({
@@ -199,12 +200,12 @@ export const ColorControl: FC<ColorProps> = ({
   }, [colorSpace]);
 
   const [presets, setPresets] = useState(() =>
-    presetColors ? presetColors.map(parseValue).filter(Boolean).slice(18) : []
+    (presetColors || []).map(parseValue).concat(color).filter(Boolean).slice(0, 27)
   );
   const addPreset = useCallback((preset) => {
     setPresets((arr) =>
       preset?.rgb && arr.every((item) => item.rgb !== preset.rgb)
-        ? arr.concat(preset).slice(-18)
+        ? arr.concat(preset).slice(-27)
         : arr
     );
   }, []);
@@ -228,11 +229,11 @@ export const ColorControl: FC<ColorProps> = ({
                   <WithTooltip
                     key={preset.value}
                     hasChrome={false}
-                    tooltip={<TooltipNote note={preset.keyword} />}
+                    tooltip={<TooltipNote note={preset.title} />}
                   >
                     <Swatch
                       style={{ background: preset[colorSpace] }}
-                      active={currentValue === preset[colorSpace]}
+                      active={color?.rgb === preset.rgb}
                       onClick={() => onChange(preset[colorSpace])}
                     />
                   </WithTooltip>
