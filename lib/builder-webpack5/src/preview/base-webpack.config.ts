@@ -4,8 +4,7 @@ import type { Configuration } from 'webpack';
 
 export async function createDefaultWebpackConfig(
   storybookBaseConfig: Configuration,
-  options: Options,
-  configType: BuilderOptions['configType']
+  options: Options
 ): Promise<Configuration> {
   if (
     options.presetsList.some((preset) =>
@@ -43,7 +42,7 @@ export async function createDefaultWebpackConfig(
     };
   }
 
-  const isProd = configType === 'PRODUCTION';
+  const isProd = storybookBaseConfig.mode !== 'development';
 
   return {
     ...storybookBaseConfig,
