@@ -30,6 +30,10 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
     throw new Error("Won't remove current directory. Check your outputDir!");
   }
 
+  if (options.staticDir?.includes('/')) {
+    throw new Error("Won't copy root directory. Check your staticDirs!");
+  }
+
   options.outputDir = path.isAbsolute(options.outputDir)
     ? options.outputDir
     : path.join(process.cwd(), options.outputDir);

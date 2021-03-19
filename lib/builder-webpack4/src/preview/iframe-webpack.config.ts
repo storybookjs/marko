@@ -194,7 +194,7 @@ export default async ({
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json', '.cjs'],
       modules: ['node_modules'].concat(envs.NODE_PATH || []),
-      mainFields: isProd ? undefined : ['browser', 'main'],
+      mainFields: ['browser', 'module', 'main'],
       alias: {
         ...themingPaths,
         ...storybookPaths,

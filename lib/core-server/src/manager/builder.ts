@@ -1,7 +1,7 @@
 import webpack, { Stats, Configuration, ProgressPlugin } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import { logger } from '@storybook/node-logger';
-import { Builder, useProgressReporting } from '@storybook/core-common';
+import { Builder, useProgressReporting, checkWebpackVersion } from '@storybook/core-common';
 import { pathExists } from 'fs-extra';
 import express from 'express';
 import { getManagerWebpackConfig } from './manager-config';
@@ -12,6 +12,9 @@ let compilation: ReturnType<typeof webpackDevMiddleware>;
 let reject: (reason?: any) => void;
 
 type WebpackBuilder = Builder<Configuration, Stats>;
+
+const checkWebpackVersion4 = (webpackInstance: { version?: string }) =>
+  checkWebpackVersion(webpackInstance, '4.x', 'manager-builder');
 
 export const getConfig: WebpackBuilder['getConfig'] = getManagerWebpackConfig;
 
@@ -27,6 +30,8 @@ export const makeStatsFromError = (err: string) =>
   } as any) as Stats);
 
 export const start: WebpackBuilder['start'] = async ({ startTime, options, router }) => {
+  checkWebpackVersion4(executor.get);
+
   const prebuiltDir = await getPrebuiltDir(options);
   const config = await getConfig(options);
 
@@ -108,6 +113,8 @@ export const bail: WebpackBuilder['bail'] = (e: Error) => {
 
 export const build: WebpackBuilder['build'] = async ({ options, startTime }) => {
   logger.info('=> Compiling manager..');
+  checkWebpackVersion4(executor.get);
+
   const config = await getConfig(options);
   const statsOptions = typeof config.stats === 'boolean' ? 'minimal' : config.stats;
 

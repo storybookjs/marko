@@ -206,9 +206,9 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
   {
     preset: ProjectType.WEB_COMPONENTS,
-    dependencies: ['lit-element'],
+    dependencies: ['lit-element', 'lit-html'],
     matcherFunction: ({ dependencies }) => {
-      return dependencies.every(Boolean);
+      return dependencies.some(Boolean);
     },
   },
   {

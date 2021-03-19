@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-essentials",
-  "version": "6.2.0-rc.1",
+  "version": "6.2.0-rc.4",
   "description": "Curated addons to bring out the best of Storybook",
   "keywords": [
     "addon",
@@ -35,28 +35,28 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addon-actions": "6.2.0-rc.1",
-    "@storybook/addon-backgrounds": "6.2.0-rc.1",
-    "@storybook/addon-controls": "6.2.0-rc.1",
-    "@storybook/addon-docs": "6.2.0-rc.1",
-    "@storybook/addon-toolbars": "6.2.0-rc.1",
-    "@storybook/addon-viewport": "6.2.0-rc.1",
-    "@storybook/addons": "6.2.0-rc.1",
-    "@storybook/api": "6.2.0-rc.1",
-    "@storybook/node-logger": "6.2.0-rc.1",
+    "@storybook/addon-actions": "6.2.0-rc.4",
+    "@storybook/addon-backgrounds": "6.2.0-rc.4",
+    "@storybook/addon-controls": "6.2.0-rc.4",
+    "@storybook/addon-docs": "6.2.0-rc.4",
+    "@storybook/addon-toolbars": "6.2.0-rc.4",
+    "@storybook/addon-viewport": "6.2.0-rc.4",
+    "@storybook/addons": "6.2.0-rc.4",
+    "@storybook/api": "6.2.0-rc.4",
+    "@storybook/node-logger": "6.2.0-rc.4",
     "core-js": "^3.8.2",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/vue": "6.2.0-rc.1",
+    "@storybook/vue": "6.2.0-rc.4",
     "@types/jest": "^26.0.16",
     "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "@babel/core": "^7.9.6",
-    "@storybook/vue": "6.2.0-rc.1",
+    "@storybook/vue": "6.2.0-rc.4",
     "babel-loader": "^8.0.0",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0",
@@ -79,5 +79,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8719fe697c922d330220851a341380546ba668e4"
+  "gitHead": "1ac1d37eff1c54867ef24623da270f5f3472d25c"
 }

@@ -2,12 +2,15 @@ import webpack, { Stats, Configuration, ProgressPlugin } from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { logger } from '@storybook/node-logger';
-import { Builder, useProgressReporting } from '@storybook/core-common';
+import { Builder, useProgressReporting, checkWebpackVersion } from '@storybook/core-common';
 
 let compilation: ReturnType<typeof webpackDevMiddleware>;
 let reject: (reason?: any) => void;
 
 type WebpackBuilder = Builder<Configuration, Stats>;
+
+const checkWebpackVersion5 = (webpackInstance: { version?: string }) =>
+  checkWebpackVersion(webpackInstance, '5.x', 'builder-webpack5');
 
 export const getConfig: WebpackBuilder['getConfig'] = async (options) => {
   const { presets } = options;
@@ -36,6 +39,8 @@ export const executor = {
 };
 
 export const start: WebpackBuilder['start'] = async ({ startTime, options, router }) => {
+  checkWebpackVersion5(executor.get);
+
   const config = await getConfig(options);
   const compiler = executor.get(config);
   if (!compiler) {
@@ -101,6 +106,8 @@ export const bail: WebpackBuilder['bail'] = (e: Error) => {
 };
 
 export const build: WebpackBuilder['build'] = async ({ options, startTime }) => {
+  checkWebpackVersion5(executor.get);
+
   logger.info('=> Compiling preview..');
   const config = await getConfig(options);
 

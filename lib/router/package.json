@@ -1,6 +1,6 @@
 {
   "name": "@storybook/router",
-  "version": "6.2.0-rc.1",
+  "version": "6.2.0-rc.4",
   "description": "Core Storybook Router",
   "keywords": [
     "storybook"
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@reach/router": "^1.3.4",
-    "@storybook/client-logger": "6.2.0-rc.1",
+    "@storybook/client-logger": "6.2.0-rc.4",
     "@types/reach__router": "^1.3.7",
     "core-js": "^3.8.2",
     "fast-deep-equal": "^3.1.3",
@@ -54,5 +54,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8719fe697c922d330220851a341380546ba668e4"
+  "gitHead": "1ac1d37eff1c54867ef24623da270f5f3472d25c"
 }

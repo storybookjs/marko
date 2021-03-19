@@ -1,3 +1,35 @@
+## 6.2.0-rc.4 (March 19, 2021)
+
+### Bug Fixes
+
+- Webpack: Fix missing `module` mainField ([#14271](https://github.com/storybookjs/storybook/pull/14271))
+
+## 6.2.0-rc.3 (March 18, 2021)
+
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below.
+
+### Bug Fixes
+
+- Addon-docs/Angular: Fix inline rendering setup ([#14270](https://github.com/storybookjs/storybook/pull/14270))
+- Addon-docs: Fix table dark mode ([#14251](https://github.com/storybookjs/storybook/pull/14251))
+- Webpack5: Replace fullhash with contenthash ([#14261](https://github.com/storybookjs/storybook/pull/14261))
+
+### Maintenance
+
+- CLI: Don't allow root directory as static dir ([#14068](https://github.com/storybookjs/storybook/pull/14068))
+- WebComponents: Fix types and improve CLI detection ([#14258](https://github.com/storybookjs/storybook/pull/14258))
+
+## 6.2.0-rc.2 (March 17, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Vue,Vue3: Fix preset options for vue-docgen-api ([#14227](https://github.com/storybookjs/storybook/pull/14227))
+- Webpack5: Fix hash => fullhash ([#14255](https://github.com/storybookjs/storybook/pull/14255))
+
+### Maintenance
+
+- Core: Check webpack version ([#14256](https://github.com/storybookjs/storybook/pull/14256))
+
 ## 6.2.0-rc.1 (March 16, 2021)
 
 ### Features

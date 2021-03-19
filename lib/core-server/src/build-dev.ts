@@ -90,11 +90,15 @@ export async function buildDevStandalone(options: CLIOptions & LoadOptions & Bui
   }
 
   if (options.smokeTest) {
-    const hasManagerWarnings = managerStats && managerStats.toJson().warnings.length > 0;
+    const managerWarnings = (managerStats && managerStats.toJson().warnings) || [];
+    if (managerWarnings.length > 0) logger.warn(`manager: ${managerWarnings}`);
     // I'm a little reticent to import webpack types in this file :shrug:
     // @ts-ignore
-    const hasPreviewWarnings = previewStats && previewStats.toJson().warnings.length > 0;
-    process.exit(hasManagerWarnings || (hasPreviewWarnings && !options.ignorePreview) ? 1 : 0);
+    const previewWarnings = (previewStats && previewStats.toJson().warnings) || [];
+    if (previewWarnings.length > 0) logger.warn(`preview: ${previewWarnings}`);
+    process.exit(
+      managerWarnings.length > 0 || (previewWarnings.length > 0 && !options.ignorePreview) ? 1 : 0
+    );
     return;
   }
 
