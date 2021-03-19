@@ -14,6 +14,7 @@ const Template = (initialValue?: string, presetColors?: string[]) => {
       value={value}
       onChange={(newVal) => setValue(newVal)}
       presetColors={presetColors}
+      startOpen
     />
   );
 };
@@ -23,4 +24,4 @@ export const Basic = () => Template('#ff0');
 export const Undefined = () => Template(undefined);
 
 export const WithPresetColors = () =>
-  Template('#ff0', ['#FE4A49', '#FED766', '#009FB7', '#E6E6EA', '#F4F4F8']);
+  Template('#ff0', ['#fe4a49', '#fed766', '#009fb7', '#e6e6ea', '#f4f4f8']);
