@@ -1,3 +1,9 @@
+## 6.2.0-rc.4 (March 19, 2021)
+
+### Bug Fixes
+
+- Webpack: Fix missing `module` mainField ([#14271](https://github.com/storybookjs/storybook/pull/14271))
+
 ## 6.2.0-rc.3 (March 18, 2021)
 
 **NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below.
