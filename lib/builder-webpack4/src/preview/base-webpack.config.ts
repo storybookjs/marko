@@ -55,8 +55,7 @@ const warnGetPostcssOptions = deprecate(
 
 export async function createDefaultWebpackConfig(
   storybookBaseConfig: any,
-  options: { presetsList: any[] },
-  configType: BuilderOptions['configType']
+  options: { presetsList: any[] }
 ) {
   if (
     options.presetsList.some((preset) =>
@@ -98,7 +97,7 @@ export async function createDefaultWebpackConfig(
     };
   }
 
-  const isProd = configType === 'PRODUCTION';
+  const isProd = storybookBaseConfig.mode !== 'development';
 
   return {
     ...storybookBaseConfig,
