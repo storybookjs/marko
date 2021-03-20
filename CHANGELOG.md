@@ -1,3 +1,14 @@
+## 6.2.0-rc.5 (March 20, 2021)
+
+### Bug Fixes
+
+- Webpack: Hash files only in production mode ([#14264](https://github.com/storybookjs/storybook/pull/14264))
+- Angular: Allow usage of all component valid selectors ([#14230](https://github.com/storybookjs/storybook/pull/14230))
+
+### Maintenance
+
+- Addon-controls: Improve color picker UI and migrate to react-colorful ([#14249](https://github.com/storybookjs/storybook/pull/14249))
+
 ## 6.2.0-rc.4 (March 19, 2021)
 
 ### Bug Fixes
