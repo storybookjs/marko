@@ -1,3 +1,9 @@
+## 6.2.0-rc.6 (March 21, 2021)
+
+### Bug Fixes
+
+- Revert "Webpack: Hash files only in production mode" ([#14283](https://github.com/storybookjs/storybook/pull/14283))
+
 ## 6.2.0-rc.5 (March 20, 2021)
 
 ### Bug Fixes
