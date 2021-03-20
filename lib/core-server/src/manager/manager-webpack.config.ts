@@ -63,7 +63,7 @@ export default async ({
     entry: entries,
     output: {
       path: outputDir,
-      filename: isProd ? '[name].[contenthash].bundle.js' : '[name].bundle.js',
+      filename: isProd ? '[name].[contenthash].manager.bundle.js' : '[name].manager.bundle.js',
       publicPath: '',
     },
     watchOptions: {
