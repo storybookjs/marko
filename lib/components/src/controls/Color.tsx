@@ -11,8 +11,8 @@ import { Form } from '../form';
 import { Icons } from '../icon/icon';
 
 enum ColorSpace {
-  RGBA = 'rgb',
-  HSLA = 'hsl',
+  RGB = 'rgb',
+  HSL = 'hsl',
   HEX = 'hex',
 }
 
@@ -20,15 +20,15 @@ const COLOR_SPACES = Object.values(ColorSpace);
 const COLOR_REGEXP = /\(([0-9]+),\s*([0-9]+)%?,\s*([0-9]+)%?,?\s*([0-9.]+)?\)/;
 const RGB_REGEXP = /^\s*rgba?\(([0-9]+),\s*([0-9]+),\s*([0-9]+),?\s*([0-9.]+)?\)\s*$/i;
 const HSL_REGEXP = /^\s*hsla?\(([0-9]+),\s*([0-9]+)%,\s*([0-9]+)%,?\s*([0-9.]+)?\)\s*$/i;
-const HEX_REGEXP = /^\s*#([0-9a-f]{1,2})([0-9a-f]{1,2})([0-9a-f]{1,2})\s*$/i;
-const SHORTHEX_REGEXP = /^\s*#([0-9a-f])([0-9a-f])([0-9a-f])\s*$/i;
+const HEX_REGEXP = /^\s*#?([0-9a-f]{3}|[0-9a-f]{6})\s*$/i;
+const SHORTHEX_REGEXP = /^\s*#?([0-9a-f]{3})\s*$/i;
 
 type ParsedColor = {
   value: string;
   title: string;
   colorSpace: ColorSpace;
-  [ColorSpace.RGBA]: string;
-  [ColorSpace.HSLA]: string;
+  [ColorSpace.RGB]: string;
+  [ColorSpace.HSL]: string;
   [ColorSpace.HEX]: string;
 };
 
@@ -51,7 +51,7 @@ const expandShorthand = (value: string) => {
   if (value.length > 4) return value;
   const match = value.match(SHORTHEX_REGEXP);
   if (!match) return value;
-  const [, r, g, b] = match;
+  const [r, g, b] = match[1].split('');
   return `#${r}${r}${g}${g}${b}${b}`;
 };
 
@@ -65,9 +65,9 @@ const parseValue = (input: string | { color: string; title?: string }): ParsedCo
     return {
       value: color,
       title: title || convert.rgb.keyword([r, g, b]) || color,
-      colorSpace: ColorSpace.RGBA,
-      [ColorSpace.RGBA]: color,
-      [ColorSpace.HSLA]: `hsla(${h}, ${s}%, ${l}%, ${a})`,
+      colorSpace: ColorSpace.RGB,
+      [ColorSpace.RGB]: color,
+      [ColorSpace.HSL]: `hsla(${h}, ${s}%, ${l}%, ${a})`,
       [ColorSpace.HEX]: `#${convert.rgb.hex([r, g, b])}`,
     };
   }
@@ -78,23 +78,29 @@ const parseValue = (input: string | { color: string; title?: string }): ParsedCo
     return {
       value: color,
       title: title || convert.rgb.keyword([r, g, b]) || color,
-      colorSpace: ColorSpace.HSLA,
-      [ColorSpace.RGBA]: `rgba(${r}, ${g}, ${b}, ${a})`,
-      [ColorSpace.HSLA]: color,
+      colorSpace: ColorSpace.HSL,
+      [ColorSpace.RGB]: `rgba(${r}, ${g}, ${b}, ${a})`,
+      [ColorSpace.HSL]: color,
       [ColorSpace.HEX]: `#${convert.hsl.hex([h, s, l])}`,
     };
   }
 
-  const convertTo = HEX_REGEXP.test(color) ? convert.hex : convert.keyword;
-  const rgb = convertTo.rgb(color.replace('#', '') as any);
-  const hsl = rgb && convert.rgb.hsl(rgb);
+  const plain = color.replace('#', '');
+  const fromKeyword = convert.keyword.rgb(plain as any);
+  const rgb = fromKeyword || convert.hex.rgb(plain as any);
+  const hsl = convert.rgb.hsl(rgb);
+
+  let value = color;
+  if (fromKeyword || /[^#a-f0-9]/.test(color)) value = plain;
+  else if (HEX_REGEXP.test(color)) value = `#${plain}`;
+
   return {
-    value: color,
+    value,
     title: title || convert.rgb.keyword(rgb) || color,
     colorSpace: ColorSpace.HEX,
-    [ColorSpace.RGBA]: rgb && `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
-    [ColorSpace.HSLA]: hsl && `hsla(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%, 1)`,
-    [ColorSpace.HEX]: color,
+    [ColorSpace.RGB]: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
+    [ColorSpace.HSL]: `hsla(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%, 1)`,
+    [ColorSpace.HEX]: value,
   };
 };
 
@@ -165,9 +171,9 @@ const ToggleIcon = styled(Icons)(({ theme }) => ({
 const SmartPicker: FC<{ value: string; colorSpace: ColorSpace }> = React.memo(
   ({ value, colorSpace, ...props }) => {
     switch (colorSpace) {
-      case ColorSpace.RGBA:
+      case ColorSpace.RGB:
         return <RgbaStringColorPicker color={value} {...props} />;
-      case ColorSpace.HSLA:
+      case ColorSpace.HSL:
         return <HslaStringColorPicker color={value} {...props} />;
       default:
         return <HexColorPicker color={expandShorthand(value)} {...props} />;
@@ -191,8 +197,8 @@ export const ColorControl: FC<ColorProps> = ({
   const currentValue = color?.[colorSpace] || '';
 
   useEffect(() => {
-    if (color) setColorSpace(color.colorSpace);
-  }, [color?.colorSpace]);
+    if (!currentValue) setColorSpace(ColorSpace.HEX);
+  }, [currentValue]);
 
   const cycleColorSpace = useCallback(() => {
     let next = COLOR_SPACES.indexOf(colorSpace) + 1;
