@@ -135,7 +135,7 @@ export default async ({
           options: {
             name: isProd
               ? 'static/media/[name].[contenthash:8].[ext]'
-              : 'static/media/[name].[ext]',
+              : 'static/media/[path][name].[ext]',
           },
         },
         {
@@ -145,7 +145,7 @@ export default async ({
             limit: 10000,
             name: isProd
               ? 'static/media/[name].[contenthash:8].[ext]'
-              : 'static/media/[name].[ext]',
+              : 'static/media/[path][name].[ext]',
           },
         },
       ],

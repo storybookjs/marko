@@ -57,7 +57,7 @@ export async function createDefaultWebpackConfig(
           options: {
             name: isProd
               ? 'static/media/[name].[contenthash:8].[ext]'
-              : 'static/media/[name].[ext]',
+              : 'static/media/[path][name].[ext]',
           },
         },
         {
@@ -67,7 +67,7 @@ export async function createDefaultWebpackConfig(
             limit: 10000,
             name: isProd
               ? 'static/media/[name].[contenthash:8].[ext]'
-              : 'static/media/[name].[ext]',
+              : 'static/media/[path][name].[ext]',
           },
         },
       ],
