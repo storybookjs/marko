@@ -41,7 +41,7 @@
     "@storybook/core-events": "6.2.0-rc.6",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
-    "qs": "^6.9.5",
+    "qs": "^6.10.0",
     "telejson": "^5.1.0"
   },
   "publishConfig": {
