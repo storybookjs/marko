@@ -44,8 +44,13 @@ export const deepDiff = (value: any, update: any): any => {
   if (typeof value !== typeof update) return update;
   if (deepEqual(value, update)) return DEEPLY_EQUAL;
   if (Array.isArray(value) && Array.isArray(update)) {
-    if (update.length >= value.length) return update;
-    return [...update, ...new Array(value.length - update.length)];
+    const res = update.reduce((acc, upd, index) => {
+      const diff = deepDiff(value[index], upd);
+      if (diff !== DEEPLY_EQUAL) acc[index] = diff;
+      return acc;
+    }, new Array(update.length));
+    if (update.length >= value.length) return res;
+    return res.concat(new Array(value.length - update.length).fill(undefined));
   }
   if (isPlainObject(value) && isPlainObject(update)) {
     return Object.keys({ ...value, ...update }).reduce((acc, key) => {

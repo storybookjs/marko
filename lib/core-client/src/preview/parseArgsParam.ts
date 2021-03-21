@@ -20,6 +20,7 @@ const validateArgs = (key = '', value: unknown): boolean => {
 const QS_OPTIONS = {
   delimiter: ';', // we're parsing a single query param
   allowDots: true, // objects are encoded using dot notation
+  allowSparse: true, // arrays will be merged on top of their initial value
   decoder(
     str: string,
     defaultDecoder: (str: string, decoder?: any, charset?: string) => string,
