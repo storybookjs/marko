@@ -80,7 +80,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9140a2884503b405d457268fd9ffd8d2438013af",
+  "gitHead": "ea154d612ff984260bfacfeed804820cf00fee97",
   "storybook": {
     "displayName": "Knobs",
     "unsupportedFrameworks": [
