@@ -31,7 +31,7 @@ Some components require a “harness” to render in a useful way. For instance 
 
 ## “Context” for mocking
 
-Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that add this context to to all stories in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
+Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that adds this context to all stories in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
 <!-- prettier-ignore-start -->
 
