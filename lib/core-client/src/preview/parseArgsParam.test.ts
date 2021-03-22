@@ -25,6 +25,36 @@ describe('parseArgsParam', () => {
     expect(args).toStrictEqual({ key: undefined });
   });
 
+  it('parses Date', () => {
+    const args = parseArgsParam('key:!2001-02-03T04:05:06.789Z');
+    expect(args).toStrictEqual({ key: new Date('2001-02-03T04:05:06.789Z') });
+  });
+
+  it('parses Date with timezone offset', () => {
+    const args = parseArgsParam('key:!2001-02-03T04:05:06.789+09:00');
+    expect(args).toStrictEqual({ key: new Date('2001-02-03T04:05:06.789+09:00') });
+  });
+
+  it('parses Date without timezone', () => {
+    const args = parseArgsParam('key:!2001-02-03T04:05:06.789');
+    expect(args).toStrictEqual({ key: expect.any(Date) }); // depends on local timezone
+  });
+
+  it('parses Date without second fraction', () => {
+    const args = parseArgsParam('key:!2001-02-03T04:05:06Z');
+    expect(args).toStrictEqual({ key: new Date('2001-02-03T04:05:06.000Z') });
+  });
+
+  it('parses Date without time', () => {
+    const args = parseArgsParam('key:!2001-02-03');
+    expect(args).toStrictEqual({ key: expect.any(Date) }); // depends on local timezone
+  });
+
+  it('does not parse Date without prefix', () => {
+    const args = parseArgsParam('key:2001-02-03T04:05:06.789Z');
+    expect(args).toStrictEqual({});
+  });
+
   it('parses multiple values', () => {
     const args = parseArgsParam('one:1;two:2;three:3');
     expect(args).toStrictEqual({ one: '1', two: '2', three: '3' });

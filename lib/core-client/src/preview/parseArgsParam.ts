@@ -12,6 +12,7 @@ const validateArgs = (key = '', value: unknown): boolean => {
   if (key === null) return false;
   if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
   if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
+  if (value instanceof Date) return true; // encoded as modified ISO string
   if (typeof value === 'number' || typeof value === 'boolean') return true;
   if (typeof value === 'string')
     return VALIDATION_REGEXP.test(value) || HEX_REGEXP.test(value) || COLOR_REGEXP.test(value);
@@ -19,6 +20,13 @@ const validateArgs = (key = '', value: unknown): boolean => {
   if (isPlainObject(value)) return Object.entries(value).every(([k, v]) => validateArgs(k, v));
   return false;
 };
+
+// Matches ISO date strings that yield a proper value when passed to new Date(...)
+// Time offset and can be `Z` or a +/- offset in hours:minutes
+// Time offset is optional, falling back to local timezone
+// Time part is optional (including offset)
+// Second fraction is optional
+const DATE_ARG_REGEXP = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z|(\+|-)\d{2}:\d{2})?)?$/;
 
 const QS_OPTIONS = {
   delimiter: ';', // we're parsing a single query param
@@ -34,6 +42,7 @@ const QS_OPTIONS = {
     if (type === 'value' && str === '!null') return null;
     if (type === 'value' && str.startsWith('!')) {
       const raw = str.slice(1);
+      if (DATE_ARG_REGEXP.test(raw)) return new Date(raw);
       if (HEX_REGEXP.test(`#${raw}`)) return `#${raw}`;
       const color = raw.match(COLOR_REGEXP);
       if (color)

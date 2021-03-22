@@ -69,6 +69,7 @@ const validateArgs = (key = '', value: unknown): boolean => {
   if (key === null) return false;
   if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
   if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
+  if (value instanceof Date) return true; // encoded as modified ISO string
   if (typeof value === 'number' || typeof value === 'boolean') return true;
   if (typeof value === 'string')
     return VALIDATION_REGEXP.test(value) || HEX_REGEXP.test(value) || COLOR_REGEXP.test(value);
@@ -100,6 +101,7 @@ const QS_OPTIONS = {
   delimiter: ';', // we don't actually create multiple query params
   allowDots: true, // encode objects using dot notation: obj.key=val
   format: 'RFC1738', // encode spaces using the + sign
+  serializeDate: (date: Date) => `!${date.toISOString()}`,
 };
 export const buildArgsParam = (initialArgs: Args, args: Args): string => {
   const update = deepDiff(initialArgs, args);

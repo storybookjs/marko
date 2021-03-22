@@ -188,6 +188,11 @@ describe('buildArgsParam', () => {
     expect(param).toEqual('foo.bar[0].key:!null;foo.baz:!null');
   });
 
+  it('encodes Date objects as prefixed ISO string', () => {
+    const param = buildArgsParam({}, { key: new Date('2001-02-03T04:05:06.789Z') });
+    expect(param).toEqual('key:!2001-02-03T04:05:06.789Z');
+  });
+
   describe('with initial state', () => {
     it('omits unchanged values', () => {
       const param = buildArgsParam({ one: 1 }, { one: 1, two: 2 });
