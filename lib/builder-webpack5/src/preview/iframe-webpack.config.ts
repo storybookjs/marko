@@ -9,8 +9,6 @@ import TerserWebpackPlugin from 'terser-webpack-plugin';
 import VirtualModulePlugin from 'webpack-virtual-modules';
 import PnpWebpackPlugin from 'pnp-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-// @ts-ignore
-import FilterWarningsPlugin from 'webpack-filter-warnings-plugin';
 
 import themingPaths from '@storybook/theming/paths';
 
@@ -132,13 +130,15 @@ export default async ({
       aggregateTimeout: 10,
       ignored: /node_modules/,
     },
+    ignoreWarnings: [
+      {
+        message: /export '\S+' was not found in 'global'/,
+      },
+    ],
     plugins: [
-      new FilterWarningsPlugin({
-        exclude: /export '\S+' was not found in 'global'/,
-      }),
       Object.keys(virtualModuleMapping).length > 0
         ? new VirtualModulePlugin(virtualModuleMapping)
-        : null,
+        : (null as any),
       new HtmlWebpackPlugin({
         filename: `iframe.html`,
         // FIXME: `none` isn't a known option
