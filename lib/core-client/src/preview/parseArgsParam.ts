@@ -4,14 +4,17 @@ import { Args } from '@storybook/addons';
 import { once } from '@storybook/client-logger';
 import isPlainObject from 'lodash/isPlainObject';
 
-// Keep this in sync with validateArgs in @storybook/core
+// Keep this in sync with validateArgs in router/src/utils.ts
 const VALIDATION_REGEXP = /^[a-zA-Z0-9 _-]*$/;
+const HEX_REGEXP = /^#([a-f0-9]{3,4}|[a-f0-9]{6}|[a-f0-9]{8})$/i;
+const COLOR_REGEXP = /^(rgba?|hsla?)\(([0-9]{1,3}),\s?([0-9]{1,3})%?,\s?([0-9]{1,3})%?,?\s?([0-9](\.[0-9]{1,2})?)?\)$/i;
 const validateArgs = (key = '', value: unknown): boolean => {
-  if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
   if (key === null) return false;
   if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
+  if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
   if (typeof value === 'number' || typeof value === 'boolean') return true;
-  if (typeof value === 'string') return VALIDATION_REGEXP.test(value);
+  if (typeof value === 'string')
+    return VALIDATION_REGEXP.test(value) || HEX_REGEXP.test(value) || COLOR_REGEXP.test(value);
   if (Array.isArray(value)) return value.every((v) => validateArgs(key, v));
   if (isPlainObject(value)) return Object.entries(value).every(([k, v]) => validateArgs(k, v));
   return false;
@@ -29,6 +32,15 @@ const QS_OPTIONS = {
   ) {
     if (type === 'value' && str === '!undefined') return undefined;
     if (type === 'value' && str === '!null') return null;
+    if (type === 'value' && str.startsWith('!')) {
+      const raw = str.slice(1);
+      if (HEX_REGEXP.test(`#${raw}`)) return `#${raw}`;
+      const color = raw.match(COLOR_REGEXP);
+      if (color)
+        return raw.startsWith('rgb')
+          ? `${color[1]}(${color[2]}, ${color[3]}, ${color[4]}, ${color[5]})`
+          : `${color[1]}(${color[2]}, ${color[3]}%, ${color[4]}%, ${color[5]})`;
+    }
     return defaultDecoder(str, defaultDecoder, charset);
   },
 };

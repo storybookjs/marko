@@ -61,30 +61,38 @@ export const deepDiff = (value: any, update: any): any => {
   return update;
 };
 
-const encodeNullish = (value: unknown): any => {
+// Keep this in sync with validateArgs in core-client/src/preview/parseArgsParam.ts
+const VALIDATION_REGEXP = /^[a-zA-Z0-9 _-]*$/;
+const HEX_REGEXP = /^#([a-f0-9]{3,4}|[a-f0-9]{6}|[a-f0-9]{8})$/i;
+const COLOR_REGEXP = /^(rgba?|hsla?)\(([0-9]{1,3}),\s?([0-9]{1,3})%?,\s?([0-9]{1,3})%?,?\s?([0-9](\.[0-9]{1,2})?)?\)$/i;
+const validateArgs = (key = '', value: unknown): boolean => {
+  if (key === null) return false;
+  if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
+  if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
+  if (typeof value === 'number' || typeof value === 'boolean') return true;
+  if (typeof value === 'string')
+    return VALIDATION_REGEXP.test(value) || HEX_REGEXP.test(value) || COLOR_REGEXP.test(value);
+  if (Array.isArray(value)) return value.every((v) => validateArgs(key, v));
+  if (isPlainObject(value)) return Object.entries(value).every(([k, v]) => validateArgs(k, v));
+  return false;
+};
+
+const encodeSpecialValues = (value: unknown): any => {
   if (value === undefined) return '!undefined';
   if (value === null) return '!null';
-  if (Array.isArray(value)) return value.map(encodeNullish);
+  if (typeof value === 'string') {
+    if (HEX_REGEXP.test(value)) return value.replace('#', '!');
+    if (COLOR_REGEXP.test(value)) return `!${value.replace(/[\s%]/g, '')}`;
+    return value;
+  }
+  if (Array.isArray(value)) return value.map(encodeSpecialValues);
   if (isPlainObject(value)) {
     return Object.entries(value).reduce(
-      (acc, [key, val]) => Object.assign(acc, { [key]: encodeNullish(val) }),
+      (acc, [key, val]) => Object.assign(acc, { [key]: encodeSpecialValues(val) }),
       {}
     );
   }
   return value;
-};
-
-// Keep this in sync with validateArgs in @storybook/core
-const VALIDATION_REGEXP = /^[a-zA-Z0-9 _-]*$/;
-const validateArgs = (key = '', value: unknown): boolean => {
-  if (value === null || value === undefined) return true; // encoded as `!null` or `!undefined`
-  if (key === null) return false;
-  if (key === '' || !VALIDATION_REGEXP.test(key)) return false;
-  if (typeof value === 'number' || typeof value === 'boolean') return true;
-  if (typeof value === 'string') return VALIDATION_REGEXP.test(value);
-  if (Array.isArray(value)) return value.every((v) => validateArgs(key, v));
-  if (isPlainObject(value)) return Object.entries(value).every(([k, v]) => validateArgs(k, v));
-  return false;
 };
 
 const QS_OPTIONS = {
@@ -108,7 +116,7 @@ export const buildArgsParam = (initialArgs: Args, args: Args): string => {
   }, {} as Args);
 
   return qs
-    .stringify(encodeNullish(object), QS_OPTIONS)
+    .stringify(encodeSpecialValues(object), QS_OPTIONS)
     .replace(/ /g, '+')
     .split(';')
     .map((part: string) => part.replace('=', ':'))
