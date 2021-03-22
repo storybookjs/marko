@@ -64,7 +64,7 @@ export const TabButton = styled(ButtonOrLink, { shouldForwardProp: isPropValid }
           borderBottomColor: theme.barSelectedColor,
         }
       : {
-          color: textColor || theme.color.mediumdark,
+          color: textColor || theme.barTextColor,
           borderBottomColor: 'transparent',
         }
 );
