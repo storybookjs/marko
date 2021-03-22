@@ -121,7 +121,7 @@ export default async ({
     entry: entries,
     output: {
       path: path.resolve(process.cwd(), outputDir),
-      filename: '[name].[hash].bundle.js',
+      filename: isProd ? '[name].[contenthash:8].iframe.bundle.js' : '[name].iframe.bundle.js',
       publicPath: '',
     },
     stats: {

@@ -4,6 +4,7 @@ import path from 'path';
 import { logger } from '@storybook/node-logger';
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
+import type { BuilderOptions } from '@storybook/core-common';
 
 const warnImplicitPostcssPlugins = deprecate(
   () => ({
@@ -96,6 +97,8 @@ export async function createDefaultWebpackConfig(
     };
   }
 
+  const isProd = storybookBaseConfig.mode !== 'development';
+
   return {
     ...storybookBaseConfig,
     module: {
@@ -107,7 +110,9 @@ export async function createDefaultWebpackConfig(
           test: /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
           loader: require.resolve('file-loader'),
           options: {
-            name: 'static/media/[name].[hash:8].[ext]',
+            name: isProd
+              ? 'static/media/[name].[contenthash:8].[ext]'
+              : 'static/media/[path][name].[ext]',
           },
         },
         {
@@ -115,7 +120,9 @@ export async function createDefaultWebpackConfig(
           loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
-            name: 'static/media/[name].[hash:8].[ext]',
+            name: isProd
+              ? 'static/media/[name].[contenthash:8].[ext]'
+              : 'static/media/[path][name].[ext]',
           },
         },
       ],
