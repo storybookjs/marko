@@ -45,10 +45,15 @@ const QS_OPTIONS = {
       if (DATE_ARG_REGEXP.test(raw)) return new Date(raw);
       if (HEX_REGEXP.test(`#${raw}`)) return `#${raw}`;
       const color = raw.match(COLOR_REGEXP);
-      if (color)
+      if (color) {
+        if (raw.startsWith('rgba'))
+          return `${color[1]}(${color[2]}, ${color[3]}, ${color[4]}, ${color[5]})`;
+        if (raw.startsWith('hsla'))
+          return `${color[1]}(${color[2]}, ${color[3]}%, ${color[4]}%, ${color[5]})`;
         return raw.startsWith('rgb')
-          ? `${color[1]}(${color[2]}, ${color[3]}, ${color[4]}, ${color[5]})`
-          : `${color[1]}(${color[2]}, ${color[3]}%, ${color[4]}%, ${color[5]})`;
+          ? `${color[1]}(${color[2]}, ${color[3]}, ${color[4]})`
+          : `${color[1]}(${color[2]}, ${color[3]}%, ${color[4]}%)`;
+      }
     }
     return defaultDecoder(str, defaultDecoder, charset);
   },

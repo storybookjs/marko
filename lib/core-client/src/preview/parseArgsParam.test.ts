@@ -25,6 +25,21 @@ describe('parseArgsParam', () => {
     expect(args).toStrictEqual({ key: undefined });
   });
 
+  it('parses hex color values', () => {
+    const args = parseArgsParam('key:!ff4785');
+    expect(args).toStrictEqual({ key: '#ff4785' });
+  });
+
+  it('parses rgba color values', () => {
+    const args = parseArgsParam('rgb:!rgb(255,71,133);rgba:!rgba(255,71,133,0.5)');
+    expect(args).toStrictEqual({ rgb: 'rgb(255, 71, 133)', rgba: 'rgba(255, 71, 133, 0.5)' });
+  });
+
+  it('parses hsla color values', () => {
+    const args = parseArgsParam('hsl:!hsl(45,99,70);hsla:!hsla(45,99,70,0.5)');
+    expect(args).toStrictEqual({ hsl: 'hsl(45, 99%, 70%)', hsla: 'hsla(45, 99%, 70%, 0.5)' });
+  });
+
   it('parses Date', () => {
     const args = parseArgsParam('key:!2001-02-03T04:05:06.789Z');
     expect(args).toStrictEqual({ key: new Date('2001-02-03T04:05:06.789Z') });

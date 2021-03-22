@@ -188,6 +188,21 @@ describe('buildArgsParam', () => {
     expect(param).toEqual('foo.bar[0].key:!null;foo.baz:!null');
   });
 
+  it('encodes hex color values by replacing # with !', () => {
+    const param = buildArgsParam({}, { key: '#ff4785' });
+    expect(param).toEqual('key:!ff4785');
+  });
+
+  it('encodes rgba color values by prefixing and compacting', () => {
+    const param = buildArgsParam({}, { rgb: 'rgb(255, 71, 133)', rgba: 'rgba(255, 71, 133, 0.5)' });
+    expect(param).toEqual('rgb:!rgb(255,71,133);rgba:!rgba(255,71,133,0.5)');
+  });
+
+  it('encodes hsla color values by prefixing and compacting', () => {
+    const param = buildArgsParam({}, { hsl: 'hsl(45, 99%, 70%)', hsla: 'hsla(45, 99%, 70%, 0.5)' });
+    expect(param).toEqual('hsl:!hsl(45,99,70);hsla:!hsla(45,99,70,0.5)');
+  });
+
   it('encodes Date objects as prefixed ISO string', () => {
     const param = buildArgsParam({}, { key: new Date('2001-02-03T04:05:06.789Z') });
     expect(param).toEqual('key:!2001-02-03T04:05:06.789Z');
