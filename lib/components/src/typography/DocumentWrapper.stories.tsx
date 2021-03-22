@@ -43,6 +43,11 @@ export const withDOM = () => (
       <em>This is italic text</em>
     </p>
     <p>
+      <em>
+        <strong>This is bold italic text</strong>
+      </em>
+    </p>
+    <p>
       <s>Strikethrough</s>
     </p>
     <h2>Blockquotes</h2>
