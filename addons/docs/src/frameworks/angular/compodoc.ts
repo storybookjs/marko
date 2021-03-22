@@ -191,11 +191,13 @@ export const extractArgTypesFromData = (componentData: Class | Directive | Injec
         isMethod(item) || section !== 'inputs'
           ? { name: 'void' }
           : extractType(item as Property, defaultValue);
+      const action = section === 'outputs' ? { action: item.name } : {};
       const argType = {
         name: item.name,
         description: item.description,
         defaultValue,
         type,
+        ...action,
         table: {
           category: section,
           type: {
