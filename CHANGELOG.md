@@ -1,3 +1,15 @@
+## 6.2.0-rc.7 (March 23, 2021)
+
+### Bug Fixes
+
+- Core: Restore webpack4 watchOptions ([#14302](https://github.com/storybookjs/storybook/pull/14302))
+- Webpack: Hash files only in dev mode ([#14284](https://github.com/storybookjs/storybook/pull/14284))
+- UI: Element em should not make text content bold ([#14290](https://github.com/storybookjs/storybook/pull/14290))
+
+### Dependency Upgrades
+
+- Webpack5: Remove deprecated webpack-filter-warnings-plugin ([#14303](https://github.com/storybookjs/storybook/pull/14303))
+
 ## 6.2.0-rc.6 (March 21, 2021)
 
 ### Bug Fixes
