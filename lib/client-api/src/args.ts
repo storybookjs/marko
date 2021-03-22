@@ -18,10 +18,11 @@ const map = (arg: unknown, type: ValueType): any => {
       return arg === 'true';
     case 'array':
       if (!type.value || !Array.isArray(arg)) return INCOMPATIBLE;
-      return arg.reduce((acc, item) => {
+      return arg.reduce((acc, item, index) => {
         const mapped = map(item, type.value as ValueType);
-        return mapped === INCOMPATIBLE ? acc : acc.concat([mapped]);
-      }, []);
+        if (mapped !== INCOMPATIBLE) acc[index] = mapped;
+        return acc;
+      }, new Array(arg.length));
     case 'object':
       if (!type.value || typeof arg !== 'object') return INCOMPATIBLE;
       return Object.entries(arg).reduce((acc, [key, val]) => {
@@ -42,6 +43,17 @@ export const mapArgsToTypes = (args: Args, argTypes: ArgTypes): Args => {
 };
 
 export const combineArgs = (value: any, update: any): Args => {
+  if (Array.isArray(value) && Array.isArray(update)) {
+    return update
+      .reduce(
+        (acc, upd, index) => {
+          acc[index] = combineArgs(value[index], update[index]);
+          return acc;
+        },
+        [...value]
+      )
+      .filter((v: any) => v !== undefined);
+  }
   if (!isPlainObject(value) || !isPlainObject(update)) return update;
   return Object.keys({ ...value, ...update }).reduce((acc, key) => {
     if (key in update) {
