@@ -63,7 +63,7 @@ export default async ({
     entry: entries,
     output: {
       path: outputDir,
-      filename: '[name].[chunkhash].bundle.js',
+      filename: isProd ? '[name].[contenthash].manager.bundle.js' : '[name].manager.bundle.js',
       publicPath: '',
     },
     watchOptions: {
@@ -133,7 +133,9 @@ export default async ({
           test: /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
           loader: require.resolve('file-loader'),
           options: {
-            name: 'static/media/[name].[hash:8].[ext]',
+            name: isProd
+              ? 'static/media/[name].[contenthash:8].[ext]'
+              : 'static/media/[path][name].[ext]',
           },
         },
         {
@@ -141,7 +143,9 @@ export default async ({
           loader: require.resolve('url-loader'),
           options: {
             limit: 10000,
-            name: 'static/media/[name].[hash:8].[ext]',
+            name: isProd
+              ? 'static/media/[name].[contenthash:8].[ext]'
+              : 'static/media/[path][name].[ext]',
           },
         },
       ],
