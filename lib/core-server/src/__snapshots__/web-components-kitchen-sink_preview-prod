@@ -25,6 +25,7 @@ Object {
     "devtool",
     "entry",
     "output",
+    "watchOptions",
     "plugins",
     "module",
     "resolve",

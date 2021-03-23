@@ -1,3 +1,25 @@
+## 6.2.0-rc.8 (March 23, 2021)
+
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below and apologies for the back and forth.
+
+### Bug Fixes
+
+- Revert "Addon-docs/Angular: Fix inline rendering setup" ([#14310](https://github.com/storybookjs/storybook/pull/14310))
+- Core: Import `isPlainObject` directly from lodash ([#14307](https://github.com/storybookjs/storybook/pull/14307))
+- Addon-Links: Fix react.d.ts paths ([#14306](https://github.com/storybookjs/storybook/pull/14306))
+
+## 6.2.0-rc.7 (March 23, 2021)
+
+### Bug Fixes
+
+- Core: Restore webpack4 watchOptions ([#14302](https://github.com/storybookjs/storybook/pull/14302))
+- Webpack: Hash files only in dev mode ([#14284](https://github.com/storybookjs/storybook/pull/14284))
+- UI: Element em should not make text content bold ([#14290](https://github.com/storybookjs/storybook/pull/14290))
+
+### Dependency Upgrades
+
+- Webpack5: Remove deprecated webpack-filter-warnings-plugin ([#14303](https://github.com/storybookjs/storybook/pull/14303))
+
 ## 6.2.0-rc.6 (March 21, 2021)
 
 ### Bug Fixes

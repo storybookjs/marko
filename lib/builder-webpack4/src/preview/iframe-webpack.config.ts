@@ -127,10 +127,10 @@ export default async ({
       filename: isProd ? '[name].[contenthash:8].iframe.bundle.js' : '[name].iframe.bundle.js',
       publicPath: '',
     },
-    // watchOptions: {
-    //   aggregateTimeout: 10,
-    //   ignored: /node_modules/,
-    // },
+    watchOptions: {
+      aggregateTimeout: 10,
+      ignored: /node_modules/,
+    },
     plugins: [
       new FilterWarningsPlugin({
         exclude: /export '\S+' was not found in 'global'/,
