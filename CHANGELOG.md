@@ -1,3 +1,13 @@
+## 6.2.0-rc.8 (March 23, 2021)
+
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below.
+
+### Bug Fixes
+
+- Revert "Addon-docs/Angular: Fix inline rendering setup" ([#14310](https://github.com/storybookjs/storybook/pull/14310))
+- Core: Import `isPlainObject` directly from lodash ([#14307](https://github.com/storybookjs/storybook/pull/14307))
+- Addon-Links: Fix react.d.ts paths ([#14306](https://github.com/storybookjs/storybook/pull/14306))
+
 ## 6.2.0-rc.7 (March 23, 2021)
 
 ### Bug Fixes
