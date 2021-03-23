@@ -283,7 +283,7 @@ export const ColorControl: FC<ColorProps> = ({
                     <Swatch
                       value={preset[colorSpace]}
                       active={color && id(preset[colorSpace]) === id(color[colorSpace])}
-                      onClick={() => updateValue(preset[colorSpace])}
+                      onClick={() => updateValue(preset.value)}
                     />
                   </WithTooltip>
                 ))}
