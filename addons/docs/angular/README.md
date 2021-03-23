@@ -220,12 +220,10 @@ Then update `.storybook/preview.js`:
 
 ```js
 import { addParameters } from '@storybook/angular';
-import { prepareForInline } from '@storybook/addon-docs/angular/inline';
 
 addParameters({
   docs: {
     inlineStories: true,
-    prepareForInline,
   },
 });
 ```
