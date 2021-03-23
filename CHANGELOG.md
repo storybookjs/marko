@@ -1,6 +1,6 @@
 ## 6.2.0-rc.8 (March 23, 2021)
 
-**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below.
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below and apologies for the back and forth.
 
 ### Bug Fixes
 
