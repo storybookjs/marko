@@ -34,7 +34,7 @@ Usage: start-storybook [options]
 | --no-manager-cache                 | Disables Storybook's manager caching mechanism. See note below.                                                                                | `start-storybook --no-manager-cache`                      |
 
 <div class="aside">
-💡 <strong>NOTE</strong>: Use the <code>--no-manager-cache</code> flag with caution. As it disables the internal caching mechanism and can severely impact your Storybook's loading time.
+💡 <strong>NOTE</strong>: The flag <code>--no-manager-cache</code> disables the internal caching of Storybook and can serverely impact your Storybook loading time, so only use it when you need to refresh Storybook's UI, such as when editing themes.
 </div>
 
 ## build-storybook
