@@ -55,7 +55,9 @@ const expandShorthand = (value: string) => {
   return `#${r}${r}${g}${g}${b}${b}`;
 };
 
-const parseValue = (input: string | { color: string; title?: string }): ParsedColor => {
+const parseValue = (input: string | { color: string; title?: string } | null): ParsedColor => {
+  if (!input) return undefined;
+
   const { color, title } = typeof input === 'object' ? input : { color: input, title: undefined };
   if (!color) return undefined;
 
