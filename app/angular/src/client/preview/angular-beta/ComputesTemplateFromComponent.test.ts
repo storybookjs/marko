@@ -29,6 +29,102 @@ describe('angular source decorator', () => {
     });
   });
 
+  describe('with component with attribute selector', () => {
+    @Component({
+      selector: 'doc-button[foo]',
+      template: '<button></button>',
+    })
+    class WithAttributeComponent {}
+
+    it('should add attribute to template', async () => {
+      const component = WithAttributeComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<doc-button foo></doc-button>`);
+    });
+  });
+
+  describe('with component with attribute and value selector', () => {
+    @Component({
+      selector: 'doc-button[foo=bar]',
+      template: '<button></button>',
+    })
+    class WithAttributeValueComponent {}
+
+    it('should add attribute to template', async () => {
+      const component = WithAttributeValueComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<doc-button foo="bar"></doc-button>`);
+    });
+  });
+
+  describe('with component with attribute only selector', () => {
+    @Component({
+      selector: '[foo]',
+      template: '<button></button>',
+    })
+    class WithAttributeOnlyComponent {}
+
+    it('should create a div and add attribute to template', async () => {
+      const component = WithAttributeOnlyComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<div foo></div>`);
+    });
+  });
+
+  describe('with component with class selector', () => {
+    @Component({
+      selector: 'doc-button.foo',
+      template: '<button></button>',
+    })
+    class WithClassComponent {}
+
+    it('should add class to template', async () => {
+      const component = WithClassComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<doc-button class="foo"></doc-button>`);
+    });
+  });
+
+  describe('with component with class only selector', () => {
+    @Component({
+      selector: '.foo',
+      template: '<button></button>',
+    })
+    class WithClassComponent {}
+
+    it('should create a div and add attribute to template', async () => {
+      const component = WithClassComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<div class="foo"></div>`);
+    });
+  });
+
+  describe('with component with multiple selectors', () => {
+    @Component({
+      selector: 'doc-button, doc-button2',
+      template: '<button></button>',
+    })
+    class WithMultipleSelectorsComponent {}
+
+    it('should use the first selector', async () => {
+      const component = WithMultipleSelectorsComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<doc-button></doc-button>`);
+    });
+  });
+
   describe('no argTypes', () => {
     it('should generate tag-only template with no props', () => {
       const component = InputComponent;

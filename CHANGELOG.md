@@ -1,3 +1,100 @@
+## 6.2.0-rc.8 (March 23, 2021)
+
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below and apologies for the back and forth.
+
+### Bug Fixes
+
+- Revert "Addon-docs/Angular: Fix inline rendering setup" ([#14310](https://github.com/storybookjs/storybook/pull/14310))
+- Core: Import `isPlainObject` directly from lodash ([#14307](https://github.com/storybookjs/storybook/pull/14307))
+- Addon-Links: Fix react.d.ts paths ([#14306](https://github.com/storybookjs/storybook/pull/14306))
+
+## 6.2.0-rc.7 (March 23, 2021)
+
+### Bug Fixes
+
+- Core: Restore webpack4 watchOptions ([#14302](https://github.com/storybookjs/storybook/pull/14302))
+- Webpack: Hash files only in dev mode ([#14284](https://github.com/storybookjs/storybook/pull/14284))
+- UI: Element em should not make text content bold ([#14290](https://github.com/storybookjs/storybook/pull/14290))
+
+### Dependency Upgrades
+
+- Webpack5: Remove deprecated webpack-filter-warnings-plugin ([#14303](https://github.com/storybookjs/storybook/pull/14303))
+
+## 6.2.0-rc.6 (March 21, 2021)
+
+### Bug Fixes
+
+- Revert "Webpack: Hash files only in production mode" ([#14283](https://github.com/storybookjs/storybook/pull/14283))
+
+## 6.2.0-rc.5 (March 20, 2021)
+
+### Bug Fixes
+
+- Webpack: Hash files only in production mode ([#14264](https://github.com/storybookjs/storybook/pull/14264))
+- Angular: Allow usage of all component valid selectors ([#14230](https://github.com/storybookjs/storybook/pull/14230))
+
+### Maintenance
+
+- Addon-controls: Improve color picker UI and migrate to react-colorful ([#14249](https://github.com/storybookjs/storybook/pull/14249))
+
+## 6.2.0-rc.4 (March 19, 2021)
+
+### Bug Fixes
+
+- Webpack: Fix missing `module` mainField ([#14271](https://github.com/storybookjs/storybook/pull/14271))
+
+## 6.2.0-rc.3 (March 18, 2021)
+
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below.
+
+### Bug Fixes
+
+- Addon-docs/Angular: Fix inline rendering setup ([#14270](https://github.com/storybookjs/storybook/pull/14270))
+- Addon-docs: Fix table dark mode ([#14251](https://github.com/storybookjs/storybook/pull/14251))
+- Webpack5: Replace fullhash with contenthash ([#14261](https://github.com/storybookjs/storybook/pull/14261))
+
+### Maintenance
+
+- CLI: Don't allow root directory as static dir ([#14068](https://github.com/storybookjs/storybook/pull/14068))
+- WebComponents: Fix types and improve CLI detection ([#14258](https://github.com/storybookjs/storybook/pull/14258))
+
+## 6.2.0-rc.2 (March 17, 2021)
+
+### Bug Fixes
+
+- Addon-docs/Vue,Vue3: Fix preset options for vue-docgen-api ([#14227](https://github.com/storybookjs/storybook/pull/14227))
+- Webpack5: Fix hash => fullhash ([#14255](https://github.com/storybookjs/storybook/pull/14255))
+
+### Maintenance
+
+- Core: Check webpack version ([#14256](https://github.com/storybookjs/storybook/pull/14256))
+
+## 6.2.0-rc.1 (March 16, 2021)
+
+### Features
+
+- CLI: Improve init for svelte ([#14161](https://github.com/storybookjs/storybook/pull/14161))
+
+## 6.2.0-rc.0 (March 15, 2021)
+
+### Features
+
+- Svelte: Improve default webpack config ([#14235](https://github.com/storybookjs/storybook/pull/14235))
+
+## 6.2.0-beta.15 (March 15, 2021)
+
+### Features
+
+- Controls: Add ArgsTable sorting ([#13125](https://github.com/storybookjs/storybook/pull/13125))
+
+### Bug Fixes
+
+- Addon-docs: Fix source block error on dynamically-generated stories ([#14217](https://github.com/storybookjs/storybook/pull/14217))
+
+### Dependency Upgrades
+
+- [Security] Bump react-dev-utils from 11.0.3 to 11.0.4 ([#14210](https://github.com/storybookjs/storybook/pull/14210))
+
 ## 6.2.0-beta.14 (March 11, 2021)
 
 ### Bug Fixes

@@ -1,6 +1,6 @@
 import { Args, ArgTypes } from '@storybook/addons';
 import { once } from '@storybook/client-logger';
-import { isPlainObject } from 'lodash';
+import isPlainObject from 'lodash/isPlainObject';
 import dedent from 'ts-dedent';
 
 type ValueType = { name: string; value?: ObjectValueType | ValueType };

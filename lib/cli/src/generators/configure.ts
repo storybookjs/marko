@@ -1,16 +1,39 @@
 import fse from 'fs-extra';
 import { SupportedFrameworks } from '../project_types';
 
-function configureMain(addons: string[], custom?: any) {
+interface ConfigureMainOptions {
+  addons: string[];
+  extensions?: string[];
+  /**
+   * Extra values for main.js
+   *
+   * In order to provide non-serializable data like functions, you can use
+   * { value: '%%yourFunctionCall()%%' }
+   *
+   * '%% and %%' will be replace.
+   *
+   */
+  [key: string]: any;
+}
+
+function configureMain({
+  addons,
+  extensions = ['js', 'jsx', 'ts', 'tsx'],
+  ...custom
+}: ConfigureMainOptions) {
   const prefix = fse.existsSync('./src') ? '../src' : '../stories';
 
   const config = {
-    stories: [`${prefix}/**/*.stories.mdx`, `${prefix}/**/*.stories.@(js|jsx|ts|tsx)`],
+    stories: [`${prefix}/**/*.stories.mdx`, `${prefix}/**/*.stories.@(${extensions.join('|')})`],
     addons,
     ...custom,
   };
 
-  const stringified = `module.exports = ${JSON.stringify(config, null, 2)}`;
+  // replace escaped values and delimiters
+  const stringified = `module.exports = ${JSON.stringify(config, null, 2)
+    .replace(/\\"/g, '"')
+    .replace(/['"]%%/g, '')
+    .replace(/%%['"]/, '')}`;
   fse.ensureDirSync('./.storybook');
   fse.writeFileSync('./.storybook/main.js', stringified, { encoding: 'utf8' });
 }
@@ -40,8 +63,8 @@ ${parameters}`
   fse.writeFileSync('./.storybook/preview.js', preview, { encoding: 'utf8' });
 }
 
-export function configure(framework: SupportedFrameworks, addons: string[], custom?: any) {
+export function configure(framework: SupportedFrameworks, mainOptions: ConfigureMainOptions) {
   fse.ensureDirSync('./.storybook');
-  configureMain(addons, custom);
+  configureMain(mainOptions);
   configurePreview(framework);
 }

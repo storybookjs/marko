@@ -21,7 +21,8 @@ export interface BooleanConfig {}
 
 export type ColorValue = string;
 export interface ColorConfig {
-  presetColors?: string[];
+  presetColors?: Array<string | { color: string; title?: string }>;
+  startOpen?: boolean;
 }
 
 export type DateValue = Date | number;

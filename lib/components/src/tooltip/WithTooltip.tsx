@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useState, useEffect } from 'react';
+import React, { FunctionComponent, ReactNode, useCallback, useState, useEffect } from 'react';
 import { styled } from '@storybook/theming';
 import { document } from 'global';
 
@@ -121,8 +121,15 @@ const WithToolTipState: FunctionComponent<
   WithTooltipPureProps & {
     startOpen?: boolean;
   }
-> = ({ startOpen, ...rest }) => {
-  const [tooltipShown, onVisibilityChange] = useState(startOpen || false);
+> = ({ startOpen, onVisibilityChange: onChange, ...rest }) => {
+  const [tooltipShown, setTooltipShown] = useState(startOpen || false);
+  const onVisibilityChange = useCallback(
+    (visibility) => {
+      setTooltipShown(visibility);
+      if (onChange) onChange(visibility);
+    },
+    [onChange]
+  );
 
   useEffect(() => {
     const hide = () => onVisibilityChange(false);

@@ -6,6 +6,7 @@ import {
   ArgsTableProps as PureArgsTableProps,
   ArgsTableError,
   ArgTypes,
+  SortType,
   TabbedArgsTable,
 } from '@storybook/components';
 import { Args } from '@storybook/addons';
@@ -22,6 +23,7 @@ import { lookupStoryId } from './Story';
 interface BaseProps {
   include?: PropDescriptor;
   exclude?: PropDescriptor;
+  sort?: SortType;
 }
 
 type OfProps = BaseProps & {
@@ -111,11 +113,13 @@ const addComponentTabs = (
   components: Record<string, Component>,
   context: DocsContextProps,
   include?: PropDescriptor,
-  exclude?: PropDescriptor
+  exclude?: PropDescriptor,
+  sort?: SortType
 ) => ({
   ...tabs,
   ...mapValues(components, (comp) => ({
     rows: extractComponentArgTypes(comp, context, include, exclude),
+    sort,
   })),
 });
 
@@ -199,14 +203,16 @@ export const ComponentsTable: FC<ComponentsProps> = (props) => {
 
 export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const context = useContext(DocsContext);
-  const { parameters: { subcomponents } = {} } = context;
+  const { parameters: { subcomponents, controls } = {} } = context;
 
-  const { include, exclude, components } = props as ComponentsProps;
+  const { include, exclude, components, sort: sortProp } = props as ComponentsProps;
   const { story } = props as StoryProps;
+
+  const sort = sortProp || controls?.sort;
 
   const main = getComponent(props, context);
   if (story) {
-    return <StoryTable {...(props as StoryProps)} component={main} subcomponents={subcomponents} />;
+    return <StoryTable {...(props as StoryProps)} component={main} {...{ subcomponents, sort }} />;
   }
 
   if (!components && !subcomponents) {
@@ -220,7 +226,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
   }
 
   if (components) {
-    return <ComponentsTable {...(props as ComponentsProps)} components={components} />;
+    return <ComponentsTable {...(props as ComponentsProps)} {...{ components, sort }} />;
   }
 
   const mainLabel = getComponentName(main);
@@ -228,6 +234,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     <ComponentsTable
       {...(props as ComponentsProps)}
       components={{ [mainLabel]: main, ...subcomponents }}
+      sort={sort}
     />
   );
 };

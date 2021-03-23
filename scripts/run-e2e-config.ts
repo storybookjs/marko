@@ -164,7 +164,7 @@ export const vue3: Parameters = {
 export const web_components: Parameters = {
   name: 'web_components',
   version: 'latest',
-  generator: fromDeps('lit-html', 'lit-element'),
+  generator: fromDeps('lit-element'),
 };
 
 export const web_components_typescript: Parameters = {

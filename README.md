@@ -86,7 +86,7 @@ Storybook comes with a lot of [addons](https://storybook.js.org/docs/react/confi
 
 ### Community
 
-For additional help, join us [in our Discord](https://discord.gg/storybook) or [Slack (legacy)](https://now-examples-slackin-rrirkqohko.now.sh/).
+For additional help, join us in the [Storybook Discord](https://discord.gg/storybook).
 
 ## Projects
 
@@ -167,9 +167,8 @@ If you're looking for material to use in your presentation about storybook, like
 ## Community
 
 - Tweeting via [@storybookjs](https://twitter.com/storybookjs)
-- Blogging at [Medium](https://medium.com/storybookjs)
+- Blogging at [storybook.js.org](https://storybook.js.org/blog/) and [Medium](https://medium.com/storybookjs)
 - Chatting on [Discord](https://discord.gg/storybook)
-- Chatting (legacy) on [Slack](https://now-examples-slackin-rrirkqohko.now.sh/)
 - Streaming saved at [Youtube](https://www.youtube.com/channel/UCr7Quur3eIyA_oe8FNYexfg)
 
 ## Contributing

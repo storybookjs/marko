@@ -6,10 +6,10 @@ import { Story } from '@storybook/angular/types-6-0';
 import ListComponent from './List.component';
 import ListItemComponent from './ListItem.component';
 
+//👇 Imports a specific story from ListItem stories
 import { Unchecked } from './ListItem.stories';
 
 const ListTemplate: Story<ListComponent> = (args) => ({
-  component: ListComponent,
   moduleMetadata: {
     declarations: [ListComponent, ListItemComponent],
   },
