@@ -236,6 +236,26 @@ And here's what the resulting UI looks like:
 
 ![Controls addon expanded](./addon-controls-expanded.png)
 
+### Specify initial preset color swatches
+
+For `color` controls, you can specify an array of `presetColors`, either on the `control` in `argTypes`, or as a parameter under the `controls` namespace:
+
+```js
+// .storybook/preview.js
+
+export const parameters = {
+  controls: {
+    presetColors: [
+      { color: '#ff4785', title: 'Coral' },
+      'rgba(0, 159, 183, 1)',
+      '#fe4a49',
+    ]
+  },
+};
+```
+
+These will then be available as swatches in the color picker. Color presets can be defined as an object with `color` and `title`, or as a simple CSS color string. The `title` will be shown when you hover over the color swatch. In case no title is specified, the nearest CSS color name will be used instead.
+
 ### Disable controls for specific properties
 
 Aside from the features already documented here, Controls can also be disabled for individual properties.
