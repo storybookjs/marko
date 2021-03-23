@@ -6,7 +6,7 @@ Storybook is designed to be highly customizable. You can develop all kinds of wo
 
 ## Preset
 
-Preset options are global and are accessible from NodeJS. Great for things like Webpack loaders, Babel plugins, and other library or framework specific configurations.
+Preset options are global and are accessible from NodeJS. Great for things like Webpack loaders, Babel plugins, and other library or framework-specific configurations.
 
 Presets offload the burden of configuration from the user to the addon. They are convenient for integrating libraries with Storybook. Let's look at an example.
 
