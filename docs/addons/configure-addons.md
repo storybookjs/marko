@@ -10,7 +10,7 @@ Preset options are global and are accessible from NodeJS. Great for things like 
 
 Presets offload the burden of configuration from the user to the addon. They are convenient for integrating libraries with Storybook. Let's look at an example.
 
-Many libraries require that the app be wrapped by a Provider. Which then provides data to components down the tree. For example, CSS-in-JS libraries use a ThemeProvider to access your theme. Presets can describe such behaviour. So, when the user installs the addon in their Storybook, all stories will automatically be wrapped by the ThemeProvider. Allowing folks to start using your library with Storybook, with just 1 line of config!
+Many libraries require that the app be wrapped by a `Provider`. Which then provides data to components down the tree. For example, CSS-in-JS libraries use a `ThemeProvider` to access the app's theme. Presets can describe behavior like adding wrappers automatically, without users having to do any manual configuration. If a user installs an addon that has Presets, the addon can instruct Storybook to wrap all stories in `ThemeProvider`. This allows folks to start using your library with Storybook, with just 1 line of config!
 
 For more on presets, see: [Write a preset addon](./writing-presets)
 
