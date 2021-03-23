@@ -12,6 +12,8 @@ const map = (arg: unknown, type: ValueType): any => {
   switch (type.name) {
     case 'string':
       return String(arg);
+    case 'enum':
+      return arg;
     case 'number':
       return Number(arg);
     case 'boolean':

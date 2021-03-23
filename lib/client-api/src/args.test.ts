@@ -4,16 +4,51 @@ import { combineArgs, mapArgsToTypes, validateOptions } from './args';
 const stringType = { name: 'string' };
 const numberType = { name: 'number' };
 const booleanType = { name: 'boolean' };
+const enumType = { name: 'enum' };
 const functionType = { name: 'function' };
 const numArrayType = { name: 'array', value: numberType };
 const boolObjectType = { name: 'object', value: { bool: booleanType } };
 
 jest.mock('@storybook/client-logger');
 
+enum ArgsMapTestEnumWithoutInitializer {
+  EnumValue,
+  EnumValue2,
+}
+
+enum ArgsMapTestEnumWithStringInitializer {
+  EnumValue = 'EnumValue',
+}
+
+enum ArgsMapTestEnumWithNumericInitializer {
+  EnumValue = 4,
+}
+
 describe('mapArgsToTypes', () => {
   it('maps strings', () => {
     expect(mapArgsToTypes({ a: 'str' }, { a: { type: stringType } })).toEqual({ a: 'str' });
     expect(mapArgsToTypes({ a: 42 }, { a: { type: stringType } })).toEqual({ a: '42' });
+  });
+
+  it('maps enums', () => {
+    expect(
+      mapArgsToTypes({ a: ArgsMapTestEnumWithoutInitializer.EnumValue }, { a: { type: enumType } })
+    ).toEqual({ a: 0 });
+    expect(
+      mapArgsToTypes({ a: ArgsMapTestEnumWithoutInitializer.EnumValue2 }, { a: { type: enumType } })
+    ).toEqual({ a: 1 });
+    expect(
+      mapArgsToTypes(
+        { a: ArgsMapTestEnumWithStringInitializer.EnumValue },
+        { a: { type: enumType } }
+      )
+    ).toEqual({ a: 'EnumValue' });
+    expect(
+      mapArgsToTypes(
+        { a: ArgsMapTestEnumWithNumericInitializer.EnumValue },
+        { a: { type: enumType } }
+      )
+    ).toEqual({ a: 4 });
   });
 
   it('maps numbers', () => {
