@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import { HexColorPicker, HslaStringColorPicker, RgbaStringColorPicker } from 'react-colorful';
 import convert from 'color-convert';
 import throttle from 'lodash/throttle';
@@ -216,28 +216,31 @@ const useColorInput = (initialValue: string, onChange: (value: string) => string
   return { value, realValue, updateValue, color, colorSpace, cycleColorSpace };
 };
 
-const usePresets = (presetColors: PresetColor[], currentColor?: ParsedColor) => {
-  const [presets, setPresets] = useState([currentColor]);
+const id = (value: string) => value.replace(/\s*/, '').toLowerCase();
 
-  const addPreset = useCallback((preset) => {
-    if (!preset) return;
-    setPresets((arr) =>
-      preset.rgb && arr.every((item) => item.rgb !== preset.rgb)
-        ? arr.concat(preset).slice(-27)
-        : arr
-    );
-  }, []);
+const usePresets = (
+  presetColors: PresetColor[],
+  currentColor: ParsedColor,
+  colorSpace: ColorSpace
+) => {
+  const [selectedColors, setSelectedColors] = useState(currentColor ? [currentColor] : []);
 
-  const initialPresets = useMemo(() => {
-    return (presetColors || []).map((preset) => {
+  const presets = useMemo(() => {
+    const initialPresets = (presetColors || []).map((preset) => {
       if (typeof preset === 'string') return parseValue(preset);
-      return preset.title
-        ? { ...parseValue(preset.color), keyword: preset.title }
-        : parseValue(preset.color);
+      if (preset.title) return { ...parseValue(preset.color), keyword: preset.title };
+      return parseValue(preset.color);
     });
+    return initialPresets.concat(selectedColors).filter(Boolean).slice(0, 27);
   }, [presetColors]);
 
-  return { presets: initialPresets.concat(presets).filter(Boolean).slice(0, 27), addPreset };
+  const addPreset = useCallback((color) => {
+    if (!color?.[colorSpace]) return;
+    if (presets.some((preset) => id(preset[colorSpace]) === id(color[colorSpace]))) return;
+    setSelectedColors(presets.concat(color).slice(-27));
+  }, []);
+
+  return { presets, addPreset };
 };
 
 export type ColorProps = ControlProps<ColorValue> & ColorConfig;
@@ -253,7 +256,7 @@ export const ColorControl: FC<ColorProps> = ({
     initialValue,
     throttle(onChange, 200)
   );
-  const { presets, addPreset } = usePresets(presetColors, color);
+  const { presets, addPreset } = usePresets(presetColors, color, colorSpace);
   const Picker = ColorPicker[colorSpace];
 
   return (
@@ -276,7 +279,7 @@ export const ColorControl: FC<ColorProps> = ({
                   >
                     <Swatch
                       value={preset[colorSpace]}
-                      active={color?.[colorSpace] === preset[colorSpace]}
+                      active={color && id(preset[colorSpace]) === id(color[colorSpace])}
                       onClick={() => updateValue(preset[colorSpace])}
                     />
                   </WithTooltip>
