@@ -47,7 +47,7 @@ describe('angular source decorator', () => {
 
   describe('with component with attribute and value selector', () => {
     @Component({
-      selector: 'doc-button[foo=bar]',
+      selector: 'doc-button[foo="bar"]',
       template: '<button></button>',
     })
     class WithAttributeValueComponent {}
@@ -74,6 +74,22 @@ describe('angular source decorator', () => {
       const argTypes: ArgTypes = {};
       const source = computesTemplateSourceFromComponent(component, props, argTypes);
       expect(source).toEqual(`<div foo></div>`);
+    });
+  });
+
+  describe('with component with attribute and value only selector', () => {
+    @Component({
+      selector: '[foo="bar"]',
+      template: '<button></button>',
+    })
+    class WithAttributeOnlyComponent {}
+
+    it('should create a div and add attribute to template', async () => {
+      const component = WithAttributeOnlyComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<div foo="bar"></div>`);
     });
   });
 
@@ -122,6 +138,72 @@ describe('angular source decorator', () => {
       const argTypes: ArgTypes = {};
       const source = computesTemplateSourceFromComponent(component, props, argTypes);
       expect(source).toEqual(`<doc-button></doc-button>`);
+    });
+  });
+
+  describe('with component with multiple selectors starting with attribute', () => {
+    @Component({
+      selector: 'doc-button[foo], doc-button2',
+      template: '<button></button>',
+    })
+    class WithMultipleSelectorsComponent {}
+
+    it('should use the first selector', async () => {
+      const component = WithMultipleSelectorsComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<doc-button foo></doc-button>`);
+    });
+  });
+
+  describe('with component with multiple selectors starting with attribute and value', () => {
+    @Component({
+      selector: 'doc-button[foo="bar"], doc-button2',
+      template: '<button></button>',
+    })
+    class WithMultipleSelectorsComponent {}
+
+    it('should use the first selector', async () => {
+      const component = WithMultipleSelectorsComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<doc-button foo="bar"></doc-button>`);
+    });
+  });
+
+  describe('with component with multiple selectors with line breaks', () => {
+    @Component({
+      selector: `doc-button, 
+      doc-button2`,
+      template: '<button></button>',
+    })
+    class WithMultipleSelectorsComponent {}
+
+    it('should use the first selector', async () => {
+      const component = WithMultipleSelectorsComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<doc-button></doc-button>`);
+    });
+  });
+
+  describe('with component with multiple selectors starting with attribute only with line breaks', () => {
+    @Component({
+      selector: `[foo], 
+      doc-button2`,
+      template: '<button></button>',
+    })
+    class WithMultipleSelectorsComponent {}
+
+    it('should use the first selector', async () => {
+      const component = WithMultipleSelectorsComponent;
+      const props = {};
+      const argTypes: ArgTypes = {};
+      const source = computesTemplateSourceFromComponent(component, props, argTypes);
+      expect(source).toEqual(`<div foo></div>`);
     });
   });
 
