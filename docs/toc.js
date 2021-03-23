@@ -331,6 +331,11 @@ module.exports = {
           type: 'link',
         },
         {
+          pathSegment: 'configure-addons',
+          title: 'Configure addons',
+          type: 'link',
+        },
+        {
           pathSegment: 'writing-presets',
           title: 'Write a preset',
           type: 'link',
