@@ -1,10 +1,10 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { HexColorPicker, HslaStringColorPicker, RgbaStringColorPicker } from 'react-colorful';
 import convert from 'color-convert';
 import throttle from 'lodash/throttle';
 
 import { styled } from '@storybook/theming';
-import { ControlProps, ColorValue, ColorConfig } from './types';
+import { ControlProps, ColorValue, ColorConfig, PresetColor } from './types';
 import { TooltipNote } from '../tooltip/TooltipNote';
 import { WithTooltip } from '../tooltip/lazy-WithTooltip';
 import { Form } from '../form';
@@ -216,19 +216,8 @@ const useColorInput = (initialValue: string, onChange: (value: string) => string
   return { value, realValue, updateValue, color, colorSpace, cycleColorSpace };
 };
 
-const usePresets = (presetColors: ColorConfig['presetColors'], currentColor?: ParsedColor) => {
-  const [presets, setPresets] = useState(() =>
-    (presetColors || [])
-      .map((preset) => {
-        if (typeof preset === 'string') return parseValue(preset);
-        return preset.title
-          ? { ...parseValue(preset.color), keyword: preset.title }
-          : parseValue(preset.color);
-      })
-      .concat(currentColor)
-      .filter(Boolean)
-      .slice(0, 27)
-  );
+const usePresets = (presetColors: PresetColor[], currentColor?: ParsedColor) => {
+  const [presets, setPresets] = useState([currentColor]);
 
   const addPreset = useCallback((preset) => {
     if (!preset) return;
@@ -239,7 +228,16 @@ const usePresets = (presetColors: ColorConfig['presetColors'], currentColor?: Pa
     );
   }, []);
 
-  return { presets, addPreset };
+  const initialPresets = useMemo(() => {
+    return (presetColors || []).map((preset) => {
+      if (typeof preset === 'string') return parseValue(preset);
+      return preset.title
+        ? { ...parseValue(preset.color), keyword: preset.title }
+        : parseValue(preset.color);
+    });
+  }, [presetColors]);
+
+  return { presets: initialPresets.concat(presets).filter(Boolean).slice(0, 27), addPreset };
 };
 
 export type ColorProps = ControlProps<ColorValue> & ColorConfig;

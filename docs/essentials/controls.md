@@ -192,7 +192,7 @@ Here is the full list of available controls you can use:
 |             |    select    | select dropdown input                                    |       -        |
 |             | multi-select | multi-select dropdown input                              |       -        |
 | **string**  |     text     | simple text input                                        |       -        |
-|             |    color     | color picker input that assumes strings are color values |       -        |
+|             |    color     | color picker input that assumes strings are color values |  presetColors  |
 |             |     date     | date picker input                                        |       -        |
 
 If you need to customize a control for a number data type in your story, you can do it like so:
