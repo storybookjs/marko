@@ -1,5 +1,4 @@
 import { Meta, Canvas, Story, ArgsTable } from '@storybook/addon-docs/blocks';
-import range from 'lodash/range';
 import { DocgenButton } from '../../components/DocgenButton';
 import { ButtonGroup, SubGroup } from '../../components/ButtonGroup';
 import { ForwardRefButton } from '../../components/ForwardRefButton';
@@ -143,7 +142,7 @@ export const Template = (args) => (
     {({ background, label, count }) => {
       return (
         <ButtonGroup background={background}>
-          {range(count).map((i) => (
+          {Array.from({ length: count }, (_, i) => (
             <DocgenButton key={i} label={`${label} ${i}`} />
           ))}
         </ButtonGroup>
