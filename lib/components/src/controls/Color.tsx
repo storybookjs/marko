@@ -231,14 +231,17 @@ const usePresets = (
       if (preset.title) return { ...parseValue(preset.color), keyword: preset.title };
       return parseValue(preset.color);
     });
-    return initialPresets.concat(selectedColors).filter(Boolean).slice(0, 27);
-  }, [presetColors]);
+    return initialPresets.concat(selectedColors).filter(Boolean).slice(-27);
+  }, [presetColors, selectedColors]);
 
-  const addPreset = useCallback((color) => {
-    if (!color?.[colorSpace]) return;
-    if (presets.some((preset) => id(preset[colorSpace]) === id(color[colorSpace]))) return;
-    setSelectedColors(presets.concat(color).slice(-27));
-  }, []);
+  const addPreset = useCallback(
+    (color) => {
+      if (!color?.[colorSpace]) return;
+      if (presets.some((preset) => id(preset[colorSpace]) === id(color[colorSpace]))) return;
+      setSelectedColors((arr) => arr.concat(color));
+    },
+    [colorSpace, presets]
+  );
 
   return { presets, addPreset };
 };
