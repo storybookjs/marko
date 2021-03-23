@@ -189,7 +189,7 @@ const useColorInput = (initialValue: string, onChange: (value: string) => string
   const [color, setColor] = useState(() => parseValue(value));
   const [colorSpace, setColorSpace] = useState(color?.colorSpace || ColorSpace.HEX);
 
-  const realValue = useMemo(() => getRealValue(value, color, colorSpace), [
+  const realValue = useMemo(() => getRealValue(value, color, colorSpace).toLowerCase(), [
     value,
     color,
     colorSpace,
