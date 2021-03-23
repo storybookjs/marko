@@ -2,7 +2,9 @@
 title: 'Configure and communicate with an addon'
 ---
 
-Storybook is designed to be highly customizable. You can develop all kinds of workflows around it. To support this, you can allow users to configure and communicate with addons in several different ways.
+Storybook is designed to be highly customizable. It fits into all kinds of UI development workflows.
+
+Like the rest of Storybook, addons are flexible and can be configured to fit many scenarios. The addon API is powerful and offers a few different ways to configure and communicate with addons. Let's look at what these are and their suggested uses cases.
 
 ## Preset
 
