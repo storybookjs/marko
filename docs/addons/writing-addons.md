@@ -87,7 +87,7 @@ Change your `package.json` and add the following script to build the addon:
 ```
 
 <div class="aside">
-Running <code>yarn build</code> at this stage will output the code into the <code>dist</code> directory, transpiled into a ES5 module ready to be installed into any Storybook. 
+Running <code>yarn build</code> at this stage will output the code into the <code>dist</code> directory, transpiled into a ES5 module ready to be installed into any Storybook.
 </div>
 
 Finally, create a new directory called `src` and inside a new file called `preset.js` with the following:
@@ -239,6 +239,6 @@ To dive deeper we recommend Storybook's [creating an addon](https://storybook.js
 
 [How to build a Storybook addon](https://www.chromatic.com/blog/how-to-build-a-storybook-addon/) shows you how to create a standalone addon in great detail.
 
-### Dev kits
+### Addon kit
 
-To help you jumpstart the addon development, the Storybook maintainers created some [`dev-kits`](https://github.com/storybookjs/storybook/tree/next/dev-kits), use them as reference when building your next addon.
+To help you jumpstart the addon development, the Storybook maintainers created an [`addon-kit`](https://github.com/storybookjs/addon-kit), use it to bootstrap your next addon.
