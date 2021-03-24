@@ -1,3 +1,15 @@
+## 6.2.0-rc.9 (March 25, 2021)
+
+### Features
+
+- Core: Support some special values in URL args ([#14293](https://github.com/storybookjs/storybook/pull/14293))
+
+### Bug Fixes
+
+- Core: Fix `enum` args parsing from URL ([#14314](https://github.com/storybookjs/storybook/pull/14314))
+- Controls: Tweaks and fixes for color control ([#14316](https://github.com/storybookjs/storybook/pull/14316))
+- Components: Handle `null` when parsing input in color picker ([#14305](https://github.com/storybookjs/storybook/pull/14305))
+
 ## 6.2.0-rc.8 (March 23, 2021)
 
 **NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below and apologies for the back and forth.
