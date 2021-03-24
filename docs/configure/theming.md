@@ -113,6 +113,8 @@ Now your custom theme will replace Storybook's default theme and you'll see a si
 
 ![Storybook starter theme](./storybook-starter-custom-theme.png)
 
+**Note:** Once you're finished configuring the theme, remove the flag `--no-manager-cache` from the `storybook` script, otherwise loading times can be severely impacted.
+
 Let's take a look at more complex example. Copy the code below and paste it in `.storybook/YourTheme.js`.
 
 <!-- prettier-ignore-start -->
