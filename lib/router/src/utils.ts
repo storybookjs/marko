@@ -82,7 +82,7 @@ const encodeSpecialValues = (value: unknown): any => {
   if (value === undefined) return '!undefined';
   if (value === null) return '!null';
   if (typeof value === 'string') {
-    if (HEX_REGEXP.test(value)) return value.replace('#', '!');
+    if (HEX_REGEXP.test(value)) return `!hex(${value.slice(1)})`;
     if (COLOR_REGEXP.test(value)) return `!${value.replace(/[\s%]/g, '')}`;
     return value;
   }
@@ -101,7 +101,7 @@ const QS_OPTIONS = {
   delimiter: ';', // we don't actually create multiple query params
   allowDots: true, // encode objects using dot notation: obj.key=val
   format: 'RFC1738', // encode spaces using the + sign
-  serializeDate: (date: Date) => `!${date.toISOString()}`,
+  serializeDate: (date: Date) => `!date(${date.toISOString()})`,
 };
 export const buildArgsParam = (initialArgs: Args, args: Args): string => {
   const update = deepDiff(initialArgs, args);

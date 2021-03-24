@@ -21,13 +21,6 @@ const validateArgs = (key = '', value: unknown): boolean => {
   return false;
 };
 
-// Matches ISO date strings that yield a proper value when passed to new Date(...)
-// Time offset and can be `Z` or a +/- offset in hours:minutes
-// Time offset is optional, falling back to local timezone
-// Time part is optional (including offset)
-// Second fraction is optional
-const DATE_ARG_REGEXP = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d{3})?(Z|(\+|-)\d{2}:\d{2})?)?$/;
-
 const QS_OPTIONS = {
   delimiter: ';', // we're parsing a single query param
   allowDots: true, // objects are encoded using dot notation
@@ -38,19 +31,19 @@ const QS_OPTIONS = {
     charset: string,
     type: 'key' | 'value'
   ) {
-    if (type === 'value' && str === '!undefined') return undefined;
-    if (type === 'value' && str === '!null') return null;
     if (type === 'value' && str.startsWith('!')) {
-      const raw = str.slice(1);
-      if (DATE_ARG_REGEXP.test(raw)) return new Date(raw);
-      if (HEX_REGEXP.test(`#${raw}`)) return `#${raw}`;
-      const color = raw.match(COLOR_REGEXP);
+      if (str === '!undefined') return undefined;
+      if (str === '!null') return null;
+      if (str.startsWith('!date(') && str.endsWith(')')) return new Date(str.slice(6, -1));
+      if (str.startsWith('!hex(') && str.endsWith(')')) return `#${str.slice(5, -1)}`;
+
+      const color = str.slice(1).match(COLOR_REGEXP);
       if (color) {
-        if (raw.startsWith('rgba'))
+        if (str.startsWith('!rgba'))
           return `${color[1]}(${color[2]}, ${color[3]}, ${color[4]}, ${color[5]})`;
-        if (raw.startsWith('hsla'))
+        if (str.startsWith('!hsla'))
           return `${color[1]}(${color[2]}, ${color[3]}%, ${color[4]}%, ${color[5]})`;
-        return raw.startsWith('rgb')
+        return str.startsWith('!rgb')
           ? `${color[1]}(${color[2]}, ${color[3]}, ${color[4]})`
           : `${color[1]}(${color[2]}, ${color[3]}%, ${color[4]}%)`;
       }
