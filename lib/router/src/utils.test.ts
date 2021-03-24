@@ -85,16 +85,19 @@ describe('deepDiff', () => {
     expect(deepDiff(true, 1)).toBe(1);
   });
 
-  it('returns the full array when updating an array', () => {
-    expect(deepDiff([1, 2], [3, 4])).toStrictEqual([3, 4]);
+  it('returns a sparse array when updating an array', () => {
+    // eslint-disable-next-line no-sparse-arrays
+    expect(deepDiff([1, 2], [1, 3])).toStrictEqual([, 3]);
   });
 
-  it('returns undefined for omitted array values', () => {
-    expect(deepDiff([1, 2], [3])).toStrictEqual([3, undefined]);
+  it('returns undefined for removed array values', () => {
+    // eslint-disable-next-line no-sparse-arrays
+    expect(deepDiff([1, 2], [1])).toStrictEqual([, undefined]);
   });
 
   it('returns a longer array when adding to an array', () => {
-    expect(deepDiff([1, 2], [3, 4, 5])).toStrictEqual([3, 4, 5]);
+    // eslint-disable-next-line no-sparse-arrays
+    expect(deepDiff([1, 2], [1, 2, 3])).toStrictEqual([, , 3]);
   });
 
   it('returns a partial when updating an object', () => {
@@ -133,6 +136,12 @@ describe('buildArgsParam', () => {
     expect(param).toEqual('arr[0]:1;arr[1]:2;arr[2]:3');
   });
 
+  it('builds sparse arrays', () => {
+    // eslint-disable-next-line no-sparse-arrays
+    const param = buildArgsParam({}, { arr: ['1', , '3'] });
+    expect(param).toEqual('arr[0]:1;arr[2]:3');
+  });
+
   it('builds simple objects', () => {
     const param = buildArgsParam({}, { obj: { one: '1', two: '2' } });
     expect(param).toEqual('obj.one:1;obj.two:2');
@@ -144,8 +153,9 @@ describe('buildArgsParam', () => {
   });
 
   it('builds arrays in objects', () => {
-    const param = buildArgsParam({}, { obj: { foo: ['1', '2'] } });
-    expect(param).toEqual('obj.foo[0]:1;obj.foo[1]:2');
+    // eslint-disable-next-line no-sparse-arrays
+    const param = buildArgsParam({}, { obj: { foo: ['1', , '3'] } });
+    expect(param).toEqual('obj.foo[0]:1;obj.foo[2]:3');
   });
 
   it('builds single object in array', () => {
@@ -168,14 +178,34 @@ describe('buildArgsParam', () => {
     expect(param).toEqual('key:foo+bar+baz');
   });
 
-  it('encodes null values as `!null`', () => {
+  it('encodes null values as !null', () => {
     const param = buildArgsParam({}, { key: null });
     expect(param).toEqual('key:!null');
   });
 
-  it('encodes nested null values as `!null`', () => {
+  it('encodes nested null values as !null', () => {
     const param = buildArgsParam({}, { foo: { bar: [{ key: null }], baz: null } });
     expect(param).toEqual('foo.bar[0].key:!null;foo.baz:!null');
+  });
+
+  it('encodes hex color values as !hex(value)', () => {
+    const param = buildArgsParam({}, { key: '#ff4785' });
+    expect(param).toEqual('key:!hex(ff4785)');
+  });
+
+  it('encodes rgba color values by prefixing and compacting', () => {
+    const param = buildArgsParam({}, { rgb: 'rgb(255, 71, 133)', rgba: 'rgba(255, 71, 133, 0.5)' });
+    expect(param).toEqual('rgb:!rgb(255,71,133);rgba:!rgba(255,71,133,0.5)');
+  });
+
+  it('encodes hsla color values by prefixing and compacting', () => {
+    const param = buildArgsParam({}, { hsl: 'hsl(45, 99%, 70%)', hsla: 'hsla(45, 99%, 70%, 0.5)' });
+    expect(param).toEqual('hsl:!hsl(45,99,70);hsla:!hsla(45,99,70,0.5)');
+  });
+
+  it('encodes Date objects as !date(ISO string)', () => {
+    const param = buildArgsParam({}, { key: new Date('2001-02-03T04:05:06.789Z') });
+    expect(param).toEqual('key:!date(2001-02-03T04:05:06.789Z)');
   });
 
   describe('with initial state', () => {
@@ -199,19 +229,17 @@ describe('buildArgsParam', () => {
       expect(param).toEqual('obj.one:!undefined');
     });
 
-    // TODO reintroduce sparse arrays when a new version of `qs` is released
-    // @see https://github.com/ljharb/qs/issues/396
-    // it('omits unchanged array values (yielding sparse arrays)', () => {
-    //   const param = buildArgsParam({ arr: [1, 2, 3] }, { arr: [1, 3, 4] });
-    //   expect(param).toEqual('arr[1]:3;arr[2]:4');
-    // });
+    it('omits unchanged array values (yielding sparse arrays)', () => {
+      const param = buildArgsParam({ arr: [1, 2, 3] }, { arr: [1, 3, 4] });
+      expect(param).toEqual('arr[1]:3;arr[2]:4');
+    });
 
-    // it('omits nested unchanged object properties and array values', () => {
-    //   const param = buildArgsParam(
-    //     { obj: { nested: [{ one: 1 }, { two: 2 }] } },
-    //     { obj: { nested: [{ one: 1 }, { two: 2, three: 3 }] } }
-    //   );
-    //   expect(param).toEqual('obj.nested[1].three:3');
-    // });
+    it('omits nested unchanged object properties and array values', () => {
+      const param = buildArgsParam(
+        { obj: { nested: [{ one: 1 }, { two: 2 }] } },
+        { obj: { nested: [{ one: 1 }, { two: 2, three: 3 }] } }
+      );
+      expect(param).toEqual('obj.nested[1].three:3');
+    });
   });
 });

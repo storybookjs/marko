@@ -26,8 +26,8 @@ enum ArgsMapTestEnumWithNumericInitializer {
 
 describe('mapArgsToTypes', () => {
   it('maps strings', () => {
-    expect(mapArgsToTypes({ a: 'str' }, { a: { type: stringType } })).toEqual({ a: 'str' });
-    expect(mapArgsToTypes({ a: 42 }, { a: { type: stringType } })).toEqual({ a: '42' });
+    expect(mapArgsToTypes({ a: 'str' }, { a: { type: stringType } })).toStrictEqual({ a: 'str' });
+    expect(mapArgsToTypes({ a: 42 }, { a: { type: stringType } })).toStrictEqual({ a: '42' });
   });
 
   it('maps enums', () => {
@@ -52,26 +52,38 @@ describe('mapArgsToTypes', () => {
   });
 
   it('maps numbers', () => {
-    expect(mapArgsToTypes({ a: '42' }, { a: { type: numberType } })).toEqual({ a: 42 });
-    expect(mapArgsToTypes({ a: 'a' }, { a: { type: numberType } })).toEqual({ a: NaN });
+    expect(mapArgsToTypes({ a: '42' }, { a: { type: numberType } })).toStrictEqual({ a: 42 });
+    expect(mapArgsToTypes({ a: 'a' }, { a: { type: numberType } })).toStrictEqual({ a: NaN });
   });
 
   it('maps booleans', () => {
-    expect(mapArgsToTypes({ a: 'true' }, { a: { type: booleanType } })).toEqual({ a: true });
-    expect(mapArgsToTypes({ a: 'false' }, { a: { type: booleanType } })).toEqual({ a: false });
-    expect(mapArgsToTypes({ a: 'yes' }, { a: { type: booleanType } })).toEqual({ a: false });
+    expect(mapArgsToTypes({ a: 'true' }, { a: { type: booleanType } })).toStrictEqual({ a: true });
+    expect(mapArgsToTypes({ a: 'false' }, { a: { type: booleanType } })).toStrictEqual({
+      a: false,
+    });
+    expect(mapArgsToTypes({ a: 'yes' }, { a: { type: booleanType } })).toStrictEqual({ a: false });
+  });
+
+  it('maps sparse arrays', () => {
+    // eslint-disable-next-line no-sparse-arrays
+    expect(mapArgsToTypes({ a: [, '2', undefined] }, { a: { type: numArrayType } })).toStrictEqual({
+      // eslint-disable-next-line no-sparse-arrays
+      a: [, 2, undefined],
+    });
   });
 
   it('omits functions', () => {
-    expect(mapArgsToTypes({ a: 'something' }, { a: { type: functionType } })).toEqual({});
+    expect(mapArgsToTypes({ a: 'something' }, { a: { type: functionType } })).toStrictEqual({});
   });
 
   it('omits unknown keys', () => {
-    expect(mapArgsToTypes({ a: 'string' }, { b: { type: stringType } })).toEqual({});
+    expect(mapArgsToTypes({ a: 'string' }, { b: { type: stringType } })).toStrictEqual({});
   });
 
   it('passes through unmodified if no type is specified', () => {
-    expect(mapArgsToTypes({ a: { b: 1 } }, { a: { type: undefined } })).toEqual({ a: { b: 1 } });
+    expect(mapArgsToTypes({ a: { b: 1 } }, { a: { type: undefined } })).toStrictEqual({
+      a: { b: 1 },
+    });
   });
 
   it('deeply maps objects', () => {
@@ -95,7 +107,7 @@ describe('mapArgsToTypes', () => {
           },
         }
       )
-    ).toEqual({
+    ).toStrictEqual({
       key: {
         arr: [1, 2],
         obj: { bool: true },
@@ -129,7 +141,7 @@ describe('mapArgsToTypes', () => {
           },
         }
       )
-    ).toEqual({
+    ).toStrictEqual({
       key: [
         {
           arr: [1, 2],
@@ -145,13 +157,16 @@ describe('combineArgs', () => {
     expect(combineArgs({ foo: 1 }, { bar: 2 })).toStrictEqual({ foo: 1, bar: 2 });
   });
 
-  it('replaces arrays', () => {
-    expect(combineArgs({ foo: [1, 2] }, { foo: [3] })).toStrictEqual({ foo: [3] });
+  it('merges sparse arrays', () => {
+    // eslint-disable-next-line no-sparse-arrays
+    expect(combineArgs({ foo: [1, 2, 3] }, { foo: [, 4, undefined] })).toStrictEqual({
+      foo: [1, 4],
+    });
   });
 
   it('deeply merges args', () => {
     expect(combineArgs({ foo: { bar: [1, 2], baz: true } }, { foo: { bar: [3] } })).toStrictEqual({
-      foo: { bar: [3], baz: true },
+      foo: { bar: [3, 2], baz: true },
     });
   });
 

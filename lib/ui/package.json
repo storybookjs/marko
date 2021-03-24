@@ -58,7 +58,7 @@
     "markdown-to-jsx": "^6.11.4",
     "memoizerific": "^1.11.3",
     "polished": "^4.0.5",
-    "qs": "^6.9.5",
+    "qs": "^6.10.0",
     "react-draggable": "^4.4.3",
     "react-helmet-async": "^1.0.7",
     "react-sizeme": "^3.0.1",
