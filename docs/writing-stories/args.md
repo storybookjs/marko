@@ -139,6 +139,8 @@ The `args` param is always a set of `key:value` pairs delimited with a semicolon
 }
 ```
 
+Similarly, special formats are available for dates and colors. Date objects will be encoded as `!date(value)` with value represented as an ISO date string. Colors are encoded as `!hex(value)`, `!rgba(value)` or `!hsla(value)`. Note that rgb(a) and hsl(a) should not contain spaces or percentage signs in the URL.
+
 Args specified through the URL will extend and override any default values of args specified on the story.
 
 ## Mapping to complex arg values
