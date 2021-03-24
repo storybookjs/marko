@@ -20,8 +20,9 @@ export type BooleanValue = boolean;
 export interface BooleanConfig {}
 
 export type ColorValue = string;
+export type PresetColor = ColorValue | { color: ColorValue; title?: string };
 export interface ColorConfig {
-  presetColors?: Array<string | { color: string; title?: string }>;
+  presetColors?: PresetColor[];
   startOpen?: boolean;
 }
 

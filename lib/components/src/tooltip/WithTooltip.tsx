@@ -30,7 +30,7 @@ export interface WithTooltipPureProps {
   tooltip: ReactNode | ((p: WithHideFn) => ReactNode);
   children: ReactNode;
   tooltipShown?: boolean;
-  onVisibilityChange?: (visibility: boolean) => void;
+  onVisibilityChange?: (visibility: boolean) => void | boolean;
   onDoubleClick?: () => void;
 }
 
@@ -125,8 +125,8 @@ const WithToolTipState: FunctionComponent<
   const [tooltipShown, setTooltipShown] = useState(startOpen || false);
   const onVisibilityChange = useCallback(
     (visibility) => {
+      if (onChange && onChange(visibility) === false) return;
       setTooltipShown(visibility);
-      if (onChange) onChange(visibility);
     },
     [onChange]
   );
