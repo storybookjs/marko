@@ -158,17 +158,4 @@ const buildTemplate = (
     (prevSelector, [searchValue, replacer]) => prevSelector.replace(searchValue, replacer as any),
     selector
   );
-  // /* eslint-disable no-return-assign, no-param-reassign */
-  // const getTemplate = (s: string): string =>
-  //   [
-  //     [/(^\..+)/, 'div$1'],
-  //     [/(^\[.+?])/, 'div$1'],
-  //     [/([\w[\]]+)(\s*,[\w\s-[\],]+)+/, `$1`],
-  //     [/#([\w-]+)/, ` id="$1"`],
-  //     [/((\.[\w-]+)+)/, (_: any, c: any) => ` class="${c.split`.`.join` `.trim()}"`],
-  //     [/(\[.+?])/g, (_: any, a: any) => ` ${a.slice(1, -1)}`],
-  //     [/([\S]+)(.*)/, `<$1$2${inputs}${outputs}>${innerTemplate}</$1>`],
-  //   ].map((r) => (s = (s as any).replace(...r)))[6];
-  // /* eslint-enable no-return-assign, no-param-reassign */
-  // return getTemplate(selector);
 };
