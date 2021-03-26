@@ -1,0 +1,4 @@
+{
+  "projects": { "foo-project": {} },
+  "defaultProject": "foo-project"
+}

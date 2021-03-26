@@ -1,0 +1,10 @@
+{
+  "projects": {
+    "foo-project": {
+      "architect": {
+        "build": {}
+      }
+    }
+  },
+  "defaultProject": "foo-project"
+}
