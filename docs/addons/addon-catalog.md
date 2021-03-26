@@ -6,7 +6,7 @@ Storybook addons are listed in the [catalog](/addons) and distributed via npm. T
 
 Add your addon to the catalog by publishing an npm package that follows these requirements:
 
-- `package.json` with [module information](writing-addons.md#get-started) and [addon metadata](#addon-metadata)
+- `package.json` with [module information](./writing-addons.md#get-started) and [addon metadata](#addon-metadata)
 - `README.md` file with installation and configuration instructions
 - `/dist` directory containing transpiled ES5 code
 - `preset.js` file written as an ES5 module at the root level
@@ -39,7 +39,7 @@ Customize your addon's appearance by adding the `storybook` property with the fo
 | `supportedFrameworks`   | List of supported frameworks      | `["react", "angular"]`                |
 
 
-Use the table below as a reference when filling in the values for both the `supportedFrameworks` and `unsupportedFrameworks` metadata properties. 
+Use the table below as a reference when filling in the values for both the `supportedFrameworks` and `unsupportedFrameworks` metadata properties.
 
 | react          | vue        | angular      |
 |----------------|------------|--------------|
