@@ -168,6 +168,7 @@ const Node = React.memo<NodeProps>(
             <Action
               type="button"
               className="sidebar-subheading-action"
+              aria-label="expand"
               data-action="expand-all"
               data-expanded={isFullyExpanded}
               onClick={(event) => {
