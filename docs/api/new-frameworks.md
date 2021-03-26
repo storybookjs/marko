@@ -24,7 +24,7 @@ Supporting a new framework in Storybook typically consists of two main aspects:
 
 ## Configuring the server
 
-Storybook has the concept of [presets](../addons/writing-presets#presets-api), which are typically babel/webpack configurations for file loading. If your framework has its own file format, e.g. “.vue,” you might need to transform these files into JS files at load time. If you expect every user of your framework to need this, you should add it to the framework. So far every framework added to Storybook has done this, because Storybook’s core configuration is very minimal.
+Storybook has the concept of [presets](../addons/writing-presets.md#presets-api), which are typically babel/webpack configurations for file loading. If your framework has its own file format, e.g. “.vue,” you might need to transform these files into JS files at load time. If you expect every user of your framework to need this, you should add it to the framework. So far every framework added to Storybook has done this, because Storybook’s core configuration is very minimal.
 
 ### Package structure
 
