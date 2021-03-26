@@ -1,3 +1,16 @@
+## 6.2.0-rc.10 (March 26, 2021)
+
+**NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below and apologies for the back and forth. Last time we hope!
+
+### Bug Fixes
+
+- Addon-docs: Fix un-prefixed path links ([#14334](https://github.com/storybookjs/storybook/pull/14334))
+- UI: Add aria-labels to buttons without discernible text ([#14338](https://github.com/storybookjs/storybook/pull/14338))
+
+### Maintenance
+
+- Angular: Improve docs inline rendering setup ([#14333](https://github.com/storybookjs/storybook/pull/14333))
+
 ## 6.2.0-rc.9 (March 25, 2021)
 
 ### Features
