@@ -1,6 +1,4 @@
-import { addParameters } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
-import { prepareForInline } from '@storybook/addon-docs/angular/inline';
 import addCssWarning from '../src/cssWarning';
 
 // @ts-ignore
@@ -17,17 +15,16 @@ setCompodocJson(filtered);
 
 addCssWarning();
 
-addParameters({
+export const parameters = {
   docs: {
     inlineStories: true,
-    prepareForInline,
   },
   options: {
     storySort: {
       order: ['Welcome', 'Core ', 'Addons ', 'Basics '],
     },
   },
-});
+};
 
 export const globalTypes = {
   theme: {
