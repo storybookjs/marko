@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 import { imported } from '../imported';
 
@@ -26,39 +26,46 @@ interface PropsWriterProps {
   importedReference?: string;
   globalReference?: any;
   stringGlobalName?: string;
+  unionGlobalName?: 'top' | 'left';
 }
 
 /**
  * A component that renders its props
  */
-export const PropsWriter: React.FC<PropsWriterProps> = ({
-  numberOptional = 1,
-  stringOptional = 'stringOptional',
-  booleanOptional = false,
-  arrayOptional = ['array', 'optional'],
-  objectOptional = { object: 'optional' },
-  functionOptional = () => 'foo',
-  dateOptional = new Date('20 Jan 1983'),
-  localReference = local,
-  importedReference = imported,
-  globalReference = Date,
-  stringGlobalName = 'top',
-}: PropsWriterProps) => (
-  <pre>
-    {JSON.stringify({
-      numberOptional,
-      stringOptional,
-      booleanOptional,
-      arrayOptional,
-      objectOptional,
-      functionOptional,
-      dateOptional,
-      localReference,
-      importedReference,
-      globalReference,
-      stringGlobalName,
-    })}
-  </pre>
+export const PropsWriter = React.forwardRef<HTMLElement, PropsWriterProps>(
+  (
+    {
+      numberOptional = 1,
+      stringOptional = 'stringOptional',
+      booleanOptional = false,
+      arrayOptional = ['array', 'optional'],
+      objectOptional = { object: 'optional' },
+      functionOptional = () => 'foo',
+      dateOptional = new Date('20 Jan 1983'),
+      localReference = local,
+      importedReference = imported,
+      globalReference = Date,
+      stringGlobalName = 'top',
+      unionGlobalName = 'top',
+    },
+    ref
+  ) => (
+    <pre>
+      {JSON.stringify({
+        numberOptional,
+        stringOptional,
+        booleanOptional,
+        arrayOptional,
+        objectOptional,
+        functionOptional,
+        dateOptional,
+        localReference,
+        importedReference,
+        globalReference,
+        stringGlobalName,
+      })}
+    </pre>
+  )
 );
 
 export const component = PropsWriter;
