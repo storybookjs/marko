@@ -342,6 +342,10 @@ jobs:
     executor:
       class: medium
       name: sb_node_10_browsers
+    environment:
+      # Disable ESLint when running smoke tests to improve perf + As of CRA 4.0.3, CRA kitchen sinks are throwing
+      # because of some ESLint warnings, related to: https://github.com/facebook/create-react-app/pull/10590
+      DISABLE_ESLINT_PLUGIN: 'true'
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
