@@ -1,3 +1,16 @@
+## 6.2.0-rc.11 (March 29, 2021)
+
+### Features
+
+- CLI: Use Svelte-native CSF during initialization ([#14363](https://github.com/storybookjs/storybook/pull/14363))
+
+### Bug Fixes
+
+- Addon-actions: Fix addArgs warnings by refactor ([#14372](https://github.com/storybookjs/storybook/pull/14372))
+- Webpack: Fix HMR by removing concatenateModules optimization ([#14373](https://github.com/storybookjs/storybook/pull/14373))
+- Fix issue with string unions/enums ([#14370](https://github.com/storybookjs/storybook/pull/14370))
+- Components: Deprecate html components entry point ([#14369](https://github.com/storybookjs/storybook/pull/14369))
+
 ## 6.2.0-rc.10 (March 26, 2021)
 
 **NOTE:** For Angular users using inline story rendering in addon-docs, this is a breaking prerelease change. See below and apologies for the back and forth. Last time we hope!
