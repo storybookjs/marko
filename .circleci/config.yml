@@ -1,7 +1,7 @@
 version: 2.1
 
 executors:
-  sb_node_10_classic:
+  sb_node_12_classic:
     parameters:
       class:
         description: The Resource class
@@ -10,20 +10,7 @@ executors:
         default: 'medium'
     working_directory: /tmp/storybook
     docker:
-      - image: circleci/node:10
-        environment:
-          NODE_OPTIONS: --max_old_space_size=3076
-    resource_class: <<parameters.class>>
-  sb_node_10_browsers:
-    parameters:
-      class:
-        description: The Resource class
-        type: enum
-        enum: ['small', 'medium', 'large', 'xlarge']
-        default: 'medium'
-    working_directory: /tmp/storybook
-    docker:
-      - image: circleci/node:10-browsers
+      - image: circleci/node:12
         environment:
           NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
@@ -77,7 +64,7 @@ jobs:
   build:
     executor:
       class: large
-      name: sb_node_10_classic
+      name: sb_node_12_classic
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
@@ -106,7 +93,7 @@ jobs:
             - app
             - lib
   chromatic:
-    executor: sb_node_10_browsers
+    executor: sb_node_12_browsers
     parallelism: 4
     steps:
       # Keep using default checkout because Chromatic needs some git history to work properly
@@ -120,7 +107,7 @@ jobs:
   packtracker:
     executor:
       class: medium
-      name: sb_node_10_browsers
+      name: sb_node_12_browsers
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
@@ -134,7 +121,7 @@ jobs:
   examples:
     executor:
       class: medium
-      name: sb_node_10_browsers
+      name: sb_node_12_browsers
     parallelism: 4
     steps:
       - git-shallow-clone/checkout_advanced:
@@ -152,7 +139,7 @@ jobs:
   publish:
     executor:
       class: medium
-      name: sb_node_10_classic
+      name: sb_node_12_classic
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
@@ -168,7 +155,7 @@ jobs:
   e2e-tests-node-10:
     executor:
       class: medium
-      name: sb_node_10_browsers
+      name: sb_node_12_browsers
     working_directory: /tmp/storybook
     parallelism: 4
     steps:
@@ -285,7 +272,7 @@ jobs:
   e2e-tests-yarn-2-pnp:
     executor:
       class: medium
-      name: sb_node_10_browsers
+      name: sb_node_12_browsers
     working_directory: /tmp/storybook
     steps:
       - git-shallow-clone/checkout_advanced:
@@ -341,7 +328,7 @@ jobs:
   smoke-tests:
     executor:
       class: medium
-      name: sb_node_10_browsers
+      name: sb_node_12_browsers
     environment:
       # Disable ESLint when running smoke tests to improve perf + As of CRA 4.0.3, CRA kitchen sinks are throwing
       # because of some ESLint warnings, related to: https://github.com/facebook/create-react-app/pull/10590
@@ -412,7 +399,7 @@ jobs:
             cd examples/cra-react15
             yarn storybook --smoke-test --quiet
   frontpage:
-    executor: sb_node_10_browsers
+    executor: sb_node_12_browsers
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
@@ -425,7 +412,7 @@ jobs:
   lint:
     executor:
       class: small
-      name: sb_node_10_classic
+      name: sb_node_12_classic
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
@@ -435,7 +422,7 @@ jobs:
           name: Lint
           command: yarn lint
   unit-tests:
-    executor: sb_node_10_browsers
+    executor: sb_node_12_browsers
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
@@ -451,7 +438,7 @@ jobs:
   coverage:
     executor:
       class: small
-      name: sb_node_10_browsers
+      name: sb_node_12_browsers
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
