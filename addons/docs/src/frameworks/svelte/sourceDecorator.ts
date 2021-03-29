@@ -58,6 +58,10 @@ function toSvelteProperty(key: string, value: any, argTypes: ArgTypes): string {
  * @param component Component
  */
 function getComponentName(component: any): string {
+  if (component == null) {
+    return null;
+  }
+
   const { __docgen = {} } = component;
   let { name } = __docgen;
 
