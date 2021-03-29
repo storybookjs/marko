@@ -4,6 +4,11 @@ import { imported } from '../imported';
 
 const local = 'local-value';
 
+enum GlobalNames {
+  top = 'top',
+  left = 'left',
+}
+
 interface PropsWriterProps {
   /**
    * Description
@@ -27,45 +32,49 @@ interface PropsWriterProps {
   globalReference?: any;
   stringGlobalName?: string;
   unionGlobalName?: 'top' | 'left';
+  unionGlobalNameMixed?: 'top' | number;
+  enumGlobalName?: GlobalNames;
 }
 
 /**
  * A component that renders its props
  */
-export const PropsWriter = React.forwardRef<HTMLElement, PropsWriterProps>(
-  (
-    {
-      numberOptional = 1,
-      stringOptional = 'stringOptional',
-      booleanOptional = false,
-      arrayOptional = ['array', 'optional'],
-      objectOptional = { object: 'optional' },
-      functionOptional = () => 'foo',
-      dateOptional = new Date('20 Jan 1983'),
-      localReference = local,
-      importedReference = imported,
-      globalReference = Date,
-      stringGlobalName = 'top',
-      unionGlobalName = 'top',
-    },
-    ref
-  ) => (
-    <pre>
-      {JSON.stringify({
-        numberOptional,
-        stringOptional,
-        booleanOptional,
-        arrayOptional,
-        objectOptional,
-        functionOptional,
-        dateOptional,
-        localReference,
-        importedReference,
-        globalReference,
-        stringGlobalName,
-      })}
-    </pre>
-  )
+export const PropsWriter: React.FC<PropsWriterProps> = ({
+  numberOptional = 1,
+  stringOptional = 'stringOptional',
+  booleanOptional = false,
+  arrayOptional = ['array', 'optional'],
+  objectOptional = { object: 'optional' },
+  functionOptional = () => 'foo',
+  dateOptional = new Date('20 Jan 1983'),
+  localReference = local,
+  importedReference = imported,
+  globalReference = Date,
+  stringGlobalName = 'top',
+  unionGlobalName = 'top',
+  // If we use this default value, controls will try and render it in a JSON object editor
+  // which leads to a circular value error.
+  // unionGlobalNameMixed = 'top',
+  enumGlobalName = 'top',
+}) => (
+  <pre>
+    {JSON.stringify({
+      numberOptional,
+      stringOptional,
+      booleanOptional,
+      arrayOptional,
+      objectOptional,
+      functionOptional,
+      dateOptional,
+      localReference,
+      importedReference,
+      globalReference,
+      stringGlobalName,
+      unionGlobalName,
+      // unionGlobalNameMixed,
+      enumGlobalName,
+    })}
+  </pre>
 );
 
 export const component = PropsWriter;

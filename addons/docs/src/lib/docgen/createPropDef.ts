@@ -25,15 +25,20 @@ function createDefaultValue(
   if (defaultValue != null) {
     const { value, computed, func } = defaultValue;
 
-
     if (!isDefaultValueBlacklisted(value)) {
+      const isReactDocgenTypescript =
+        typeof computed === 'undefined' && typeof func === 'undefined';
+      const isStringValued =
+        type.name === 'string' ||
+        (type.name === 'enum' &&
+          Array.isArray(type.value) &&
+          type.value.every(
+            ({ value: tv }) => typeof tv === 'string' && tv[0] === '"' && tv[tv.length - 1] === '"'
+          ));
+
       // Work around a bug in `react-docgen-typescript-loader`, which returns 'string' for a string
-      // default, instead of "'string'" -- which is incorrect (PR to RDT to follow)
-      if (
-        typeof computed === 'undefined' &&
-        typeof func === 'undefined' &&
-        type.name === 'string'
-      ) {
+      // default, instead of "'string'" -- which is incorrect
+      if (isReactDocgenTypescript && isStringValued) {
         return createSummaryValue(JSON.stringify(value));
       }
 
