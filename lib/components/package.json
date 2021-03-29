@@ -58,7 +58,8 @@
     "react-syntax-highlighter": "^13.5.3",
     "react-textarea-autosize": "^8.3.0",
     "regenerator-runtime": "^0.13.7",
-    "ts-dedent": "^2.0.0"
+    "ts-dedent": "^2.0.0",
+    "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
     "css": "^3.0.0",

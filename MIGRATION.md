@@ -11,6 +11,7 @@
     - [Deprecated default PostCSS plugins](#deprecated-default-postcss-plugins)
     - [Deprecated showRoots config option](#deprecated-showroots-config-option)
     - [Deprecated control.options](#deprecated-controloptions)
+    - [Deprecated storybook components html entry point](#deprecated-storybook-components-html-entry-point)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
@@ -273,6 +274,18 @@ argTypes: {
 Keys in `control.labels` as well as in `mapping` should match the values in `options`. Neither object has to be exhaustive, in case of a missing property, the option value will be used directly.
 
 If you are currently using an object as value for `control.options`, be aware that the key and value are reversed in `control.labels`.
+
+#### Deprecated storybook components html entry point
+
+Storybook HTML components are now exported directly from '@storybook/components' for better ESM and Typescript compatibility. The old entry point will be removed in SB 7.0.
+
+```js
+// before
+import { components } from '@storybook/components/html';
+
+// after
+import { components } from '@storybook/components';
+```
 
 ## From version 6.0.x to 6.1.0
 
