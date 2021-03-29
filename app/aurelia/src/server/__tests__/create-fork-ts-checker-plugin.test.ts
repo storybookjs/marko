@@ -37,3 +37,7 @@
 it('work-around', () => {
   expect(true).toBe(true);
 });
+
+// Make it work with --isolatedModules, we need a dummy export
+/* eslint-disable jest/no-export */
+export default {};
