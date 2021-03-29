@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`react component properties ts-function-component-inline-defaults 1`] = `
-"import * as React from 'react';
+"import React from 'react';
 import { imported } from '../imported';
 const local = 'local-value';
 var GlobalNames;
