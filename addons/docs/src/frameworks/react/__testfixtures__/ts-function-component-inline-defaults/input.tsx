@@ -4,6 +4,11 @@ import { imported } from '../imported';
 
 const local = 'local-value';
 
+enum GlobalNames {
+  top = 'top',
+  left = 'left',
+}
+
 interface PropsWriterProps {
   /**
    * Description
@@ -26,6 +31,9 @@ interface PropsWriterProps {
   importedReference?: string;
   globalReference?: any;
   stringGlobalName?: string;
+  unionGlobalName?: 'top' | 'left';
+  unionGlobalNameMixed?: 'top' | number;
+  enumGlobalName?: GlobalNames;
 }
 
 /**
@@ -43,7 +51,12 @@ export const PropsWriter: React.FC<PropsWriterProps> = ({
   importedReference = imported,
   globalReference = Date,
   stringGlobalName = 'top',
-}: PropsWriterProps) => (
+  unionGlobalName = 'top',
+  // If we use this default value, controls will try and render it in a JSON object editor
+  // which leads to a circular value error.
+  // unionGlobalNameMixed = 'top',
+  enumGlobalName = 'top',
+}) => (
   <pre>
     {JSON.stringify({
       numberOptional,
@@ -57,6 +70,9 @@ export const PropsWriter: React.FC<PropsWriterProps> = ({
       importedReference,
       globalReference,
       stringGlobalName,
+      unionGlobalName,
+      // unionGlobalNameMixed,
+      enumGlobalName,
     })}
   </pre>
 );
