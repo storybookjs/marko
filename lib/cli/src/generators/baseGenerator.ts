@@ -20,6 +20,7 @@ export interface FrameworkOptions {
   addESLint?: boolean;
   extraMain?: any;
   extensions?: string[];
+  commonJs?: boolean;
 }
 
 export type Generator = (
@@ -38,6 +39,7 @@ const defaultOptions: FrameworkOptions = {
   addESLint: false,
   extraMain: undefined,
   extensions: undefined,
+  commonJs: false,
 };
 
 export async function baseGenerator(
@@ -105,6 +107,7 @@ export async function baseGenerator(
   configure(framework, {
     addons: [...addons, ...extraAddons],
     extensions,
+    commonJs: options.commonJs,
     ...mainOptions,
   });
   if (addComponents) {
