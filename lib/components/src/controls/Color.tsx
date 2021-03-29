@@ -102,6 +102,7 @@ const HEX_REGEXP = /^\s*#?([0-9a-f]{3}|[0-9a-f]{6})\s*$/i;
 const SHORTHEX_REGEXP = /^\s*#?([0-9a-f]{3})\s*$/i;
 
 type ParsedColor = {
+  valid: boolean;
   value: string;
   keyword: string;
   colorSpace: ColorSpace;
@@ -131,11 +132,13 @@ const stringToArgs = (value: string) => {
 
 const parseValue = (value: string): ParsedColor => {
   if (!value) return undefined;
+  let valid = true;
 
   if (RGB_REGEXP.test(value)) {
     const [r, g, b, a] = stringToArgs(value);
     const [h, s, l] = convert.rgb.hsl([r, g, b]) || [0, 0, 0];
     return {
+      valid,
       value,
       keyword: convert.rgb.keyword([r, g, b]),
       colorSpace: ColorSpace.RGB,
@@ -149,6 +152,7 @@ const parseValue = (value: string): ParsedColor => {
     const [h, s, l, a] = stringToArgs(value);
     const [r, g, b] = convert.hsl.rgb([h, s, l]) || [0, 0, 0];
     return {
+      valid,
       value,
       keyword: convert.hsl.keyword([h, s, l]),
       colorSpace: ColorSpace.HSL,
@@ -166,7 +170,18 @@ const parseValue = (value: string): ParsedColor => {
   if (/[^#a-f0-9]/i.test(value)) mapped = plain;
   else if (HEX_REGEXP.test(value)) mapped = `#${plain}`;
 
+  if (mapped.startsWith('#')) {
+    valid = HEX_REGEXP.test(mapped);
+  } else {
+    try {
+      convert.keyword.hex(mapped as any);
+    } catch (e) {
+      valid = false;
+    }
+  }
+
   return {
+    valid,
     value: mapped,
     keyword: convert.rgb.keyword(rgb),
     colorSpace: ColorSpace.HEX,
@@ -177,7 +192,7 @@ const parseValue = (value: string): ParsedColor => {
 };
 
 const getRealValue = (value: string, color: ParsedColor, colorSpace: ColorSpace) => {
-  if (!value) return fallbackColor[colorSpace];
+  if (!value || !color?.valid) return fallbackColor[colorSpace];
   if (colorSpace !== ColorSpace.HEX) return color?.[colorSpace] || fallbackColor[colorSpace];
   if (!color.hex.startsWith('#')) {
     try {
@@ -244,7 +259,7 @@ const usePresets = (
 
   const addPreset = useCallback(
     (color) => {
-      if (!color?.[colorSpace]) return;
+      if (!color?.valid) return;
       if (presets.some((preset) => id(preset[colorSpace]) === id(color[colorSpace]))) return;
       setSelectedColors((arr) => arr.concat(color));
     },
