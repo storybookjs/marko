@@ -23,6 +23,7 @@ const PickerTooltip = styled(WithTooltip)({
 });
 
 const TooltipContent = styled.div({
+  width: 200,
   margin: 5,
 
   '.react-colorful__saturation': {
@@ -35,6 +36,10 @@ const TooltipContent = styled.div({
     borderRadius: '0 0 4px 4px',
   },
 });
+
+const Note = styled(TooltipNote)(({ theme }) => ({
+  fontFamily: theme.typography.fonts.base,
+}));
 
 const Swatches = styled.div({
   display: 'grid',
@@ -62,11 +67,13 @@ const Swatch = ({ value, active, onClick, style, ...props }: SwatchProps) => {
   return <SwatchColor {...props} {...{ active, onClick }} style={{ ...style, backgroundImage }} />;
 };
 
-const Input = styled(Form.Input)({
+const Input = styled(Form.Input)(({ theme }) => ({
   width: '100%',
   paddingLeft: 30,
   paddingRight: 30,
-});
+  boxSizing: 'border-box',
+  fontFamily: theme.typography.fonts.base,
+}));
 
 const ToggleIcon = styled(Icons)(({ theme }) => ({
   position: 'absolute',
@@ -76,6 +83,7 @@ const ToggleIcon = styled(Icons)(({ theme }) => ({
   width: 20,
   height: 20,
   padding: 4,
+  boxSizing: 'border-box',
   cursor: 'pointer',
   color: theme.input.color,
 }));
@@ -278,7 +286,7 @@ export const ColorControl: FC<ColorProps> = ({
                   <WithTooltip
                     key={preset.value}
                     hasChrome={false}
-                    tooltip={<TooltipNote note={preset.keyword || preset.value} />}
+                    tooltip={<Note note={preset.keyword || preset.value} />}
                   >
                     <Swatch
                       value={preset[colorSpace]}
