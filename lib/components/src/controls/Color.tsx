@@ -294,7 +294,10 @@ export const ColorControl: FC<ColorProps> = ({
         onVisibilityChange={() => addPreset(color)}
         tooltip={
           <TooltipContent>
-            <Picker {...{ color: realValue, onChange: updateValue, onFocus, onBlur }} />
+            <Picker
+              color={realValue === 'transparent' ? '#000000' : realValue}
+              {...{ onChange: updateValue, onFocus, onBlur }}
+            />
             {presets.length > 0 && (
               <Swatches>
                 {presets.map((preset) => (
