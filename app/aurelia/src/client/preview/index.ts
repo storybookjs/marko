@@ -29,7 +29,8 @@ export const storiesOf: ClientApi['storiesOf'] = (kind, m) => {
   });
 };
 
-export { StoryFnAureliaReturnType, addRegistries, addContainer, Component, addComponents };
+export { addRegistries, addContainer, addComponents };
+export type { StoryFnAureliaReturnType, Component };
 
 export const configure: ClientApi['configure'] = (...args) => api.configure(framework, ...args);
 export const addDecorator: ClientApi['addDecorator'] = api.clientApi

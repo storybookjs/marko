@@ -72,4 +72,5 @@ const Handle = styled.div<{ isDragging: boolean; axis: Axis }>(
   }
 );
 
-export { Draggable, Handle, DraggableEvent, DraggableData };
+export { Draggable, Handle };
+export type { DraggableEvent, DraggableData };

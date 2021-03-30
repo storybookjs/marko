@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoriesHash } from '@storybook/api';
+import type { StoriesHash } from '@storybook/api';
 
 import { Tree } from './Tree';
 import { stories } from './mockdata.large';

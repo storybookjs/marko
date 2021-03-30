@@ -51,4 +51,4 @@ export type Knob<T extends KnobType = any> = T extends 'text'
   ? KnobPlus<T, Pick<OptionsTypeKnob<any>, 'options' | 'value' | 'optionsObj'>>
   : never;
 
-export { KnobType };
+export type { KnobType };

@@ -53,4 +53,4 @@ export enum TypeSystem {
   UNKNOWN = 'Unknown',
 }
 
-export { PropDef };
+export type { PropDef };

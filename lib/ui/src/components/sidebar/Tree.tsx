@@ -1,4 +1,5 @@
-import { Group, Story, StoriesHash, isRoot, isStory } from '@storybook/api';
+import type { Group, Story, StoriesHash } from '@storybook/api';
+import { isRoot, isStory } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Icons } from '@storybook/components';
 import { transparentize } from 'polished';
