@@ -38,9 +38,8 @@
     "versions.json"
   ],
   "scripts": {
-    "prepare": "node ./scripts/generate-sb-packages-versions.js && node ../../scripts/prepare.js",
-    "test": "jest test/**/*.test.js",
-    "postversion": "node ./scripts/generate-sb-packages-versions.js"
+    "prepare": "node ../../scripts/prepare.js",
+    "test": "jest test/**/*.test.js"
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
