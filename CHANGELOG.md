@@ -1,3 +1,9 @@
+## 6.2.0-rc.13 (March 30, 2021)
+
+### Bug Fixes
+
+- Controls: QA fixes for Object and Color controls ([#14392](https://github.com/storybookjs/storybook/pull/14392))
+
 ## 6.2.0-rc.12 (March 30, 2021)
 
 ### Bug Fixes
