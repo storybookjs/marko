@@ -1,6 +1,6 @@
 ## 6.2.0 (March 30, 2021)
 
-## [Storybook 6.2](https://github.com/storybookjs/storybook/issues/13160) future-proof component development
+**[Storybook 6.2](https://github.com/storybookjs/storybook/issues/13160) future-proof component development**
 
 Storybook 6.2 includes major improvements for new frameworks, package managers, and bundlers.
 
@@ -8,9 +8,9 @@ Storybook 6.2 includes major improvements for new frameworks, package managers, 
 📦 Packaging: NPM 7, Yarn 2, ESM
 🛠 Bundlers: Webpack 5, pluggable bundlers to enable Vite, ESBuild, Snowpack, & more.
 
-It also includes an overhaul of Storybook’s auto-generated controls.
+It also includes an overhaul of Storybook’s auto-generated controls and hundreds more fixes, features, and tweaks.
 
-6.2 contains hundreds more fixes, features, and tweaks. Browse the [changelogs](https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md) matching `6.2.0-alpha.*`, `6.2.0-beta.*`, and `6.2.0-rc.*` for the full list of changes. See [Storybook 6 migration guide](https://storybook.js.org/blog/storybook-6-migration-guide/) to upgrade from `5.x` or [MIGRATION.md](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) for detailed migration instructions.
+Browse the [changelogs](https://github.com/storybookjs/storybook/blob/next/CHANGELOG.md) matching `6.2.0-alpha.*`, `6.2.0-beta.*`, and `6.2.0-rc.*` for the full list of changes. See [Storybook 6 migration guide](https://storybook.js.org/blog/storybook-6-migration-guide/) to upgrade from `5.x` or [MIGRATION.md](https://github.com/storybookjs/storybook/blob/next/MIGRATION.md) for detailed migration instructions.
 
 ## 6.2.0-rc.13 (March 30, 2021)
 
