@@ -50,7 +50,9 @@ PropsWriter.defaultProps = {
   localReference: local,
   importedReference: imported,
   globalReference: Date,
-  stringGlobalName: 'top'
+  stringGlobalName: 'top',
+  // eslint-disable-next-line react/default-props-match-prop-types
+  stringNoPropType: 'stringNoPropType'
 };
 export const component = PropsWriter;
 PropsWriter.__docgenInfo = {
@@ -183,6 +185,13 @@ PropsWriter.__docgenInfo = {
       },
       \\"required\\": false,
       \\"description\\": \\"\\"
+    },
+    \\"stringNoPropType\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'stringNoPropType'\\",
+        \\"computed\\": false
+      },
+      \\"required\\": false
     },
     \\"numberRequired\\": {
       \\"type\\": {
