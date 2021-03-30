@@ -48,6 +48,8 @@ PropsWriter.defaultProps = {
   importedReference: imported,
   globalReference: Date,
   stringGlobalName: 'top',
+  // eslint-disable-next-line react/default-props-match-prop-types
+  stringNoPropType: 'stringNoPropType',
 };
 
 export const component = PropsWriter;
