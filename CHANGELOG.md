@@ -1,3 +1,16 @@
+# (March 30, 2021)
+
+### Bug Fixes
+
+- Controls: Fix defaultValue without PropType ([#14387](https://github.com/storybookjs/storybook/pull/14387))
+- CLI: Compatibility with sveltekit ([#14384](https://github.com/storybookjs/storybook/pull/14384))
+- Controls: Color picker QA fixes ([#14382](https://github.com/storybookjs/storybook/pull/14382))
+- Svelte: Fix Cannot read property '\_\_docgen' of undefined ([#14383](https://github.com/storybookjs/storybook/pull/14383))
+
+### Maintenance
+
+- Core: Make Storybook esbuild-compatible ([#14380](https://github.com/storybookjs/storybook/pull/14380))
+
 ## 6.2.0-rc.11 (March 29, 2021)
 
 ### Features
