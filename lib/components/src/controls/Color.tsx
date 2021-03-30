@@ -246,7 +246,7 @@ const usePresets = (
   currentColor: ParsedColor,
   colorSpace: ColorSpace
 ) => {
-  const [selectedColors, setSelectedColors] = useState(currentColor ? [currentColor] : []);
+  const [selectedColors, setSelectedColors] = useState(currentColor?.valid ? [currentColor] : []);
 
   const presets = useMemo(() => {
     const initialPresets = (presetColors || []).map((preset) => {
@@ -294,7 +294,10 @@ export const ColorControl: FC<ColorProps> = ({
         onVisibilityChange={() => addPreset(color)}
         tooltip={
           <TooltipContent>
-            <Picker {...{ color: realValue, onChange: updateValue, onFocus, onBlur }} />
+            <Picker
+              color={realValue === 'transparent' ? '#000000' : realValue}
+              {...{ onChange: updateValue, onFocus, onBlur }}
+            />
             {presets.length > 0 && (
               <Swatches>
                 {presets.map((preset) => (
