@@ -246,7 +246,7 @@ const usePresets = (
   currentColor: ParsedColor,
   colorSpace: ColorSpace
 ) => {
-  const [selectedColors, setSelectedColors] = useState(currentColor ? [currentColor] : []);
+  const [selectedColors, setSelectedColors] = useState(currentColor?.valid ? [currentColor] : []);
 
   const presets = useMemo(() => {
     const initialPresets = (presetColors || []).map((preset) => {
