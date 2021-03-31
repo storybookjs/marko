@@ -1,3 +1,7 @@
+## 6.2.1 (March 30, 2021)
+
+Fix bad version update message from [#12183](https://github.com/storybookjs/storybook/issues/12183)
+
 ## 6.2.0 (March 30, 2021)
 
 **[Storybook 6.2](https://github.com/storybookjs/storybook/issues/13160) future-proof component development**
