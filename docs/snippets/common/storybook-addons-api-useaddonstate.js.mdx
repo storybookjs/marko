@@ -1,5 +1,8 @@
 ```js
-// .storybook/my-addon/register.js
+// /my-addon/register.js
+import React from 'react';
+
+import { useAddonState } from '@storybook/api';
 
 export const Panel = () => {
   const [state, setState] = useAddonState('my/addon-id', 'initial state');

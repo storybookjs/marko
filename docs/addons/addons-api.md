@@ -179,6 +179,24 @@ This hook gets you the current story's parameter.
 
 If the parameter isn't set, the default value (second argument) is returned instead.
 
+### useGlobals
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-addons-api-useglobal.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+Extremely useful hook for addons that rely on Storybook [Globals](../essentials/toolbars-and-globals.md).
+
+It allows you to retrieve and update any Storybook Globals you want.
+
+If you use this hook, remember that your component will render a lot, and you may need to optimize for that using [`React.memo`](https://reactjs.org/docs/react-api.html#reactmemo) or [`useMemo`](https://reactjs.org/docs/hooks-reference.html#usememo) or [`useCallback`](https://reactjs.org/docs/hooks-reference.html#usecallback).
+
 ---
 
 ## Storybook API

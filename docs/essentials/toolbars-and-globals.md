@@ -121,7 +121,7 @@ In Storybook 6.0, if you set the global option `passArgsFirst: false` for backwa
 
 ## Consuming globals from within an addon
 
-If you're working on a Storybook addon and you need to retrieve globals. You can do so, The `@storybook/api` package provides a hook for this scenario, you can use the `useGlobals()` hook to retrieve any globals you want.
+If you're working on a Storybook addon and you need to retrieve globals. You can do so, the `@storybook/api` package provides a hook for this scenario, you can use the [`useGlobals()`](../addons/addons-api.md#useglobals) hook to retrieve any globals you want.
 
 Using the ThemeProvider example above, you could expand it to display which current theme is being shown inside a panel like so:
 
@@ -130,6 +130,24 @@ Using the ThemeProvider example above, you could expand it to display which curr
 <CodeSnippets
   paths={[
     'common/addon-consume-globaltype.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+## Updating globals from within an addon
+
+If you're working on a Storybook addon that needs to update the global and refreshes the UI, you can do so. As mentioned previously, the `@storybook/api` package provides the necessary hook for this scenario. You can use the `updateGlobals` function to update any global values you want. 
+
+Also, you can use the `@storybook/addons` and `@storybook/core-events` packages together to trigger the refresh.
+
+For example, if you were working on a [toolbar addon](../addons/addon-types.md#toolbars), and you want to refresh the UI and update the global once the user clicks on a button, like so:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/addon-consume-and-update-globaltype.js.mdx',
   ]}
 />
 
