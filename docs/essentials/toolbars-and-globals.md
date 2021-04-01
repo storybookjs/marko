@@ -143,6 +143,8 @@ Also, you can use the `@storybook/addons` and `@storybook/core-events` packages 
 
 For example, if you were working on a [toolbar addon](../addons/addon-types.md#toolbars), and you want to refresh the UI and update the global once the user clicks on a button, like so:
 
+<!-- prettier-ignore-start -->
+
 <CodeSnippets
   paths={[
     'common/addon-consume-and-update-globaltype.js.mdx',
