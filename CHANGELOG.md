@@ -1,3 +1,16 @@
+## 6.2.2 (April 2, 2021)
+
+### Bug Fixes
+
+- Core: Fix symlinks in static dir when building static Storybook ([#14448](https://github.com/storybookjs/storybook/pull/14448))
+- Addon-docs/ArgsTable: Use storySort parameter ([#14422](https://github.com/storybookjs/storybook/pull/14422))
+- Revert "Svelte - Fix async loaders and docs" Fix #14443 ([#14444](https://github.com/storybookjs/storybook/pull/14444))
+- Addon-docs/Angular: Keep inlineStories to false by default ([#14447](https://github.com/storybookjs/storybook/pull/14447))
+
+### Maintenance
+
+- CLI: Fix link to `sb init` docs ([#14421](https://github.com/storybookjs/storybook/pull/14421))
+
 ## 6.2.1 (March 30, 2021)
 
 Fix bad version update message from [#12183](https://github.com/storybookjs/storybook/issues/12183)
