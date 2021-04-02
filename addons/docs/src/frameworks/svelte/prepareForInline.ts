@@ -1,36 +1,20 @@
-import { StoryContext, StoryFn } from '@storybook/addons';
+import { StoryFn } from '@storybook/addons';
 
 import React from 'react';
 
 // @ts-ignore
 import HOC from './HOC.svelte';
 
-export const prepareForInline = (storyFn: StoryFn, context: StoryContext) => {
+export const prepareForInline = (storyFn: StoryFn) => {
   const el = React.useRef(null);
   React.useEffect(() => {
-    let cancelled = false;
-    const { applyLoaders, unboundStoryFn } = context;
-
-    let cpn: any;
-
-    applyLoaders().then((storyContext: StoryContext) => {
-      if (!cancelled) {
-        cpn = new HOC({
-          target: el.current,
-          props: {
-            storyContext,
-            unboundStoryFn,
-          },
-        });
-      }
+    const root = new HOC({
+      target: el.current,
+      props: {
+        storyFn,
+      },
     });
-
-    return () => {
-      cancelled = true;
-      if (cpn) {
-        cpn.$destroy();
-      }
-    };
+    return () => root.$destroy();
   });
 
   return React.createElement('div', { ref: el });
