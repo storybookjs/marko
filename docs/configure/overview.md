@@ -60,6 +60,21 @@ For example if you wanted to pull both `.md` and `.js` files from the `my-projec
 
 <!-- prettier-ignore-end -->
 
+If you want to use a custom logic for loading stories which is not supported by a glob pattern, you can supply the final list of stories files:
+
+```js
+// .storybook/main.js
+
+function findStories() {
+  // your custom logic returns a list of files
+}
+
+module.exports = {
+  stories: async (list) => [...list, ...findStories()],
+};
+```
+
+
 ## Configure story rendering
 
 To control the way stories are rendered and add global [decorators](../writing-stories/decorators.md#global-decorators) and [parameters](../writing-stories/parameters.md#global-parameters), create a `.storybook/preview.js` file. This is loaded in the Canvas tab, the “preview” iframe that renders your components in isolation. Use `preview.js` for global code (such as [CSS imports](../get-started/setup.md#render-component-styles) or JavaScript mocks) that applies to all stories.
