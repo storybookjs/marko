@@ -71,6 +71,7 @@ export const start: WebpackBuilder['start'] = async ({ startTime, options, route
     publicPath: config.output?.publicPath as string,
     writeToDisk: true,
     logLevel: 'error',
+    watchOptions: config.watchOptions || {},
   };
 
   compilation = webpackDevMiddleware(compiler, middlewareOptions);
