@@ -1,6 +1,7 @@
 /** @jsx h */
 
 import { h } from 'preact';
+import { useState } from 'preact/hooks';
 
 import { action, actions } from '@storybook/addon-actions';
 import Button from '../Button';
@@ -9,7 +10,22 @@ export default {
   title: 'Addons/Actions',
 };
 
-export const ActionOnly = () => <Button onclick={action('log')}>Click me to log the action</Button>;
+export const ActionOnly = () => {
+  const [clicks, setClicks] = useState(0);
+  const log = action('log');
+  return (
+    <Button
+      onclick={() => {
+        const clicked = clicks + 1;
+        setClicks(clicked);
+        log(clicked);
+      }}
+    >
+      Click me to log the action{' '}
+      {clicks > 0 ? `(Clicked ${clicks} time${clicks > 1 ? 's' : ''}.)` : ''}
+    </Button>
+  );
+};
 
 ActionOnly.storyName = 'Action only';
 
