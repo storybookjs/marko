@@ -1,4 +1,4 @@
-import { window, document, location } from 'global';
+import { window as globalWindow, document, location } from 'global';
 import * as EVENTS from '@storybook/core-events';
 import Channel, { ChannelEvent, ChannelHandler } from '@storybook/channels';
 import { logger, pretty } from '@storybook/client-logger';
@@ -31,7 +31,7 @@ export class PostmsgTransport {
   constructor(private readonly config: Config) {
     this.buffer = [];
     this.handler = null;
-    window.addEventListener('message', this.handleEvent.bind(this), false);
+    globalWindow.addEventListener('message', this.handleEvent.bind(this), false);
 
     // Check whether the config.page parameter has a valid value
     if (config.page !== 'manager' && config.page !== 'preview') {
@@ -129,8 +129,8 @@ export class PostmsgTransport {
 
       return list.length ? list : this.getCurrentFrames();
     }
-    if (window && window.parent && window.parent !== window) {
-      return [window.parent];
+    if (globalWindow && globalWindow.parent && globalWindow.parent !== globalWindow) {
+      return [globalWindow.parent];
     }
 
     return [];
@@ -143,8 +143,8 @@ export class PostmsgTransport {
       ];
       return list.map((e) => e.contentWindow);
     }
-    if (window && window.parent) {
-      return [window.parent];
+    if (globalWindow && globalWindow.parent) {
+      return [globalWindow.parent];
     }
 
     return [];
@@ -155,8 +155,8 @@ export class PostmsgTransport {
       const list: HTMLIFrameElement[] = [...document.querySelectorAll('#storybook-preview-iframe')];
       return list.map((e) => e.contentWindow);
     }
-    if (window && window.parent) {
-      return [window.parent];
+    if (globalWindow && globalWindow.parent) {
+      return [globalWindow.parent];
     }
 
     return [];

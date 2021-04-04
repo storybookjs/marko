@@ -1,3 +1,3 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
-window.STORYBOOK_ENV = 'HTML';
+globalWindow.STORYBOOK_ENV = 'HTML';

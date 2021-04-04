@@ -1,7 +1,7 @@
 import React, { ComponentProps, FunctionComponent, MouseEvent, useState } from 'react';
 import { logger } from '@storybook/client-logger';
 import { styled } from '@storybook/theming';
-import { navigator, document, window } from 'global';
+import { navigator, document, window as globalWindow } from 'global';
 import memoize from 'memoizerific';
 
 // @ts-ignore
@@ -156,7 +156,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
     copyToClipboard(highlightableCode)
       .then(() => {
         setCopied(true);
-        window.setTimeout(() => setCopied(false), 1500);
+        globalWindow.setTimeout(() => setCopied(false), 1500);
       })
       .catch(logger.error);
   };

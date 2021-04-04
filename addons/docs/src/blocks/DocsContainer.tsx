@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react';
-import { document, window } from 'global';
+import { document, window as globalWindow } from 'global';
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { MDXProvider } from '@mdx-js/react';
@@ -46,7 +46,7 @@ export const DocsContainer: FunctionComponent<DocsContainerProps> = ({ context, 
   useEffect(() => {
     let url;
     try {
-      url = new URL(window.parent.location);
+      url = new URL(globalWindow.parent.location);
     } catch (err) {
       return;
     }

@@ -1,4 +1,4 @@
-import { document, window } from 'global';
+import { document, window as globalWindow } from 'global';
 import {
   Dispatch,
   MutableRefObject,
@@ -88,8 +88,8 @@ export const useHighlighted = ({
       if (!(isArrowUp || isArrowDown)) return;
       event.preventDefault();
 
-      const requestId = window.requestAnimationFrame(() => {
-        window.cancelAnimationFrame(lastRequestId);
+      const requestId = globalWindow.requestAnimationFrame(() => {
+        globalWindow.cancelAnimationFrame(lastRequestId);
         lastRequestId = requestId;
 
         const target = event.target as Element;

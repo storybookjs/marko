@@ -1,4 +1,4 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
-window.STORYBOOK_REACT_CLASSES = {};
-window.STORYBOOK_ENV = 'vue3';
+globalWindow.STORYBOOK_REACT_CLASSES = {};
+globalWindow.STORYBOOK_ENV = 'vue3';

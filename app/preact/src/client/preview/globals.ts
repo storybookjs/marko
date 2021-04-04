@@ -1,5 +1,5 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
-if (window) {
-  window.STORYBOOK_ENV = 'preact';
+if (globalWindow) {
+  globalWindow.STORYBOOK_ENV = 'preact';
 }
