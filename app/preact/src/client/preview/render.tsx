@@ -1,7 +1,6 @@
 import * as preact from 'preact';
 import { document } from 'global';
 import dedent from 'ts-dedent';
-import { StoryFn } from '@storybook/addons/dist/ts3.9/types';
 import { RenderContext, StoryFnPreactReturnType } from './types';
 
 const rootElement = document ? document.getElementById('root') : null;
@@ -9,7 +8,6 @@ const rootElement = document ? document.getElementById('root') : null;
 let renderedStory: Element;
 
 function preactRender(story: StoryFnPreactReturnType): void {
-  console.log('rendering', story);
   if (preact.Fragment) {
     // Preact 10 only:
     preact.render(story, rootElement);
@@ -22,7 +20,7 @@ const StoryHarness: preact.FunctionalComponent<{
   name: string;
   kind: string;
   showError: RenderContext['showError'];
-  storyFn: StoryFn;
+  storyFn: () => any;
 }> = ({ showError, name, kind, storyFn }) => {
   const content = preact.h(storyFn as any, null);
   if (!content) {
