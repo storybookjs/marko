@@ -456,7 +456,13 @@ Object {
           Object {
             "loader": "NODE_MODULES/postcss-loader/dist/cjs.js",
             "options": Object {
-              "postcssOptions": [Function],
+              "postcssOptions": Object {
+                "config": false,
+                "plugins": Array [
+                  [Function],
+                  [Function],
+                ],
+              },
             },
           },
         ],
