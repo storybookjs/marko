@@ -1,3 +1,14 @@
+## 6.2.3 (April 5, 2021)
+
+### Bug Fixes
+
+- Core: Fix file-loader options for ESM compat ([#14480](https://github.com/storybookjs/storybook/pull/14480))
+- Core: Fix config.js-based configuration ([#14479](https://github.com/storybookjs/storybook/pull/14479))
+
+### Maintenance
+
+- Core: Disable postcss warning, add main.js `features` setting ([#14478](https://github.com/storybookjs/storybook/pull/14478))
+
 ## 6.2.2 (April 2, 2021)
 
 ### Bug Fixes
