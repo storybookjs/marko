@@ -1,7 +1,7 @@
 /** @jsx h */
 
 // eslint-disable-next-line import/no-extraneous-dependencies
-import preactRenderer from 'preact-render-to-string';
+import preactRenderer from 'preact-render-to-string/jsx';
 
 const boundRenderer = (_storyElement: any, _rendererOptions: any) =>
   preactRenderer(_storyElement, null, { pretty: '  ' });
