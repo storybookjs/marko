@@ -119,6 +119,7 @@ export async function createDefaultWebpackConfig(storybookBaseConfig: any, optio
           test: /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
           loader: require.resolve('file-loader'),
           options: {
+            esModule: false,
             name: isProd
               ? 'static/media/[name].[contenthash:8].[ext]'
               : 'static/media/[path][name].[ext]',
