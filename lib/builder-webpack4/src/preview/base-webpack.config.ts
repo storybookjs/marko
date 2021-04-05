@@ -4,7 +4,7 @@ import path from 'path';
 import { logger } from '@storybook/node-logger';
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
-import type { BuilderOptions } from '@storybook/core-common';
+import type { BuilderOptions, LoadedPreset, Options } from '@storybook/core-common';
 
 const warnImplicitPostcssPlugins = deprecate(
   () => ({
@@ -26,74 +26,83 @@ const warnImplicitPostcssPlugins = deprecate(
 );
 
 const warnGetPostcssOptions = deprecate(
-  async () => {
-    const postcssConfigFiles = [
-      '.postcssrc',
-      '.postcssrc.json',
-      '.postcssrc.yml',
-      '.postcssrc.js',
-      'postcss.config.js',
-    ];
-    // This is done naturally by newer postcss-loader (through cosmiconfig)
-    const customPostcssConfig = await findUp(postcssConfigFiles);
-
-    if (customPostcssConfig) {
-      logger.info(`=> Using custom ${path.basename(customPostcssConfig)}`);
-      return {
-        config: customPostcssConfig,
-      };
-    }
-    return warnImplicitPostcssPlugins;
-  },
+  () => {},
   dedent`
     Relying on the implicit PostCSS loader is deprecated and will be removed in Storybook 7.0.
     If you need PostCSS, include '@storybook/addon-postcss' in your '.storybook/main.js' file.
 
     See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-implicit-postcss-loader for details.
-  `
+    `
 );
 
-export async function createDefaultWebpackConfig(
-  storybookBaseConfig: any,
-  options: { presetsList: any[] }
-) {
+const getPostcssOptions = async () => {
+  const postcssConfigFiles = [
+    '.postcssrc',
+    '.postcssrc.json',
+    '.postcssrc.yml',
+    '.postcssrc.js',
+    'postcss.config.js',
+  ];
+  // This is done naturally by newer postcss-loader (through cosmiconfig)
+  const customPostcssConfig = await findUp(postcssConfigFiles);
+
+  if (customPostcssConfig) {
+    logger.info(`=> Using custom ${path.basename(customPostcssConfig)}`);
+    warnGetPostcssOptions();
+    return {
+      config: customPostcssConfig,
+    };
+  }
+  return warnImplicitPostcssPlugins();
+};
+
+const presetName = (preset: LoadedPreset | string): string =>
+  typeof preset === 'string' ? preset : preset.name;
+
+export async function createDefaultWebpackConfig(storybookBaseConfig: any, options: Options) {
   if (
     options.presetsList.some((preset) =>
-      /@storybook(\/|\\)preset-create-react-app/.test(preset.name || preset)
+      /@storybook(\/|\\)preset-create-react-app/.test(presetName(preset))
     )
   ) {
     return storybookBaseConfig;
   }
 
   const hasPostcssAddon = options.presetsList.some((preset) =>
-    /@storybook(\/|\\)addon-postcss/.test(preset.name || preset)
+    /@storybook(\/|\\)addon-postcss/.test(presetName(preset))
   );
+
+  const features = await options.presets.apply<{ postcss?: boolean }>('features');
 
   let cssLoaders = {};
   if (!hasPostcssAddon) {
     logger.info(`=> Using implicit CSS loaders`);
+    const use = [
+      // TODO(blaine): Decide if we want to keep style-loader & css-loader in core
+      // Trying to apply style-loader or css-loader to files that already have been
+      // processed by them causes webpack to crash, so no one else can add similar
+      // loader configurations to the `.css` extension.
+      require.resolve('style-loader'),
+      {
+        loader: require.resolve('css-loader'),
+        options: {
+          importLoaders: 1,
+        },
+      },
+
+      features?.postcss !== false
+        ? {
+            loader: require.resolve('postcss-loader'),
+            options: {
+              postcssOptions: await getPostcssOptions(),
+            },
+          }
+        : null,
+    ];
     cssLoaders = {
       test: /\.css$/,
       sideEffects: true,
-      use: [
-        // TODO(blaine): Decide if we want to keep style-loader & css-loader in core
-        // Trying to apply style-loader or css-loader to files that already have been
-        // processed by them causes webpack to crash, so no one else can add similar
-        // loader configurations to the `.css` extension.
-        require.resolve('style-loader'),
-        {
-          loader: require.resolve('css-loader'),
-          options: {
-            importLoaders: 1,
-          },
-        },
-        {
-          loader: require.resolve('postcss-loader'),
-          options: {
-            postcssOptions: await warnGetPostcssOptions(),
-          },
-        },
-      ],
+      use: use.filter(Boolean),
     };
   }
 
@@ -110,6 +119,7 @@ export async function createDefaultWebpackConfig(
           test: /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
           loader: require.resolve('file-loader'),
           options: {
+            esModule: false,
             name: isProd
               ? 'static/media/[name].[contenthash:8].[ext]'
               : 'static/media/[path][name].[ext]',

@@ -1,5 +1,5 @@
 import { logger } from '@storybook/node-logger';
-import type { Options, BuilderOptions } from '@storybook/core-common';
+import type { Options } from '@storybook/core-common';
 import type { Configuration } from 'webpack';
 
 export async function createDefaultWebpackConfig(
@@ -55,6 +55,7 @@ export async function createDefaultWebpackConfig(
           test: /\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\?.*)?$/,
           loader: require.resolve('file-loader'),
           options: {
+            esModule: false,
             name: isProd
               ? 'static/media/[name].[contenthash:8].[ext]'
               : 'static/media/[path][name].[ext]',

@@ -214,6 +214,16 @@ If you require PostCSS support, please install `@storybook/addon-postcss` in you
 
 Further information is available at https://github.com/storybookjs/storybook/issues/12668 and https://github.com/storybookjs/storybook/pull/13669.
 
+If you're not using Postcss and you don't want to see the warning, you can disable it by adding the following to your `.storybook/main.js`:
+
+```js
+module.exports = {
+  features: {
+    postcss: false,
+  },
+};
+```
+
 #### Deprecated default PostCSS plugins
 
 When relying on the [implicit PostCSS loader](#deprecated-implicit-postcss-loader), it would also add [autoprefixer v9](https://www.npmjs.com/package/autoprefixer/v/9.8.6) and [postcss-flexbugs-fixes v4](https://www.npmjs.com/package/postcss-flexbugs-fixes/v/4.2.1) plugins to the `postcss-loader` configuration when you didn't have a PostCSS config file (such as `postcss.config.js`) within your project.
