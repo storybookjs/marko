@@ -1,24 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Button with some emoji 1`] = `
-<button
-  class="button"
-  onclick={[Function]}
->
-  <span
-    aria-label="so cool"
-    role="img"
-  >
-    😀 😎 👍 💯
-  </span>
-</button>
+"<button class=\\"button\\">
+  <span role=\\"img\\" aria-label=\\"so cool\\">😀 😎 👍 💯</span>
+</button>"
 `;
 
-exports[`Storyshots Button with text 1`] = `
-<button
-  class="button"
-  onclick={[Function]}
->
-  Hello Button
-</button>
-`;
+exports[`Storyshots Button with text 1`] = `"<button class=\\"button\\">Hello Button</button>"`;
