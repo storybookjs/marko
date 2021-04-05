@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from 'preact';
-import preactRenderer from 'preact-render-to-string';
+import preactRenderer from 'preact-render-to-string/jsx';
 
 const boundRenderer = (_storyElement: any, _rendererOptions: any) =>
   preactRenderer(_storyElement, null, { pretty: '  ' });
