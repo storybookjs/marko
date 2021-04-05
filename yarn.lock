@@ -26543,10 +26543,12 @@ posthtml@^0.13.4:
     posthtml-parser "^0.5.0"
     posthtml-render "^1.2.3"
 
-preact-render-to-json@^3.6.6:
-  version "3.6.6"
-  resolved "https://registry.yarnpkg.com/preact-render-to-json/-/preact-render-to-json-3.6.6.tgz#f67f48581912ac53fc9f4873bc6d7ce342f71c20"
-  integrity sha1-9n9IWBkSrFP8n0hzvG1840L3HCA=
+preact-render-to-string@^5.1.18:
+  version "5.1.18"
+  resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-5.1.18.tgz#c57fe62642981db47e95edda2354873e6b799a1a"
+  integrity sha512-jTL6iTZeheYOhb54r7KuyrNCf33lc+Z52Wos5P1z2wGZ/dREfhBVwrK1qGOrl4fboBN1KxC1lxhBchDHNZr8Uw==
+  dependencies:
+    pretty-format "^3.8.0"
 
 preact@^10.5.13:
   version "10.5.13"
@@ -26642,6 +26644,11 @@ pretty-format@^25.2.1, pretty-format@^25.5.0:
     ansi-regex "^5.0.0"
     ansi-styles "^4.0.0"
     react-is "^16.12.0"
+
+pretty-format@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/pretty-format/-/pretty-format-3.8.0.tgz#bfbed56d5e9a776645f4b1ff7aa1a3ac4fa3c385"
+  integrity sha1-v77VbV6ad2ZF9LH/eqGjrE+jw4U=
 
 pretty-hrtime@^1.0.3:
   version "1.0.3"
