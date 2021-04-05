@@ -55,3 +55,8 @@ export const typescript = () => ({
     savePropValueAsString: true,
   },
 });
+
+export const features = async (existing: Record<string, boolean>) => ({
+  ...existing,
+  postcss: true,
+});
