@@ -3,7 +3,11 @@
 exports[`Storyshots Welcome to Storybook 1`] = `
 "<article style=\\"padding: 15px; line-height: 1.4; font-family: &quot;Helvetica Neue&quot;, Helvetica, &quot;Segoe UI&quot;, Arial, freesans, sans-serif; background-color: #ffffff;\\">
   <h1>Welcome to storybook for Preact</h1>
-  <img alt=\\"Preact logo\\" src=\\"./logo.png\\" style=\\"text-align: center; height: 150px; display: block; margin: 0 auto;\\" />
+  <img
+    alt=\\"Preact logo\\"
+    src=\\"./logo.png\\"
+    style=\\"text-align: center; height: 150px; display: block; margin: 0 auto;\\"
+   />
   <p>
     This is a UI component dev environment for your Preact app.
   </p>
@@ -18,7 +22,13 @@ exports[`Storyshots Welcome to Storybook 1`] = `
   </p>
   <p>
     See these sample 
-    <button type=\\"button\\" style=\\"color: #1474f3; text-decoration: none; border-bottom: 1px solid #1474f3; padding-bottom: 2px; border-top: none; border-right: none; border-left: none; background-color: transparent; padding: 0px; cursor: pointer; font: inherit;\\">stories</button>
+    <button
+      onClick={[Function anonymous]}
+      type=\\"button\\"
+      style=\\"color: #1474f3; text-decoration: none; border-bottom: 1px solid #1474f3; padding-bottom: 2px; border-top: none; border-right: none; border-left: none; background-color: transparent; padding: 0px; cursor: pointer; font: inherit;\\"
+    >
+      stories
+    </button>
      for a component called 
     <code style=\\"font-size: 15px; font-weight: 600; padding: 2px 5px; border: 1px solid #eae9e9; border-radius: 4px; background-color: #f3f2f2; color: #3a3a3a;\\">Button</code>
     .
@@ -38,7 +48,14 @@ exports[`Storyshots Welcome to Storybook 1`] = `
     Usually we create stories with smaller UI components in the app.
     <br />
     Have a look at the 
-    <a href=\\"https://storybook.js.org/basics/writing-stories\\" target=\\"_blank\\" rel=\\"noopener noreferrer\\" style=\\"color: #1474f3; text-decoration: none; border-bottom: 1px solid #1474f3; padding-bottom: 2px;\\">Writing Stories</a>
+    <a
+      href=\\"https://storybook.js.org/basics/writing-stories\\"
+      target=\\"_blank\\"
+      rel=\\"noopener noreferrer\\"
+      style=\\"color: #1474f3; text-decoration: none; border-bottom: 1px solid #1474f3; padding-bottom: 2px;\\"
+    >
+      Writing Stories
+    </a>
      section in our documentation.
   </p>
   <p style=\\"opacity: 0.5;\\">
