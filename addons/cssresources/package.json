@@ -67,7 +67,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7d8a84165eca35692cc0cab1a2e820b1220667fd",
+  "gitHead": "fd587f55266ddb52ba0a508b11089895ce8c3b59",
   "storybook": {
     "displayName": "CSS Resources",
     "unsupportedFrameworks": [
