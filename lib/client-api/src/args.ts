@@ -7,8 +7,6 @@ type ValueType = { name: string; value?: ObjectValueType | ValueType };
 type ObjectValueType = Record<string, ValueType>;
 
 const INCOMPATIBLE = Symbol('incompatible');
-const NUMBER_REGEXP = /^-?[0-9]+(\.[0-9]+)?$/;
-
 const map = (arg: unknown, type: ValueType): any => {
   if (arg === undefined || arg === null || !type) return arg;
   switch (type.name) {
@@ -28,7 +26,7 @@ const map = (arg: unknown, type: ValueType): any => {
         return acc;
       }, new Array(arg.length));
     case 'object':
-      if (typeof arg === 'string') return NUMBER_REGEXP.test(arg) ? Number(arg) : arg;
+      if (typeof arg === 'string' || typeof arg === 'number') return arg;
       if (!type.value || typeof arg !== 'object') return INCOMPATIBLE;
       return Object.entries(arg).reduce((acc, [key, val]) => {
         const mapped = map(val, (type.value as ObjectValueType)[key]);
