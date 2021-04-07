@@ -95,8 +95,8 @@ function run() {
       command: () => {
         log.info(prefix, 'prepare');
         spawn(
-          `nx run-many --target=prepare --all ${
-            process.env.CI ? `--max-parallel ${maxConcurrentTasks}` : ''
+          `nx run-many --target=prepare --all --parallel ${
+            process.env.CI ? `--max-parallel=${maxConcurrentTasks}` : ''
           }`
         );
       },
