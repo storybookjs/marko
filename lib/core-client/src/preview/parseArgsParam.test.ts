@@ -225,6 +225,14 @@ describe('parseArgsParam', () => {
       expect(parseArgsParam('key:1')).toStrictEqual({ key: '1' });
     });
 
+    it('allows valid fractional numbers', () => {
+      expect(parseArgsParam('key:1.2')).toStrictEqual({ key: '1.2' });
+      expect(parseArgsParam('key:-1.2')).toStrictEqual({ key: '-1.2' });
+      expect(parseArgsParam('key:1.')).toStrictEqual({});
+      expect(parseArgsParam('key:.2')).toStrictEqual({});
+      expect(parseArgsParam('key:1.2.3')).toStrictEqual({});
+    });
+
     it('also applies to nested object and array values', () => {
       expect(parseArgsParam('obj.key:a!b')).toStrictEqual({});
       expect(parseArgsParam('obj[key]:a!b')).toStrictEqual({});
