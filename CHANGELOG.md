@@ -1,3 +1,15 @@
+## 6.2.5 (April 7, 2021)
+
+### Bug Fixes
+
+- Core: Don't include args param in docs mode URL ([#14494](https://github.com/storybookjs/storybook/pull/14494))
+- Core: Restore previewHead/Body presets ([#14500](https://github.com/storybookjs/storybook/pull/14500))
+- Controls: Reset ArgsTable state when switching stories ([#14493](https://github.com/storybookjs/storybook/pull/14493))
+
+### Dependency Upgrades
+
+- Revert "Upgrade `dotenv-webpack` to v6" ([#14501](https://github.com/storybookjs/storybook/pull/14501))
+
 ## 6.2.4 (April 7, 2021)
 
 ### Dependency Upgrades
