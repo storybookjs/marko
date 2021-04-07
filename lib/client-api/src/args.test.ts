@@ -87,16 +87,12 @@ describe('mapArgsToTypes', () => {
     });
   });
 
-  it('passes raw string for object type', () => {
-    expect(mapArgsToTypes({ a: 'string' }, { a: { type: boolObjectType } })).toStrictEqual({
-      a: 'string',
-    });
+  it('passes string for object type', () => {
+    expect(mapArgsToTypes({ a: 'A' }, { a: { type: boolObjectType } })).toStrictEqual({ a: 'A' });
   });
 
-  it('parses number for object type', () => {
-    expect(mapArgsToTypes({ a: '1.2' }, { a: { type: boolObjectType } })).toStrictEqual({
-      a: 1.2,
-    });
+  it('passes number for object type', () => {
+    expect(mapArgsToTypes({ a: 1.2 }, { a: { type: boolObjectType } })).toStrictEqual({ a: 1.2 });
   });
 
   it('deeply maps objects', () => {
