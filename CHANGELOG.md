@@ -1,3 +1,9 @@
+## 6.2.4 (April 7, 2021)
+
+### Dependency Upgrades
+
+- Upgrade `dotenv-webpack` to v6 ([#14492](https://github.com/storybookjs/storybook/pull/14492))
+
 ## 6.2.3 (April 5, 2021)
 
 ### Bug Fixes
