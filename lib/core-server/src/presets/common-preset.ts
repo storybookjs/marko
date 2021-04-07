@@ -20,7 +20,7 @@ export const babel = async (_: unknown, options: Options) => {
 
 export const logLevel = (previous: any, options: Options) => previous || options.loglevel || 'info';
 
-export const previewHeadTemplate = async (base: any, { configDir, presets }: Options) => {
+export const previewHead = async (base: any, { configDir, presets }: Options) => {
   const interpolations = await presets.apply<Record<string, string>>('env');
   return getPreviewHeadTemplate(configDir, interpolations);
 };
@@ -29,7 +29,7 @@ export const env = async () => {
   return loadEnvs({ production: true }).raw;
 };
 
-export const previewBodyTemplate = async (base: any, { configDir, presets }: Options) => {
+export const previewBody = async (base: any, { configDir, presets }: Options) => {
   const interpolations = await presets.apply<Record<string, string>>('env');
   return getPreviewBodyTemplate(configDir, interpolations);
 };
