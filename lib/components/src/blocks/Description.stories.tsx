@@ -29,7 +29,27 @@ const markdownWithLinksCaption = `
 He stared at the clinic, [Molly](https://storybook.js.org/) took him to the *[Tank War](https://storybook.js.org/)*, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a **[skyscraper](https://storybook.js.org/)** canyon.
 `;
 
-const Template = (args) => <Description {...args} />;
+const markdownWithCodeSnippets = `
+# My Example Markdown
+
+An \`inline\` codeblock
+
+\`\`\`tsx
+// TypeScript React code block
+export const MyStory = () => {
+  return <Button>Click me</Button>;
+};
+\`\`\`
+
+\`\`\`
+code block with with no language
+const a = fn({
+  b: 2,
+});
+\`\`\`
+`;
+
+const Template = (args: React.ComponentProps<typeof Description>) => <Description {...args} />;
 
 export const Text = Template.bind({});
 Text.args = {
@@ -44,4 +64,9 @@ Markdown.args = {
 export const MarkdownLinks = Template.bind({});
 MarkdownLinks.args = {
   markdown: markdownWithLinksCaption,
+};
+
+export const MarkdownCodeSnippets = Template.bind({});
+MarkdownCodeSnippets.args = {
+  markdown: markdownWithCodeSnippets,
 };
