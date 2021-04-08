@@ -13,6 +13,6 @@ module.exports = {
     '@storybook/addon-viewport',
   ],
   core: {
-    builder: 'webpack5',
+    builder: 'webpack4',
   },
 };
