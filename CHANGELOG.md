@@ -1,3 +1,9 @@
+## 6.3.0-alpha.0 (April 8, 2021)
+
+### Maintenance
+
+- Build: Move monorepo to Yarn 2 ([#13907](https://github.com/storybookjs/storybook/pull/13907))
+
 ## 6.2.5 (April 7, 2021)
 
 ### Bug Fixes
