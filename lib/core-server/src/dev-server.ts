@@ -1,4 +1,5 @@
 import express, { Router } from 'express';
+import compression from 'compression';
 
 import { Builder, logConfig, Options } from '@storybook/core-common';
 
@@ -19,6 +20,8 @@ export async function storybookDevServer(options: Options) {
   const startTime = process.hrtime();
   const app = express();
   const server = await getServer(app, options);
+
+  app.use(compression({ level: 1 }));
 
   if (typeof options.extendServer === 'function') {
     options.extendServer(server);

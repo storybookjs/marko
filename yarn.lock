@@ -7135,6 +7135,7 @@ __metadata:
     "@storybook/theming": 6.3.0-alpha.0
     "@storybook/ui": 6.3.0-alpha.0
     "@types/case-sensitive-paths-webpack-plugin": ^2.1.4
+    "@types/compression": ^1.7.0
     "@types/cpy": ^7.1.3
     "@types/dotenv-webpack": ^3.0.0
     "@types/ip": ^1.1.0
@@ -7154,6 +7155,7 @@ __metadata:
     chalk: ^4.1.0
     cli-table3: 0.6.0
     commander: ^6.2.1
+    compression: ^1.7.4
     core-js: ^3.8.2
     cpy: ^8.1.1
     css-loader: ^3.6.0
@@ -8731,6 +8733,15 @@ __metadata:
   version: 1.8.0
   resolution: "@types/common-tags@npm:1.8.0"
   checksum: 4f58d0c521bee06c153d70b1a5af48843ac844e0f3e095e98b30398b2da061a548d6fed63afce99c6db6ad31a27c8a4709273f60a0a4d858c13664161ea14b53
+  languageName: node
+  linkType: hard
+
+"@types/compression@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "@types/compression@npm:1.7.0"
+  dependencies:
+    "@types/express": "*"
+  checksum: ffc8cdc980038ef005524a74d42ecefe0ad1e56e4b9ed2696be5f39e8f54048fd293d442a816283c77a7a3c4c5b7da11e2a08e8b3efe617dc74e4c9be1c4e754
   languageName: node
   linkType: hard
 
