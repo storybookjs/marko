@@ -195,6 +195,8 @@ For example, the following snippet adds a style tag to the preview head programa
 
 Similarly, the `managerHead` can be used to modify the surrounding "manager" UI, analogous to `manager-head.html`.
 
+Finally, the preview's main page _template_ can also be overridden using the `previewMainTemplate`, which should return a reference to a file containing an `.ejs` template that gets interpolated with some environment variables. For an example, see the [Storbook's default template](https://github.com/storybookjs/storybook/blob/next/lib/core-common/src/templates/index.ejs).
+
 ## Sharing advanced configuration
 
 Change your `main.js` file to:

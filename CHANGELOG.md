@@ -1,3 +1,51 @@
+## 6.3.0-alpha.0 (April 8, 2021)
+
+### Maintenance
+
+- Build: Move monorepo to Yarn 2 ([#13907](https://github.com/storybookjs/storybook/pull/13907))
+
+## 6.2.5 (April 7, 2021)
+
+### Bug Fixes
+
+- Core: Don't include args param in docs mode URL ([#14494](https://github.com/storybookjs/storybook/pull/14494))
+- Core: Restore previewHead/Body presets ([#14500](https://github.com/storybookjs/storybook/pull/14500))
+- Controls: Reset ArgsTable state when switching stories ([#14493](https://github.com/storybookjs/storybook/pull/14493))
+
+### Dependency Upgrades
+
+- Revert "Upgrade `dotenv-webpack` to v6" ([#14501](https://github.com/storybookjs/storybook/pull/14501))
+
+## 6.2.4 (April 7, 2021)
+
+### Dependency Upgrades
+
+- Upgrade `dotenv-webpack` to v6 ([#14492](https://github.com/storybookjs/storybook/pull/14492))
+
+## 6.2.3 (April 5, 2021)
+
+### Bug Fixes
+
+- Core: Fix file-loader options for ESM compat ([#14480](https://github.com/storybookjs/storybook/pull/14480))
+- Core: Fix config.js-based configuration ([#14479](https://github.com/storybookjs/storybook/pull/14479))
+
+### Maintenance
+
+- Core: Disable postcss warning, add main.js `features` setting ([#14478](https://github.com/storybookjs/storybook/pull/14478))
+
+## 6.2.2 (April 2, 2021)
+
+### Bug Fixes
+
+- Core: Fix symlinks in static dir when building static Storybook ([#14448](https://github.com/storybookjs/storybook/pull/14448))
+- Addon-docs/ArgsTable: Use storySort parameter ([#14422](https://github.com/storybookjs/storybook/pull/14422))
+- Revert "Svelte - Fix async loaders and docs" Fix #14443 ([#14444](https://github.com/storybookjs/storybook/pull/14444))
+- Addon-docs/Angular: Keep inlineStories to false by default ([#14447](https://github.com/storybookjs/storybook/pull/14447))
+
+### Maintenance
+
+- CLI: Fix link to `sb init` docs ([#14421](https://github.com/storybookjs/storybook/pull/14421))
+
 ## 6.2.1 (March 30, 2021)
 
 Fix bad version update message from [#12183](https://github.com/storybookjs/storybook/issues/12183)

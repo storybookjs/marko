@@ -456,7 +456,13 @@ Object {
           Object {
             "loader": "NODE_MODULES/postcss-loader/dist/cjs.js",
             "options": Object {
-              "postcssOptions": [Function],
+              "postcssOptions": Object {
+                "config": false,
+                "plugins": Array [
+                  [Function],
+                  [Function],
+                ],
+              },
             },
           },
         ],
@@ -464,6 +470,7 @@ Object {
       Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
         "options": Object {
+          "esModule": false,
           "name": "static/media/[path][name].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
