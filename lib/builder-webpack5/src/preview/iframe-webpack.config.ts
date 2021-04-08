@@ -64,8 +64,8 @@ export default async ({
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {});
 
-  const headHtmlSnippet = await presets.apply('previewHeadTemplate');
-  const bodyHtmlSnippet = await presets.apply('previewBodyTemplate');
+  const headHtmlSnippet = await presets.apply('previewHead');
+  const bodyHtmlSnippet = await presets.apply('previewBody');
   const template = await presets.apply<string>('previewMainTemplate');
 
   const babelLoader = createBabelLoader(babelOptions, framework);
@@ -228,7 +228,9 @@ export default async ({
                 mangle: false,
                 keep_fnames: true,
               },
-            }),
+              // It looks like the types from `@types/terser-webpack-plugin` are not matching the latest version of
+              // Webpack yet
+            }) as any,
           ]
         : [],
     },

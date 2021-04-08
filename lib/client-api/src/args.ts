@@ -26,6 +26,7 @@ const map = (arg: unknown, type: ValueType): any => {
         return acc;
       }, new Array(arg.length));
     case 'object':
+      if (typeof arg === 'string' || typeof arg === 'number') return arg;
       if (!type.value || typeof arg !== 'object') return INCOMPATIBLE;
       return Object.entries(arg).reduce((acc, [key, val]) => {
         const mapped = map(val, (type.value as ObjectValueType)[key]);

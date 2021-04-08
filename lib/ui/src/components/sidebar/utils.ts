@@ -36,7 +36,7 @@ export const getDescendantIds = memoize(1000)(
   (data: StoriesHash, id: string, skipLeafs: boolean): string[] => {
     const { children = [] } = data[id] || {};
     return children.reduce((acc, childId) => {
-      if (skipLeafs && data[childId].isLeaf) return acc;
+      if (!data[childId] || (skipLeafs && data[childId].isLeaf)) return acc;
       acc.push(childId, ...getDescendantIds(data, childId, skipLeafs));
       return acc;
     }, []);

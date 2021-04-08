@@ -11,7 +11,7 @@ const inputRegExp = /^input\..*$/;
 const runWebComponentsAnalyzer = (inputPath: string) => {
   const { name: tmpDir, removeCallback } = tmp.dirSync();
   const customElementsFile = `${tmpDir}/custom-elements.json`;
-  spawnSync('wca', ['analyze', inputPath, '--outFile', customElementsFile], {
+  spawnSync('yarn', ['wca', 'analyze', inputPath, '--outFile', customElementsFile], {
     stdio: 'inherit',
   });
   const output = fs.readFileSync(customElementsFile, 'utf8');
