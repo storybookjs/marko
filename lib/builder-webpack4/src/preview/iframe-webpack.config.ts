@@ -67,8 +67,8 @@ export default async ({
   const logLevel = await presets.apply('logLevel', undefined);
   const frameworkOptions = await presets.apply(`${framework}Options`, {});
 
-  const headHtmlSnippet = await presets.apply('previewHeadTemplate');
-  const bodyHtmlSnippet = await presets.apply('previewBodyTemplate');
+  const headHtmlSnippet = await presets.apply('previewHead');
+  const bodyHtmlSnippet = await presets.apply('previewBody');
   const template = await presets.apply<string>('previewMainTemplate');
   const envs = await presets.apply<Record<string, string>>('env');
 
@@ -124,13 +124,13 @@ export default async ({
     // stats: 'errors-only',
     output: {
       path: path.resolve(process.cwd(), outputDir),
-      filename: '[name].[hash].bundle.js',
+      filename: isProd ? '[name].[contenthash:8].iframe.bundle.js' : '[name].iframe.bundle.js',
       publicPath: '',
     },
-    // watchOptions: {
-    //   aggregateTimeout: 10,
-    //   ignored: /node_modules/,
-    // },
+    watchOptions: {
+      aggregateTimeout: 10,
+      ignored: /node_modules/,
+    },
     plugins: [
       new FilterWarningsPlugin({
         exclude: /export '\S+' was not found in 'global'/,
@@ -217,7 +217,6 @@ export default async ({
       runtimeChunk: true,
       sideEffects: true,
       usedExports: true,
-      concatenateModules: true,
       minimizer: isProd
         ? [
             new TerserWebpackPlugin({

@@ -4,6 +4,12 @@ exports[`react component properties ts-function-component-inline-defaults 1`] = 
 "import React from 'react';
 import { imported } from '../imported';
 const local = 'local-value';
+var GlobalNames;
+
+(function (GlobalNames) {
+  GlobalNames[\\"top\\"] = \\"top\\";
+  GlobalNames[\\"left\\"] = \\"left\\";
+})(GlobalNames || (GlobalNames = {}));
 
 /**
  * A component that renders its props
@@ -21,7 +27,12 @@ export const PropsWriter = ({
   localReference = local,
   importedReference = imported,
   globalReference = Date,
-  stringGlobalName = 'top'
+  stringGlobalName = 'top',
+  unionGlobalName = 'top',
+  // If we use this default value, controls will try and render it in a JSON object editor
+  // which leads to a circular value error.
+  // unionGlobalNameMixed = 'top',
+  enumGlobalName = 'top'
 }) => /*#__PURE__*/React.createElement(\\"pre\\", null, JSON.stringify({
   numberOptional,
   stringOptional,
@@ -33,7 +44,10 @@ export const PropsWriter = ({
   localReference,
   importedReference,
   globalReference,
-  stringGlobalName
+  stringGlobalName,
+  unionGlobalName,
+  // unionGlobalNameMixed,
+  enumGlobalName
 }));
 export const component = PropsWriter;
 PropsWriter.__docgenInfo = {
@@ -46,206 +60,91 @@ PropsWriter.__docgenInfo = {
         \\"value\\": \\"1\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"number\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"stringOptional\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"'stringOptional'\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"string\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"booleanOptional\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"false\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"boolean\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"arrayOptional\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"['array', 'optional']\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"Array\\",
-        \\"elements\\": [{
-          \\"name\\": \\"string\\"
-        }],
-        \\"raw\\": \\"string[]\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"objectOptional\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"{ object: 'optional' }\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"Record\\",
-        \\"elements\\": [{
-          \\"name\\": \\"string\\"
-        }, {
-          \\"name\\": \\"string\\"
-        }],
-        \\"raw\\": \\"Record<string, string>\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"functionOptional\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"() => 'foo'\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"signature\\",
-        \\"type\\": \\"function\\",
-        \\"raw\\": \\"() => string\\",
-        \\"signature\\": {
-          \\"arguments\\": [],
-          \\"return\\": {
-            \\"name\\": \\"string\\"
-          }
-        }
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"dateOptional\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"new Date('20 Jan 1983')\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"Date\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"localReference\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"'local-value'\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"string\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"importedReference\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"imported\\",
         \\"computed\\": true
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"string\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"globalReference\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"Date\\",
         \\"computed\\": true
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"any\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
     \\"stringGlobalName\\": {
       \\"defaultValue\\": {
         \\"value\\": \\"'top'\\",
         \\"computed\\": false
       },
-      \\"required\\": false,
-      \\"tsType\\": {
-        \\"name\\": \\"string\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     },
-    \\"numberRequired\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"number\\"
+    \\"unionGlobalName\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'top'\\",
+        \\"computed\\": false
       },
-      \\"description\\": \\"Description\\"
+      \\"required\\": false
     },
-    \\"stringRequired\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"string\\"
+    \\"enumGlobalName\\": {
+      \\"defaultValue\\": {
+        \\"value\\": \\"'top'\\",
+        \\"computed\\": false
       },
-      \\"description\\": \\"\\"
-    },
-    \\"booleanRequired\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"boolean\\"
-      },
-      \\"description\\": \\"\\"
-    },
-    \\"arrayRequired\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"Array\\",
-        \\"elements\\": [{
-          \\"name\\": \\"string\\"
-        }],
-        \\"raw\\": \\"string[]\\"
-      },
-      \\"description\\": \\"\\"
-    },
-    \\"objectRequired\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"Record\\",
-        \\"elements\\": [{
-          \\"name\\": \\"string\\"
-        }, {
-          \\"name\\": \\"string\\"
-        }],
-        \\"raw\\": \\"Record<string, string>\\"
-      },
-      \\"description\\": \\"\\"
-    },
-    \\"functionRequired\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"signature\\",
-        \\"type\\": \\"function\\",
-        \\"raw\\": \\"() => string\\",
-        \\"signature\\": {
-          \\"arguments\\": [],
-          \\"return\\": {
-            \\"name\\": \\"string\\"
-          }
-        }
-      },
-      \\"description\\": \\"\\"
-    },
-    \\"dateRequired\\": {
-      \\"required\\": true,
-      \\"tsType\\": {
-        \\"name\\": \\"Date\\"
-      },
-      \\"description\\": \\"\\"
+      \\"required\\": false
     }
   }
 };"

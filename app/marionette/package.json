@@ -1,6 +1,6 @@
 {
   "name": "@storybook/marionette",
-  "version": "6.2.0-rc.6",
+  "version": "6.3.0-alpha.0",
   "description": "Storybook for Marionette: Develop Marionette.js component in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -34,8 +34,8 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.2.0-rc.6",
-    "@storybook/core-common": "6.2.0-rc.6",
+    "@storybook/core": "6.3.0-alpha.0",
+    "@storybook/core-common": "6.3.0-alpha.0",
     "common-tags": "^1.8.0",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
@@ -62,5 +62,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9140a2884503b405d457268fd9ffd8d2438013af"
+  "gitHead": "7739aace24e8614f2acc9972b2ae44cf7f228c18"
 }

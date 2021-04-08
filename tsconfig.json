@@ -11,6 +11,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "target": "es5",
     "types": ["jest"],
     "lib": ["es2017", "dom"]

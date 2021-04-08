@@ -23,6 +23,7 @@ Object {
     "devtool",
     "entry",
     "output",
+    "watchOptions",
     "plugins",
     "module",
     "resolve",
@@ -423,7 +424,13 @@ Object {
           Object {
             "loader": "NODE_MODULES/postcss-loader/dist/cjs.js",
             "options": Object {
-              "postcssOptions": [Function],
+              "postcssOptions": Object {
+                "config": false,
+                "plugins": Array [
+                  [Function],
+                  [Function],
+                ],
+              },
             },
           },
         ],
@@ -431,7 +438,8 @@ Object {
       Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
         "options": Object {
-          "name": "static/media/[name].[hash:8].[ext]",
+          "esModule": false,
+          "name": "static/media/[name].[contenthash:8].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
       },
@@ -439,7 +447,7 @@ Object {
         "loader": "NODE_MODULES/url-loader/dist/cjs.js",
         "options": Object {
           "limit": 10000,
-          "name": "static/media/[name].[hash:8].[ext]",
+          "name": "static/media/[name].[contenthash:8].[ext]",
         },
         "test": "/\\\\.(mp4|webm|wav|mp3|m4a|aac|oga)(\\\\?.*)?$/",
       },

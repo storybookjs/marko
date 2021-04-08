@@ -1,1 +1,1 @@
-{"version":"6.2.0-rc.6","info":{"plain":"### Bug Fixes\n\n- Revert \"Webpack: Hash files only in production mode\" ([#14283](https://github.com/storybookjs/storybook/pull/14283))"}}
+{"version":"6.3.0-alpha.0","info":{"plain":"### Maintenance\n\n- Build: Move monorepo to Yarn 2 ([#13907](https://github.com/storybookjs/storybook/pull/13907))"}}

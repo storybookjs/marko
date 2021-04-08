@@ -34,7 +34,7 @@ Usage: start-storybook [options]
 | --no-manager-cache                 | Disables Storybook's manager caching mechanism. See note below.                                                                                | `start-storybook --no-manager-cache`                      |
 
 <div class="aside">
-💡 <strong>NOTE</strong>: Use the <code>--no-manager-cache</code> flag with caution. As it disables the internal caching mechanism and can severely impact your Storybook's loading time.
+💡 <strong>NOTE</strong>: The flag <code>--no-manager-cache</code> disables the internal caching of Storybook and can serverely impact your Storybook loading time, so only use it when you need to refresh Storybook's UI, such as when editing themes.
 </div>
 
 ## build-storybook
@@ -55,7 +55,7 @@ Usage: build-storybook [options]
 | --quiet                            | Suppress verbose build output                                                                                                                   | `build-storybook --quiet`                                 |
 | --no-dll                           | Do not use dll reference (no-op)                                                                                                                | `build-storybook --no-dll`                                |
 | --debug-webpack                    | Display final webpack configurations for debugging purposes                                                                                     | `build-storybook --debug-webpack`                         |
-| `--webpack-stats-json <directory>` | Write Webpack Stats JSON to disk                                                                                                                | `start-storybook --webpack-stats-json /tmp/webpack-stats` |
+| `--webpack-stats-json <directory>` | Write Webpack Stats JSON to disk                                                                                                                | `build-storybook --webpack-stats-json /my-storybook/webpack-stats` |
 | --docs                             | Builds Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#publish-storybooks-documentation)) | `build-storybook --docs`                                  |
 
 <div class="aside">
