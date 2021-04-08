@@ -6,7 +6,7 @@ Storybook is a tool for UI development. It makes development faster and easier b
 
 <video autoPlay muted playsInline loop>
   <source
-    src="storybook-hero-video-optimized.mp4"
+    src="storybook-hero-video-optimized-lg.mp4"
     type="video/mp4"
   />
 </video>

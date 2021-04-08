@@ -28,4 +28,7 @@ module.exports = {
   core: {
     builder: 'webpack4',
   },
+  features: {
+    postcss: false,
+  },
 } as StorybookConfig;

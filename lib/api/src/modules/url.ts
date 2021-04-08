@@ -8,7 +8,6 @@ import { window } from 'global';
 import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
 import { isStory } from '../lib/stories';
-import type { Story } from '../lib/stories';
 
 interface Additions {
   isFullscreen?: boolean;
@@ -150,25 +149,30 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
 
   const initModule = () => {
     // Sets `args` parameter in URL, omitting any args that have their initial value or cannot be unserialized safely.
-    const updateArgsParam = (args?: Story['args']) => {
+    const updateArgsParam = () => {
+      const { path, viewMode } = fullAPI.getUrlState();
+      if (viewMode !== 'story') return;
+
       const currentStory = fullAPI.getCurrentStoryData();
-      const initialArgs = (isStory(currentStory) && currentStory.initialArgs) || {};
+      if (!isStory(currentStory)) return;
+
+      const { args, initialArgs } = currentStory;
       const argsString = buildArgsParam(initialArgs, args);
       const argsParam = argsString.length ? `&args=${argsString}` : '';
-      queryNavigate(`${fullAPI.getUrlState().path}${argsParam}`, { replace: true });
+      queryNavigate(`${path}${argsParam}`, { replace: true });
       api.setQueryParams({ args: argsString });
     };
 
     fullAPI.on(SET_CURRENT_STORY, () => updateArgsParam());
 
     let handleOrId: any;
-    fullAPI.on(STORY_ARGS_UPDATED, ({ args }) => {
+    fullAPI.on(STORY_ARGS_UPDATED, () => {
       if ('requestIdleCallback' in window) {
         if (handleOrId) window.cancelIdleCallback(handleOrId);
-        handleOrId = window.requestIdleCallback(() => updateArgsParam(args), { timeout: 1000 });
+        handleOrId = window.requestIdleCallback(updateArgsParam, { timeout: 1000 });
       } else {
         if (handleOrId) clearTimeout(handleOrId);
-        setTimeout(updateArgsParam, 100, args);
+        setTimeout(updateArgsParam, 100);
       }
     });
 

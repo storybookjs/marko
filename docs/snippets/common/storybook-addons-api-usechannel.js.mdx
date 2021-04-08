@@ -1,7 +1,9 @@
 ```js
-// .storybook/my-addon/register.js
+// /my-addon/register.js
 
+import React from 'react';
 import { STORY_CHANGED } from '@storybook/core-events';
+
 export const Panel = () => {
   const emit = useChannel({
     STORY_CHANGED: (...args) => console.log(...args),

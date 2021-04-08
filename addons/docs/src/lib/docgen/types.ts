@@ -10,6 +10,7 @@ export interface DocgenType {
   name: string;
   description?: string;
   required?: boolean;
+  value?: any; // Seems like this can be many things
 }
 
 export interface DocgenPropType extends DocgenType {
@@ -52,4 +53,4 @@ export enum TypeSystem {
   UNKNOWN = 'Unknown',
 }
 
-export { PropDef };
+export type { PropDef };

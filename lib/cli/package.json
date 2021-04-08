@@ -1,6 +1,6 @@
 {
   "name": "@storybook/cli",
-  "version": "6.2.0-rc.8",
+  "version": "6.3.0-alpha.0",
   "description": "Storybook's CLI - easiest method of adding storybook to your projects",
   "keywords": [
     "cli",
@@ -38,15 +38,14 @@
     "versions.json"
   ],
   "scripts": {
-    "prepare": "node ./scripts/generate-sb-packages-versions.js && node ../../scripts/prepare.js",
-    "test": "jest test/**/*.test.js",
-    "postversion": "node ./scripts/generate-sb-packages-versions.js"
+    "prepare": "node ../../scripts/prepare.js",
+    "test": "jest test/**/*.test.js"
   },
   "dependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
-    "@storybook/codemod": "6.2.0-rc.8",
-    "@storybook/node-logger": "6.2.0-rc.8",
+    "@storybook/codemod": "6.3.0-alpha.0",
+    "@storybook/node-logger": "6.3.0-alpha.0",
     "@storybook/semver": "^7.3.2",
     "chalk": "^4.1.0",
     "commander": "^6.2.1",
@@ -70,7 +69,7 @@
     "update-notifier": "^5.0.1"
   },
   "devDependencies": {
-    "@storybook/client-api": "6.2.0-rc.8",
+    "@storybook/client-api": "6.3.0-alpha.0",
     "@types/cross-spawn": "^6.0.2",
     "@types/inquirer": "^7.3.1",
     "@types/prompts": "^2.0.9",
@@ -87,5 +86,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "229ae2956bdb1e49a5dee26d3b6ada991a38c725"
+  "gitHead": "7739aace24e8614f2acc9972b2ae44cf7f228c18"
 }

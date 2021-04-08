@@ -1,5 +1,5 @@
 import { StoryContext } from '@storybook/addons';
-import { inferActionsFromArgTypesRegex, addActionsFromArgTypes } from './addArgs';
+import { inferActionsFromArgTypesRegex, addActionsFromArgTypes } from './addArgsHelpers';
 
 const withDefaultValue = (argTypes) =>
   Object.keys(argTypes).filter((key) => !!argTypes[key].defaultValue);

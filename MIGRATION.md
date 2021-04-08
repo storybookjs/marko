@@ -11,6 +11,7 @@
     - [Deprecated default PostCSS plugins](#deprecated-default-postcss-plugins)
     - [Deprecated showRoots config option](#deprecated-showroots-config-option)
     - [Deprecated control.options](#deprecated-controloptions)
+    - [Deprecated storybook components html entry point](#deprecated-storybook-components-html-entry-point)
 - [From version 6.0.x to 6.1.0](#from-version-60x-to-610)
   - [Addon-backgrounds preset](#addon-backgrounds-preset)
   - [Single story hoisting](#single-story-hoisting)
@@ -213,6 +214,16 @@ If you require PostCSS support, please install `@storybook/addon-postcss` in you
 
 Further information is available at https://github.com/storybookjs/storybook/issues/12668 and https://github.com/storybookjs/storybook/pull/13669.
 
+If you're not using Postcss and you don't want to see the warning, you can disable it by adding the following to your `.storybook/main.js`:
+
+```js
+module.exports = {
+  features: {
+    postcss: false,
+  },
+};
+```
+
 #### Deprecated default PostCSS plugins
 
 When relying on the [implicit PostCSS loader](#deprecated-implicit-postcss-loader), it would also add [autoprefixer v9](https://www.npmjs.com/package/autoprefixer/v/9.8.6) and [postcss-flexbugs-fixes v4](https://www.npmjs.com/package/postcss-flexbugs-fixes/v/4.2.1) plugins to the `postcss-loader` configuration when you didn't have a PostCSS config file (such as `postcss.config.js`) within your project.
@@ -273,6 +284,18 @@ argTypes: {
 Keys in `control.labels` as well as in `mapping` should match the values in `options`. Neither object has to be exhaustive, in case of a missing property, the option value will be used directly.
 
 If you are currently using an object as value for `control.options`, be aware that the key and value are reversed in `control.labels`.
+
+#### Deprecated storybook components html entry point
+
+Storybook HTML components are now exported directly from '@storybook/components' for better ESM and Typescript compatibility. The old entry point will be removed in SB 7.0.
+
+```js
+// before
+import { components } from '@storybook/components/html';
+
+// after
+import { components } from '@storybook/components';
+```
 
 ## From version 6.0.x to 6.1.0
 

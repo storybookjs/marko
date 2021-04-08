@@ -4,6 +4,7 @@ import { SupportedFrameworks } from '../project_types';
 interface ConfigureMainOptions {
   addons: string[];
   extensions?: string[];
+  commonJs?: boolean;
   /**
    * Extra values for main.js
    *
@@ -19,6 +20,7 @@ interface ConfigureMainOptions {
 function configureMain({
   addons,
   extensions = ['js', 'jsx', 'ts', 'tsx'],
+  commonJs = false,
   ...custom
 }: ConfigureMainOptions) {
   const prefix = fse.existsSync('./src') ? '../src' : '../stories';
@@ -35,10 +37,12 @@ function configureMain({
     .replace(/['"]%%/g, '')
     .replace(/%%['"]/, '')}`;
   fse.ensureDirSync('./.storybook');
-  fse.writeFileSync('./.storybook/main.js', stringified, { encoding: 'utf8' });
+  fse.writeFileSync(`./.storybook/main.${commonJs ? 'cjs' : 'js'}`, stringified, {
+    encoding: 'utf8',
+  });
 }
 
-function configurePreview(framework: SupportedFrameworks) {
+function configurePreview(framework: SupportedFrameworks, commonJs: boolean) {
   const parameters = `
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -60,11 +64,14 @@ setCompodocJson(docJson);
 ${parameters}`
       : parameters;
 
-  fse.writeFileSync('./.storybook/preview.js', preview, { encoding: 'utf8' });
+  fse.writeFileSync(`./.storybook/preview.${commonJs ? 'cjs' : 'js'}`, preview, {
+    encoding: 'utf8',
+  });
 }
 
 export function configure(framework: SupportedFrameworks, mainOptions: ConfigureMainOptions) {
   fse.ensureDirSync('./.storybook');
+
   configureMain(mainOptions);
-  configurePreview(framework);
+  configurePreview(framework, mainOptions.commonJs);
 }

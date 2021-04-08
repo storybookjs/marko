@@ -1,14 +1,92 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo, useState } from 'react';
 import { HexColorPicker, HslaStringColorPicker, RgbaStringColorPicker } from 'react-colorful';
 import convert from 'color-convert';
 import throttle from 'lodash/throttle';
 
 import { styled } from '@storybook/theming';
-import { ControlProps, ColorValue, ColorConfig } from './types';
+import { ControlProps, ColorValue, ColorConfig, PresetColor } from './types';
 import { TooltipNote } from '../tooltip/TooltipNote';
 import { WithTooltip } from '../tooltip/lazy-WithTooltip';
 import { Form } from '../form';
 import { Icons } from '../icon/icon';
+
+const Wrapper = styled.div({
+  position: 'relative',
+  maxWidth: 250,
+});
+
+const PickerTooltip = styled(WithTooltip)({
+  position: 'absolute',
+  zIndex: 1,
+  top: 4,
+  left: 4,
+});
+
+const TooltipContent = styled.div({
+  width: 200,
+  margin: 5,
+
+  '.react-colorful__saturation': {
+    borderRadius: '4px 4px 0 0',
+  },
+  '.react-colorful__hue': {
+    boxShadow: 'inset 0 0 0 1px rgb(0 0 0 / 5%)',
+  },
+  '.react-colorful__last-control': {
+    borderRadius: '0 0 4px 4px',
+  },
+});
+
+const Note = styled(TooltipNote)(({ theme }) => ({
+  fontFamily: theme.typography.fonts.base,
+}));
+
+const Swatches = styled.div({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(9, 16px)',
+  gap: 6,
+  padding: 3,
+  marginTop: 5,
+  width: 200,
+});
+
+const SwatchColor = styled.div<{ active: boolean }>(({ theme, active }) => ({
+  width: 16,
+  height: 16,
+  boxShadow: active
+    ? `${theme.appBorderColor} 0 0 0 1px inset, ${theme.color.mediumdark}50 0 0 0 4px`
+    : `${theme.appBorderColor} 0 0 0 1px inset`,
+  borderRadius: theme.appBorderRadius,
+}));
+
+const swatchBackground = `url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill-opacity=".05"><path d="M8 0h8v8H8zM0 8h8v8H0z"/></svg>')`;
+
+type SwatchProps = { value: string; active?: boolean; onClick?: () => void; style?: object };
+const Swatch = ({ value, active, onClick, style, ...props }: SwatchProps) => {
+  const backgroundImage = `linear-gradient(${value}, ${value}), ${swatchBackground}, linear-gradient(#fff, #fff)`;
+  return <SwatchColor {...props} {...{ active, onClick }} style={{ ...style, backgroundImage }} />;
+};
+
+const Input = styled(Form.Input)(({ theme }) => ({
+  width: '100%',
+  paddingLeft: 30,
+  paddingRight: 30,
+  boxSizing: 'border-box',
+  fontFamily: theme.typography.fonts.base,
+}));
+
+const ToggleIcon = styled(Icons)(({ theme }) => ({
+  position: 'absolute',
+  zIndex: 1,
+  top: 6,
+  right: 7,
+  width: 20,
+  height: 20,
+  padding: 4,
+  boxSizing: 'border-box',
+  cursor: 'pointer',
+  color: theme.input.color,
+}));
 
 enum ColorSpace {
   RGB = 'rgb',
@@ -24,12 +102,25 @@ const HEX_REGEXP = /^\s*#?([0-9a-f]{3}|[0-9a-f]{6})\s*$/i;
 const SHORTHEX_REGEXP = /^\s*#?([0-9a-f]{3})\s*$/i;
 
 type ParsedColor = {
+  valid: boolean;
   value: string;
-  title: string;
+  keyword: string;
   colorSpace: ColorSpace;
   [ColorSpace.RGB]: string;
   [ColorSpace.HSL]: string;
   [ColorSpace.HEX]: string;
+};
+
+const ColorPicker = {
+  [ColorSpace.HEX]: HexColorPicker,
+  [ColorSpace.RGB]: RgbaStringColorPicker,
+  [ColorSpace.HSL]: HslaStringColorPicker,
+};
+
+const fallbackColor = {
+  [ColorSpace.HEX]: 'transparent',
+  [ColorSpace.RGB]: 'rgba(0, 0, 0, 0)',
+  [ColorSpace.HSL]: 'hsla(0, 0%, 0%, 0)',
 };
 
 const stringToArgs = (value: string) => {
@@ -39,183 +130,163 @@ const stringToArgs = (value: string) => {
   return [x, y, z, a].map(Number);
 };
 
-const expandShorthand = (value: string) => {
-  if (!value) return '#000000';
-  if (!value.startsWith('#')) {
-    try {
-      return `#${convert.keyword.hex(value as any)}`;
-    } catch (e) {
-      return value;
-    }
-  }
-  if (value.length > 4) return value;
-  const match = value.match(SHORTHEX_REGEXP);
-  if (!match) return value;
-  const [r, g, b] = match[1].split('');
-  return `#${r}${r}${g}${g}${b}${b}`;
-};
+const parseValue = (value: string): ParsedColor => {
+  if (!value) return undefined;
+  let valid = true;
 
-const parseValue = (input: string | { color: string; title?: string }): ParsedColor => {
-  const { color, title } = typeof input === 'object' ? input : { color: input, title: undefined };
-  if (!color) return undefined;
-
-  if (RGB_REGEXP.test(color)) {
-    const [r, g, b, a] = stringToArgs(color);
+  if (RGB_REGEXP.test(value)) {
+    const [r, g, b, a] = stringToArgs(value);
     const [h, s, l] = convert.rgb.hsl([r, g, b]) || [0, 0, 0];
     return {
-      value: color,
-      title: title || convert.rgb.keyword([r, g, b]) || color,
+      valid,
+      value,
+      keyword: convert.rgb.keyword([r, g, b]),
       colorSpace: ColorSpace.RGB,
-      [ColorSpace.RGB]: color,
+      [ColorSpace.RGB]: value,
       [ColorSpace.HSL]: `hsla(${h}, ${s}%, ${l}%, ${a})`,
-      [ColorSpace.HEX]: `#${convert.rgb.hex([r, g, b])}`,
+      [ColorSpace.HEX]: `#${convert.rgb.hex([r, g, b]).toLowerCase()}`,
     };
   }
 
-  if (HSL_REGEXP.test(color)) {
-    const [h, s, l, a] = stringToArgs(color);
+  if (HSL_REGEXP.test(value)) {
+    const [h, s, l, a] = stringToArgs(value);
     const [r, g, b] = convert.hsl.rgb([h, s, l]) || [0, 0, 0];
     return {
-      value: color,
-      title: title || convert.rgb.keyword([r, g, b]) || color,
+      valid,
+      value,
+      keyword: convert.hsl.keyword([h, s, l]),
       colorSpace: ColorSpace.HSL,
       [ColorSpace.RGB]: `rgba(${r}, ${g}, ${b}, ${a})`,
-      [ColorSpace.HSL]: color,
-      [ColorSpace.HEX]: `#${convert.hsl.hex([h, s, l])}`,
+      [ColorSpace.HSL]: value,
+      [ColorSpace.HEX]: `#${convert.hsl.hex([h, s, l]).toLowerCase()}`,
     };
   }
 
-  const plain = color.replace('#', '');
-  const fromKeyword = convert.keyword.rgb(plain as any);
-  const rgb = fromKeyword || convert.hex.rgb(plain as any);
+  const plain = value.replace('#', '');
+  const rgb = convert.keyword.rgb(plain as any) || convert.hex.rgb(plain);
   const hsl = convert.rgb.hsl(rgb);
 
-  let value = color;
-  if (fromKeyword || /[^#a-f0-9]/.test(color)) value = plain;
-  else if (HEX_REGEXP.test(color)) value = `#${plain}`;
+  let mapped = value;
+  if (/[^#a-f0-9]/i.test(value)) mapped = plain;
+  else if (HEX_REGEXP.test(value)) mapped = `#${plain}`;
+
+  if (mapped.startsWith('#')) {
+    valid = HEX_REGEXP.test(mapped);
+  } else {
+    try {
+      convert.keyword.hex(mapped as any);
+    } catch (e) {
+      valid = false;
+    }
+  }
 
   return {
-    value,
-    title: title || convert.rgb.keyword(rgb) || color,
+    valid,
+    value: mapped,
+    keyword: convert.rgb.keyword(rgb),
     colorSpace: ColorSpace.HEX,
     [ColorSpace.RGB]: `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, 1)`,
     [ColorSpace.HSL]: `hsla(${hsl[0]}, ${hsl[1]}%, ${hsl[2]}%, 1)`,
-    [ColorSpace.HEX]: value,
+    [ColorSpace.HEX]: mapped,
   };
 };
 
-const Wrapper = styled.div({
-  position: 'relative',
-  maxWidth: 250,
-});
-
-const PickerTooltip = styled(WithTooltip)({
-  position: 'absolute',
-  zIndex: 1,
-  top: 4,
-  left: 4,
-});
-
-const TooltipContent = styled.div({
-  margin: 5,
-
-  '.react-colorful__saturation': {
-    borderRadius: '4px 4px 0 0',
-  },
-  '.react-colorful__hue': {
-    boxShadow: 'inset 0 0 0 1px rgb(0 0 0 / 5%)',
-  },
-  '.react-colorful__last-control': {
-    borderRadius: '0 0 4px 4px',
-  },
-});
-
-const Swatches = styled.div({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(9, 15px)',
-  gap: 7,
-  padding: 3,
-  marginTop: 5,
-  width: 200,
-});
-
-const Swatch = styled.div<{ active?: boolean; round?: boolean }>(({ theme, active, round }) => ({
-  width: round ? 16 : 15,
-  height: round ? 16 : 15,
-  margin: round ? 4 : 0,
-  boxShadow: active
-    ? `${theme.appBorderColor} 0 0 0 1px inset, ${theme.color.mediumdark}55 0 0 0 4px`
-    : `${theme.appBorderColor} 0 0 0 1px inset`,
-  borderRadius: round ? 16 : theme.appBorderRadius,
-  cursor: 'pointer',
-}));
-
-const Input = styled(Form.Input)({
-  width: '100%',
-  paddingLeft: 30,
-  paddingRight: 30,
-});
-
-const ToggleIcon = styled(Icons)(({ theme }) => ({
-  position: 'absolute',
-  zIndex: 1,
-  top: 6,
-  right: 7,
-  width: 20,
-  height: 20,
-  padding: 4,
-  cursor: 'pointer',
-  color: theme.input.color,
-}));
-
-const SmartPicker: FC<{ value: string; colorSpace: ColorSpace }> = React.memo(
-  ({ value, colorSpace, ...props }) => {
-    switch (colorSpace) {
-      case ColorSpace.RGB:
-        return <RgbaStringColorPicker color={value} {...props} />;
-      case ColorSpace.HSL:
-        return <HslaStringColorPicker color={value} {...props} />;
-      default:
-        return <HexColorPicker color={expandShorthand(value)} {...props} />;
+const getRealValue = (value: string, color: ParsedColor, colorSpace: ColorSpace) => {
+  if (!value || !color?.valid) return fallbackColor[colorSpace];
+  if (colorSpace !== ColorSpace.HEX) return color?.[colorSpace] || fallbackColor[colorSpace];
+  if (!color.hex.startsWith('#')) {
+    try {
+      return `#${convert.keyword.hex(color.hex as any)}`;
+    } catch (e) {
+      return fallbackColor.hex;
     }
   }
-);
+  const short = color.hex.match(SHORTHEX_REGEXP);
+  if (!short) return HEX_REGEXP.test(color.hex) ? color.hex : fallbackColor.hex;
+  const [r, g, b] = short[1].split('');
+  return `#${r}${r}${g}${g}${b}${b}`;
+};
+
+const useColorInput = (initialValue: string, onChange: (value: string) => string | void) => {
+  const [value, setValue] = useState(initialValue || '');
+  const [color, setColor] = useState(() => parseValue(value));
+  const [colorSpace, setColorSpace] = useState(color?.colorSpace || ColorSpace.HEX);
+
+  const realValue = useMemo(() => getRealValue(value, color, colorSpace).toLowerCase(), [
+    value,
+    color,
+    colorSpace,
+  ]);
+
+  const updateValue = useCallback(
+    (update: string) => {
+      const parsed = parseValue(update);
+      setValue(parsed?.value || update || '');
+      if (!parsed) return;
+      setColor(parsed);
+      setColorSpace(parsed.colorSpace);
+      onChange(parsed.value);
+    },
+    [onChange]
+  );
+
+  const cycleColorSpace = useCallback(() => {
+    let next = COLOR_SPACES.indexOf(colorSpace) + 1;
+    if (next >= COLOR_SPACES.length) next = 0;
+    setColorSpace(COLOR_SPACES[next]);
+    const update = color?.[COLOR_SPACES[next]] || '';
+    setValue(update);
+    onChange(update);
+  }, [color, colorSpace, onChange]);
+
+  return { value, realValue, updateValue, color, colorSpace, cycleColorSpace };
+};
+
+const id = (value: string) => value.replace(/\s*/, '').toLowerCase();
+
+const usePresets = (
+  presetColors: PresetColor[],
+  currentColor: ParsedColor,
+  colorSpace: ColorSpace
+) => {
+  const [selectedColors, setSelectedColors] = useState(currentColor?.valid ? [currentColor] : []);
+
+  const presets = useMemo(() => {
+    const initialPresets = (presetColors || []).map((preset) => {
+      if (typeof preset === 'string') return parseValue(preset);
+      if (preset.title) return { ...parseValue(preset.color), keyword: preset.title };
+      return parseValue(preset.color);
+    });
+    return initialPresets.concat(selectedColors).filter(Boolean).slice(-27);
+  }, [presetColors, selectedColors]);
+
+  const addPreset = useCallback(
+    (color) => {
+      if (!color?.valid) return;
+      if (presets.some((preset) => id(preset[colorSpace]) === id(color[colorSpace]))) return;
+      setSelectedColors((arr) => arr.concat(color));
+    },
+    [colorSpace, presets]
+  );
+
+  return { presets, addPreset };
+};
 
 export type ColorProps = ControlProps<ColorValue> & ColorConfig;
 export const ColorControl: FC<ColorProps> = ({
-  name,
-  value,
+  value: initialValue,
   onChange,
   onFocus,
   onBlur,
   presetColors,
   startOpen,
 }) => {
-  const color = useMemo(() => parseValue(value), [value]);
-  const update = useMemo(() => throttle(onChange, 200), []);
-  const [colorSpace, setColorSpace] = useState(color?.colorSpace || ColorSpace.HEX);
-  const currentValue = color?.[colorSpace] || '';
-
-  useEffect(() => {
-    if (!currentValue) setColorSpace(ColorSpace.HEX);
-  }, [currentValue]);
-
-  const cycleColorSpace = useCallback(() => {
-    let next = COLOR_SPACES.indexOf(colorSpace) + 1;
-    if (next >= COLOR_SPACES.length) next = 0;
-    setColorSpace(COLOR_SPACES[next]);
-  }, [colorSpace]);
-
-  const [presets, setPresets] = useState(() =>
-    (presetColors || []).map(parseValue).concat(color).filter(Boolean).slice(0, 27)
+  const { value, realValue, updateValue, color, colorSpace, cycleColorSpace } = useColorInput(
+    initialValue,
+    throttle(onChange, 200)
   );
-  const addPreset = useCallback((preset) => {
-    setPresets((arr) =>
-      preset?.rgb && arr.every((item) => item.rgb !== preset.rgb)
-        ? arr.concat(preset).slice(-27)
-        : arr
-    );
-  }, []);
+  const { presets, addPreset } = usePresets(presetColors, color, colorSpace);
+  const Picker = ColorPicker[colorSpace];
 
   return (
     <Wrapper>
@@ -223,12 +294,12 @@ export const ColorControl: FC<ColorProps> = ({
         trigger="click"
         startOpen={startOpen}
         closeOnClick
-        onVisibilityChange={() => color && addPreset(color)}
+        onVisibilityChange={() => addPreset(color)}
         tooltip={
           <TooltipContent>
-            <SmartPicker
-              value={currentValue}
-              {...{ colorSpace, onChange: update, onFocus, onBlur }}
+            <Picker
+              color={realValue === 'transparent' ? '#000000' : realValue}
+              {...{ onChange: updateValue, onFocus, onBlur }}
             />
             {presets.length > 0 && (
               <Swatches>
@@ -236,12 +307,12 @@ export const ColorControl: FC<ColorProps> = ({
                   <WithTooltip
                     key={preset.value}
                     hasChrome={false}
-                    tooltip={<TooltipNote note={preset.title} />}
+                    tooltip={<Note note={preset.keyword || preset.value} />}
                   >
                     <Swatch
-                      style={{ background: preset[colorSpace] }}
-                      active={color?.rgb === preset.rgb}
-                      onClick={() => onChange(preset[colorSpace])}
+                      value={preset[colorSpace]}
+                      active={color && id(preset[colorSpace]) === id(color[colorSpace])}
+                      onClick={() => updateValue(preset.value)}
                     />
                   </WithTooltip>
                 ))}
@@ -250,11 +321,11 @@ export const ColorControl: FC<ColorProps> = ({
           </TooltipContent>
         }
       >
-        <Swatch round style={{ background: currentValue || '#000000' }} />
+        <Swatch value={realValue} style={{ margin: 4 }} />
       </PickerTooltip>
       <Input
-        value={currentValue}
-        onChange={(e: any) => onChange(e.target.value)}
+        value={value}
+        onChange={(e: any) => updateValue(e.target.value)}
         onFocus={(e) => e.target.select()}
         placeholder="Choose color"
       />

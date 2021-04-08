@@ -41,4 +41,7 @@ describe('generateSvelteSource', () => {
       </Component>
     `);
   });
+  test('component is not set', () => {
+    expect(generateSvelteSource(null, null, null, null)).toBeNull();
+  });
 });
