@@ -15,13 +15,15 @@ import { getEventMetadata } from '../lib/events';
 import {
   denormalizeStoryParameters,
   transformStoriesRawToStoriesHash,
+  isStory,
+  isRoot,
+} from '../lib/stories';
+import type {
   StoriesHash,
   Story,
   Group,
   StoryId,
-  isStory,
   Root,
-  isRoot,
   StoriesRaw,
   SetStoriesPayload,
 } from '../lib/stories';

@@ -33,3 +33,11 @@ examples/ember-cli/ember-output
 tsconfig.tsbuildinfo
 lib/core-server/prebuilt
 examples/angular-cli/addon-jest.testresults.json
+
+# Yarn stuff
+/.yarn/*
+!/.yarn/releases
+!/.yarn/plugins
+!/.yarn/sdks
+!/.yarn/versions
+/.pnp.*

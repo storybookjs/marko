@@ -5,12 +5,21 @@ import { baseGenerator, Generator } from '../baseGenerator';
 
 const generator: Generator = async (packageManager, npmOptions, options) => {
   let extraMain;
+  let commonJs = false;
   // svelte.config.js ?
   if (fse.existsSync('./svelte.config.js')) {
     logger.info("Configuring preprocessor from 'svelte.config.js'");
 
     extraMain = {
       svelteOptions: { preprocess: '%%require("../svelte.config.js").preprocess%%' },
+    };
+  } else if (fse.existsSync('./svelte.config.cjs')) {
+    logger.info("Configuring preprocessor from 'svelte.config.cjs'");
+
+    commonJs = true;
+
+    extraMain = {
+      svelteOptions: { preprocess: '%%require("../svelte.config.cjs").preprocess%%' },
     };
   } else {
     // svelte-preprocess dependencies ?
@@ -29,6 +38,7 @@ const generator: Generator = async (packageManager, npmOptions, options) => {
     extraAddons: ['@storybook/addon-svelte-csf'],
     extensions: ['js', 'jsx', 'ts', 'tsx', 'svelte'],
     extraMain,
+    commonJs,
   });
 };
 

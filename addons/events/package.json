@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-events",
-  "version": "6.2.0-rc.7",
+  "version": "6.3.0-alpha.0",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
@@ -39,11 +39,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-rc.7",
-    "@storybook/api": "6.2.0-rc.7",
-    "@storybook/client-api": "6.2.0-rc.7",
-    "@storybook/core-events": "6.2.0-rc.7",
-    "@storybook/theming": "6.2.0-rc.7",
+    "@storybook/addons": "6.3.0-alpha.0",
+    "@storybook/api": "6.3.0-alpha.0",
+    "@storybook/client-api": "6.3.0-alpha.0",
+    "@storybook/core-events": "6.3.0-alpha.0",
+    "@storybook/theming": "6.3.0-alpha.0",
     "core-js": "^3.8.2",
     "format-json": "^1.0.3",
     "lodash": "^4.17.20",
@@ -70,7 +70,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "ea154d612ff984260bfacfeed804820cf00fee97",
+  "gitHead": "7739aace24e8614f2acc9972b2ae44cf7f228c18",
   "storybook": {
     "displayName": "Events",
     "unsupportedFrameworks": [

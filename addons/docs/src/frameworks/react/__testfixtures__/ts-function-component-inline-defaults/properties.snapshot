@@ -8,15 +8,12 @@ Object {
         "detail": undefined,
         "summary": "1",
       },
-      "description": "",
+      "description": undefined,
       "name": "numberOptional",
       "required": false,
-      "sbType": Object {
-        "name": "number",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "number",
+        "summary": "unknown",
       },
     },
     Object {
@@ -24,15 +21,12 @@ Object {
         "detail": undefined,
         "summary": "'stringOptional'",
       },
-      "description": "",
+      "description": undefined,
       "name": "stringOptional",
       "required": false,
-      "sbType": Object {
-        "name": "string",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "string",
+        "summary": "unknown",
       },
     },
     Object {
@@ -40,37 +34,25 @@ Object {
         "detail": undefined,
         "summary": "false",
       },
-      "description": "",
+      "description": undefined,
       "name": "booleanOptional",
       "required": false,
-      "sbType": Object {
-        "name": "boolean",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "boolean",
+        "summary": "unknown",
       },
     },
     Object {
       "defaultValue": Object {
         "detail": undefined,
-        "summary": "['array',    'optional']",
+        "summary": "['array', 'optional']",
       },
-      "description": "",
+      "description": undefined,
       "name": "arrayOptional",
       "required": false,
-      "sbType": Object {
-        "name": "array",
-        "raw": "string[]",
-        "value": Array [
-          Object {
-            "name": "string",
-          },
-        ],
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "Array",
+        "summary": "unknown",
       },
     },
     Object {
@@ -78,17 +60,12 @@ Object {
         "detail": undefined,
         "summary": "{ object: 'optional' }",
       },
-      "description": "",
+      "description": undefined,
       "name": "objectOptional",
       "required": false,
-      "sbType": Object {
-        "name": "other",
-        "raw": "Record<string, string>",
-        "value": "Record",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "Record",
+        "summary": "unknown",
       },
     },
     Object {
@@ -96,16 +73,12 @@ Object {
         "detail": undefined,
         "summary": "() => 'foo'",
       },
-      "description": "",
+      "description": undefined,
       "name": "functionOptional",
       "required": false,
-      "sbType": Object {
-        "name": "function",
-        "raw": "() => string",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "signature",
+        "summary": "unknown",
       },
     },
     Object {
@@ -113,16 +86,12 @@ Object {
         "detail": undefined,
         "summary": "new Date('20 Jan 1983')",
       },
-      "description": "",
+      "description": undefined,
       "name": "dateOptional",
       "required": false,
-      "sbType": Object {
-        "name": "other",
-        "value": "Date",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "Date",
+        "summary": "unknown",
       },
     },
     Object {
@@ -130,15 +99,12 @@ Object {
         "detail": undefined,
         "summary": "'local-value'",
       },
-      "description": "",
+      "description": undefined,
       "name": "localReference",
       "required": false,
-      "sbType": Object {
-        "name": "string",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "string",
+        "summary": "unknown",
       },
     },
     Object {
@@ -146,15 +112,12 @@ Object {
         "detail": undefined,
         "summary": "imported",
       },
-      "description": "",
+      "description": undefined,
       "name": "importedReference",
       "required": false,
-      "sbType": Object {
-        "name": "string",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "string",
+        "summary": "unknown",
       },
     },
     Object {
@@ -162,16 +125,12 @@ Object {
         "detail": undefined,
         "summary": "Date",
       },
-      "description": "",
+      "description": undefined,
       "name": "globalReference",
       "required": false,
-      "sbType": Object {
-        "name": "other",
-        "value": "any",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "any",
+        "summary": "unknown",
       },
     },
     Object {
@@ -179,116 +138,38 @@ Object {
         "detail": undefined,
         "summary": "'top'",
       },
-      "description": "",
+      "description": undefined,
       "name": "stringGlobalName",
       "required": false,
-      "sbType": Object {
-        "name": "string",
-      },
       "type": Object {
         "detail": undefined,
-        "summary": "string",
+        "summary": "unknown",
       },
     },
     Object {
-      "defaultValue": null,
-      "description": "Description",
-      "name": "numberRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "number",
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'top'",
       },
+      "description": undefined,
+      "name": "unionGlobalName",
+      "required": false,
       "type": Object {
         "detail": undefined,
-        "summary": "number",
+        "summary": "unknown",
       },
     },
     Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "stringRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "string",
+      "defaultValue": Object {
+        "detail": undefined,
+        "summary": "'top'",
       },
+      "description": undefined,
+      "name": "enumGlobalName",
+      "required": false,
       "type": Object {
         "detail": undefined,
-        "summary": "string",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "booleanRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "boolean",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "boolean",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "arrayRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "array",
-        "raw": "string[]",
-        "value": Array [
-          Object {
-            "name": "string",
-          },
-        ],
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "Array",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "objectRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "other",
-        "raw": "Record<string, string>",
-        "value": "Record",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "Record",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "functionRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "function",
-        "raw": "() => string",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "signature",
-      },
-    },
-    Object {
-      "defaultValue": null,
-      "description": "",
-      "name": "dateRequired",
-      "required": true,
-      "sbType": Object {
-        "name": "other",
-        "value": "Date",
-      },
-      "type": Object {
-        "detail": undefined,
-        "summary": "Date",
+        "summary": "unknown",
       },
     },
   ],
