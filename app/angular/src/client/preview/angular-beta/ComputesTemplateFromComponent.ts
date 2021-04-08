@@ -56,8 +56,12 @@ export const computesTemplateFromComponent = (
       ? ` ${initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ')}`
       : '';
 
-  const template = buildTemplate(ngComponentMetadata.selector);
-  return `<${template.openTag}${templateInputs}${templateOutputs}>${innerTemplate}</${template.closeTag}>`;
+  return buildTemplate(
+    ngComponentMetadata.selector,
+    innerTemplate,
+    templateInputs,
+    templateOutputs
+  );
 };
 
 const createAngularInputProperty = ({
@@ -128,55 +132,30 @@ export const computesTemplateSourceFromComponent = (
       ? ` ${initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ')}`
       : '';
 
-  const template = buildTemplate(ngComponentMetadata.selector);
-  return `<${template.openTag}${templateInputs}${templateOutputs}></${template.closeTag}>`;
+  return buildTemplate(ngComponentMetadata.selector, '', templateInputs, templateOutputs);
 };
 
 const buildTemplate = (
-  selector: string
-): {
-  openTag?: string;
-  closeTag?: string;
-} => {
-  const templates = [
-    {
-      // Match element selectors with optional chained attributes or classes
-      re: /^([\w\d-_]+)(?:(?:\[([\w\d-_]+)(?:=(.+))?\])|\.([\w\d-_]+))?/,
-      openTag: (matched: string[]) => {
-        let template = matched[1];
-        if (matched[2]) {
-          template += ` ${matched[2]}`;
-        }
-        if (matched[3]) {
-          template += `="${matched[3]}"`;
-        }
-        if (matched[4]) {
-          template += ` class="${matched[4]}"`;
-        }
-        return template;
-      },
-      closeTag: (matched: string[]) => `${matched[1]}`,
-    },
-    {
-      re: /^\.(.+)/,
-      openTag: (matched: string[]) => `div class="${matched[1]}"`,
-      closeTag: (matched: string[]) => `div`,
-    },
-    {
-      re: /^\[([\w\d-_]+)(?:=(.+))?\]/,
-      openTag: (matched: string[]) => `div ${matched[1]} ${matched[2] ? `="${matched[2]}"` : ''}`,
-      closeTag: (matched: string[]) => `div`,
-    },
+  selector: string,
+  innerTemplate: string,
+  inputs: string,
+  outputs: string
+) => {
+  const templateReplacers: [
+    string | RegExp,
+    string | ((substring: string, ...args: any[]) => string)
+  ][] = [
+    [/(^\..+)/, 'div$1'],
+    [/(^\[.+?])/, 'div$1'],
+    [/([\w[\]]+)(\s*,[\w\s-[\],]+)+/, `$1`],
+    [/#([\w-]+)/, ` id="$1"`],
+    [/((\.[\w-]+)+)/, (_, c) => ` class="${c.split`.`.join` `.trim()}"`],
+    [/(\[.+?])/g, (_, a) => ` ${a.slice(1, -1)}`],
+    [/([\S]+)(.*)/, `<$1$2${inputs}${outputs}>${innerTemplate}</$1>`],
   ];
 
-  return templates.reduce((acc, template) => {
-    const matched = selector.match(template.re);
-    if (matched) {
-      return {
-        openTag: template.openTag(matched).trim(),
-        closeTag: template.closeTag(matched),
-      };
-    }
-    return acc;
-  }, {});
+  return templateReplacers.reduce(
+    (prevSelector, [searchValue, replacer]) => prevSelector.replace(searchValue, replacer as any),
+    selector
+  );
 };
