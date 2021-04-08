@@ -53,6 +53,7 @@ describe('mapArgsToTypes', () => {
 
   it('maps numbers', () => {
     expect(mapArgsToTypes({ a: '42' }, { a: { type: numberType } })).toStrictEqual({ a: 42 });
+    expect(mapArgsToTypes({ a: '4.2' }, { a: { type: numberType } })).toStrictEqual({ a: 4.2 });
     expect(mapArgsToTypes({ a: 'a' }, { a: { type: numberType } })).toStrictEqual({ a: NaN });
   });
 
@@ -84,6 +85,14 @@ describe('mapArgsToTypes', () => {
     expect(mapArgsToTypes({ a: { b: 1 } }, { a: { type: undefined } })).toStrictEqual({
       a: { b: 1 },
     });
+  });
+
+  it('passes string for object type', () => {
+    expect(mapArgsToTypes({ a: 'A' }, { a: { type: boolObjectType } })).toStrictEqual({ a: 'A' });
+  });
+
+  it('passes number for object type', () => {
+    expect(mapArgsToTypes({ a: 1.2 }, { a: { type: boolObjectType } })).toStrictEqual({ a: 1.2 });
   });
 
   it('deeply maps objects', () => {

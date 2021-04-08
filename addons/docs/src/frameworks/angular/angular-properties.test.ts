@@ -16,7 +16,7 @@ const runCompodoc = (inputPath: string) => {
   // FIXME: for now, this requires a tsconfig.json for each test case. Tried generating
   // one dynamically in tmpDir, but compodoc doesn't handle absolute paths properly
   // (and screwed around with relative paths as well, but couldn't get it working)
-  spawnSync('compodoc', ['-p', `${testDir}/tsconfig.json`, '-e', 'json', '-d', tmpDir], {
+  spawnSync('yarn', ['compodoc', '-p', `${testDir}/tsconfig.json`, '-e', 'json', '-d', tmpDir], {
     stdio: 'inherit',
   });
   const output = fs.readFileSync(`${tmpDir}/documentation.json`, 'utf8');
