@@ -152,7 +152,7 @@ jobs:
           root: .
           paths:
             - .verdaccio-cache
-  e2e-tests-node-10:
+  e2e-tests-extended:
     executor:
       class: medium
       name: sb_node_12_browsers
@@ -178,39 +178,27 @@ jobs:
           command: yarn local-registry --port 6000 --open
           background: true
       - run:
-          name: wait for registry
+          name: Wait for registry
           command: yarn wait-on http://localhost:6000
       - run:
-          name: set registry
+          name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
-      - run:
-          name: test local registry
-          command: yarn npm info @storybook/core
       - run:
           name: Install Cypress binary
           command: yarn cypress install
       - run:
-          name: run e2e tests
-          command: yarn test:e2e-framework --clean --skip preact
+          name: Run E2E tests
+          command: yarn test:e2e-framework --clean --skip angular@latest --skip vue3@next --skip web_components_typescript@latest --skip cra@latest
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  e2e-tests-node-12:
+  e2e-tests-core:
     executor:
-      class: medium
+      class: small
       name: sb_node_12_browsers
     working_directory: /tmp/storybook
+    parallelism: 2
     steps:
-      - when:
-          condition:
-            and:
-              - not:
-                  equal: [ master, << pipeline.git.branch >> ]
-              - not:
-                  equal: [ next, << pipeline.git.branch >> ]
-          steps:
-            - ensure-pr-is-labeled-with:
-                label: "run e2e extended test suite"
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
       - attach_workspace:
@@ -226,14 +214,12 @@ jobs:
           name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
-          name: Test local registry
-          command: yarn npm info @storybook/core
-      - run:
           name: Install Cypress binary
           command: yarn cypress install
       - run:
           name: Run E2E tests
-          command: yarn test:e2e-framework preact
+          # Do not test CRA nor Web Components here because it's done in PnP part
+          command: yarn test:e2e-framework angular@latest vue3@next
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -258,9 +244,6 @@ jobs:
           name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
-          name: Test local registry
-          command: yarn npm info @storybook/core
-      - run:
           name: Install Cypress binary
           command: yarn cypress install
       - run:
@@ -269,7 +252,7 @@ jobs:
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  e2e-tests-yarn-2-pnp:
+  e2e-tests-pnp:
     executor:
       class: medium
       name: sb_node_12_browsers
@@ -280,24 +263,21 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: running local registry
+          name: Running local registry
           command: yarn local-registry --port 6000 --open
           background: true
       - run:
-          name: wait for registry
+          name: Wait for registry
           command: yarn wait-on http://localhost:6000
       - run:
-          name: set registry
+          name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
-      - run:
-          name: test local registry
-          command: yarn npm info @storybook/core
       - run:
           name: Install Cypress binary
           command: yarn cypress install
       - run:
           name: run e2e tests
-          command: yarn test:e2e-framework --use-yarn-2-pnp sfcVue cra
+          command: yarn test:e2e-framework --use-yarn-2-pnp sfcVue@latest cra@latest web_components_typescript@latest
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
@@ -479,13 +459,13 @@ workflows:
       - publish:
           requires:
             - build
-      - e2e-tests-node-10:
+      - e2e-tests-extended:
           requires:
             - publish
-      - e2e-tests-node-12:
+      - e2e-tests-core:
           requires:
             - publish
-      - e2e-tests-yarn-2-pnp:
+      - e2e-tests-pnp:
           requires:
             - publish
       - e2e-tests-cra-bench:
