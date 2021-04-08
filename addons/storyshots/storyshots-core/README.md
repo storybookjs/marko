@@ -235,11 +235,11 @@ module.exports = {
 
 ### Configure Jest for Preact
 
-StoryShots addon for Preact is dependent on [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json), but
+StoryShots addon for Preact is dependent on [preact-render-to-string](https://github.com/preactjs/preact-render-to-string), but
 [doesn't](#deps-issue) install it, so you need to install it separately.
 
 ```sh
-yarn add preact-render-to-json --dev
+yarn add preact-render-to-string --dev
 ```
 
 ### Configure Jest for Web Components
@@ -325,19 +325,18 @@ By design, [`react-test-renderer` doesn't use a browser environment or JSDOM](ht
 #### Example with React Testing Library
 
 ```js
-import initStoryshots from "@storybook/addon-storyshots";
-import { render } from "@testing-library/react";
+import initStoryshots from '@storybook/addon-storyshots';
+import { render } from '@testing-library/react';
 
 const reactTestingLibrarySerializer = {
   print: (val, serialize, indent) => serialize(val.container.firstChild),
-  test: val => val && val.hasOwnProperty("container")
+  test: (val) => val && val.hasOwnProperty('container'),
 };
 
 initStoryshots({
   renderer: render,
-  snapshotSerializers: [reactTestingLibrarySerializer]
+  snapshotSerializers: [reactTestingLibrarySerializer],
 });
-
 ```
 
 #### Example with Enzyme
@@ -584,9 +583,10 @@ initStoryshots({
 
 ### `framework`
 
-If you are running tests from outside of your app's directory, storyshots' detection of which framework you are using may fail. Pass `"react"` or `"react-native"` to short-circuit this. 
+If you are running tests from outside of your app's directory, storyshots' detection of which framework you are using may fail. Pass `"react"` or `"react-native"` to short-circuit this.
 
 For example:
+
 ```js
 // storybook.test.js
 
@@ -604,11 +604,10 @@ initStoryshots({
 Use this table as a reference for manually specifying the framework.
 
 | angular        | html | preact       |
-|----------------|------|--------------|
+| -------------- | ---- | ------------ |
 | react          | riot | react-native |
 | svelte         | vue  | vue3         |
 | web-components | rax  |              |
-
 
 ### `test`
 
@@ -633,7 +632,6 @@ Pass a custom renderer (such as enzymes `mount`) to record snapshots.
 This may be necessary if you want to use React features that are not supported by the default test renderer,
 such as **ref** or **Portals**.
 Note that setting `test` overrides `renderer`.
-
 
 ### `snapshotSerializers`
 

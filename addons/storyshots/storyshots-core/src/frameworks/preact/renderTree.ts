@@ -1,12 +1,13 @@
 /** @jsx h */
+import { h } from 'preact';
+import preactRenderer from 'preact-render-to-string/jsx';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import preactRenderer from 'preact-render-to-json';
+const boundRenderer = (_storyElement: any, _rendererOptions: any) =>
+  preactRenderer(_storyElement, null, { pretty: '  ' });
 
 function getRenderedTree(story: any, context: any, { renderer, ...rendererOptions }: any) {
-  const storyElement = story.render();
-  const currentRenderer = renderer || preactRenderer;
-  const tree = currentRenderer(storyElement, rendererOptions);
+  const currentRenderer = renderer || boundRenderer;
+  const tree = currentRenderer(h(story.render, null), rendererOptions);
 
   return tree;
 }

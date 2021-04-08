@@ -6375,6 +6375,7 @@ __metadata:
     jest-preset-angular: ^8.3.2
     jest-specific-snapshot: ^4.0.0
     jest-vue-preprocessor: ^1.7.1
+    preact-render-to-string: ^5.1.19
     pretty-format: ^26.6.2
     react-test-renderer: ^16.8.0 || ^17.0.0
     read-pkg-up: ^7.0.1
@@ -6391,6 +6392,7 @@ __metadata:
     "@storybook/vue3": "*"
     jest-preset-angular: "*"
     jest-vue-preprocessor: "*"
+    preact: ^10.5.13
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
     rxjs: "*"
@@ -6411,6 +6413,8 @@ __metadata:
     jest-preset-angular:
       optional: true
     jest-vue-preprocessor:
+      optional: true
+    preact:
       optional: true
     react:
       optional: true
@@ -7546,7 +7550,7 @@ __metadata:
     "@types/webpack-env": ^1.16.0
     core-js: ^3.8.2
     global: ^4.4.0
-    preact: ^10.5.9
+    preact: ^10.5.13
     react: 16.14.0
     react-dom: 16.14.0
     read-pkg-up: ^7.0.1
@@ -36758,8 +36762,8 @@ fsevents@2.1.2:
     cross-env: ^7.0.3
     file-loader: ^6.2.0
     global: ^4.4.0
-    preact: ^8.5.3
-    preact-render-to-json: ^3.6.6
+    preact: ^10.5.13
+    preact-render-to-string: ^5.1.19
     raw-loader: ^4.0.2
     svg-url-loader: ^7.1.1
     webpack: 4
@@ -36767,26 +36771,21 @@ fsevents@2.1.2:
   languageName: unknown
   linkType: soft
 
-"preact-render-to-json@npm:^3.6.6":
-  version: 3.6.6
-  resolution: "preact-render-to-json@npm:3.6.6"
+"preact-render-to-string@npm:^5.1.19":
+  version: 5.1.19
+  resolution: "preact-render-to-string@npm:5.1.19"
+  dependencies:
+    pretty-format: ^3.8.0
   peerDependencies:
-    preact: "*"
-  checksum: 8d37bd0d9203a6401ac2076cbe8c1749cdc80407b0b24e8622c58e4fc1fc2b490aa19637982abe22dc6183e1fa0e09a4d256bec615756a6b1e273ae0bd5781c3
+    preact: ">=10"
+  checksum: 560670ad725fc22ef80c37f38b2b2959313f53b9b52e988260365d7be158fbaebb24ddee391f41e4c353365b2c59a36e27e3e5c84cb692016c5adbb4c9a7a055
   languageName: node
   linkType: hard
 
-"preact@npm:^10.5.9":
-  version: 10.5.12
-  resolution: "preact@npm:10.5.12"
-  checksum: ae4f3e7f8f2134df925b5142cee5014ba18c329c0db488fa9f2e550ece91dbac702c08b0dbf8adbe84496c3ccdf9db581e4f09320258246915a804a51c64eb0f
-  languageName: node
-  linkType: hard
-
-"preact@npm:^8.5.3":
-  version: 8.5.3
-  resolution: "preact@npm:8.5.3"
-  checksum: 4db04521a654e7897d13f8c3106d9cb113585f4c13e914d5de92aa65772841cefcd98b0e2485ef902c8af8174f700c19071eb83111b44e01de00bdc12add3894
+"preact@npm:^10.5.13":
+  version: 10.5.13
+  resolution: "preact@npm:10.5.13"
+  checksum: 5e75e70287b30545e28b73b58db2064b3e09bfa444067c4ae1c065071d1c93adce7d48bd64a6266a38cfe7c9c2464b52616926335a43817816582c73037b4eba
   languageName: node
   linkType: hard
 
@@ -36909,6 +36908,13 @@ fsevents@2.1.2:
     ansi-styles: ^4.0.0
     react-is: ^16.12.0
   checksum: cbcf79f57a96f5eb9970722614a360539940606a20a924f6202e309433af4ad5b71ba210b6b3efcdcdad178f9aefa74f04a447d86520d721fbe155ff43b33112
+  languageName: node
+  linkType: hard
+
+"pretty-format@npm:^3.8.0":
+  version: 3.8.0
+  resolution: "pretty-format@npm:3.8.0"
+  checksum: 69f12937bfb7b2a537a7463b9f875a16322401f1e44d7702d643faa0d21991126c24c093217ef6da403b54c15942a834174fa1c016b72e2cb9edaae6bb3729b6
   languageName: node
   linkType: hard
 
