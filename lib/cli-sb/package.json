@@ -15,9 +15,7 @@
     "directory": "lib/cli"
   },
   "license": "MIT",
-  "bin": {
-    "sb": "./index.js"
-  },
+  "bin": "./index.js",
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
