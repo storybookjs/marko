@@ -1,3 +1,14 @@
+## 6.3.0-alpha.1 (April 9, 2021)
+
+### Features
+
+- Core: Enable gzip compression on the development server ([#14459](https://github.com/storybookjs/storybook/pull/14459))
+
+### Bug Fixes
+
+- Preact: Fix hooks when used in stories, preact-kitchen-sink ([#14473](https://github.com/storybookjs/storybook/pull/14473))
+- Angular: Fix handling of line breaks with multiple selectors ([#14313](https://github.com/storybookjs/storybook/pull/14313))
+
 ## 6.3.0-alpha.0 (April 8, 2021)
 
 ### Maintenance
