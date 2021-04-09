@@ -3,34 +3,42 @@ import { Configuration } from 'webpack';
 import { logger } from '@storybook/node-logger';
 import { webpackFinal } from './framework-preset-angular-cli';
 
-// eslint-disable-next-line global-require, jest/no-mocks-import
-jest.spyOn(logger, 'error').mockImplementation();
-jest.spyOn(logger, 'info').mockImplementation();
+const testPath = __dirname;
 
-const testCwd = process.cwd();
-const cwdSpy = jest.spyOn(process, 'cwd');
-
-let cwd = process.cwd();
-
-const initMockWorkspace = (name: string) => {
-  cwdSpy.mockReturnValue(`${testCwd}/src/server/__mocks-ng-workspace__/${name}`);
-  cwd = process.cwd();
-};
+let workspaceRoot = testPath;
+let cwdSpy: jest.SpyInstance;
 
 beforeEach(() => {
+  cwdSpy = jest.spyOn(process, 'cwd');
+  jest.spyOn(logger, 'error').mockImplementation();
+  jest.spyOn(logger, 'info').mockImplementation();
+});
+
+afterEach(() => {
   jest.clearAllMocks();
 });
 
+function initMockWorkspace(name: string) {
+  workspaceRoot = `${testPath}/__mocks-ng-workspace__/${name}`;
+  cwdSpy.mockReturnValue(workspaceRoot);
+}
+
 describe('framework-preset-angular-cli', () => {
   describe('without angular.json', () => {
-    it('should return webpack base config and display log error', () => {
+    let consoleErrorSpy: jest.SpyInstance;
+
+    beforeEach(() => {
+      initMockWorkspace('');
+      consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation();
+    });
+    it('should return webpack base config and display log error', async () => {
       const webpackBaseConfig = newWebpackConfiguration();
 
-      const config = webpackFinal(webpackBaseConfig);
+      const config = await webpackFinal(webpackBaseConfig);
 
-      expect(logger.info).toHaveBeenCalledWith('=> Loading angular-cli config.');
+      expect(logger.info).toHaveBeenCalledWith('=> Loading angular-cli config');
       expect(logger.error).toHaveBeenCalledWith(
-        `Could not find angular.json using ${cwd}/angular.json`
+        `=> Could not find angular workspace config (angular.json) on this path "${workspaceRoot}"`
       );
 
       expect(config).toEqual(webpackBaseConfig);
@@ -41,10 +49,18 @@ describe('framework-preset-angular-cli', () => {
     beforeEach(() => {
       initMockWorkspace('without-projects-entry');
     });
-    it('throws error', () => {
-      expect(() => webpackFinal(newWebpackConfiguration())).toThrowError(
-        'angular.json must have projects entry.'
+    it('should return webpack base config and display log error', async () => {
+      const webpackBaseConfig = newWebpackConfiguration();
+
+      const config = await webpackFinal(webpackBaseConfig);
+
+      expect(logger.info).toHaveBeenCalledWith('=> Loading angular-cli config');
+      expect(logger.error).toHaveBeenCalledWith('=> Could not find angular project');
+      expect(logger.info).toHaveBeenCalledWith(
+        '=> Fail to load angular-cli config. Using base config'
       );
+
+      expect(config).toEqual(webpackBaseConfig);
     });
   });
 
@@ -52,10 +68,37 @@ describe('framework-preset-angular-cli', () => {
     beforeEach(() => {
       initMockWorkspace('empty-projects-entry');
     });
-    it('throws error', () => {
-      expect(() => webpackFinal(newWebpackConfiguration())).toThrowError(
-        'angular.json must have projects entry.'
+    it('should return webpack base config and display log error', async () => {
+      const webpackBaseConfig = newWebpackConfiguration();
+
+      const config = await webpackFinal(webpackBaseConfig);
+
+      expect(logger.info).toHaveBeenCalledWith('=> Loading angular-cli config');
+      expect(logger.error).toHaveBeenCalledWith('=> Could not find angular project');
+      expect(logger.info).toHaveBeenCalledWith(
+        '=> Fail to load angular-cli config. Using base config'
       );
+
+      expect(config).toEqual(webpackBaseConfig);
+    });
+  });
+
+  describe('when angular.json does not have a compatible project', () => {
+    beforeEach(() => {
+      initMockWorkspace('without-compatible-projects');
+    });
+    it('should return webpack base config and display log error', async () => {
+      const webpackBaseConfig = newWebpackConfiguration();
+
+      const config = await webpackFinal(webpackBaseConfig);
+
+      expect(logger.info).toHaveBeenCalledWith('=> Loading angular-cli config');
+      expect(logger.error).toHaveBeenCalledWith('=> Could not find angular project');
+      expect(logger.info).toHaveBeenCalledWith(
+        '=> Fail to load angular-cli config. Using base config'
+      );
+
+      expect(config).toEqual(webpackBaseConfig);
     });
   });
 
@@ -63,43 +106,54 @@ describe('framework-preset-angular-cli', () => {
     beforeEach(() => {
       initMockWorkspace('without-architect-build');
     });
+    it('should return webpack base config and display log error', async () => {
+      const webpackBaseConfig = newWebpackConfiguration();
 
-    it('throws error', () => {
-      expect(() => webpackFinal(newWebpackConfiguration())).toThrowError(
-        "Cannot read property 'build' of undefined"
+      const config = await webpackFinal(webpackBaseConfig);
+
+      expect(logger.info).toHaveBeenCalledWith('=> Loading angular-cli config');
+      expect(logger.error).toHaveBeenCalledWith(
+        '=> "build" target is not defined in project "foo-project"'
       );
+      expect(logger.info).toHaveBeenCalledWith(
+        '=> Fail to load angular-cli config. Using base config'
+      );
+
+      expect(config).toEqual(webpackBaseConfig);
     });
   });
-  describe('when angular.json have projects without architect.build.options.assets', () => {
+
+  describe('when angular.json have projects without architect.build.options', () => {
     beforeEach(() => {
-      initMockWorkspace('without-architect-build-options-assets');
+      initMockWorkspace('without-architect-build-options');
     });
-    it('throws error', () => {
-      expect(() => webpackFinal(newWebpackConfiguration())).toThrowError(
-        "Cannot read property 'assets' of undefined"
+    it('throws error', async () => {
+      await expect(() => webpackFinal(newWebpackConfiguration())).rejects.toThrowError(
+        'Missing required options in project target. Check "tsConfig, assets, optimization"'
       );
+      expect(logger.error).toHaveBeenCalledWith(`=> Could not get angular cli webpack config`);
     });
   });
   describe('when angular.json have minimal config', () => {
     beforeEach(() => {
       initMockWorkspace('minimal-config');
     });
-    it('should log', () => {
+    it('should log', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      webpackFinal(baseWebpackConfig);
+      await webpackFinal(baseWebpackConfig);
 
       expect(logger.info).toHaveBeenCalledTimes(3);
+      expect(logger.info).toHaveBeenNthCalledWith(1, '=> Loading angular-cli config');
       expect(logger.info).toHaveBeenNthCalledWith(
-        1,
-        "=> Using angular project 'foo-project' for configuring Storybook."
+        2,
+        '=> Using angular project "foo-project" for configuring Storybook'
       );
-      expect(logger.info).toHaveBeenNthCalledWith(2, '=> Loading angular-cli config.');
-      expect(logger.info).toHaveBeenNthCalledWith(3, '=> Get angular-cli webpack config.');
+      expect(logger.info).toHaveBeenNthCalledWith(3, '=> Using angular-cli webpack config');
     });
 
-    it('should extends webpack base config', () => {
+    it('should extends webpack base config', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      const webpackFinalConfig = webpackFinal(baseWebpackConfig);
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
 
       expect(webpackFinalConfig).toEqual({
         ...baseWebpackConfig,
@@ -115,9 +169,9 @@ describe('framework-preset-angular-cli', () => {
       });
     });
 
-    it('should set webpack "module.rules"', () => {
+    it('should set webpack "module.rules"', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      const webpackFinalConfig = webpackFinal(baseWebpackConfig);
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
 
       expect(webpackFinalConfig.module.rules).toEqual([
         {
@@ -144,9 +198,9 @@ describe('framework-preset-angular-cli', () => {
       ]);
     });
 
-    it('should set webpack "plugins"', () => {
+    it('should set webpack "plugins"', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      const webpackFinalConfig = webpackFinal(baseWebpackConfig);
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
 
       expect(webpackFinalConfig.plugins).toMatchInlineSnapshot(`
         Array [
@@ -172,24 +226,24 @@ describe('framework-preset-angular-cli', () => {
       `);
     });
 
-    it('should set webpack "resolve.modules"', () => {
+    it('should set webpack "resolve.modules"', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      const webpackFinalConfig = webpackFinal(baseWebpackConfig);
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
 
       expect(webpackFinalConfig.resolve.modules).toEqual([
         ...baseWebpackConfig.resolve.modules,
-        `${cwd}/src`,
+        `${workspaceRoot}/src`,
       ]);
     });
 
-    it('should replace webpack "resolve.plugins"', () => {
+    it('should replace webpack "resolve.plugins"', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      const webpackFinalConfig = webpackFinal(baseWebpackConfig);
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
 
       expect(webpackFinalConfig.resolve.plugins).toMatchInlineSnapshot(`
         Array [
           TsconfigPathsPlugin {
-            "absoluteBaseUrl": "${cwd}/src/",
+            "absoluteBaseUrl": "${workspaceRoot}/src/",
             "baseUrl": "./",
             "extensions": Array [
               ".ts",
@@ -214,16 +268,16 @@ describe('framework-preset-angular-cli', () => {
       initMockWorkspace('with-options-styles');
     });
 
-    it('should extends webpack base config', () => {
+    it('should extends webpack base config', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      const webpackFinalConfig = webpackFinal(baseWebpackConfig);
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
 
       expect(webpackFinalConfig).toEqual({
         ...baseWebpackConfig,
         entry: [
           ...(baseWebpackConfig.entry as any[]),
-          `${cwd}/src/styles.css`,
-          `${cwd}/src/styles.scss`,
+          `${workspaceRoot}/src/styles.css`,
+          `${workspaceRoot}/src/styles.scss`,
         ],
         module: { ...baseWebpackConfig.module, rules: expect.anything() },
         plugins: expect.anything(),
@@ -237,48 +291,126 @@ describe('framework-preset-angular-cli', () => {
       });
     });
 
-    it('should set webpack "module.rules"', () => {
+    it('should set webpack "module.rules"', async () => {
       const baseWebpackConfig = newWebpackConfiguration();
-      const webpackFinalConfig = webpackFinal(baseWebpackConfig);
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
 
       expect(webpackFinalConfig.module.rules).toEqual([
         {
-          exclude: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.css$/,
           use: expect.anything(),
         },
         {
-          exclude: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.scss$|\.sass$/,
           use: expect.anything(),
         },
         {
-          exclude: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.less$/,
           use: expect.anything(),
         },
         {
-          exclude: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.styl$/,
           use: expect.anything(),
         },
         {
-          include: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.css$/,
           use: expect.anything(),
         },
         {
-          include: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.scss$|\.sass$/,
           use: expect.anything(),
         },
         {
-          include: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.less$/,
           use: expect.anything(),
         },
         {
-          include: [`${cwd}/src/styles.css`, `${cwd}/src/styles.scss`],
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.styl$/,
+          use: expect.anything(),
+        },
+        ...baseWebpackConfig.module.rules,
+      ]);
+    });
+  });
+
+  describe('when is a nx workspace', () => {
+    beforeEach(() => {
+      initMockWorkspace('with-nx');
+    });
+
+    it('should extends webpack base config', async () => {
+      const baseWebpackConfig = newWebpackConfiguration();
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
+
+      expect(webpackFinalConfig).toEqual({
+        ...baseWebpackConfig,
+        entry: [
+          ...(baseWebpackConfig.entry as any[]),
+          `${workspaceRoot}/src/styles.css`,
+          `${workspaceRoot}/src/styles.scss`,
+        ],
+        module: { ...baseWebpackConfig.module, rules: expect.anything() },
+        plugins: expect.anything(),
+        resolve: {
+          ...baseWebpackConfig.resolve,
+          modules: expect.arrayContaining(baseWebpackConfig.resolve.modules),
+          // the base resolve.plugins are not kept 🤷‍♂️
+          plugins: expect.not.arrayContaining(baseWebpackConfig.resolve.plugins),
+        },
+        resolveLoader: expect.anything(),
+      });
+    });
+
+    it('should set webpack "module.rules"', async () => {
+      const baseWebpackConfig = newWebpackConfiguration();
+      const webpackFinalConfig = await webpackFinal(baseWebpackConfig);
+
+      expect(webpackFinalConfig.module.rules).toEqual([
+        {
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.css$/,
+          use: expect.anything(),
+        },
+        {
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.scss$|\.sass$/,
+          use: expect.anything(),
+        },
+        {
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.less$/,
+          use: expect.anything(),
+        },
+        {
+          exclude: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.styl$/,
+          use: expect.anything(),
+        },
+        {
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.css$/,
+          use: expect.anything(),
+        },
+        {
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.scss$|\.sass$/,
+          use: expect.anything(),
+        },
+        {
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
+          test: /\.less$/,
+          use: expect.anything(),
+        },
+        {
+          include: [`${workspaceRoot}/src/styles.css`, `${workspaceRoot}/src/styles.scss`],
           test: /\.styl$/,
           use: expect.anything(),
         },
