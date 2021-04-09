@@ -1083,6 +1083,42 @@ describe('preview.story_store', () => {
       ]);
     });
 
+    it('sorts stories in specified order or alphabetically with wildcards', () => {
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'alphabetical',
+              order: ['b', ['bc', '*', 'bb'], '*', 'c'],
+            },
+          },
+        },
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
+
+      const extracted = store.extract();
+
+      expect(Object.keys(extracted)).toEqual([
+        'b--1',
+        'b-bc--1',
+        'b-ba--1',
+        'b-bd--1',
+        'b-bb--1',
+        'a--1',
+        'a-b--1',
+        'c--1',
+      ]);
+    });
+
     it('sorts stories in specified order or by configure order', () => {
       const store = new StoryStore({ channel });
       store.addGlobalMetadata({
@@ -1115,6 +1151,46 @@ describe('preview.story_store', () => {
         'b-bc--1',
         'a--1',
         'a-b--1',
+        'c--1',
+      ]);
+    });
+
+    it('sorts stories in specified order or by configure order with wildcard', () => {
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'configure',
+              order: ['b', '*', 'c'],
+            },
+          },
+        },
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
+      addStoryToStore(store, 'e', '1', () => 0);
+      addStoryToStore(store, 'd', '1', () => 0);
+
+      const extracted = store.extract();
+
+      expect(Object.keys(extracted)).toEqual([
+        'b--1',
+        'b-bd--1',
+        'b-bb--1',
+        'b-ba--1',
+        'b-bc--1',
+        'a--1',
+        'a-b--1',
+        'e--1',
+        'd--1',
         'c--1',
       ]);
     });
