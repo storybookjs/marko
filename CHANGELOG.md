@@ -1,3 +1,14 @@
+## 6.3.0-alpha.2 (April 9, 2021)
+
+### Features
+
+- Web-components: Add full reload listening to server-side-events ([#14445](https://github.com/storybookjs/storybook/pull/14445))
+- Core: Pass watchOptions from webpack config to webpackDevMiddleware ([#14461](https://github.com/storybookjs/storybook/pull/14461))
+
+### Bug Fixes
+
+- CLI: Fix prerelease upgrade ([#14529](https://github.com/storybookjs/storybook/pull/14529))
+
 ## 6.3.0-alpha.1 (April 9, 2021)
 
 ### Features
