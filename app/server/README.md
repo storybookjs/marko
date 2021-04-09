@@ -247,7 +247,7 @@ To configure controls, simple add `args` and `argTypes` keys to the story JSON m
         "server": { "id": "controls/button" }
       },
       "args": { "button_text": "Push Me", "color": "red" },
-      "argsTypes": { "button_text": { "control": { "type": "color" } } }
+      "argTypes": { "button_text": { "control": { "type": "color" } } }
     },
   ]
 }
