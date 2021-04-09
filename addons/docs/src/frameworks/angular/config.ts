@@ -6,7 +6,7 @@ import { prepareForInline } from './prepareForInline';
 export const parameters = {
   docs: {
     // probably set this to true by default once it's battle-tested
-    inlineStories: true,
+    inlineStories: false,
     prepareForInline,
     extractArgTypes,
     extractComponentDescription,

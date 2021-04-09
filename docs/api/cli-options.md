@@ -55,7 +55,7 @@ Usage: build-storybook [options]
 | --quiet                            | Suppress verbose build output                                                                                                                   | `build-storybook --quiet`                                 |
 | --no-dll                           | Do not use dll reference (no-op)                                                                                                                | `build-storybook --no-dll`                                |
 | --debug-webpack                    | Display final webpack configurations for debugging purposes                                                                                     | `build-storybook --debug-webpack`                         |
-| `--webpack-stats-json <directory>` | Write Webpack Stats JSON to disk                                                                                                                | `start-storybook --webpack-stats-json /tmp/webpack-stats` |
+| `--webpack-stats-json <directory>` | Write Webpack Stats JSON to disk                                                                                                                | `build-storybook --webpack-stats-json /my-storybook/webpack-stats` |
 | --docs                             | Builds Storybook in documentation mode. Learn more about it in [here](../writing-docs/build-documentation.md#publish-storybooks-documentation)) | `build-storybook --docs`                                  |
 
 <div class="aside">

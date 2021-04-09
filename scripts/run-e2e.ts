@@ -4,7 +4,6 @@ import { remove, ensureDir, pathExists, writeFile, writeJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
-import shell from 'shelljs';
 import program from 'commander';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
@@ -49,10 +48,11 @@ const prepareDirectory = async ({
 
   if (!siblingExists) {
     await ensureDir(siblingDir);
-    await exec('git init', { cwd: siblingDir });
-    await exec('npm init -y', { cwd: siblingDir });
-    await writeFile(path.join(siblingDir, '.gitignore'), 'node_modules\n');
   }
+
+  await exec('git init', { cwd: siblingDir });
+  await exec('npm init -y', { cwd: siblingDir });
+  await writeFile(path.join(siblingDir, '.gitignore'), 'node_modules\n');
 
   const cwdExists = await pathExists(cwd);
 
@@ -70,26 +70,54 @@ const prepareDirectory = async ({
 const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
   await remove(cwd);
   await remove(path.join(siblingDir, 'node_modules'));
+  await remove(path.join(siblingDir, 'package.json'));
+  await remove(path.join(siblingDir, 'yarn.lock'));
+  await remove(path.join(siblingDir, '.yarnrc.yml'));
+  await remove(path.join(siblingDir, '.yarn'));
+};
 
-  if (useYarn2Pnp) {
-    await shell.rm('-rf', [path.join(siblingDir, '.yarn'), path.join(siblingDir, '.yarnrc.yml')]);
+const installYarn2 = async ({ cwd }: Options) => {
+  const commands = [`yarn set version berry`, `yarn config set enableGlobalCache true`];
+
+  if (!useYarn2Pnp) {
+    commands.push('yarn config set nodeLinker node-modules');
+  }
+
+  const command = commands.join(' && ');
+
+  logger.info(`🧶 Installing Yarn 2`);
+  logger.debug(command);
+
+  try {
+    await exec(command, { cwd });
+  } catch (e) {
+    logger.error(`🚨 Installing Yarn 2 failed`);
+    throw e;
   }
 };
 
-const configureYarn2PnP = async ({ cwd }: Options) => {
-  const command = [
-    `yarn set version berry`,
+const configureYarn2 = async ({ cwd }: Options) => {
+  const commands = [
+    // Create file to ensure yarn will be ok to set some config in the current directory and not in the parent
+    `touch yarn.lock`,
     // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
     `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
     // Some required magic to be able to fetch deps from local registry
     `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
     // Disable fallback mode to make sure everything is required correctly
     `yarn config set pnpFallbackMode none`,
+    `yarn config set enableGlobalCache true`,
     // Add package extensions
     // https://github.com/facebook/create-react-app/pull/9872
     `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
     `yarn config set "packageExtensions.react-scripts@*.dependencies.@pmmmwh/react-refresh-webpack-plugin" "*"`,
-  ].join(' && ');
+  ];
+
+  if (!useYarn2Pnp) {
+    commands.push('yarn config set nodeLinker node-modules');
+  }
+
+  const command = commands.join(' && ');
   logger.info(`🎛 Configuring Yarn 2`);
   logger.debug(command);
 
@@ -125,7 +153,7 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
 
     const sbCLICommand = useLocalSbCli
       ? 'node ../../storybook/lib/cli/dist/esm/generate'
-      : 'npx -p @storybook/cli sb';
+      : 'yarn dlx -p @storybook/cli sb';
 
     await exec(`${sbCLICommand} init --yes ${type}`, { cwd });
   } catch (e) {
@@ -226,12 +254,16 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
   logger.log();
 
   if (!(await prepareDirectory(options))) {
-    if (useYarn2Pnp) {
-      await configureYarn2PnP({ ...options, cwd: siblingDir });
-    }
+    // We need to install Yarn 2 to be able to bootstrap the different apps used
+    // for the tests with `yarn dlx`
+    await installYarn2({ ...options, cwd: siblingDir });
 
     await generate({ ...options, cwd: siblingDir });
     logger.log();
+
+    // Configure Yarn 2 in the bootstrapped project to make it use the local
+    // verdaccio registry
+    await configureYarn2(options);
 
     if (options.typescript) {
       await addTypescript(options);

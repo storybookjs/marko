@@ -17,6 +17,7 @@ Object {
     "ROOT/addons/knobs/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/addons/links/dist/esm/preset/addDecorator.js-generated-other-entry.js",
     "ROOT/examples/web-components-kitchen-sink/.storybook/preview.js-generated-config-entry.js",
+    "ROOT/examples/web-components-kitchen-sink/.storybook/generated-stories-entry.js",
     "NODE_MODULES/webpack-hot-middleware/client.js?reload=true&quiet=false&noInfo=undefined",
   ],
   "keys": Array [
@@ -456,7 +457,13 @@ Object {
           Object {
             "loader": "NODE_MODULES/postcss-loader/dist/cjs.js",
             "options": Object {
-              "postcssOptions": [Function],
+              "postcssOptions": Object {
+                "config": false,
+                "plugins": Array [
+                  [Function],
+                  [Function],
+                ],
+              },
             },
           },
         ],
@@ -464,6 +471,7 @@ Object {
       Object {
         "loader": "NODE_MODULES/file-loader/dist/cjs.js",
         "options": Object {
+          "esModule": false,
           "name": "static/media/[path][name].[ext]",
         },
         "test": "/\\\\.(svg|ico|jpg|jpeg|png|apng|gif|eot|otf|webp|ttf|woff|woff2|cur|ani|pdf)(\\\\?.*)?$/",
