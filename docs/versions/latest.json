@@ -1,1 +1,1 @@
-{"version":"6.2.6","info":{"plain":"### Bug Fixes\n\n- Core: Allow string in object arg and support fractional numbers in URL args ([#14511](https://github.com/storybookjs/storybook/pull/14511))\n- UI: Skip duplicate storyId breaking sidebar ([#14502](https://github.com/storybookjs/storybook/pull/14502))"}}
+{"version":"6.2.7","info":{"plain":"### Bug Fixes\n\n* CLI: Fix prerelease upgrade ([#14529](https://github.com/storybookjs/storybook/pull/14529))"}}
