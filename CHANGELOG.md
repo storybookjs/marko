@@ -1,3 +1,9 @@
+## 6.2.7 (April 9, 2021)
+
+### Bug Fixes
+
+- CLI: Fix prerelease upgrade ([#14529](https://github.com/storybookjs/storybook/pull/14529))
+
 ## 6.3.0-alpha.2 (April 9, 2021)
 
 ### Features
