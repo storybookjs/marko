@@ -81,7 +81,7 @@
     "@angular/forms": "^11.2.0",
     "@angular/platform-browser": "^11.2.0",
     "@angular/platform-browser-dynamic": "^11.2.0",
-    "@nrwl/workspace": "^11.1.5",
+    "@nrwl/workspace": "^11.6.3",
     "@types/autoprefixer": "^9.7.2",
     "@types/jest": "^26.0.16",
     "@webcomponents/custom-elements": "^1.4.3",

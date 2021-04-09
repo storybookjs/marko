@@ -1,12 +1,10 @@
 {
   "npmScope": "storybook",
   "implicitDependencies": {
-    "workspace.json": "*",
     "package.json": {
       "dependencies": "*",
       "devDependencies": "*"
-    },
-    "nx.json": "*"
+    }
   },
   "tasksRunnerOptions": {
     "default": {
