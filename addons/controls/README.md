@@ -77,7 +77,6 @@ Basic.args = { label: 'hello' };
 Similarly, we can also consider a story that uses knob inputs to change its behavior:
 
 ```jsx
-import range from 'lodash/range';
 import { number, text } from '@storybook/addon-knobs';
 
 export const Reflow = () => {
@@ -85,7 +84,7 @@ export const Reflow = () => {
   const label = text('Label', 'reflow');
   return (
     <>
-      {range(count).map((i) => (
+      {Array.from({ length: count }, (_, i) => (
         <Button label={`button ${i}`} />
       ))}
     </>
@@ -97,7 +96,7 @@ And again, as above, this can be rewritten using [fully custom args](https://sto
 
 ```jsx
 export const Reflow = ({ count, label, ...args }) => (
-  <>{range(count).map((i) => <Button label={`${label} ${i}` {...args}} />)}</>
+  <>{Array.from({ length: count }, (_, i) => <Button label={`${label} ${i}` {...args}} />)}</>
 );
 Reflow.args = { count: 3, label: 'reflow' };
 Reflow.argTypes = {
