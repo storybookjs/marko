@@ -169,7 +169,7 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
     fullAPI.on(STORY_ARGS_UPDATED, ({ args }) => {
       if ('requestIdleCallback' in globalWindow) {
         if (handleOrId) globalWindow.cancelIdleCallback(handleOrId);
-        handleOrId = globalWindow.requestIdleCallback(() => updateArgsParam(args), { timeout: 1000 });
+        handleOrId = globalWindow.requestIdleCallback(updateArgsParam, { timeout: 1000 });
       } else {
         if (handleOrId) clearTimeout(handleOrId);
         setTimeout(updateArgsParam, 100);
