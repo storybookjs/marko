@@ -1,4 +1,4 @@
-import { document, window } from 'global';
+import { document, window as globalWindow } from 'global';
 import React, { FunctionComponent, useMemo, ComponentProps, useCallback, forwardRef } from 'react';
 
 import { Icons, WithTooltip, Spaced, TooltipLinkList } from '@storybook/components';
@@ -249,7 +249,7 @@ const ReadyMessage: FunctionComponent<{
 const LoginRequiredMessage: FunctionComponent<RefType> = ({ loginUrl, id }) => {
   const open = useCallback((e) => {
     e.preventDefault();
-    const childWindow = window.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
+    const childWindow = globalWindow.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
 
     // poll for window to close
     const timer = setInterval(() => {

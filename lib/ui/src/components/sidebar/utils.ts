@@ -1,5 +1,5 @@
 import memoize from 'memoizerific';
-import { document, window, DOCS_MODE } from 'global';
+import { document, window as globalWindow, DOCS_MODE } from 'global';
 import { SyntheticEvent } from 'react';
 import type { StoriesHash } from '@storybook/api';
 import { isRoot } from '@storybook/api';
@@ -64,7 +64,7 @@ export const scrollIntoView = (element: Element, center = false) => {
   if (!element) return;
   const { top, bottom } = element.getBoundingClientRect();
   const isInView =
-    top >= 0 && bottom <= (window.innerHeight || document.documentElement.clientHeight);
+    top >= 0 && bottom <= (globalWindow.innerHeight || document.documentElement.clientHeight);
   if (!isInView) element.scrollIntoView({ block: center ? 'center' : 'nearest' });
 };
 

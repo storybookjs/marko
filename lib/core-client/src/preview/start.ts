@@ -1,4 +1,4 @@
-import { navigator, window } from 'global';
+import { navigator, window as globalWindow } from 'global';
 
 import addons, { DecorateStoryFunction, Channel } from '@storybook/addons';
 import createChannel from '@storybook/channel-postmessage';
@@ -35,12 +35,12 @@ function getClientApi(decorateStory: DecorateStoryFunction, channel?: Channel) {
   let storyStore: StoryStore;
   let clientApi: ClientApi;
   if (
-    typeof window !== 'undefined' &&
-    window.__STORYBOOK_CLIENT_API__ &&
-    window.__STORYBOOK_STORY_STORE__
+    typeof globalWindow !== 'undefined' &&
+    globalWindow.__STORYBOOK_CLIENT_API__ &&
+    globalWindow.__STORYBOOK_STORY_STORE__
   ) {
-    clientApi = window.__STORYBOOK_CLIENT_API__;
-    storyStore = window.__STORYBOOK_STORY_STORE__;
+    clientApi = globalWindow.__STORYBOOK_CLIENT_API__;
+    storyStore = globalWindow.__STORYBOOK_STORY_STORE__;
   } else {
     storyStore = new StoryStore({ channel });
     clientApi = new ClientApi({ storyStore, decorateStory });
@@ -73,7 +73,7 @@ export default function start(
     channel.on(Events.CURRENT_STORY_WAS_SET, setPath);
 
     // Handle keyboard shortcuts
-    window.onkeydown = (event: KeyboardEvent) => {
+    globalWindow.onkeydown = (event: KeyboardEvent) => {
       if (!focusInInput(event)) {
         // We have to pick off the keys of the event that we need on the other side
         const { altKey, ctrlKey, metaKey, shiftKey, key, code, keyCode } = event;
@@ -84,10 +84,10 @@ export default function start(
     };
   }
 
-  if (typeof window !== 'undefined') {
-    window.__STORYBOOK_CLIENT_API__ = clientApi;
-    window.__STORYBOOK_STORY_STORE__ = storyStore;
-    window.__STORYBOOK_ADDONS_CHANNEL__ = channel; // may not be defined
+  if (typeof globalWindow !== 'undefined') {
+    globalWindow.__STORYBOOK_CLIENT_API__ = clientApi;
+    globalWindow.__STORYBOOK_STORY_STORE__ = storyStore;
+    globalWindow.__STORYBOOK_ADDONS_CHANNEL__ = channel; // may not be defined
   }
 
   const configure = loadCsf({ clientApi, storyStore, configApi });
