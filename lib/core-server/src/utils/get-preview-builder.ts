@@ -8,7 +8,10 @@ export async function getPreviewBuilder(configDir: Options['configDir']) {
   const mainFile = getInterpretedFile(main);
   const { core } = mainFile ? serverRequire(mainFile) : { core: null };
   const builder = core?.builder || DEFAULT_WEBPACK;
+  const builderPackage = ['webpack4', 'webpack5'].includes(builder)
+    ? `@storybook/builder-${builder}`
+    : builder;
 
-  const previewBuilder = await import(`@storybook/builder-${builder}`);
+  const previewBuilder = await import(builderPackage);
   return previewBuilder;
 }
