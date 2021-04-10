@@ -62,12 +62,14 @@ export async function storybookDevServer(options: Options) {
         startTime,
         options,
         router,
+        server,
       });
 
   const manager = managerBuilder.start({
     startTime,
     options,
     router,
+    server,
   });
 
   const [previewResult, managerResult] = await Promise.all([

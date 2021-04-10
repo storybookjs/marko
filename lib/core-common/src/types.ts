@@ -169,6 +169,7 @@ export interface Builder<Config, Stats> {
     options: Options;
     startTime: ReturnType<typeof process.hrtime>;
     router: Router;
+    server: Server;
   }) => Promise<void | {
     stats: Stats;
     totalTime: ReturnType<typeof process.hrtime>;
