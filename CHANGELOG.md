@@ -1,3 +1,13 @@
+## 6.3.0-alpha.4 (April 10, 2021)
+
+### Features
+
+- Core: Expose Server instance through the pluggable Builder API ([#14468](https://github.com/storybookjs/storybook/pull/14468))
+
+### Maintenance
+
+- Core: Don't shadow the window global variable ([#14472](https://github.com/storybookjs/storybook/pull/14472))
+
 ## 6.3.0-alpha.3 (April 10, 2021)
 
 ### Features
