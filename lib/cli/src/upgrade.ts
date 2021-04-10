@@ -99,7 +99,8 @@ export const upgrade = async ({ prerelease, skipCheck, useNpm, dryRun }: Options
 
   const flags = [];
   if (!dryRun) flags.push('--upgrade');
-  if (prerelease) flags.push('--newest');
+  flags.push('--target');
+  flags.push(prerelease ? 'greatest' : 'latest');
   const check = spawnSync('npx', ['npm-check-updates', '/storybook/', ...flags], {
     stdio: 'pipe',
   }).output.toString();

@@ -83,9 +83,7 @@ function run() {
       defaultValue: false,
       option: '--install',
       command: () => {
-        const command = process.env.CI
-          ? `yarn install --frozen-lockfile --cache-folder ~/.cache/yarn --network-concurrency ${maxConcurrentTasks}`
-          : `yarn install --ignore-optional --network-concurrency ${maxConcurrentTasks}`;
+        const command = process.env.CI ? `yarn install --immutable` : `yarn install`;
         spawn(command);
       },
       order: 1,

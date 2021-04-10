@@ -9,15 +9,16 @@ jobs:
     steps:
     - uses: actions/setup-node@v1
       with:
-        node-version: '10.x'
+        node-version: '12.x'
     - uses: actions/checkout@v2
     - name: Cache node modules
       uses: actions/cache@v2
       with:
         path: node_modules
-        key: build-v2-${{ hashFiles('**/yarn.lock') }}
+        key: yarn-2-cache-v1-${{ hashFiles('**/yarn.lock') }}
     - name: install, bootstrap
       run: |
+        yarn install --immutable
         yarn bootstrap --core
     - name: test
       run: |

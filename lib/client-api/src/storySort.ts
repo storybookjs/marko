@@ -34,15 +34,25 @@ export const storySort = (options: StorySortObjectParameter = {}): StorySortComp
       // Look for the names in the given `order` array.
       let indexA = order.indexOf(nameA);
       let indexB = order.indexOf(nameB);
+      const indexWildcard = order.indexOf('*');
 
       // If at least one of the names is found, sort by the `order` array.
       if (indexA !== -1 || indexB !== -1) {
-        // If one of the names is not found in `order`, list it last.
+        // If one of the names is not found and there is a wildcard, insert it at the wildcard position.
+        // Otherwise, list it last.
         if (indexA === -1) {
-          indexA = order.length;
+          if (indexWildcard !== -1) {
+            indexA = indexWildcard;
+          } else {
+            indexA = order.length;
+          }
         }
         if (indexB === -1) {
-          indexB = order.length;
+          if (indexWildcard !== -1) {
+            indexB = indexWildcard;
+          } else {
+            indexB = order.length;
+          }
         }
 
         return indexA - indexB;

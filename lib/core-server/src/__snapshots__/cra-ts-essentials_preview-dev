@@ -47,33 +47,18 @@ Object {
         },
       },
       Object {
-        "enforce": "pre",
-        "include": Array [
-          "ROOT/src",
-          "ROOT/examples/cra-ts-essentials/.storybook",
-        ],
-        "test": "/\\\\.(js|mjs|jsx|ts|tsx)$/",
-        "use": Array [
-          Object {
-            "loader": "NODE_MODULES/eslint-loader/dist/cjs.js",
-            "options": Object {
-              "baseConfig": Object {
-                "extends": Array [
-                  "NODE_MODULES/eslint-config-react-app/index.js",
-                ],
-              },
-              "cache": true,
-              "eslintPath": "NODE_MODULES/eslint/lib/api.js",
-              "formatter": "NODE_MODULES/react-dev-utils/eslintFormatter.js",
-              "ignore": false,
-              "resolvePluginsRelativeTo": "NODE_MODULES/react-scripts/config",
-              "useEslintrc": false,
-            },
-          },
-        ],
-      },
-      Object {
         "oneOf": Array [
+          Object {
+            "loader": "NODE_MODULES/url-loader/dist/cjs.js",
+            "options": Object {
+              "limit": 10000,
+              "mimetype": "image/avif",
+              "name": "static/media/[name].[hash:8].[ext]",
+            },
+            "test": Array [
+              "/\\\\.avif$/",
+            ],
+          },
           Object {
             "loader": "NODE_MODULES/url-loader/dist/cjs.js",
             "options": Object {
@@ -97,7 +82,7 @@ Object {
               "babelrc": false,
               "cacheCompression": false,
               "cacheDirectory": true,
-              "cacheIdentifier": "development:babel-plugin-named-asset-import@0.3.7:babel-preset-react-app@9.1.2:react-dev-utils@10.2.1:react-scripts@3.4.4",
+              "cacheIdentifier": "development:babel-plugin-named-asset-import@0.3.7:babel-preset-react-app@10.0.0:react-dev-utils@11.0.3:react-scripts@4.0.3",
               "compact": false,
               "configFile": false,
               "customize": "NODE_MODULES/babel-preset-react-app/webpack-overrides.js",
@@ -126,9 +111,15 @@ Object {
                     },
                   },
                 ],
+                "NODE_MODULES/react-refresh/babel.js",
               ],
               "presets": Array [
-                "NODE_MODULES/babel-preset-react-app/index.js",
+                Array [
+                  "NODE_MODULES/babel-preset-react-app/index.js",
+                  Object {
+                    "runtime": "automatic",
+                  },
+                ],
               ],
             },
             "test": "/\\\\.(js|mjs|jsx|ts|tsx)$/",
@@ -143,7 +134,7 @@ Object {
               "babelrc": false,
               "cacheCompression": false,
               "cacheDirectory": true,
-              "cacheIdentifier": "development:babel-plugin-named-asset-import@0.3.7:babel-preset-react-app@9.1.2:react-dev-utils@10.2.1:react-scripts@3.4.4",
+              "cacheIdentifier": "development:babel-plugin-named-asset-import@0.3.7:babel-preset-react-app@10.0.0:react-dev-utils@11.0.3:react-scripts@4.0.3",
               "compact": false,
               "configFile": false,
               "inputSourceMap": true,
@@ -168,12 +159,12 @@ Object {
             "sideEffects": true,
             "test": "/\\\\.css$/",
             "use": Array [
-              "NODE_MODULES/style-loader/index.js",
+              "NODE_MODULES/style-loader/dist/cjs.js",
               Object {
                 "loader": "NODE_MODULES/css-loader/dist/cjs.js",
                 "options": Object {
                   "importLoaders": 1,
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
               Object {
@@ -181,7 +172,7 @@ Object {
                 "options": Object {
                   "ident": "postcss",
                   "plugins": [Function],
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -189,7 +180,7 @@ Object {
           Object {
             "test": "/\\\\.module\\\\.css$/",
             "use": Array [
-              "NODE_MODULES/style-loader/index.js",
+              "NODE_MODULES/style-loader/dist/cjs.js",
               Object {
                 "loader": "NODE_MODULES/css-loader/dist/cjs.js",
                 "options": Object {
@@ -197,7 +188,7 @@ Object {
                   "modules": Object {
                     "getLocalIdent": [Function],
                   },
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
               Object {
@@ -205,7 +196,7 @@ Object {
                 "options": Object {
                   "ident": "postcss",
                   "plugins": [Function],
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
             ],
@@ -215,12 +206,12 @@ Object {
             "sideEffects": true,
             "test": "/\\\\.(scss|sass)$/",
             "use": Array [
-              "NODE_MODULES/style-loader/index.js",
+              "NODE_MODULES/style-loader/dist/cjs.js",
               Object {
                 "loader": "NODE_MODULES/css-loader/dist/cjs.js",
                 "options": Object {
                   "importLoaders": 3,
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
               Object {
@@ -228,13 +219,14 @@ Object {
                 "options": Object {
                   "ident": "postcss",
                   "plugins": [Function],
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
               Object {
                 "loader": "NODE_MODULES/resolve-url-loader/index.js",
                 "options": Object {
-                  "sourceMap": false,
+                  "root": "ROOT/src",
+                  "sourceMap": true,
                 },
               },
               Object {
@@ -248,7 +240,7 @@ Object {
           Object {
             "test": "/\\\\.module\\\\.(scss|sass)$/",
             "use": Array [
-              "NODE_MODULES/style-loader/index.js",
+              "NODE_MODULES/style-loader/dist/cjs.js",
               Object {
                 "loader": "NODE_MODULES/css-loader/dist/cjs.js",
                 "options": Object {
@@ -256,7 +248,7 @@ Object {
                   "modules": Object {
                     "getLocalIdent": [Function],
                   },
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
               Object {
@@ -264,13 +256,14 @@ Object {
                 "options": Object {
                   "ident": "postcss",
                   "plugins": [Function],
-                  "sourceMap": false,
+                  "sourceMap": true,
                 },
               },
               Object {
                 "loader": "NODE_MODULES/resolve-url-loader/index.js",
                 "options": Object {
-                  "sourceMap": false,
+                  "root": "ROOT/src",
+                  "sourceMap": true,
                 },
               },
               Object {
@@ -430,9 +423,11 @@ Object {
     "ProgressPlugin",
     "InterpolateHtmlPlugin",
     "ModuleNotFoundPlugin",
+    "ReactRefreshPlugin",
     "ManifestPlugin",
     "IgnorePlugin",
     "ForkTsCheckerWebpackPlugin",
+    "ESLintWebpackPlugin",
     "DocgenPlugin",
   ],
 }

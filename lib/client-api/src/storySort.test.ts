@@ -8,8 +8,10 @@ describe('preview.storySort', () => {
     b: ['', { kind: 'b' }],
     a_a: ['', { kind: 'a/a' }],
     a_b: ['', { kind: 'a/b' }],
+    a_c: ['', { kind: 'a/c' }],
     b_a_a: ['', { kind: 'b/a/a' }],
     b_b: ['', { kind: 'b/b' }],
+    c: ['', { kind: 'c' }],
     locale1: ['', { kind: 'Б' }],
     locale2: ['', { kind: 'Г' }],
   };
@@ -72,5 +74,27 @@ describe('preview.storySort', () => {
 
     expect(sortFn(fixture.a_a, fixture.a_b)).toBeGreaterThan(0);
     expect(sortFn(fixture.a_b, fixture.a_a)).toBeLessThan(0);
+  });
+
+  it('sorts according to the order array with a wildcard', () => {
+    const sortFn = storySort({ order: ['a', '*', 'b'] });
+
+    expect(sortFn(fixture.a, fixture.b)).toBeLessThan(0);
+    expect(sortFn(fixture.c, fixture.b)).toBeLessThan(0);
+    expect(sortFn(fixture.b, fixture.c)).toBeGreaterThan(0);
+    expect(sortFn(fixture.b, fixture.a)).toBeGreaterThan(0);
+  });
+
+  it('sorts according to the nested order array with wildcard', () => {
+    const sortFn = storySort({ order: ['a', ['a', '*', 'b'], 'c'] });
+
+    expect(sortFn(fixture.a, fixture.c)).toBeLessThan(0);
+    expect(sortFn(fixture.c, fixture.a)).toBeGreaterThan(0);
+    expect(sortFn(fixture.a_a, fixture.a_b)).toBeLessThan(0);
+    expect(sortFn(fixture.a_b, fixture.a_a)).toBeGreaterThan(0);
+    expect(sortFn(fixture.a_a, fixture.a_c)).toBeLessThan(0);
+    expect(sortFn(fixture.a_c, fixture.a_a)).toBeGreaterThan(0);
+    expect(sortFn(fixture.a_c, fixture.a_b)).toBeLessThan(0);
+    expect(sortFn(fixture.a_b, fixture.a_c)).toBeGreaterThan(0);
   });
 });
