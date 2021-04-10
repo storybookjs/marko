@@ -71,60 +71,60 @@ describe('parseArgsParam', () => {
   });
 
   it('parses multiple values', () => {
-    const args = parseArgsParam('one:1;two:2;three:3');
-    expect(args).toStrictEqual({ one: '1', two: '2', three: '3' });
+    const args = parseArgsParam('one:A;two:B;three:C');
+    expect(args).toStrictEqual({ one: 'A', two: 'B', three: 'C' });
   });
 
   it('parses arrays', () => {
-    const args = parseArgsParam('arr[]:1;arr[]:2;arr[]:3');
-    expect(args).toStrictEqual({ arr: ['1', '2', '3'] });
+    const args = parseArgsParam('arr[]:A;arr[]:B;arr[]:C');
+    expect(args).toStrictEqual({ arr: ['A', 'B', 'C'] });
   });
 
   it('parses arrays with indices', () => {
-    const args = parseArgsParam('arr[0]:1;arr[1]:2;arr[2]:3');
-    expect(args).toStrictEqual({ arr: ['1', '2', '3'] });
+    const args = parseArgsParam('arr[0]:A;arr[1]:B;arr[2]:C');
+    expect(args).toStrictEqual({ arr: ['A', 'B', 'C'] });
   });
 
   it('parses sparse arrays', () => {
-    const args = parseArgsParam('arr[0]:1;arr[2]:3');
+    const args = parseArgsParam('arr[0]:A;arr[2]:C');
     // eslint-disable-next-line no-sparse-arrays
-    expect(args).toStrictEqual({ arr: ['1', , '3'] });
+    expect(args).toStrictEqual({ arr: ['A', , 'C'] });
   });
 
   it('parses repeated values as arrays', () => {
-    const args = parseArgsParam('arr:1;arr:2;arr:3');
-    expect(args).toStrictEqual({ arr: ['1', '2', '3'] });
+    const args = parseArgsParam('arr:A;arr:B;arr:C');
+    expect(args).toStrictEqual({ arr: ['A', 'B', 'C'] });
   });
 
   it('parses simple objects', () => {
-    const args = parseArgsParam('obj.one:1;obj.two:2');
-    expect(args).toStrictEqual({ obj: { one: '1', two: '2' } });
+    const args = parseArgsParam('obj.one:A;obj.two:B');
+    expect(args).toStrictEqual({ obj: { one: 'A', two: 'B' } });
   });
 
   it('parses nested objects', () => {
-    const args = parseArgsParam('obj.foo.one:1;obj.foo.two:2;obj.bar.one:1');
-    expect(args).toStrictEqual({ obj: { foo: { one: '1', two: '2' }, bar: { one: '1' } } });
+    const args = parseArgsParam('obj.foo.one:A;obj.foo.two:B;obj.bar.one:A');
+    expect(args).toStrictEqual({ obj: { foo: { one: 'A', two: 'B' }, bar: { one: 'A' } } });
   });
 
   it('parses arrays in objects', () => {
-    expect(parseArgsParam('obj.foo[]:1;obj.foo[]:2')).toStrictEqual({ obj: { foo: ['1', '2'] } });
-    expect(parseArgsParam('obj.foo[0]:1;obj.foo[1]:2')).toStrictEqual({ obj: { foo: ['1', '2'] } });
+    expect(parseArgsParam('obj.foo[]:A;obj.foo[]:B')).toStrictEqual({ obj: { foo: ['A', 'B'] } });
+    expect(parseArgsParam('obj.foo[0]:A;obj.foo[1]:B')).toStrictEqual({ obj: { foo: ['A', 'B'] } });
     // eslint-disable-next-line no-sparse-arrays
-    expect(parseArgsParam('obj.foo[1]:2')).toStrictEqual({ obj: { foo: [, '2'] } });
-    expect(parseArgsParam('obj.foo:1;obj.foo:2')).toStrictEqual({ obj: { foo: ['1', '2'] } });
+    expect(parseArgsParam('obj.foo[1]:B')).toStrictEqual({ obj: { foo: [, 'B'] } });
+    expect(parseArgsParam('obj.foo:A;obj.foo:B')).toStrictEqual({ obj: { foo: ['A', 'B'] } });
   });
 
   it('parses single object in array', () => {
-    const args = parseArgsParam('arr[].one:1;arr[].two:2');
-    expect(args).toStrictEqual({ arr: [{ one: '1', two: '2' }] });
+    const args = parseArgsParam('arr[].one:A;arr[].two:B');
+    expect(args).toStrictEqual({ arr: [{ one: 'A', two: 'B' }] });
   });
 
   it('parses multiple objects in array', () => {
-    expect(parseArgsParam('arr[0].key:1;arr[1].key:2')).toStrictEqual({
-      arr: [{ key: '1' }, { key: '2' }],
+    expect(parseArgsParam('arr[0].key:A;arr[1].key:B')).toStrictEqual({
+      arr: [{ key: 'A' }, { key: 'B' }],
     });
-    expect(parseArgsParam('arr[0][key]:1;arr[1][key]:2')).toStrictEqual({
-      arr: [{ key: '1' }, { key: '2' }],
+    expect(parseArgsParam('arr[0][key]:A;arr[1][key]:B')).toStrictEqual({
+      arr: [{ key: 'A' }, { key: 'B' }],
     });
   });
 
@@ -222,7 +222,15 @@ describe('parseArgsParam', () => {
       expect(parseArgsParam('key:_val_')).toStrictEqual({ key: '_val_' });
       expect(parseArgsParam('key:-val-')).toStrictEqual({ key: '-val-' });
       expect(parseArgsParam('key:VAL123')).toStrictEqual({ key: 'VAL123' });
-      expect(parseArgsParam('key:1')).toStrictEqual({ key: '1' });
+    });
+
+    it('allows and parses valid (fractional) numbers', () => {
+      expect(parseArgsParam('key:1')).toStrictEqual({ key: 1 });
+      expect(parseArgsParam('key:1.2')).toStrictEqual({ key: 1.2 });
+      expect(parseArgsParam('key:-1.2')).toStrictEqual({ key: -1.2 });
+      expect(parseArgsParam('key:1.')).toStrictEqual({});
+      expect(parseArgsParam('key:.2')).toStrictEqual({});
+      expect(parseArgsParam('key:1.2.3')).toStrictEqual({});
     });
 
     it('also applies to nested object and array values', () => {
