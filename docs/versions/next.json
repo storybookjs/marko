@@ -1,1 +1,1 @@
-{"version":"6.3.0-alpha.4","info":{"plain":"### Features\n\n- Core: Expose Server instance through the pluggable Builder API ([#14468](https://github.com/storybookjs/storybook/pull/14468))\n\n### Maintenance\n\n- Core: Don't shadow the window global variable ([#14472](https://github.com/storybookjs/storybook/pull/14472))"}}
+{"version":"6.3.0-alpha.5","info":{"plain":"### Features\n\n* Core: Enable community builders ([#14545](https://github.com/storybookjs/storybook/pull/14545))"}}
