@@ -1,3 +1,9 @@
+## 6.3.0-alpha.5 (April 11, 2021)
+
+### Features
+
+* Core: Enable community builders ([#14545](https://github.com/storybookjs/storybook/pull/14545))
+
 ## 6.3.0-alpha.4 (April 10, 2021)
 
 ### Features
