@@ -126,7 +126,10 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
   {
     preset: ProjectType.SFC_VUE,
-    dependencies: ['vue-loader', 'vuetify'],
+    dependencies: {
+      'vue-loader': (versionRange) => ltMajor(versionRange, 16),
+      vuetify: (versionRange) => ltMajor(versionRange, 3),
+    },
     matcherFunction: ({ dependencies }) => {
       return dependencies.some(Boolean);
     },
