@@ -43,6 +43,10 @@ export interface ImageSnapshotConfig extends CommonConfig {
   afterScreenshot: (options: { image: string; context: Context }) => Promise<void>;
 }
 
+export interface AxeConfig extends CommonConfig {
+  beforeAxeTest: (page: Page, options: Options) => Promise<void>;
+}
+
 const noop: () => undefined = () => undefined;
 const asyncNoop: () => Promise<undefined> = async () => undefined;
 
@@ -81,4 +85,9 @@ export const defaultImageSnapshotConfig: ImageSnapshotConfig = {
   getScreenshotOptions: defaultScreenshotOptions,
   beforeScreenshot: noop,
   afterScreenshot: noop,
+};
+
+export const defaultAxeConfig: AxeConfig = {
+  ...defaultCommonConfig,
+  beforeAxeTest: noop,
 };
