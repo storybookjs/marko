@@ -8,7 +8,7 @@ labels: needs triage, bug
 A clear and concise description of what the bug is.
 
 **To Reproduce**
-Link to a repro repo that demonstrates the bug, plus instructions on how to trigger it.
+Link to a reproduction repo that demonstrates the bug, plus instructions on how to trigger it.
 
 **System**
 Please paste the results of `npx sb@next info` here.
