@@ -59,7 +59,8 @@
   },
   "peerDependencies": {
     "@babel/core": "*",
-    "preact": "^8.0.0||^10.0.0"
+    "preact": "^8.0.0||^10.0.0",
+    "webpack": "*"
   },
   "engines": {
     "node": ">=10.13.0"
