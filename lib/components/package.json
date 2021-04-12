@@ -53,7 +53,7 @@
     "overlayscrollbars": "^1.13.1",
     "polished": "^4.0.5",
     "prop-types": "^15.7.2",
-    "react-colorful": "^5.0.1",
+    "react-colorful": "^5.1.2",
     "react-popper-tooltip": "^3.1.1",
     "react-syntax-highlighter": "^13.5.3",
     "react-textarea-autosize": "^8.3.0",
