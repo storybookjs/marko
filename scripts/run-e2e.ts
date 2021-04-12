@@ -107,6 +107,8 @@ const configureYarn2 = async ({ cwd }: Options) => {
     // Disable fallback mode to make sure everything is required correctly
     `yarn config set pnpFallbackMode none`,
     `yarn config set enableGlobalCache true`,
+    // We need to be able to update lockfile when bootstrapping the examples
+    `yarn config set enableImmutableInstalls false`,
     // Add package extensions
     // https://github.com/facebook/create-react-app/pull/9872
     `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
