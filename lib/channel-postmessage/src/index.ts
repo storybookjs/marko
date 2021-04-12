@@ -231,8 +231,8 @@ const getEventSourceUrl = (event: MessageEvent) => {
 
   if (frame && remainder.length === 0) {
     const src = frame.getAttribute('src');
-    const { origin, pathname } = new URL(src, document.location);
-    return origin + pathname;
+    const { protocol, host, pathname } = new URL(src, document.location);
+    return `${protocol}//${host}${pathname}`;
   }
 
   if (remainder.length > 0) {
