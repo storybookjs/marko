@@ -7561,6 +7561,7 @@ __metadata:
   peerDependencies:
     "@babel/core": "*"
     preact: ^8.0.0||^10.0.0
+    webpack: "*"
   bin:
     build-storybook: ./bin/build.js
     start-storybook: ./bin/index.js
