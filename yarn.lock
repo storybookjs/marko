@@ -9519,6 +9519,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-dom@npm:^17":
+  version: 17.0.3
+  resolution: "@types/react-dom@npm:17.0.3"
+  dependencies:
+    "@types/react": "*"
+  checksum: 1f6a025a71bbac583a4d41b1ad6fae6ac35b0595acf54637e312caffdd364a04d9390e71147e79726586a8df0963e24e42f63d7f2887c0e85b8c0847be686154
+  languageName: node
+  linkType: hard
+
 "@types/react-lifecycles-compat@npm:^3.0.1":
   version: 3.0.1
   resolution: "@types/react-lifecycles-compat@npm:3.0.1"
@@ -9587,6 +9596,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react@npm:^17":
+  version: 17.0.3
+  resolution: "@types/react@npm:17.0.3"
+  dependencies:
+    "@types/prop-types": "*"
+    "@types/scheduler": "*"
+    csstype: ^3.0.2
+  checksum: 94d390d4033e72962b71a969b7cbfc870a0fa499d93322a58b4f5e3dcfecd0833ecd1ed59882ed92a362a41189195c285f2be100fb1199b76e87577ac662808c
+  languageName: node
+  linkType: hard
+
 "@types/relateurl@npm:*":
   version: 0.2.28
   resolution: "@types/relateurl@npm:0.2.28"
@@ -9635,6 +9655,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: 669a9b48cde060e256f4fc295b9ac12443df2676f62abdfb58ded86a57d4bca15dc8b3083445e53b84263203e1ebaeb08c9f7d78b05398bfbe95963fd38ea7b1
+  languageName: node
+  linkType: hard
+
+"@types/scheduler@npm:*":
+  version: 0.16.1
+  resolution: "@types/scheduler@npm:0.16.1"
+  checksum: 78aa5a8b19b42b7b6dc1dc3fb64c1ef2cb87b685292a0951d06d15ac4de8926c9a219bd027f438c3cb701cf525cf1f233bc09a90af5488ae8b98af2ec84b656a
   languageName: node
   linkType: hard
 
@@ -20696,6 +20723,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"enzyme-adapter-preact@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "enzyme-adapter-preact@npm:0.2.0"
+  dependencies:
+    enzyme-adapter-utils: ^1.3.0
+    object.values: ^1.0.4
+    preact-compat: ^3.18.0
+    preact-render-to-string: ^3.7.0
+    proptypes: ^1.1.0
+    react: ^16.2.0
+    react-test-renderer: ^16.2.0
+  peerDependencies:
+    enzyme: ^3.3.0
+    preact: ^8.2.7
+  checksum: 8f88c74331b47cafa1befc28cdb2168e9196740ff35ec1e9ed2abd66b031e311c1dd1d086747f57fb90b283498b2f84304d90ad0b63622f9147c988c4882b7ea
+  languageName: node
+  linkType: hard
+
 "enzyme-adapter-react-16@npm:^1.15.5, enzyme-adapter-react-16@npm:^1.9.1":
   version: 1.15.6
   resolution: "enzyme-adapter-react-16@npm:1.15.6"
@@ -20717,7 +20762,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"enzyme-adapter-utils@npm:^1.14.0":
+"enzyme-adapter-utils@npm:^1.14.0, enzyme-adapter-utils@npm:^1.3.0":
   version: 1.14.0
   resolution: "enzyme-adapter-utils@npm:1.14.0"
   dependencies:
@@ -26040,6 +26085,15 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
+"immutability-helper@npm:^2.7.1":
+  version: 2.9.1
+  resolution: "immutability-helper@npm:2.9.1"
+  dependencies:
+    invariant: ^2.2.0
+  checksum: 0e087f39f1e3dce387094471e55c6e6bf2ab109eaf07d8549b4ca4b01f60712331a5c45fc89344c9e273fa27742cd9b6443d9adee19edaefc1e546dba33087e1
+  languageName: node
+  linkType: hard
+
 "import-cwd@npm:^2.0.0":
   version: 2.1.0
   resolution: "import-cwd@npm:2.1.0"
@@ -26434,7 +26488,7 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"invariant@npm:^2.2.2, invariant@npm:^2.2.3, invariant@npm:^2.2.4":
+"invariant@npm:^2.2.0, invariant@npm:^2.2.2, invariant@npm:^2.2.3, invariant@npm:^2.2.4":
   version: 2.2.4
   resolution: "invariant@npm:2.2.4"
   dependencies:
@@ -34050,7 +34104,7 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"object.values@npm:^1.1.0, object.values@npm:^1.1.1, object.values@npm:^1.1.2":
+"object.values@npm:^1.0.4, object.values@npm:^1.1.0, object.values@npm:^1.1.1, object.values@npm:^1.1.2":
   version: 1.1.3
   resolution: "object.values@npm:1.1.3"
   dependencies:
@@ -36753,6 +36807,31 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
+"preact-compat@npm:^3.18.0":
+  version: 3.19.0
+  resolution: "preact-compat@npm:3.19.0"
+  dependencies:
+    immutability-helper: ^2.7.1
+    preact-context: ^1.1.3
+    preact-render-to-string: ^3.8.2
+    preact-transition-group: ^1.1.1
+    prop-types: ^15.6.2
+    standalone-react-addons-pure-render-mixin: ^0.1.1
+  peerDependencies:
+    preact: <10
+  checksum: fea8b9c08596e52cf782feeec3a9b805e7cee8499eb992b245cda722a6efa8f22cfe2d640db0349c9f13e3790b437df538bd06276cc4908d2540114620283e27
+  languageName: node
+  linkType: hard
+
+"preact-context@npm:^1.1.3":
+  version: 1.1.4
+  resolution: "preact-context@npm:1.1.4"
+  peerDependencies:
+    preact: ^8.2.7
+  checksum: a3eb81da4a2a2751d4ba3e3c888a20f2978e0a57e3fa1ff438ec717e09ad742f10dd8a7cf3ba5145a0b680bd000097502f5493f41df0e1926962d003cab54007
+  languageName: node
+  linkType: hard
+
 "preact-example@workspace:examples/preact-kitchen-sink":
   version: 0.0.0-use.local
   resolution: "preact-example@workspace:examples/preact-kitchen-sink"
@@ -36770,18 +36849,36 @@ fsevents@2.1.2:
     "@storybook/addons": 6.3.0-alpha.5
     "@storybook/preact": 6.3.0-alpha.5
     "@storybook/source-loader": 6.3.0-alpha.5
+    "@types/prop-types": ^15.7.3
+    "@types/react": ^17
+    "@types/react-dom": ^17
     babel-loader: ^8.2.2
     cross-env: ^7.0.3
+    enzyme-adapter-preact: ^0.2.0
     file-loader: ^6.2.0
     global: ^4.4.0
     preact: ^10.5.13
     preact-render-to-string: ^5.1.19
+    prop-types: ^15.7.2
     raw-loader: ^4.0.2
+    react: ^17.0.2
+    react-dom: ^17.0.2
     svg-url-loader: ^7.1.1
     webpack: 4
     webpack-dev-server: ^3.11.2
   languageName: unknown
   linkType: soft
+
+"preact-render-to-string@npm:^3.7.0, preact-render-to-string@npm:^3.8.2":
+  version: 3.8.2
+  resolution: "preact-render-to-string@npm:3.8.2"
+  dependencies:
+    pretty-format: ^3.5.1
+  peerDependencies:
+    preact: "*"
+  checksum: e139fb6d0bbfa4131f5ab07ab8175fd1633fb4dc3d68a045499b38bf30428131e7a7ebdf86778f9a2981b6f315083eb2d698302e74351ac1a48cebc3baa0bb35
+  languageName: node
+  linkType: hard
 
 "preact-render-to-string@npm:^5.1.19":
   version: 5.1.19
@@ -36791,6 +36888,15 @@ fsevents@2.1.2:
   peerDependencies:
     preact: ">=10"
   checksum: 560670ad725fc22ef80c37f38b2b2959313f53b9b52e988260365d7be158fbaebb24ddee391f41e4c353365b2c59a36e27e3e5c84cb692016c5adbb4c9a7a055
+  languageName: node
+  linkType: hard
+
+"preact-transition-group@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "preact-transition-group@npm:1.1.1"
+  peerDependencies:
+    preact: "*"
+  checksum: dc40e114508cff3e7952d4681eb717d20514cd87349da7455b46ed897d71c4e1b209eeadc1f2788cf851d25c3e9d781456c177a16549ebfb4c76fae3222668c6
   languageName: node
   linkType: hard
 
@@ -36923,7 +37029,7 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"pretty-format@npm:^3.8.0":
+"pretty-format@npm:^3.5.1, pretty-format@npm:^3.8.0":
   version: 3.8.0
   resolution: "pretty-format@npm:3.8.0"
   checksum: 69f12937bfb7b2a537a7463b9f875a16322401f1e44d7702d643faa0d21991126c24c093217ef6da403b54c15942a834174fa1c016b72e2cb9edaae6bb3729b6
@@ -37199,6 +37305,13 @@ fsevents@2.1.2:
   dependencies:
     xtend: ^4.0.0
   checksum: d54b77c31dc13bb6819559080b2c67d37d94be7dc271f404f139a16a57aa96fcc0b3ad806d4a5baef9e031744853e4afe3df2e37275aacb1f78079bbb652c5af
+  languageName: node
+  linkType: hard
+
+"proptypes@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "proptypes@npm:1.1.0"
+  checksum: 8944fb0763433438cbe5c34fac004edabb33be3cf4454079cbef10f752f614c4082c935d916b7347d4541323323e17e159ac2f804ef783cdf19870298f64eca6
   languageName: node
   linkType: hard
 
@@ -38377,6 +38490,19 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
+"react-dom@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react-dom@npm:17.0.2"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+    scheduler: ^0.20.2
+  peerDependencies:
+    react: 17.0.2
+  checksum: 51abbcb72450fe527ebf978c3bc989ba266630faaa53f47a2fae5392369729e8de62b2e4683598cbe651ea7873cd34ec7d5127e2f50bf4bfe6bd0c3ad9bddcb0
+  languageName: node
+  linkType: hard
+
 "react-draggable@npm:^4.4.3":
   version: 4.4.3
   resolution: "react-draggable@npm:4.4.3"
@@ -38793,7 +38919,7 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"react-test-renderer@npm:^16.0.0-0":
+"react-test-renderer@npm:^16.0.0-0, react-test-renderer@npm:^16.2.0":
   version: 16.14.0
   resolution: "react-test-renderer@npm:16.14.0"
   dependencies:
@@ -38849,7 +38975,7 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"react@npm:16.14.0":
+"react@npm:16.14.0, react@npm:^16.2.0":
   version: 16.14.0
   resolution: "react@npm:16.14.0"
   dependencies:
@@ -38880,6 +39006,16 @@ fsevents@2.1.2:
     loose-envify: ^1.1.0
     object-assign: ^4.1.1
   checksum: adaf04c179d1f3811ea7d221a0929643c2b0518e6e168cba554a4c3e2032c0c22a6a49e83f1b43f98bbf71d93fede73e69489082373bccf2142d13ae94fa3b20
+  languageName: node
+  linkType: hard
+
+"react@npm:^17.0.2":
+  version: 17.0.2
+  resolution: "react@npm:17.0.2"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+  checksum: 07ae8959acf1596f0550685102fd6097d461a54a4fd46a50f88a0cd7daaa97fdd6415de1dcb4bfe0da6aa43221a6746ce380410fa848acc60f8ac41f6649c148
   languageName: node
   linkType: hard
 
@@ -41122,6 +41258,16 @@ resolve@1.19.0:
   languageName: node
   linkType: hard
 
+"scheduler@npm:^0.20.2":
+  version: 0.20.2
+  resolution: "scheduler@npm:0.20.2"
+  dependencies:
+    loose-envify: ^1.1.0
+    object-assign: ^4.1.1
+  checksum: b0982e4b0f34f4ffa4f2f486161c0fd9ce9b88680b045dccbf250eb1aa4fd27413570645455187a83535e2370f5c667a251045547765408492bd883cbe95fcdb
+  languageName: node
+  linkType: hard
+
 "schema-utils@npm:2.7.0":
   version: 2.7.0
   resolution: "schema-utils@npm:2.7.0"
@@ -42500,6 +42646,13 @@ resolve@1.19.0:
     react-dom: 16.14.0
   languageName: unknown
   linkType: soft
+
+"standalone-react-addons-pure-render-mixin@npm:^0.1.1":
+  version: 0.1.1
+  resolution: "standalone-react-addons-pure-render-mixin@npm:0.1.1"
+  checksum: 1c6ca4c69c621e05adaa53e1f0424829ad37e1bb7eea4e32656c9c31e225b302613f9ca5d6c141f47caa38cba7d043e7b6ee30a07e51e8762598afcfa490d818
+  languageName: node
+  linkType: hard
 
 "state-toggle@npm:^1.0.0":
   version: 1.0.3
