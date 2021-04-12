@@ -17,12 +17,11 @@ export function webpackFinal(config: Configuration) {
     ...config,
     resolve: {
       ...config.resolve,
-      modules: [path.resolve('node_modules'), ...config.resolve.modules],
       alias: {
         ...config.resolve.alias,
-        react: require.resolve('preact/compat'),
-        'react-dom/test-utils': require.resolve('preact/test-utils'),
-        'react-dom': require.resolve('preact/compat'),
+        react: path.dirname(require.resolve('preact/compat/package.json')),
+        'react-dom/test-utils': path.dirname(require.resolve('preact/test-utils/package.json')),
+        'react-dom': path.dirname(require.resolve('preact/compat/package.json')),
       },
     },
   };
