@@ -114,6 +114,7 @@ Args are used in story templates to configure the component appearance just as y
     'react/page-story-slots.ts.mdx',
     'vue/page-story-slots.2.js.mdx',
     'vue/page-story-slots.3.js.mdx',
+    'angular/page-story-slots.ts.mdx'
   ]}
 />
 
