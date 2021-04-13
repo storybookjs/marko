@@ -1,3 +1,20 @@
+## 6.3.0-alpha.6 (April 13, 2021)
+
+### Bug Fixes
+
+- Core: Fix build config inconsistency ([#14566](https://github.com/storybookjs/storybook/pull/14566))
+- CLI: Fix vuetify3 detection ([#14552](https://github.com/storybookjs/storybook/pull/14552))
+
+### Maintenance
+
+- Build: Disable yarn immutable install by default during E2E tests ([#14568](https://github.com/storybookjs/storybook/pull/14568))
+- Build: Fix `dev:babel` and `dev:tsc` NPM scripts ([#14560](https://github.com/storybookjs/storybook/pull/14560))
+
+### Dependency Upgrades
+
+- Bump vue-docgen-api to 4.38.0 ([#14567](https://github.com/storybookjs/storybook/pull/14567))
+- Upgrade react-colorful to latest ([#14553](https://github.com/storybookjs/storybook/pull/14553))
+
 ## 6.3.0-alpha.5 (April 11, 2021)
 
 ### Features
