@@ -51,6 +51,12 @@ describe('Construct URL for Storyshots', () => {
     );
   });
 
+  it('can use a url with username and query params', () => {
+    expect(constructUrl('http://username@localhost:9001/nice-path/?hello=world', id)).toEqual(
+      'http://username@localhost:9001/nice-path/iframe.html?hello=world&id=somekind--somestory'
+    );
+  });
+
   it('can use a url with file protocol', () => {
     expect(constructUrl('file://users/storybook', id)).toEqual(
       'file://users/storybook/iframe.html?id=somekind--somestory'
