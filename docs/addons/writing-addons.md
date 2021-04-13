@@ -49,8 +49,8 @@ Once you've gone through the prompts your `package.json` should look like:
 We'll need to add the necessary dependencies and make some adjustments. Run the following commands:
 
 ```shell
-# Installs React
-yarn add react react-dom
+# Installs React and Babel CLI
+yarn add react react-dom @babel/cli
 
 # Adds Storybook:
 npx -p @storybook/cli sb init
