@@ -3146,9 +3146,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cypress/webpack-preprocessor@npm:^5.5.0":
-  version: 5.6.0
-  resolution: "@cypress/webpack-preprocessor@npm:5.6.0"
+"@cypress/webpack-preprocessor@npm:^5.7.0":
+  version: 5.7.0
+  resolution: "@cypress/webpack-preprocessor@npm:5.7.0"
   dependencies:
     bluebird: ^3.7.1
     debug: 4.3.2
@@ -3158,7 +3158,7 @@ __metadata:
     "@babel/preset-env": ^7.0.0
     babel-loader: ^8.0.2
     webpack: ^4.18.1
-  checksum: 337cf2ec91a240400bf0e75acb780670365b5b08d9f41f00aa534239489f70f3bb700556c5adb910798779a21a13c98a874d38f18a4cb68cc5f866a9bd41eec1
+  checksum: 5b76736aaaf2674f7a8d29c69abaf5d820cbc280e49ff0a097ce131bb4d9f8e79a32267c72a51b1ff2bfc13e5ed01a87e9437dc70d93bed6d640c416b8a081c5
   languageName: node
   linkType: hard
 
@@ -7754,7 +7754,7 @@ __metadata:
     "@babel/preset-typescript": ^7.12.7
     "@babel/runtime": ^7.12.5
     "@compodoc/compodoc": ^1.1.11
-    "@cypress/webpack-preprocessor": ^5.5.0
+    "@cypress/webpack-preprocessor": ^5.7.0
     "@emotion/snapshot-serializer": ^0.8.2
     "@nicolo-ribaudo/chokidar-2": ^2.1.8
     "@storybook/addon-a11y": "workspace:*"
@@ -7855,7 +7855,7 @@ __metadata:
     concurrently: ^5.3.0
     core-js: ^3.8.2
     cross-env: ^7.0.3
-    cypress: 4.12.1
+    cypress: 6.8.0
     danger: ^10.6.2
     detect-port: ^1.3.0
     downlevel-dts: ^0.6.0
@@ -9340,6 +9340,13 @@ __metadata:
   version: 14.14.31
   resolution: "@types/node@npm:14.14.31"
   checksum: 9ba9faaa4e88fe84296bb7c81d78ab8ddca4ba6b309307ea7a23eb0c50767a886505d73eaf7de83725ad9c051b7831ff61c5537841d29e69f63c095c80ecc945
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:12.12.50":
+  version: 12.12.50
+  resolution: "@types/node@npm:12.12.50"
+  checksum: d11b1e0d8bb4aaf81333567b344780eb117ec5b28bc56a312f3759e94fade77bce6a4dc6174fe6269779132863fc64f8c0521324e5c2d42f3cceed66eace0cdd
   languageName: node
   linkType: hard
 
@@ -14108,6 +14115,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"blob-util@npm:2.0.2":
+  version: 2.0.2
+  resolution: "blob-util@npm:2.0.2"
+  checksum: ed82d587827e5c86be122301a7c250f8364963e9582f72a826255bfbd32f8d69cc10169413d666667bb1c4fc8061329ae89d176ffe46fee8f32080af944ccddc
+  languageName: node
+  linkType: hard
+
 "blob@npm:0.0.5":
   version: 0.0.5
   resolution: "blob@npm:0.0.5"
@@ -16381,7 +16395,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cli-table3@npm:0.6.0":
+"cli-table3@npm:0.6.0, cli-table3@npm:~0.6.0":
   version: 0.6.0
   resolution: "cli-table3@npm:0.6.0"
   dependencies:
@@ -16392,20 +16406,6 @@ __metadata:
     colors:
       optional: true
   checksum: 3805702bb9a0d54ed8a5385237088b489109744b37654fd2fe9ca9df0369dc1603feef28f610c5f5fee8ed4350c38ddcfb1dfc7f700616e668f5487529551249
-  languageName: node
-  linkType: hard
-
-"cli-table3@npm:~0.5.1":
-  version: 0.5.1
-  resolution: "cli-table3@npm:0.5.1"
-  dependencies:
-    colors: ^1.1.2
-    object-assign: ^4.1.0
-    string-width: ^2.1.1
-  dependenciesMeta:
-    colors:
-      optional: true
-  checksum: 659c40ead17539d0665aa9dea85a7650fc161939f9d8bd3842c6cf5da51dc867057d3066fe8c962dafa163da39ce2029357754aee2c8f9513ea7a0810511d1d6
   languageName: node
   linkType: hard
 
@@ -16856,7 +16856,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"commander@npm:^5.0.0":
+"commander@npm:^5.0.0, commander@npm:^5.1.0":
   version: 5.1.0
   resolution: "commander@npm:5.1.0"
   checksum: da9d71dbe4ce039faf1fe9eac3771dca8c11d66963341f62602f7b66e36d2a3f8883407af4f9a37b1db1a55c59c0c1325f186425764c2e963dc1d67aec2a4b6d
@@ -18492,50 +18492,53 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:4.12.1":
-  version: 4.12.1
-  resolution: "cypress@npm:4.12.1"
+"cypress@npm:6.8.0":
+  version: 6.8.0
+  resolution: "cypress@npm:6.8.0"
   dependencies:
     "@cypress/listr-verbose-renderer": ^0.4.1
     "@cypress/request": ^2.88.5
     "@cypress/xvfb": ^1.2.4
+    "@types/node": 12.12.50
     "@types/sinonjs__fake-timers": ^6.0.1
     "@types/sizzle": ^2.3.2
     arch: ^2.1.2
+    blob-util: 2.0.2
     bluebird: ^3.7.2
     cachedir: ^2.3.0
-    chalk: ^2.4.2
+    chalk: ^4.1.0
     check-more-types: ^2.24.0
-    cli-table3: ~0.5.1
-    commander: ^4.1.1
+    cli-table3: ~0.6.0
+    commander: ^5.1.0
     common-tags: ^1.8.0
-    debug: ^4.1.1
+    dayjs: ^1.9.3
+    debug: 4.3.2
     eventemitter2: ^6.4.2
-    execa: ^1.0.0
+    execa: ^4.0.2
     executable: ^4.1.1
     extract-zip: ^1.7.0
-    fs-extra: ^8.1.0
+    fs-extra: ^9.0.1
     getos: ^3.2.1
     is-ci: ^2.0.0
     is-installed-globally: ^0.3.2
     lazy-ass: ^1.6.0
     listr: ^0.14.3
     lodash: ^4.17.19
-    log-symbols: ^3.0.0
+    log-symbols: ^4.0.0
     minimist: ^1.2.5
-    moment: ^2.27.0
+    moment: ^2.29.1
     ospath: ^1.2.2
-    pretty-bytes: ^5.3.0
-    ramda: ~0.26.1
+    pretty-bytes: ^5.4.1
+    ramda: ~0.27.1
     request-progress: ^3.0.0
-    supports-color: ^7.1.0
-    tmp: ~0.1.0
+    supports-color: ^7.2.0
+    tmp: ~0.2.1
     untildify: ^4.0.0
     url: ^0.11.0
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 9a5953f15f27eb6f3aa44fb2e61987415dcb38c231faafb9231200f6e870002130a19490c4ee01f4f124835ff7fd22bb77a75c342fe24f7b799f8ca7f15e4e45
+  checksum: 2afad38fca18384801a9b096e7809f18883c717ca4c478f02a8df62bf7bd25cdec4d1308d63c4d7695676ec540e6ac92f2391ee7e03a9d00bc0d1c0b5794b901
   languageName: node
   linkType: hard
 
@@ -18712,6 +18715,13 @@ __metadata:
   version: 1.10.3
   resolution: "dayjs@npm:1.10.3"
   checksum: de64f8e8a50001bd28ed2bde5a2ae9dd87e6ceeffa70cc1363878787b80b2a4f3c7f99a2e5f214b2fdbe27f1ce62eea710a85d2c63773da1b002a4c78f1eecac
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.9.3":
+  version: 1.10.4
+  resolution: "dayjs@npm:1.10.4"
+  checksum: ff5f760db0f169ca7ff93aab60fb0fafd9592ad4d45fff989fca642cf3c356ff6ed630339bcf5405e81361518fbd1619d73a336c3b092fdd42665469118b8929
   languageName: node
   linkType: hard
 
@@ -22241,7 +22251,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"execa@npm:^4.0.0, execa@npm:^4.1.0":
+"execa@npm:^4.0.0, execa@npm:^4.0.2, execa@npm:^4.1.0":
   version: 4.1.0
   resolution: "execa@npm:4.1.0"
   dependencies:
@@ -31340,15 +31350,6 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"log-symbols@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "log-symbols@npm:3.0.0"
-  dependencies:
-    chalk: ^2.4.2
-  checksum: d11582a1b499b76aa1415988234ad54d9fb3f888f4cb4186cbc20ee4d314ac4b5f3d9fe9edd828748d2c0d372df2ea9f5dfd89100510988a8ce5ddf483ae015e
-  languageName: node
-  linkType: hard
-
 "log-symbols@npm:^4.0.0":
   version: 4.0.0
   resolution: "log-symbols@npm:4.0.0"
@@ -32957,7 +32958,7 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"moment@npm:>=1.6.0, moment@npm:^2.18.1, moment@npm:^2.19.3, moment@npm:^2.27.0":
+"moment@npm:>=1.6.0, moment@npm:^2.18.1, moment@npm:^2.19.3, moment@npm:^2.29.1":
   version: 2.29.1
   resolution: "moment@npm:2.29.1"
   checksum: 2617e383c0e0f910696214d026b9742173ea1916775d2023b39fd7d5fc3fae694f67c17876d154e246b139ad2a8028c42b2898c66cd665316b61c18453a5103f
@@ -37005,7 +37006,7 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"pretty-bytes@npm:^5.1.0, pretty-bytes@npm:^5.3.0":
+"pretty-bytes@npm:^5.1.0, pretty-bytes@npm:^5.3.0, pretty-bytes@npm:^5.4.1":
   version: 5.6.0
   resolution: "pretty-bytes@npm:5.6.0"
   checksum: f69f494dcc1adda98dbe0e4a36d301e8be8ff99bfde7a637b2ee2820e7cb583b0fc0f3a63b0e3752c01501185a5cf38602c7be60da41bdf84ef5b70e89c370f3
@@ -37939,10 +37940,10 @@ fsevents@2.1.2:
   languageName: node
   linkType: hard
 
-"ramda@npm:~0.26.1":
-  version: 0.26.1
-  resolution: "ramda@npm:0.26.1"
-  checksum: af591bdb593a7bd4c715af306f9a1c591ed0eccabc9bb5166dd17e68b182e6ff313b35c057f9dc300715d060c3ed2f56e424a42499fe2b27b40446fb447838ba
+"ramda@npm:~0.27.1":
+  version: 0.27.1
+  resolution: "ramda@npm:0.27.1"
+  checksum: 84f717f285f2f9d850ff15850084bccb55fbf4b1985846d39b8d276fa146d9e23416c47583cf25b710d93257fd5a3240447fddc41a1fffcfed48bd5e10d5c97d
   languageName: node
   linkType: hard
 
@@ -43555,7 +43556,7 @@ resolve@1.19.0:
   languageName: node
   linkType: hard
 
-"supports-color@npm:^7.0.0, supports-color@npm:^7.1.0":
+"supports-color@npm:^7.0.0, supports-color@npm:^7.1.0, supports-color@npm:^7.2.0":
   version: 7.2.0
   resolution: "supports-color@npm:7.2.0"
   dependencies:
@@ -44488,7 +44489,7 @@ resolve@1.19.0:
   languageName: node
   linkType: hard
 
-"tmp@npm:^0.1.0, tmp@npm:~0.1.0":
+"tmp@npm:^0.1.0":
   version: 0.1.0
   resolution: "tmp@npm:0.1.0"
   dependencies:
@@ -44497,7 +44498,7 @@ resolve@1.19.0:
   languageName: node
   linkType: hard
 
-"tmp@npm:^0.2.0, tmp@npm:^0.2.1":
+"tmp@npm:^0.2.0, tmp@npm:^0.2.1, tmp@npm:~0.2.1":
   version: 0.2.1
   resolution: "tmp@npm:0.2.1"
   dependencies:
