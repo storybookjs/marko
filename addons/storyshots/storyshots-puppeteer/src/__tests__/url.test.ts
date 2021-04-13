@@ -21,25 +21,25 @@ describe('Construct URL for Storyshots', () => {
 
   it('can use a url without path and with query params', () => {
     expect(constructUrl('http://localhost:9001?hello=world', id)).toEqual(
-      'http://localhost:9001/iframe.html?id=somekind--somestory&hello=world'
+      'http://localhost:9001/iframe.html?hello=world&id=somekind--somestory'
     );
   });
 
   it('can use a url without path (buth slash) and with query params', () => {
     expect(constructUrl('http://localhost:9001/?hello=world', id)).toEqual(
-      'http://localhost:9001/iframe.html?id=somekind--somestory&hello=world'
+      'http://localhost:9001/iframe.html?hello=world&id=somekind--somestory'
     );
   });
 
   it('can use a url with some path and query params', () => {
     expect(constructUrl('http://localhost:9001/nice-path?hello=world', id)).toEqual(
-      'http://localhost:9001/nice-path/iframe.html?id=somekind--somestory&hello=world'
+      'http://localhost:9001/nice-path/iframe.html?hello=world&id=somekind--somestory'
     );
   });
 
   it('can use a url with some path (slash) and query params', () => {
     expect(constructUrl('http://localhost:9001/nice-path/?hello=world', id)).toEqual(
-      'http://localhost:9001/nice-path/iframe.html?id=somekind--somestory&hello=world'
+      'http://localhost:9001/nice-path/iframe.html?hello=world&id=somekind--somestory'
     );
   });
 
