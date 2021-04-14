@@ -1,3 +1,18 @@
+## 6.3.0-alpha.7 (April 14, 2021)
+
+### Features
+
+- Angular: Improve story rendering mode ([#14226](https://github.com/storybookjs/storybook/pull/14226))
+
+### Bug Fixes
+
+- Angular: set the @ViewChild with a non-empty value in StorybookWrapperComponent ([#14586](https://github.com/storybookjs/storybook/pull/14586))
+
+### Maintenance
+
+- CI: Remove Travis, fix TeamCity, rework E2E on CircleCI ([#14522](https://github.com/storybookjs/storybook/pull/14522))
+- Core: Resolve builders relatively to config file ([#14576](https://github.com/storybookjs/storybook/pull/14576))
+
 ## 6.3.0-alpha.6 (April 13, 2021)
 
 ### Bug Fixes
