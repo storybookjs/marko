@@ -397,7 +397,7 @@ const perform = () => {
   const narrowedConfigs = Object.values(e2eConfigs);
   const list = filterDataForCurrentCircleCINode(narrowedConfigs) as Parameters[];
 
-  logger.info(`📑 Will run E2E tests for:${list.map((c) => c.name).join(', ')}`);
+  logger.info(`📑 Will run E2E tests for:${list.map((c) => `${c.name}@${c.version}`).join(', ')}`);
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };

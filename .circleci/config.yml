@@ -27,6 +27,21 @@ executors:
         environment:
           NODE_OPTIONS: --max_old_space_size=3076
     resource_class: <<parameters.class>>
+  sb_cypress_6_node_12:
+    parameters:
+      class:
+        description: The Resource class
+        type: enum
+        enum: ['small', 'medium', 'large', 'xlarge']
+        default: 'medium'
+    working_directory: /tmp/storybook
+    docker:
+      # ⚠️ The Cypress docker image is based on Node.js one so be careful when updating it because it can also
+      # cause an upgrade of the Node.
+      - image: cypress/included:6.8.0
+        environment:
+          NODE_OPTIONS: --max_old_space_size=3076
+    resource_class: <<parameters.class>>
 
 orbs:
   git-shallow-clone: guitarrapc/git-shallow-clone@2.0.3
@@ -41,7 +56,7 @@ commands:
       - run:
           name: Check if PR is labeled with "<< parameters.label >>"
           command: |
-            sudo apt-get install jq
+            apt-get -y install jq
 
             PR_NUMBER=$(echo "$CIRCLE_PULL_REQUEST" | sed "s/.*\/pull\///")
             echo "PR_NUMBER: $PR_NUMBER"
@@ -152,11 +167,10 @@ jobs:
           root: .
           paths:
             - .verdaccio-cache
-  e2e-tests-node-10:
+  e2e-tests-extended:
     executor:
       class: medium
-      name: sb_node_12_browsers
-    working_directory: /tmp/storybook
+      name: sb_cypress_6_node_12
     parallelism: 4
     steps:
       - when:
@@ -178,39 +192,23 @@ jobs:
           command: yarn local-registry --port 6000 --open
           background: true
       - run:
-          name: wait for registry
+          name: Wait for registry
           command: yarn wait-on http://localhost:6000
       - run:
-          name: set registry
+          name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
-          name: test local registry
-          command: yarn npm info @storybook/core
-      - run:
-          name: Install Cypress binary
-          command: yarn cypress install
-      - run:
-          name: run e2e tests
-          command: yarn test:e2e-framework --clean --skip preact
+          name: Run E2E tests
+          command: yarn test:e2e-framework --clean --skip angular@latest --skip vue3@next --skip web_components_typescript@latest --skip cra@latest
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  e2e-tests-node-12:
+  e2e-tests-core:
     executor:
       class: medium
-      name: sb_node_12_browsers
-    working_directory: /tmp/storybook
+      name: sb_cypress_6_node_12
+    parallelism: 2
     steps:
-      - when:
-          condition:
-            and:
-              - not:
-                  equal: [ master, << pipeline.git.branch >> ]
-              - not:
-                  equal: [ next, << pipeline.git.branch >> ]
-          steps:
-            - ensure-pr-is-labeled-with:
-                label: "run e2e extended test suite"
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
       - attach_workspace:
@@ -226,21 +224,16 @@ jobs:
           name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
-          name: Test local registry
-          command: yarn npm info @storybook/core
-      - run:
-          name: Install Cypress binary
-          command: yarn cypress install
-      - run:
           name: Run E2E tests
-          command: yarn test:e2e-framework preact
+          # Do not test CRA nor Web Components here because it's done in PnP part
+          command: yarn test:e2e-framework angular@latest vue3@next
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
   e2e-tests-cra-bench:
     executor:
       class: medium
-      name: sb_node_12_browsers
+      name: sb_cypress_6_node_12
     working_directory: /tmp/storybook
     steps:
       - git-shallow-clone/checkout_advanced:
@@ -258,21 +251,15 @@ jobs:
           name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
-          name: Test local registry
-          command: yarn npm info @storybook/core
-      - run:
-          name: Install Cypress binary
-          command: yarn cypress install
-      - run:
           name: Run @storybook/bench on a CRA project
           command: yarn test:e2e-framework cra_bench
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
-  e2e-tests-yarn-2-pnp:
+  e2e-tests-pnp:
     executor:
       class: medium
-      name: sb_node_12_browsers
+      name: sb_cypress_6_node_12
     working_directory: /tmp/storybook
     steps:
       - git-shallow-clone/checkout_advanced:
@@ -280,33 +267,25 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: running local registry
+          name: Running local registry
           command: yarn local-registry --port 6000 --open
           background: true
       - run:
-          name: wait for registry
+          name: Wait for registry
           command: yarn wait-on http://localhost:6000
       - run:
-          name: set registry
+          name: Set registry
           command: yarn config set npmRegistryServer http://localhost:6000/
       - run:
-          name: test local registry
-          command: yarn npm info @storybook/core
-      - run:
-          name: Install Cypress binary
-          command: yarn cypress install
-      - run:
           name: run e2e tests
-          command: yarn test:e2e-framework --use-yarn-2-pnp sfcVue cra
+          command: yarn test:e2e-framework --use-yarn-2-pnp sfcVue@latest cra@latest web_components_typescript@latest
       - store_artifacts:
           path: /tmp/storybook/cypress
           destination: cypress
   e2e-tests-examples:
-    working_directory: /tmp/storybook
-    docker:
-      - image: cypress/included:4.12.1
-        environment:
-          TERM: xterm
+    executor:
+      class: small
+      name: sb_cypress_6_node_12
     steps:
       - git-shallow-clone/checkout_advanced:
           clone_options: '--depth 1 --verbose'
@@ -479,13 +458,13 @@ workflows:
       - publish:
           requires:
             - build
-      - e2e-tests-node-10:
+      - e2e-tests-extended:
           requires:
             - publish
-      - e2e-tests-node-12:
+      - e2e-tests-core:
           requires:
             - publish
-      - e2e-tests-yarn-2-pnp:
+      - e2e-tests-pnp:
           requires:
             - publish
       - e2e-tests-cra-bench:
