@@ -1,4 +1,4 @@
-import { Inject, Injectable, InjectionToken, Optional } from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 
 export const DEFAULT_LOCALE = new InjectionToken<string>('test');
 
