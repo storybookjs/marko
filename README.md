@@ -143,8 +143,8 @@ See [Addon / Framework Support Table](https://storybook.js.org/docs/react/api/fr
 | ---------------------------------------------------------------------------------- | -------------------------------------------------------- |
 | [info](https://github.com/storybookjs/deprecated-addons/tree/master/addons/info)   | Annotate stories with extra component usage information  |
 | [notes](https://github.com/storybookjs/deprecated-addons/tree/master/addons/notes) | Annotate Storybook stories with notes                    |
-| [contexts](https://github.com/storybookjs/storybook/tree/master/addons/contexts)   | Addon for driving your components under dynamic contexts |
-| [options](https://github.com/storybookjs/storybook/tree/master/addons/options/)    | Customize the Storybook UI in code                       |
+| [contexts](https://storybook.js.org/addons/@storybook/addon-contexts/)             | Addon for driving your components under dynamic contexts |
+| [options](https://www.npmjs.com/package/@storybook/addon-options)                  | Customize the Storybook UI in code                       |
 
 In order to continue improving your experience, we have to eventually deprecate certain addons in favor of new, better tools.
 
