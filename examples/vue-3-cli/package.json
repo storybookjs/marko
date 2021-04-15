@@ -1,6 +1,6 @@
 {
   "name": "vue-3-cli-example",
-  "version": "6.3.0-alpha.7",
+  "version": "6.3.0-alpha.8",
   "private": true,
   "scripts": {
     "build": "vue-cli-service build",
@@ -14,11 +14,11 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
-    "@storybook/addon-actions": "6.3.0-alpha.7",
-    "@storybook/addon-essentials": "6.3.0-alpha.7",
-    "@storybook/addon-links": "6.3.0-alpha.7",
-    "@storybook/addon-storyshots": "6.3.0-alpha.7",
-    "@storybook/vue3": "6.3.0-alpha.7",
+    "@storybook/addon-actions": "6.3.0-alpha.8",
+    "@storybook/addon-essentials": "6.3.0-alpha.8",
+    "@storybook/addon-links": "6.3.0-alpha.8",
+    "@storybook/addon-storyshots": "6.3.0-alpha.8",
+    "@storybook/vue3": "6.3.0-alpha.8",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
