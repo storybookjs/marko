@@ -24,4 +24,4 @@ async function webpack(webpackConfig, options) {
   return webpackConfig;
 }
 
-module.exports = { managerEntries, config };
+module.exports = { managerEntries, config, webpack };
