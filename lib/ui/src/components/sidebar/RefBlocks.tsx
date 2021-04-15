@@ -1,4 +1,4 @@
-import { window, document } from 'global';
+import { window as globalWindow, document } from 'global';
 import React, { FunctionComponent, useState, useCallback, Fragment } from 'react';
 
 import { Icons, WithTooltip, Spaced, Button, Link } from '@storybook/components';
@@ -111,12 +111,12 @@ export const AuthBlock: FunctionComponent<{ loginUrl: string; id: string }> = ({
   const [isAuthAttempted, setAuthAttempted] = useState(false);
 
   const refresh = useCallback(() => {
-    window.document.location.reload();
+    globalWindow.document.location.reload();
   }, []);
 
   const open = useCallback((e) => {
     e.preventDefault();
-    const childWindow = window.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
+    const childWindow = globalWindow.open(loginUrl, `storybook_auth_${id}`, 'resizable,scrollbars');
 
     // poll for window to close
     const timer = setInterval(() => {

@@ -8,7 +8,7 @@ import {
 } from '@storybook/addons';
 import { StoryFnAngularReturnType } from './types';
 
-export { Args, ArgTypes } from '@storybook/addons';
+export type { Args, ArgTypes } from '@storybook/addons';
 
 type AngularComponent = any;
 type AngularReturnType = StoryFnAngularReturnType;

@@ -1,3 +1,3 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
-window.STORYBOOK_ENV = 'riot';
+globalWindow.STORYBOOK_ENV = 'riot';

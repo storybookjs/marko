@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-server",
-  "version": "6.2.0-rc.6",
+  "version": "6.3.0-alpha.7",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -41,14 +41,14 @@
     "@babel/core": "^7.12.10",
     "@babel/plugin-transform-template-literals": "^7.12.1",
     "@babel/preset-react": "^7.12.10",
-    "@storybook/addons": "6.2.0-rc.6",
-    "@storybook/builder-webpack4": "6.2.0-rc.6",
-    "@storybook/core-client": "6.2.0-rc.6",
-    "@storybook/core-common": "6.2.0-rc.6",
-    "@storybook/node-logger": "6.2.0-rc.6",
+    "@storybook/addons": "6.3.0-alpha.7",
+    "@storybook/builder-webpack4": "6.3.0-alpha.7",
+    "@storybook/core-client": "6.3.0-alpha.7",
+    "@storybook/core-common": "6.3.0-alpha.7",
+    "@storybook/node-logger": "6.3.0-alpha.7",
     "@storybook/semver": "^7.3.2",
-    "@storybook/theming": "6.2.0-rc.6",
-    "@storybook/ui": "6.2.0-rc.6",
+    "@storybook/theming": "6.3.0-alpha.7",
+    "@storybook/ui": "6.3.0-alpha.7",
     "@types/node": "^14.0.10",
     "@types/node-fetch": "^2.5.7",
     "@types/pretty-hrtime": "^1.0.0",
@@ -61,6 +61,7 @@
     "chalk": "^4.1.0",
     "cli-table3": "0.6.0",
     "commander": "^6.2.1",
+    "compression": "^1.7.4",
     "core-js": "^3.8.2",
     "cpy": "^8.1.1",
     "css-loader": "^3.6.0",
@@ -84,7 +85,7 @@
     "serve-favicon": "^2.5.0",
     "style-loader": "^1.3.0",
     "telejson": "^5.1.0",
-    "terser-webpack-plugin": "^3.1.0",
+    "terser-webpack-plugin": "^4.2.3",
     "ts-dedent": "^2.0.0",
     "url-loader": "^4.1.1",
     "util-deprecate": "^1.0.2",
@@ -93,8 +94,9 @@
     "webpack-virtual-modules": "^0.2.2"
   },
   "devDependencies": {
-    "@storybook/builder-webpack5": "6.2.0-rc.6",
+    "@storybook/builder-webpack5": "6.3.0-alpha.7",
     "@types/case-sensitive-paths-webpack-plugin": "^2.1.4",
+    "@types/compression": "^1.7.0",
     "@types/cpy": "^7.1.3",
     "@types/dotenv-webpack": "^3.0.0",
     "@types/ip": "^1.1.0",
@@ -105,7 +107,7 @@
     "jest-specific-snapshot": "^4.0.0"
   },
   "peerDependencies": {
-    "@storybook/builder-webpack5": "6.2.0-rc.6",
+    "@storybook/builder-webpack5": "6.3.0-alpha.7",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0"
   },
@@ -120,5 +122,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9140a2884503b405d457268fd9ffd8d2438013af"
+  "gitHead": "ca7182ff5f2ce82ade20e198fed65cd701bf6084"
 }

@@ -1,4 +1,4 @@
-import { StoriesHash } from '@storybook/api';
+import type { StoriesHash } from '@storybook/api';
 import { collapseDocsOnlyStories, collapseAllStories } from './data';
 
 type Item = StoriesHash[keyof StoriesHash];

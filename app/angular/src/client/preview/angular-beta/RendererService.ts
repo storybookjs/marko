@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { enableProdMode, PlatformRef } from '@angular/core';
+import { enableProdMode, NgModule, PlatformRef } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -30,7 +30,10 @@ export class RendererService {
   // Observable to change the properties dynamically without reloading angular module&component
   private storyProps$: Subject<ICollection | undefined>;
 
-  private previousStoryFnAngular: StoryFnAngularReturnType = {};
+  private currentStoryRender: {
+    storyFnAngular: StoryFnAngularReturnType;
+    moduleMetadataSnapshot: string;
+  };
 
   constructor() {
     if (typeof NODE_ENV === 'string' && NODE_ENV !== 'development') {
@@ -62,23 +65,28 @@ export class RendererService {
     forced: boolean;
     parameters: Parameters;
   }) {
-    if (!this.fullRendererRequired(storyFnAngular, forced)) {
+    const storyProps$ = new BehaviorSubject<ICollection>(storyFnAngular.props);
+    const moduleMetadata = getStorybookModuleMetadata({ storyFnAngular, parameters }, storyProps$);
+
+    if (
+      !this.fullRendererRequired({
+        storyFnAngular,
+        moduleMetadata,
+        forced,
+      })
+    ) {
       this.storyProps$.next(storyFnAngular.props);
 
       return;
     }
 
-    // Complete last BehaviorSubject and create a new one for the current module
+    // Complete last BehaviorSubject and set a new one for the current module
     if (this.storyProps$) {
       this.storyProps$.complete();
     }
-    this.storyProps$ = new BehaviorSubject<ICollection>(storyFnAngular.props);
+    this.storyProps$ = storyProps$;
 
-    await this.newPlatformBrowserDynamic().bootstrapModule(
-      createStorybookModule(
-        getStorybookModuleMetadata({ storyFnAngular, parameters }, this.storyProps$)
-      )
-    );
+    await this.newPlatformBrowserDynamic().bootstrapModule(createStorybookModule(moduleMetadata));
   }
 
   public newPlatformBrowserDynamic() {
@@ -108,13 +116,42 @@ export class RendererService {
     this.staticRoot.appendChild(storybookWrapperElement);
   }
 
-  private fullRendererRequired(storyFnAngular: StoryFnAngularReturnType, forced: boolean) {
-    const { previousStoryFnAngular } = this;
-    this.previousStoryFnAngular = storyFnAngular;
+  private fullRendererRequired({
+    storyFnAngular,
+    moduleMetadata,
+    forced,
+  }: {
+    storyFnAngular: StoryFnAngularReturnType;
+    moduleMetadata: NgModule;
+    forced: boolean;
+  }) {
+    const { currentStoryRender: lastStoryRender } = this;
 
+    this.currentStoryRender = {
+      storyFnAngular,
+      moduleMetadataSnapshot: JSON.stringify(moduleMetadata),
+    };
+
+    if (
+      // check `forceRender` of story RenderContext
+      !forced ||
+      // if it's the first rendering and storyProps$ is not init
+      !this.storyProps$
+    ) {
+      return true;
+    }
+
+    // force the rendering if the template has changed
     const hasChangedTemplate =
-      !!storyFnAngular?.template && previousStoryFnAngular?.template !== storyFnAngular.template;
+      !!storyFnAngular?.template &&
+      lastStoryRender?.storyFnAngular?.template !== storyFnAngular.template;
+    if (hasChangedTemplate) {
+      return true;
+    }
 
-    return !forced || !this.storyProps$ || hasChangedTemplate;
+    // force the rendering if the metadata structure has changed
+    const hasChangedModuleMetadata =
+      this.currentStoryRender?.moduleMetadataSnapshot !== lastStoryRender?.moduleMetadataSnapshot;
+    return hasChangedModuleMetadata;
   }
 }

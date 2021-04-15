@@ -1,4 +1,4 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
-window.STORYBOOK_NAME = process.env.STORYBOOK_NAME;
-window.STORYBOOK_ENV = 'ember';
+globalWindow.STORYBOOK_NAME = process.env.STORYBOOK_NAME;
+globalWindow.STORYBOOK_ENV = 'ember';

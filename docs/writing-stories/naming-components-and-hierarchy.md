@@ -129,4 +129,18 @@ Which would result in this story ordering:
 7. `Components` and `Components/*` stories
 8. All other stories
 
+If you want certain categories to sort to the end of the list, you can insert a `*` into your `order` array to indicate where "all other stories" should go:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-preview-with-ordered-pages-and-wildcard.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+In this example, the `WIP` category would be displayed at the end of the list.
+
 Note that the `order` option is independent of the `method` option; stories are sorted first by the `order` array and then by either the `method: 'alphabetical'` or the default `configure()` import order.

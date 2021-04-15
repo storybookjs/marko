@@ -16,10 +16,8 @@ const baseAngular: Parameters = {
   name: 'angular',
   version: 'latest',
   generator: [
-    `yarn add @angular/cli@{{version}} --no-lockfile --non-interactive --silent --no-progress`,
-    `yarn ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict --packageManager=npm`,
+    `yarn dlx --package @angular/cli@{{version}} ng new {{name}}-{{version}} --routing=true --minimal=true --style=scss --skipInstall=true --strict`,
     `cd {{name}}-{{version}}`,
-    `yarn install`,
   ].join(' && '),
 };
 
@@ -117,7 +115,7 @@ export const cra: Parameters = {
   name: 'cra',
   version: 'latest',
   generator: [
-    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'yarn dlx create-react-app@{{version}} {{name}}-{{version}}',
     'cd {{name}}-{{version}}',
     'echo "FAST_REFRESH=true" > .env',
   ].join(' && '),
@@ -126,7 +124,7 @@ export const cra: Parameters = {
 export const cra_typescript: Parameters = {
   name: 'cra_typescript',
   version: 'latest',
-  generator: 'npx create-react-app@{{version}} {{name}}-{{version}} --template typescript',
+  generator: 'yarn dlx create-react-app@{{version}} {{name}}-{{version}} --template typescript',
 };
 
 // TODO: there is a compatibility issue with riot@4
@@ -145,20 +143,30 @@ export const sfcVue: Parameters = {
 export const svelte: Parameters = {
   name: 'svelte',
   version: 'latest',
-  generator: 'npx degit sveltejs/template {{name}}-{{version}}',
+  generator: 'yarn dlx degit sveltejs/template {{name}}-{{version}}',
 };
 
 export const vue: Parameters = {
   name: 'vue',
   version: 'latest',
-  generator: `npx @vue/cli@{{version}} create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
+  generator: [
+    `echo '{"useTaobaoRegistry": false}' > ~/.vuerc`,
+    // Need to remove this file otherwise there is an issue when vue-cli is trying to install the dependency in the bootstrapped folder
+    `rm package.json`,
+    `yarn dlx -p @vue/cli@{{version}} vue create {{name}}-{{version}} --default --packageManager=yarn --no-git --force`,
+  ].join(' && '),
 };
 
 export const vue3: Parameters = {
   name: 'vue3',
   version: 'next',
   // Vue CLI v4 utilizes webpack 4, and the 5-alpha uses webpack 5 so we force ^4 here
-  generator: `npx @vue/cli@^4 create {{name}}-{{version}} --preset=__default_vue_3__ --packageManager=yarn --no-git --force`,
+  generator: [
+    `echo '{"useTaobaoRegistry": false}' > ~/.vuerc`,
+    // Need to remove this file otherwise there is an issue when vue-cli is trying to install the dependency in the bootstrapped folder
+    `rm package.json`,
+    `yarn dlx -p @vue/cli@^4 vue create {{name}}-{{version}} --preset=__default_vue_3__ --packageManager=yarn --no-git --force`,
+  ].join(' && '),
 };
 
 export const web_components: Parameters = {
@@ -185,7 +193,8 @@ export const react_in_yarn_workspace: Parameters = {
   generator: [
     'cd {{name}}-{{version}}',
     'echo "{ \\"name\\": \\"workspace-root\\", \\"private\\": true, \\"workspaces\\": [] }" > package.json',
-    `yarn add react react-dom --silent -W`,
+    'touch yarn.lock',
+    `yarn add react react-dom`,
   ].join(' && '),
 };
 
@@ -194,8 +203,10 @@ export const cra_bench: Parameters = {
   name: 'cra_bench',
   version: 'latest',
   generator: [
-    'npx create-react-app@{{version}} {{name}}-{{version}}',
+    'yarn dlx create-react-app@{{version}} {{name}}-{{version}}',
     'cd {{name}}-{{version}}',
+    // TODO: Move from `npx` to `yarn dlx`, it is not working out of the box
+    // because of the fancy things done in `@storybook/bench` to investigate 🔎
     "npx @storybook/bench 'npx sb init' --label cra",
   ].join(' && '),
 };

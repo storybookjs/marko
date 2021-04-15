@@ -1,10 +1,10 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 import cloneDeep from 'lodash/cloneDeep';
 import React, { ComponentProps, SyntheticEvent, useCallback, useMemo, useState } from 'react';
 import { styled, useTheme, Theme } from '@storybook/theming';
 
 // @ts-ignore
-import { JsonTree } from './react-editable-json-tree';
+import { JsonTree, getObjectType } from './react-editable-json-tree';
 import type { ControlProps, ObjectValue, ObjectConfig } from './types';
 import { Form } from '../form';
 import { Icons, IconsProps } from '../icon/icon';
@@ -201,7 +201,7 @@ const RawInput = styled(Form.Textarea)(({ theme }) => ({
 
 const ENTER_EVENT = { bubbles: true, cancelable: true, key: 'Enter', code: 'Enter', keyCode: 13 };
 const dispatchEnterKey = (event: SyntheticEvent<HTMLInputElement>) => {
-  event.currentTarget.dispatchEvent(new window.KeyboardEvent('keydown', ENTER_EVENT));
+  event.currentTarget.dispatchEvent(new globalWindow.KeyboardEvent('keydown', ENTER_EVENT));
 };
 const selectValue = (event: SyntheticEvent<HTMLInputElement>) => {
   event.currentTarget.select();
@@ -260,7 +260,7 @@ export const ObjectControl: React.FC<ObjectProps> = ({ name, value, onChange }) 
 
   return (
     <Wrapper>
-      {hasData && (
+      {hasData && ['Object', 'Array'].includes(getObjectType(data)) && (
         <RawButton onClick={() => setShowRaw((v) => !v)}>
           <Icons icon={showRaw ? 'eyeclose' : 'eye'} />
           <span>RAW</span>

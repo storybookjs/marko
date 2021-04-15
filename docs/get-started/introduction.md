@@ -6,7 +6,7 @@ Storybook is a tool for UI development. It makes development faster and easier b
 
 <video autoPlay muted playsInline loop>
   <source
-    src="storybook-hero-video-optimized.mp4"
+    src="storybook-hero-video-optimized-lg.mp4"
     type="video/mp4"
   />
 </video>
@@ -15,7 +15,7 @@ Use Storybook to build small atomic components and complex pages in your web app
 
 ![Storybook relationship](./storybook-relationship.png)
 
-Storybook helps you **document** components for reuse and automatically **visually test** your components to prevent bugs. Extend Storybook with an ecosystem of **addons** that help you do things like fine tune responsive layouts or verify accessibility.
+Storybook helps you **document** components for reuse and automatically **visually test** your components to prevent bugs. Extend Storybook with an ecosystem of **addons** that help you do things like fine-tune responsive layouts or verify accessibility.
 
 Storybook integrates with most popular JavaScript UI frameworks and (experimentally) supports server-rendered component frameworks such as [Ruby on Rails](https://rubyonrails.org/).
 

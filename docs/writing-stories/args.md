@@ -114,6 +114,7 @@ Args are used in story templates to configure the component appearance just as y
     'react/page-story-slots.ts.mdx',
     'vue/page-story-slots.2.js.mdx',
     'vue/page-story-slots.3.js.mdx',
+    'angular/page-story-slots.ts.mdx'
   ]}
 />
 
@@ -138,6 +139,8 @@ The `args` param is always a set of `key:value` pairs delimited with a semicolon
   nil: null
 }
 ```
+
+Similarly, special formats are available for dates and colors. Date objects will be encoded as `!date(value)` with value represented as an ISO date string. Colors are encoded as `!hex(value)`, `!rgba(value)` or `!hsla(value)`. Note that rgb(a) and hsl(a) should not contain spaces or percentage signs in the URL.
 
 Args specified through the URL will extend and override any default values of args specified on the story.
 

@@ -1,13 +1,13 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
 export const importPolyfills = () => {
   const polyfills = [];
 
-  if (!window.fetch) {
+  if (!globalWindow.fetch) {
     // manually patch window.fetch;
     //    see issue: <https://github.com/developit/unfetch/issues/101#issuecomment-454451035>
     const patch = ({ default: fetch }: any) => {
-      window.fetch = fetch;
+      globalWindow.fetch = fetch;
     };
 
     polyfills.push(import('unfetch/dist/unfetch').then(patch));

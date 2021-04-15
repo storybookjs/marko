@@ -1,13 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Storyshots Basics / Component / With Complex Selectors Input Selectors 1`] = `
-<storybook-wrapper>
-  <foo>
-    foo
-  </foo>
-</storybook-wrapper>
-`;
-
 exports[`Storyshots Basics / Component / With Complex Selectors attribute selectors 1`] = `
 <storybook-wrapper>
   <storybook-attribute-selector
