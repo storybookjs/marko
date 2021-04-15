@@ -1,3 +1,22 @@
+## 6.3.0-alpha.8 (April 15, 2021)
+
+### Features
+
+- Angular: Create actions for Outputs by default ([#14299](https://github.com/storybookjs/storybook/pull/14299))
+
+### Bug Fixes
+
+- Addon-a11y: Fix crypto in webpack5 ([#14592](https://github.com/storybookjs/storybook/pull/14592))
+- Storyshots: Preserve authentication information in Storybook URL ([#14582](https://github.com/storybookjs/storybook/pull/14582))
+
+### Maintenance
+
+- Angular: Add template MDX example ([#14597](https://github.com/storybookjs/storybook/pull/14597))
+
+### Dependency Upgrades
+
+- Remove unused inquirer dependency ([#14590](https://github.com/storybookjs/storybook/pull/14590))
+
 ## 6.3.0-alpha.7 (April 14, 2021)
 
 ### Features
