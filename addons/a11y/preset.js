@@ -13,7 +13,7 @@ function config(entry = []) {
 
 async function webpack(webpackConfig, options) {
   const core = await options.presets.apply('core');
-  if (core && core.builder !== 'webpack5') {
+  if ((core && core.builder) !== 'webpack5') {
     return webpackConfig;
   }
   if (!webpackConfig.resolve.fallback) {
