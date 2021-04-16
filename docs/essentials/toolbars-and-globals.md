@@ -72,6 +72,10 @@ The <code>icon</code> element used in the examples loads the icons from the <cod
 
 </div>
 
+<div class="aside">
+  The <code>@storybook/addon-toolbars</code> addon is required to use toolbars. The toolbars addon is included by default in <code>@storybook/addon-essentials</code>.
+</div>
+
 By adding the configuration element `right`, the text will be displayed on the right side in the toolbar menu, once you connect it to a decorator.
 
 Here's a list of the configuration options available.

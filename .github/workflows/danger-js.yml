@@ -1,5 +1,8 @@
-on: label
-name: Dangerfile JS Label
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+name: Danger JS
 jobs:
   dangerJS:
     name: Danger JS

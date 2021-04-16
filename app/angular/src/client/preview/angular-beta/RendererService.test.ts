@@ -79,7 +79,12 @@ describe('RendererService', () => {
         );
       });
 
-      it('should not be re-rendered', async () => {
+      it('should not be re-rendered when only props change', async () => {
+        let countDestroy = 0;
+
+        rendererService.platform.onDestroy(() => {
+          countDestroy += 1;
+        });
         // only props change
         await rendererService.render({
           storyFnAngular: {
@@ -90,6 +95,7 @@ describe('RendererService', () => {
           forced: true,
           parameters: {} as any,
         });
+        expect(countDestroy).toEqual(0);
 
         expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe(
           '👾: Fox'
@@ -109,6 +115,43 @@ describe('RendererService', () => {
         });
 
         expect(document.body.getElementsByTagName('storybook-wrapper')[0].innerHTML).toBe('🍺');
+      });
+
+      it('should be re-rendered when moduleMetadata structure change', async () => {
+        let countDestroy = 0;
+
+        rendererService.platform.onDestroy(() => {
+          countDestroy += 1;
+        });
+
+        // Only props change -> no full rendering
+        await rendererService.render({
+          storyFnAngular: {
+            template: '{{ logo }}: {{ name }}',
+            props: {
+              logo: '🍺',
+              name: 'Beer',
+            },
+          },
+          forced: true,
+          parameters: {} as any,
+        });
+        expect(countDestroy).toEqual(0);
+
+        // Change in the module structure -> full rendering
+        await rendererService.render({
+          storyFnAngular: {
+            template: '{{ logo }}: {{ name }}',
+            props: {
+              logo: '🍺',
+              name: 'Beer',
+            },
+            moduleMetadata: { providers: [{ provide: 'foo', useValue: 42 }] },
+          },
+          forced: true,
+          parameters: {} as any,
+        });
+        expect(countDestroy).toEqual(1);
       });
     });
 

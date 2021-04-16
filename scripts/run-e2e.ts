@@ -107,6 +107,8 @@ const configureYarn2 = async ({ cwd }: Options) => {
     // Disable fallback mode to make sure everything is required correctly
     `yarn config set pnpFallbackMode none`,
     `yarn config set enableGlobalCache true`,
+    // We need to be able to update lockfile when bootstrapping the examples
+    `yarn config set enableImmutableInstalls false`,
     // Add package extensions
     // https://github.com/facebook/create-react-app/pull/9872
     `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
@@ -395,7 +397,7 @@ const perform = () => {
   const narrowedConfigs = Object.values(e2eConfigs);
   const list = filterDataForCurrentCircleCINode(narrowedConfigs) as Parameters[];
 
-  logger.info(`📑 Will run E2E tests for:${list.map((c) => c.name).join(', ')}`);
+  logger.info(`📑 Will run E2E tests for:${list.map((c) => `${c.name}@${c.version}`).join(', ')}`);
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };
