@@ -3,10 +3,10 @@
 exports[`json-to-csf-compiler a11y.json 1`] = `
 "
 export default {
-  title: 'Addons/a11y',
+  title: \\"Addons/a11y\\",
   parameters: {
     options: {
-      selectedPanel: 'storybook/a11y/panel'
+      selectedPanel: \\"storybook/a11y/panel\\"
     }
   }
 };
@@ -15,7 +15,7 @@ export const Label = (args) => {};
 Label.storyName = 'Label';
 Label.parameters = {
   server: {
-    id: 'addons/a11y/label'
+    id: \\"addons/a11y/label\\"
   }
 };
 "
