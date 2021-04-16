@@ -1,3 +1,18 @@
+## 6.3.0-alpha.9 (April 17, 2021)
+
+### Features
+
+- Preact: Add react compat by default ([#14555](https://github.com/storybookjs/storybook/pull/14555))
+
+### Bug Fixes
+
+- Addon-docs: Fix MD code snippet format inside Description ([#14495](https://github.com/storybookjs/storybook/pull/14495))
+- Server: Fix string escaping in CSF compiler ([#14615](https://github.com/storybookjs/storybook/pull/14615))
+
+### Maintenance
+
+- Maintenance: Improve issue templates ([#14543](https://github.com/storybookjs/storybook/pull/14543))
+
 ## 6.3.0-alpha.8 (April 15, 2021)
 
 ### Features
