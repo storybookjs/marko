@@ -2,7 +2,7 @@
 import React from 'react';
 
 const text = 'Testing the a11y addon';
-const image = 'http://placehold.it/350x150';
+const image = 'http://place-hold.it/350x150';
 
 export default {
   title: 'Addons/A11y/Image',
