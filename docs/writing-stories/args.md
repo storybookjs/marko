@@ -132,7 +132,7 @@ In order to protect against [XSS](https://owasp.org/www-community/attacks/xss/) 
 
 The `args` param is always a set of `key:value` pairs delimited with a semicolon `;`. Values will be coerced (cast) to their respective `argTypes` (which may have been automatically inferred). Objects and arrays are supported. Special values `null` and `undefined` can be set by prefixing with a bang `!`. For example, `args=obj.key:val;arr[0]:one;arr[1]:two;nil:!null` will be interpreted as:
 
-```
+```js
 {
   obj: { key: 'val' },
   arr: ['one', 'two'],
@@ -148,7 +148,7 @@ Args specified through the URL will extend and override any default values of ar
 
 Complex values such as JSX elements cannot be serialized to the manager (e.g. the Controls addon) or synced with the URL. To work around this limitation, arg values can be "mapped" from a simple string to a complex type using the `mapping` property in `argTypes`. This works on any type of arg, but makes most sense when used with the `select` control type.
 
-```
+```js
 argTypes: {
   label: {
     options: ['Normal', 'Bold', 'Italic'],
