@@ -44,7 +44,7 @@ Learn how leading teams build design systems.
 - [Chakra UI](https://chakra-ui.netlify.app/?path=/story/*)
 - [Grommet](https://storybook.grommet.io/?path=/story/all--all)
 - [Reaviz](https://reaviz.io/?path=/story/docs-intro--page)
-- [ShareGate Orbit](https://orbit.sharegate.design/?path=/docs/getting-started-packages--page)
+- [ShareGate Orbit](https://orbit.sharegate.design)
 - [AppNexus Lucid](https://appnexus.github.io/lucid/?path=/docs/documentation-introduction--introduction)
 - [AnyVision UI](http://storybook.anyvision.co/)
 - [Skyscanner Backpack](https://backpack.github.io/storybook/)
