@@ -6018,12 +6018,10 @@ __metadata:
     webpack: 4
     zone.js: ^0.11.3
   peerDependencies:
-    "@babel/core": ^7.11.5
     "@storybook/angular": 6.3.0-alpha.13
     "@storybook/vue": 6.3.0-alpha.13
     "@storybook/vue3": 6.3.0-alpha.13
     "@storybook/web-components": 6.3.0-alpha.13
-    babel-loader: ^8.0.0
     lit-html: ^1.0.0
     react: ^16.8.0 || ^17.0.0
     react-dom: ^16.8.0 || ^17.0.0
