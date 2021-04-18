@@ -128,3 +128,11 @@ You can change your story through [parameters](../writing-stories/parameters.md)
 />
 
 <!-- prettier-ignore-end -->
+
+### Keyboard shortcuts
+
+* Previous viewport: `shift + v`
+* Next viewport: `v`
+* Reset viewport: `control + v`
+
+These shortcuts can be edited in Storybook's Keyboard shortcuts page.

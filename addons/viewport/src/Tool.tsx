@@ -6,7 +6,8 @@ import { styled, Global, Theme, withTheme } from '@storybook/theming';
 
 import { Icons, IconButton, WithTooltip, TooltipLinkList } from '@storybook/components';
 
-import { useParameter, useAddonState } from '@storybook/api';
+import { useStorybookApi, useParameter, useAddonState } from '@storybook/api';
+import { registerShortcuts } from './shortcuts';
 import { PARAM_KEY, ADDON_ID } from './constants';
 import { MINIMAL_VIEWPORTS } from './defaults';
 import { ViewportAddonParameter, ViewportMap, ViewportStyles, Styles } from './models';
@@ -135,8 +136,10 @@ export const ViewportTool: FunctionComponent = memo(
     });
 
     const list = toList(viewports);
+    const api = useStorybookApi();
 
     if (!list.find((i) => i.id === defaultViewport)) {
+      // eslint-disable-next-line no-console
       console.warn(
         `Cannot find "defaultViewport" of "${defaultViewport}" in addon-viewport configs, please check the "viewports" setting in the configuration.`
       );
@@ -148,6 +151,7 @@ export const ViewportTool: FunctionComponent = memo(
           defaultViewport || (viewports[state.selected] ? state.selected : responsiveViewport.id),
         isRotated: state.isRotated,
       });
+      registerShortcuts(api, setState);
     }, [defaultViewport]);
 
     const { selected, isRotated } = state;
