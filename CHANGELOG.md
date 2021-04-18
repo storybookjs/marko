@@ -1,3 +1,14 @@
+## 6.3.0-alpha.10 (April 18, 2021)
+
+### Bug Fixes
+
+- Modified Swatches keys to avoid duplicates ([#14636](https://github.com/storybookjs/storybook/pull/14636))
+
+### Maintenance
+
+- ESM tweaks for vite builder ([#14641](https://github.com/storybookjs/storybook/pull/14641))
+- Examples: Move from placehold.it to place-hold.it for mock images ([#14637](https://github.com/storybookjs/storybook/pull/14637))
+
 ## 6.3.0-alpha.9 (April 17, 2021)
 
 ### Features
