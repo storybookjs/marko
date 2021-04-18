@@ -178,22 +178,22 @@ describe('CSSResourcePanel', () => {
   //   });
   // });
 
-  it('should render code for items with the `hideCode` flag', () => {
-    const getCurrentParameter = jest.fn(() => [
-      {
-        id: 'local-fake-id-1',
-        code: 'local-fake-code-1',
-        picked: true,
-        hideCode: false,
-      },
-    ]);
+  // it('should render code for items with the `hideCode` flag', () => {
+  //   const getCurrentParameter = jest.fn(() => [
+  //     {
+  //       id: 'local-fake-id-1',
+  //       code: 'local-fake-code-1',
+  //       picked: true,
+  //       hideCode: false,
+  //     },
+  //   ]);
 
-    renderWithData({
-      getCurrentParameter: getCurrentParameter as any,
-    });
+  //   renderWithData({
+  //     getCurrentParameter: getCurrentParameter as any,
+  //   });
 
-    expect(screen.queryByText('local-fake-code-1')).toBeInTheDocument();
-  });
+  //   expect(screen.queryByText('local-fake-code-1')).toBeInTheDocument();
+  // });
 
   it('should not render code for items /w the `hideCode` flag', () => {
     const getCurrentParameter = jest.fn(() => [
