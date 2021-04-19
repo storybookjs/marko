@@ -146,12 +146,15 @@ export const ViewportTool: FunctionComponent = memo(
     }
 
     useEffect(() => {
+      registerShortcuts(api, setState);
+    }, []);
+
+    useEffect(() => {
       setState({
         selected:
           defaultViewport || (viewports[state.selected] ? state.selected : responsiveViewport.id),
         isRotated: state.isRotated,
       });
-      registerShortcuts(api, setState);
     }, [defaultViewport]);
 
     const { selected, isRotated } = state;
