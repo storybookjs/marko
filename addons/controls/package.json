@@ -69,7 +69,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7620a2978c6c85168b5d922f4d994cb57526998f",
+  "gitHead": "d559d96fc502634e605654d777bf92924692f154",
   "storybook": {
     "displayName": "Controls",
     "icon": "https://user-images.githubusercontent.com/263385/101991669-479cc600-3c7c-11eb-93d9-38b67e8371f2.png",
