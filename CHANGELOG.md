@@ -1,3 +1,14 @@
+## 6.3.0-alpha.11 (April 19, 2021)
+
+### Features
+
+- CLI: Support community builders in `sb init` ([#14651](https://github.com/storybookjs/storybook/pull/14651))
+- Angular: Support Ivy addon ([#14649](https://github.com/storybookjs/storybook/pull/14649))
+
+### Maintenance
+
+- Add `funding` to manifests ([#14647](https://github.com/storybookjs/storybook/pull/14647))
+
 ## 6.3.0-alpha.10 (April 18, 2021)
 
 ### Bug Fixes
