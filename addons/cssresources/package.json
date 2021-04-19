@@ -18,6 +18,10 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/cssresources"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "author": "nm123github",
   "main": "dist/cjs/index.js",

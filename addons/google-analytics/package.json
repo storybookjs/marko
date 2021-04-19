@@ -16,6 +16,10 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/google-analytics"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "main": "dist/cjs/register.js",
   "module": "dist/esm/register.js",

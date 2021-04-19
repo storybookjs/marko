@@ -16,6 +16,10 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/storyshots/storyshots-core"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "main": "dist/ts3.9/index.js",
   "module": "dist/ts3.9/index.js",

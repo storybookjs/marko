@@ -17,6 +17,10 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/viewport"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "main": "dist/cjs/preview.js",
   "module": "dist/esm/preview.js",

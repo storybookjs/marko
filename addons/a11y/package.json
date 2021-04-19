@@ -20,6 +20,10 @@
     "url": "git+https://github.com/storybookjs/storybook.git",
     "directory": "addons/a11y"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
