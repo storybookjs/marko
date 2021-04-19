@@ -1,3 +1,10 @@
+## 6.3.0-alpha.12 (April 20, 2021)
+
+### Maintenance
+
+- Angular: Refactor angular server ([#14358](https://github.com/storybookjs/storybook/pull/14358))
+- CLI: Rename react template files to jsx ([#14650](https://github.com/storybookjs/storybook/pull/14650))
+
 ## 6.3.0-alpha.11 (April 19, 2021)
 
 ### Features
