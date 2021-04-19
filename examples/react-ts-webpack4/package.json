@@ -1,6 +1,6 @@
 {
   "name": "@storybook/example-react-ts-webpack4",
-  "version": "6.3.0-alpha.10",
+  "version": "6.3.0-alpha.11",
   "private": true,
   "scripts": {
     "build-storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true build-storybook -c ./",
@@ -8,10 +8,10 @@
     "storybook": "cross-env STORYBOOK_DISPLAY_WARNING=true DISPLAY_WARNING=true start-storybook -p 9011 -c ./"
   },
   "dependencies": {
-    "@storybook/addon-controls": "6.3.0-alpha.10",
-    "@storybook/addon-essentials": "6.3.0-alpha.10",
-    "@storybook/builder-webpack4": "6.3.0-alpha.10",
-    "@storybook/react": "6.3.0-alpha.10",
+    "@storybook/addon-controls": "6.3.0-alpha.11",
+    "@storybook/addon-essentials": "6.3.0-alpha.11",
+    "@storybook/builder-webpack4": "6.3.0-alpha.11",
+    "@storybook/react": "6.3.0-alpha.11",
     "@types/react": "^16.14.2",
     "@types/react-dom": "^16.9.10",
     "prop-types": "15.7.2",
