@@ -17,6 +17,10 @@
     "url": "git+https://github.com/storybooks/storybook.git",
     "directory": "dev-kit/addon-roundtrip"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",

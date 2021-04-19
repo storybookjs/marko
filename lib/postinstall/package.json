@@ -15,6 +15,10 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/postinstall"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "sideEffects": false,
   "main": "dist/cjs/index.js",

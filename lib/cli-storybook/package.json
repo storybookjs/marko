@@ -14,6 +14,10 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/cli"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "bin": {
     "sb": "./index.js",

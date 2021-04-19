@@ -19,6 +19,10 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/backgrounds"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "author": "jbaxleyiii",
   "main": "dist/cjs/index.js",
