@@ -84,10 +84,12 @@ export enum StoryFormat {
   MDX = 'mdx',
 }
 
-export enum Builder {
+export enum CoreBuilder {
   Webpack4 = 'webpack4',
   Webpack5 = 'webpack5',
 }
+
+export type Builder = CoreBuilder | string;
 
 export enum SupportedLanguage {
   JAVASCRIPT = 'javascript',
