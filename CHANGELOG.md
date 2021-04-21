@@ -1,3 +1,13 @@
+## 6.3.0-alpha.13 (April 21, 2021)
+
+### Bug Fixes
+
+- Addon-docs: Fix ArgsTable sorting when using of={Component} ([#14669](https://github.com/storybookjs/storybook/pull/14669))
+
+### Maintenance
+
+- CLI: Rename preact template files to JSX ([#14670](https://github.com/storybookjs/storybook/pull/14670))
+
 ## 6.3.0-alpha.12 (April 20, 2021)
 
 ### Maintenance
