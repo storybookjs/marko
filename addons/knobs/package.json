@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-knobs",
-  "version": "6.3.0-alpha.12",
+  "version": "6.3.0-alpha.13",
   "description": "Storybook addon prop editor component",
   "keywords": [
     "addon",
@@ -41,13 +41,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.3.0-alpha.12",
-    "@storybook/api": "6.3.0-alpha.12",
-    "@storybook/channels": "6.3.0-alpha.12",
-    "@storybook/client-api": "6.3.0-alpha.12",
-    "@storybook/components": "6.3.0-alpha.12",
-    "@storybook/core-events": "6.3.0-alpha.12",
-    "@storybook/theming": "6.3.0-alpha.12",
+    "@storybook/addons": "6.3.0-alpha.13",
+    "@storybook/api": "6.3.0-alpha.13",
+    "@storybook/channels": "6.3.0-alpha.13",
+    "@storybook/client-api": "6.3.0-alpha.13",
+    "@storybook/components": "6.3.0-alpha.13",
+    "@storybook/core-events": "6.3.0-alpha.13",
+    "@storybook/theming": "6.3.0-alpha.13",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.2",
     "escape-html": "^1.0.3",
@@ -84,7 +84,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d559d96fc502634e605654d777bf92924692f154",
+  "gitHead": "35287402b58e8c9ec660d28e9fe812f6b1204254",
   "storybook": {
     "displayName": "Knobs",
     "unsupportedFrameworks": [
