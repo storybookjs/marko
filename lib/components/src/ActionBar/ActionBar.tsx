@@ -55,6 +55,7 @@ ActionButton.displayName = 'ActionButton';
 
 export interface ActionItem {
   title: string | JSX.Element;
+  className?: string;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
   disabled?: boolean;
 }
@@ -65,9 +66,9 @@ export interface ActionBarProps {
 
 export const ActionBar: FunctionComponent<ActionBarProps> = ({ actionItems, ...props }) => (
   <Container {...props}>
-    {actionItems.map(({ title, onClick, disabled }, index: number) => (
+    {actionItems.map(({ title, className, onClick, disabled }, index: number) => (
       // eslint-disable-next-line react/no-array-index-key
-      <ActionButton key={index} onClick={onClick} disabled={disabled}>
+      <ActionButton key={index} className={className} onClick={onClick} disabled={disabled}>
         {title}
       </ActionButton>
     ))}

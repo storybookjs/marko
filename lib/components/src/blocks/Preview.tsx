@@ -113,6 +113,7 @@ const getSource = (
         source: null,
         actionItem: {
           title: 'No code available',
+          className: 'code-toggle code-toggle--disabled',
           disabled: true,
           onClick: () => setExpanded(false),
         },
@@ -121,13 +122,21 @@ const getSource = (
     case expanded: {
       return {
         source: <StyledSource {...withSource} dark />,
-        actionItem: { title: 'Hide code', onClick: () => setExpanded(false) },
+        actionItem: {
+          title: 'Hide code',
+          className: 'code-toggle code-toggle--expanded',
+          onClick: () => setExpanded(false),
+        },
       };
     }
     default: {
       return {
         source: null,
-        actionItem: { title: 'Show code', onClick: () => setExpanded(true) },
+        actionItem: {
+          title: 'Show code',
+          className: 'code-toggle',
+          onClick: () => setExpanded(true),
+        },
       };
     }
   }
