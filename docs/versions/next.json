@@ -1,1 +1,1 @@
-{"version":"6.3.0-alpha.0","info":{"plain":"### Maintenance\n\n- Build: Move monorepo to Yarn 2 ([#13907](https://github.com/storybookjs/storybook/pull/13907))"}}
+{"version":"6.3.0-alpha.13","info":{"plain":"### Bug Fixes\n\n- Addon-docs: Fix ArgsTable sorting when using of={Component} ([#14669](https://github.com/storybookjs/storybook/pull/14669))\n\n### Maintenance\n\n- CLI: Rename preact template files to JSX ([#14670](https://github.com/storybookjs/storybook/pull/14670))"}}

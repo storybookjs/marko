@@ -1,8 +1,8 @@
-import window from 'global';
+import { window as globalWindow } from 'global';
 
 export function browserSupportsCssZoom(): boolean {
   try {
-    return window.document.implementation.createHTMLDocument('').body.style.zoom !== undefined;
+    return globalWindow.document.implementation.createHTMLDocument('').body.style.zoom !== undefined;
   } catch (error) {
     return false;
   }

@@ -1,34 +1,34 @@
 import React, { ComponentProps, FunctionComponent, MouseEvent, useState } from 'react';
 import { logger } from '@storybook/client-logger';
 import { styled } from '@storybook/theming';
-import { navigator, document, window } from 'global';
+import { navigator, document, window as globalWindow } from 'global';
 import memoize from 'memoizerific';
 
 // @ts-ignore
-import jsx from 'react-syntax-highlighter/dist/cjs/languages/prism/jsx';
+import jsx from 'react-syntax-highlighter/dist/esm/languages/prism/jsx';
 // @ts-ignore
-import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
+import bash from 'react-syntax-highlighter/dist/esm/languages/prism/bash';
 // @ts-ignore
-import css from 'react-syntax-highlighter/dist/cjs/languages/prism/css';
+import css from 'react-syntax-highlighter/dist/esm/languages/prism/css';
 // @ts-ignore
-import jsExtras from 'react-syntax-highlighter/dist/cjs/languages/prism/js-extras';
+import jsExtras from 'react-syntax-highlighter/dist/esm/languages/prism/js-extras';
 // @ts-ignore
-import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+import json from 'react-syntax-highlighter/dist/esm/languages/prism/json';
 // @ts-ignore
-import graphql from 'react-syntax-highlighter/dist/cjs/languages/prism/graphql';
+import graphql from 'react-syntax-highlighter/dist/esm/languages/prism/graphql';
 // @ts-ignore
-import html from 'react-syntax-highlighter/dist/cjs/languages/prism/markup';
+import html from 'react-syntax-highlighter/dist/esm/languages/prism/markup';
 // @ts-ignore
-import md from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
+import md from 'react-syntax-highlighter/dist/esm/languages/prism/markdown';
 // @ts-ignore
-import yml from 'react-syntax-highlighter/dist/cjs/languages/prism/yaml';
+import yml from 'react-syntax-highlighter/dist/esm/languages/prism/yaml';
 // @ts-ignore
-import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+import tsx from 'react-syntax-highlighter/dist/esm/languages/prism/tsx';
 // @ts-ignore
-import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
+import typescript from 'react-syntax-highlighter/dist/esm/languages/prism/typescript';
 
 // @ts-ignore
-import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/cjs/prism-light';
+import ReactSyntaxHighlighter from 'react-syntax-highlighter/dist/esm/prism-light';
 
 import { ActionBar } from '../ActionBar/ActionBar';
 import { ScrollArea } from '../ScrollArea/ScrollArea';
@@ -156,7 +156,7 @@ export const SyntaxHighlighter: FunctionComponent<Props> = ({
     copyToClipboard(highlightableCode)
       .then(() => {
         setCopied(true);
-        window.setTimeout(() => setCopied(false), 1500);
+        globalWindow.setTimeout(() => setCopied(false), 1500);
       })
       .catch(logger.error);
   };

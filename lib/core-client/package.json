@@ -1,6 +1,6 @@
 {
   "name": "@storybook/core-client",
-  "version": "6.3.0-alpha.0",
+  "version": "6.3.0-alpha.13",
   "description": "Storybook framework-agnostic API",
   "keywords": [
     "storybook"
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/core"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -36,13 +40,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.3.0-alpha.0",
-    "@storybook/channel-postmessage": "6.3.0-alpha.0",
-    "@storybook/client-api": "6.3.0-alpha.0",
-    "@storybook/client-logger": "6.3.0-alpha.0",
-    "@storybook/core-events": "6.3.0-alpha.0",
+    "@storybook/addons": "6.3.0-alpha.13",
+    "@storybook/channel-postmessage": "6.3.0-alpha.13",
+    "@storybook/client-api": "6.3.0-alpha.13",
+    "@storybook/client-logger": "6.3.0-alpha.13",
+    "@storybook/core-events": "6.3.0-alpha.13",
     "@storybook/csf": "0.0.1",
-    "@storybook/ui": "6.3.0-alpha.0",
+    "@storybook/ui": "6.3.0-alpha.13",
     "ansi-to-html": "^0.6.11",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
@@ -66,5 +70,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7739aace24e8614f2acc9972b2ae44cf7f228c18"
+  "gitHead": "35287402b58e8c9ec660d28e9fe812f6b1204254"
 }

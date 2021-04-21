@@ -1,24 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Storyshots Button with some emoji 1`] = `
-<button
-  class="button"
-  onclick={[Function]}
+"<button
+  class=\\"button\\"
+  onclick={[Function actionHandler]}
 >
   <span
-    aria-label="so cool"
-    role="img"
+    role=\\"img\\"
+    aria-label=\\"so cool\\"
   >
     😀 😎 👍 💯
   </span>
-</button>
+</button>"
 `;
 
 exports[`Storyshots Button with text 1`] = `
-<button
-  class="button"
-  onclick={[Function]}
+"<button
+  class=\\"button\\"
+  onclick={[Function actionHandler]}
 >
   Hello Button
-</button>
+</button>"
 `;

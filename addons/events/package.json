@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-events",
-  "version": "6.3.0-alpha.0",
+  "version": "6.3.0-alpha.13",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
@@ -17,6 +17,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/events"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -39,11 +43,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.3.0-alpha.0",
-    "@storybook/api": "6.3.0-alpha.0",
-    "@storybook/client-api": "6.3.0-alpha.0",
-    "@storybook/core-events": "6.3.0-alpha.0",
-    "@storybook/theming": "6.3.0-alpha.0",
+    "@storybook/addons": "6.3.0-alpha.13",
+    "@storybook/api": "6.3.0-alpha.13",
+    "@storybook/client-api": "6.3.0-alpha.13",
+    "@storybook/core-events": "6.3.0-alpha.13",
+    "@storybook/theming": "6.3.0-alpha.13",
     "core-js": "^3.8.2",
     "format-json": "^1.0.3",
     "lodash": "^4.17.20",
@@ -70,7 +74,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "7739aace24e8614f2acc9972b2ae44cf7f228c18",
+  "gitHead": "35287402b58e8c9ec660d28e9fe812f6b1204254",
   "storybook": {
     "displayName": "Events",
     "unsupportedFrameworks": [

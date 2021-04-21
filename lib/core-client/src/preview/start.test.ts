@@ -1,4 +1,4 @@
-import { document, window } from 'global';
+import { document, window as globalWindow } from 'global';
 
 import start from './start';
 
@@ -25,7 +25,7 @@ jest.mock('global', () => ({
 }));
 
 afterEach(() => {
-  window.__STORYBOOK_CLIENT_API__ = undefined;
+  globalWindow.__STORYBOOK_CLIENT_API__ = undefined;
 });
 
 it('returns apis', () => {
@@ -49,7 +49,7 @@ it('reuses the current client api when the lib is reloaded', () => {
 
   const { clientApi } = start(render);
 
-  const valueOfClientApi = window.__STORYBOOK_CLIENT_API__;
+  const valueOfClientApi = globalWindow.__STORYBOOK_CLIENT_API__;
 
   const { clientApi: newClientApi } = start(render);
 

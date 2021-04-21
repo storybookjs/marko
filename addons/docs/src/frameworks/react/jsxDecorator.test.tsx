@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events */
 import React from 'react';
-import range from 'lodash/range';
 import PropTypes from 'prop-types';
 import addons, { StoryContext } from '@storybook/addons';
 import { renderJsx, jsxDecorator } from './jsxDecorator';
@@ -46,10 +45,10 @@ describe('renderJsx', () => {
     `);
   });
   it('large objects', () => {
-    const obj: Record<string, string> = {};
-    range(20).forEach((i) => {
-      obj[`key_${i}`] = `val_${i}`;
-    });
+    const obj = Array.from({ length: 20 }).reduce((acc, _, i) => {
+      acc[`key_${i}`] = `val_${i}`;
+      return acc;
+    }, {});
     expect(renderJsx(<div data-val={obj} />, {})).toMatchInlineSnapshot(`
       <div
         data-val={{
@@ -79,7 +78,7 @@ describe('renderJsx', () => {
   });
 
   it('long arrays', () => {
-    const arr = range(20).map((i) => `item ${i}`);
+    const arr = Array.from({ length: 20 }, (_, i) => `item ${i}`);
     expect(renderJsx(<div data-val={arr} />, {})).toMatchInlineSnapshot(`
       <div
         data-val={[

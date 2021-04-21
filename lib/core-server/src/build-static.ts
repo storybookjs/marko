@@ -107,7 +107,7 @@ export async function buildStatic({ packageJson, ...loadOptions }: LoadOptions) 
       ...cliOptions,
       ...loadOptions,
       packageJson,
-      configDir: cliOptions.configDir || './.storybook',
+      configDir: loadOptions.configDir || cliOptions.configDir || './.storybook',
       outputDir: loadOptions.outputDir || cliOptions.outputDir || './storybook-static',
       ignorePreview: !!loadOptions.ignorePreview || !!cliOptions.previewUrl,
       docsMode: !!cliOptions.docs,

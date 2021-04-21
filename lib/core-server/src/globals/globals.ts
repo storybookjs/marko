@@ -1,3 +1,3 @@
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
-window.STORYBOOK_REACT_CLASSES = {};
+globalWindow.STORYBOOK_REACT_CLASSES = {};

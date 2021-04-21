@@ -8,6 +8,7 @@ import {
   StoryFormat,
   SupportedLanguage,
   Builder,
+  CoreBuilder,
 } from './project_types';
 import { commandLog, codeLog, paddedLog } from './helpers';
 import angularGenerator from './generators/ANGULAR';
@@ -67,7 +68,7 @@ const installStorybook = (projectType: ProjectType, options: CommandOptions): Pr
   const generatorOptions = {
     storyFormat: options.storyFormat || defaultStoryFormat,
     language,
-    builder: options.builder || Builder.Webpack4,
+    builder: options.builder || CoreBuilder.Webpack4,
   };
 
   const end = () => {
