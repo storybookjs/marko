@@ -24,7 +24,7 @@ In the example above, Storybook will center all stories in the UI. `layout` acce
 
 - `centered`: center the component horizontally and vertically in the Canvas
 - `fullscreen`: allow the component to expand to the full width and height of the Canvas
-- `padded`: Add extra padding around the component
+- `padded`: _(default)_ Add extra padding around the component
 
 ## Component layout
 
