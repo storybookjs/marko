@@ -93,7 +93,8 @@ export async function buildStaticStandalone(options: CLIOptions & LoadOptions & 
   const [managerStats, previewStats] = await Promise.all([manager, preview]);
 
   if (options.webpackStatsJson) {
-    await outputStats(options.webpackStatsJson, previewStats, managerStats);
+    const target = options.webpackStatsJson === true ? options.outputDir : options.webpackStatsJson;
+    await outputStats(target, previewStats, managerStats);
   }
 
   logger.info(`=> Output directory: ${options.outputDir}`);

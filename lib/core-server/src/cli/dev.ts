@@ -12,10 +12,10 @@ export async function getDevCli(packageJson: {
 
   program
     .version(packageJson.version)
-    .option('-p, --port [number]', 'Port to run Storybook', (str) => parseInt(str, 10))
-    .option('-h, --host [string]', 'Host to run Storybook')
+    .option('-p, --port <number>', 'Port to run Storybook', (str) => parseInt(str, 10))
+    .option('-h, --host <string>', 'Host to run Storybook')
     .option('-s, --static-dir <dir-names>', 'Directory where to load static files from', parseList)
-    .option('-c, --config-dir [dir-name]', 'Directory where to load Storybook configurations from')
+    .option('-c, --config-dir <dir-name>', 'Directory where to load Storybook configurations from')
     .option(
       '--https',
       'Serve Storybook over HTTPS. Note: You must provide your own certificate information.'
@@ -29,7 +29,7 @@ export async function getDevCli(packageJson: {
     .option('--ssl-key <key>', 'Provide an SSL key. (Required with --https)')
     .option('--smoke-test', 'Exit after successful start')
     .option('--ci', "CI mode (skip interactive prompts, don't open browser)")
-    .option('--loglevel [level]', 'Control level of logging during build')
+    .option('--loglevel <level>', 'Control level of logging during build')
     .option('--quiet', 'Suppress verbose build output')
     .option('--no-version-updates', 'Suppress update check', true)
     .option(
@@ -44,7 +44,7 @@ export async function getDevCli(packageJson: {
     .option('--debug-webpack', 'Display final webpack configurations for debugging purposes')
     .option('--webpack-stats-json [directory]', 'Write Webpack Stats JSON to disk')
     .option(
-      '--preview-url [string]',
+      '--preview-url <string>',
       'Disables the default storybook preview and lets your use your own'
     )
     .option('--docs', 'Build a documentation-only site using addon-docs')
