@@ -103,10 +103,10 @@ First add the package. Make sure that the versions for your `@storybook/*` packa
 yarn add -D @storybook/addon-docs
 ```
 
-Docs has peer dependencies on `react` and `babel-loader`. If you want to write stories in MDX, you may need to add these dependencies as well:
+Docs has peer dependencies on `react`. If you want to write stories in MDX, you may need to add this dependency as well:
 
 ```sh
-yarn add -D react babel-loader
+yarn add -D react
 ```
 
 Then add the following to your `.storybook/main.js`:
@@ -183,7 +183,8 @@ module.exports = {
       test: /\.(stories|story)\.mdx$/,
       use: [
         {
-          loader: 'babel-loader',
+          // Need to add babel-loader as dependency: `yarn add -D babel-loader`
+          loader: require.resolve('babel-loader'),
           // may or may not need this line depending on your app's setup
           options: {
             plugins: ['@babel/plugin-transform-react-jsx'],

@@ -67,12 +67,6 @@ storiesOf('InfoButton', module)
 
 [MDX](../docs/mdx.md) is a convenient way to document your components in Markdown and embed documentation components, such as stories and props tables, inline.
 
-Docs has peer dependencies on `react` and `babel-loader`. If you want to write stories in MDX, you may need to add these dependencies as well:
-
-```sh
-yarn add -D react babel-loader
-```
-
 Then update your `.storybook/main.js` to make sure you load MDX files:
 
 ```js
