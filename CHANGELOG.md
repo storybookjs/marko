@@ -1,8 +1,113 @@
+## 6.3.0-alpha.13 (April 21, 2021)
+
+### Bug Fixes
+
+- Addon-docs: Fix ArgsTable sorting when using of={Component} ([#14669](https://github.com/storybookjs/storybook/pull/14669))
+
+### Maintenance
+
+- CLI: Rename preact template files to JSX ([#14670](https://github.com/storybookjs/storybook/pull/14670))
+
+## 6.3.0-alpha.12 (April 20, 2021)
+
+### Maintenance
+
+- Angular: Refactor angular server ([#14358](https://github.com/storybookjs/storybook/pull/14358))
+- CLI: Rename react template files to jsx ([#14650](https://github.com/storybookjs/storybook/pull/14650))
+
+## 6.3.0-alpha.11 (April 19, 2021)
+
+### Features
+
+- CLI: Support community builders in `sb init` ([#14651](https://github.com/storybookjs/storybook/pull/14651))
+- Angular: Support Ivy addon ([#14649](https://github.com/storybookjs/storybook/pull/14649))
+
+### Maintenance
+
+- Add `funding` to manifests ([#14647](https://github.com/storybookjs/storybook/pull/14647))
+
+## 6.3.0-alpha.10 (April 18, 2021)
+
+### Bug Fixes
+
+- Modified Swatches keys to avoid duplicates ([#14636](https://github.com/storybookjs/storybook/pull/14636))
+
+### Maintenance
+
+- ESM tweaks for vite builder ([#14641](https://github.com/storybookjs/storybook/pull/14641))
+- Examples: Move from placehold.it to place-hold.it for mock images ([#14637](https://github.com/storybookjs/storybook/pull/14637))
+
+## 6.3.0-alpha.9 (April 17, 2021)
+
+### Features
+
+- Preact: Add react compat by default ([#14555](https://github.com/storybookjs/storybook/pull/14555))
+
+### Bug Fixes
+
+- Addon-docs: Fix MD code snippet format inside Description ([#14495](https://github.com/storybookjs/storybook/pull/14495))
+- Server: Fix string escaping in CSF compiler ([#14615](https://github.com/storybookjs/storybook/pull/14615))
+
+### Maintenance
+
+- Maintenance: Improve issue templates ([#14543](https://github.com/storybookjs/storybook/pull/14543))
+
+## 6.3.0-alpha.8 (April 15, 2021)
+
+### Features
+
+- Angular: Create actions for Outputs by default ([#14299](https://github.com/storybookjs/storybook/pull/14299))
+
+### Bug Fixes
+
+- Addon-a11y: Fix crypto in webpack5 ([#14592](https://github.com/storybookjs/storybook/pull/14592))
+- Storyshots: Preserve authentication information in Storybook URL ([#14582](https://github.com/storybookjs/storybook/pull/14582))
+
+### Maintenance
+
+- Angular: Add template MDX example ([#14597](https://github.com/storybookjs/storybook/pull/14597))
+
+### Dependency Upgrades
+
+- Remove unused inquirer dependency ([#14590](https://github.com/storybookjs/storybook/pull/14590))
+
+## 6.3.0-alpha.7 (April 14, 2021)
+
+### Features
+
+- Angular: Improve story rendering mode ([#14226](https://github.com/storybookjs/storybook/pull/14226))
+
+### Bug Fixes
+
+- Angular: set the @ViewChild with a non-empty value in StorybookWrapperComponent ([#14586](https://github.com/storybookjs/storybook/pull/14586))
+
+### Maintenance
+
+- CI: Remove Travis, fix TeamCity, rework E2E on CircleCI ([#14522](https://github.com/storybookjs/storybook/pull/14522))
+- Core: Resolve builders relatively to config file ([#14576](https://github.com/storybookjs/storybook/pull/14576))
+
+## 6.3.0-alpha.6 (April 13, 2021)
+
+### Bug Fixes
+
+- Core: Fix build config inconsistency ([#14566](https://github.com/storybookjs/storybook/pull/14566))
+- CLI: Fix vuetify3 detection ([#14552](https://github.com/storybookjs/storybook/pull/14552))
+
+### Maintenance
+
+- Build: Disable yarn immutable install by default during E2E tests ([#14568](https://github.com/storybookjs/storybook/pull/14568))
+- Build: Fix `dev:babel` and `dev:tsc` NPM scripts ([#14560](https://github.com/storybookjs/storybook/pull/14560))
+
+### Dependency Upgrades
+
+- Bump vue-docgen-api to 4.38.0 ([#14567](https://github.com/storybookjs/storybook/pull/14567))
+- Upgrade react-colorful to latest ([#14553](https://github.com/storybookjs/storybook/pull/14553))
+
 ## 6.3.0-alpha.5 (April 11, 2021)
 
 ### Features
 
-* Core: Enable community builders ([#14545](https://github.com/storybookjs/storybook/pull/14545))
+- Core: Enable community builders ([#14545](https://github.com/storybookjs/storybook/pull/14545))
 
 ## 6.3.0-alpha.4 (April 10, 2021)
 

@@ -13,7 +13,7 @@ const markdownCaption = `
 
 The group looked like tall, exotic grazing animals, swaying gracefully and unconsciously with the movement of the train, their high heels like polished hooves against the gray metal of the Flatline as a construct, a hardwired ROM cassette replicating a dead man’s skills, obsessions, kneejerk responses.
 
-![An image](http://placehold.it/350x150)
+![An image](http://place-hold.it/350x150)
 
 He stared at the clinic, Molly took him to the Tank War, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a skyscraper canyon.
 `;
@@ -29,7 +29,27 @@ const markdownWithLinksCaption = `
 He stared at the clinic, [Molly](https://storybook.js.org/) took him to the *[Tank War](https://storybook.js.org/)*, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a **[skyscraper](https://storybook.js.org/)** canyon.
 `;
 
-const Template = (args) => <Description {...args} />;
+const markdownWithCodeSnippets = `
+# My Example Markdown
+
+An \`inline\` codeblock
+
+\`\`\`tsx
+// TypeScript React code block
+export const MyStory = () => {
+  return <Button>Click me</Button>;
+};
+\`\`\`
+
+\`\`\`
+code block with with no language
+const a = fn({
+  b: 2,
+});
+\`\`\`
+`;
+
+const Template = (args: React.ComponentProps<typeof Description>) => <Description {...args} />;
 
 export const Text = Template.bind({});
 Text.args = {
@@ -44,4 +64,9 @@ Markdown.args = {
 export const MarkdownLinks = Template.bind({});
 MarkdownLinks.args = {
   markdown: markdownWithLinksCaption,
+};
+
+export const MarkdownCodeSnippets = Template.bind({});
+MarkdownCodeSnippets.args = {
+  markdown: markdownWithCodeSnippets,
 };

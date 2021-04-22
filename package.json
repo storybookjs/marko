@@ -1,6 +1,6 @@
 {
   "name": "@storybook/root",
-  "version": "6.3.0-alpha.5",
+  "version": "6.3.0-alpha.13",
   "private": true,
   "description": "Storybook is an open source tool for developing UI components in isolation for React, Vue and Angular. It makes building stunning UIs organized and efficient.",
   "keywords": [
@@ -33,6 +33,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "workspaces": {
     "packages": [
       "addons/*",
@@ -57,9 +61,9 @@
     "coverage": "codecov",
     "danger": "danger",
     "dev": "concurrently --kill-others \"yarn dev:tsc\" \"yarn dev:babel\"",
-    "dev:babel": "lerna exec --scope @storybook/* --parallel -- cross-env-shell node \\$LERNA_ROOT_PATH/scripts/utils/watch-babel.js",
+    "dev:babel": "lerna exec --scope \"@storybook/*\" --parallel -- cross-env-shell node \\$LERNA_ROOT_PATH/scripts/utils/watch-babel.js",
     "dev:check-types": "tsc --noEmit",
-    "dev:tsc": "lerna exec --scope @storybook/* --parallel -- cross-env-shell node \\$LERNA_ROOT_PATH/scripts/utils/watch-tsc.js",
+    "dev:tsc": "lerna exec --scope \"@storybook/*\" --parallel -- cross-env-shell node \\$LERNA_ROOT_PATH/scripts/utils/watch-tsc.js",
     "github-release": "github-release-from-changelog",
     "lint": "yarn lint:js . && yarn lint:md .",
     "lint:js": "cross-env NODE_ENV=production eslint --cache --cache-location=.cache/eslint --ext .js,.jsx,.json,.html,.ts,.tsx,.mjs --report-unused-disable-directives",
@@ -276,8 +280,8 @@
     "window-size": "^1.1.1"
   },
   "optionalDependencies": {
-    "@cypress/webpack-preprocessor": "^5.5.0",
-    "cypress": "4.12.1",
+    "@cypress/webpack-preprocessor": "^5.7.0",
+    "cypress": "6.8.0",
     "puppeteer": "^2.1.1",
     "ts-loader": "^8.0.14",
     "verdaccio": "^4.10.0",

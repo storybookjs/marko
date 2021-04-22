@@ -3,10 +3,10 @@
 exports[`json-to-csf-compiler actions.json 1`] = `
 "
 export default {
-  title: 'Addons/Actions',
+  title: \\"Addons/Actions\\",
   parameters: {
     options: {
-      selectedPanel: 'storybook/actions/panel'
+      selectedPanel: \\"storybook/actions/panel\\"
     }
   }
 };
@@ -15,14 +15,14 @@ export const Multiple_actions_config = (args) => {};
 Multiple_actions_config.storyName = 'Multiple actions + config';
 Multiple_actions_config.parameters = {
   actions: [
-    'click',
-    'contextmenu',
+    \\"click\\",
+    \\"contextmenu\\",
     {
       clearOnStoryChange: false
     }
   ],
   server: {
-    id: 'addons/actions/story3'
+    id: \\"addons/actions/story3\\"
   }
 };
 "

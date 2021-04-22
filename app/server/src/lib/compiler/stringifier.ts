@@ -5,7 +5,7 @@ const { identifier } = require('safe-identifier');
 
 export function stringifyObject(object: any, level = 0, excludeOuterParams = false): string {
   if (typeof object === 'string') {
-    return `'${object}'`;
+    return JSON.stringify(object);
   }
   const indent = '  '.repeat(level);
   if (Array.isArray(object)) {
@@ -53,7 +53,7 @@ export function stringifyDefault(section: StorybookSection): string {
 
   return dedent`
   export default {
-    title: '${title}',${decoratorsString}${optionsString}
+    title: ${JSON.stringify(title)},${decoratorsString}${optionsString}
   };
   
   `;

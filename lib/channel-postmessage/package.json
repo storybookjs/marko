@@ -1,6 +1,6 @@
 {
   "name": "@storybook/channel-postmessage",
-  "version": "6.3.0-alpha.5",
+  "version": "6.3.0-alpha.13",
   "description": "",
   "keywords": [
     "storybook"
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/channel-postmessage"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -36,9 +40,9 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/channels": "6.3.0-alpha.5",
-    "@storybook/client-logger": "6.3.0-alpha.5",
-    "@storybook/core-events": "6.3.0-alpha.5",
+    "@storybook/channels": "6.3.0-alpha.13",
+    "@storybook/client-logger": "6.3.0-alpha.13",
+    "@storybook/core-events": "6.3.0-alpha.13",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
     "qs": "^6.10.0",
@@ -47,5 +51,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "9030fc7598b26f94e209c26152a021b218386b3d"
+  "gitHead": "35287402b58e8c9ec660d28e9fe812f6b1204254"
 }

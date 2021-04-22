@@ -3,14 +3,14 @@
 exports[`json-to-csf-compiler links.json 1`] = `
 "
 export default {
-  title: 'Welcome',
+  title: \\"Welcome\\",
 };
 
 export const Welcome = (args) => {};
 Welcome.storyName = 'Welcome';
 Welcome.parameters = {
   server: {
-    id: 'welcome/welcome'
+    id: \\"welcome/welcome\\"
   }
 };
 "

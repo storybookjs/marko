@@ -98,7 +98,7 @@ storiesOf('Button').add('simple usage (JSX description)', withInfo(<div>
     </a>
   </p>
   <p>
-    <img src=\\"http://placehold.it/350x150\\" />
+    <img src=\\"http://place-hold.it/350x150\\" />
   </p>
 </div>)(() => (
   <div>
@@ -125,7 +125,7 @@ storiesOf('Button').add('simple usage (inline JSX description)', withInfo({
       </a>
     </p>
     <p>
-      <img src=\\"http://placehold.it/350x150\\" />
+      <img src=\\"http://place-hold.it/350x150\\" />
     </p>
   </div>,
 

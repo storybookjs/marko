@@ -1,5 +1,11 @@
 import { NpmOptions } from '../NpmOptions';
-import { StoryFormat, SupportedLanguage, SupportedFrameworks, Builder } from '../project_types';
+import {
+  StoryFormat,
+  SupportedLanguage,
+  SupportedFrameworks,
+  Builder,
+  CoreBuilder,
+} from '../project_types';
 import { getBabelDependencies, copyComponents } from '../helpers';
 import { configure } from './configure';
 import { getPackageDetails, JsPackageManager } from '../js-package-manager';
@@ -42,6 +48,17 @@ const defaultOptions: FrameworkOptions = {
   commonJs: false,
 };
 
+const builderDependencies = (builder: Builder) => {
+  switch (builder) {
+    case CoreBuilder.Webpack4:
+      return [];
+    case CoreBuilder.Webpack5:
+      return ['@storybook/builder-webpack5'];
+    default:
+      return [builder];
+  }
+};
+
 export async function baseGenerator(
   packageManager: JsPackageManager,
   npmOptions: NpmOptions,
@@ -73,10 +90,6 @@ export async function baseGenerator(
   const yarn2Dependencies =
     packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
 
-  const builderDependencies: Partial<Record<Builder, string>> = {
-    [Builder.Webpack5]: '@storybook/builder-webpack5',
-  };
-
   const packageJson = packageManager.retrievePackageJson();
   const installedDependencies = new Set(Object.keys(packageJson.dependencies));
 
@@ -86,7 +99,7 @@ export async function baseGenerator(
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,
-    builderDependencies[builder],
+    ...builderDependencies(builder),
   ]
     .filter(Boolean)
     .filter(
@@ -96,7 +109,7 @@ export async function baseGenerator(
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
   const mainOptions =
-    builder !== Builder.Webpack4
+    builder !== CoreBuilder.Webpack4
       ? {
           core: {
             builder,
