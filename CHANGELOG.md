@@ -1,3 +1,15 @@
+## 6.2.9 (April 23, 2021)
+
+### Bug Fixes
+
+- Angular: set the @ViewChild with a non-empty value in StorybookWrapperComponent ([#14586](https://github.com/storybookjs/storybook/pull/14586))
+- Addon-docs: Fix ArgsTable sorting when using of={Component} ([#14669](https://github.com/storybookjs/storybook/pull/14669))
+- Server: Fix string escaping in CSF compiler ([#14615](https://github.com/storybookjs/storybook/pull/14615))
+
+### Maintenance
+
+- Examples: Move from placehold.it to place-hold.it for mock images ([#14637](https://github.com/storybookjs/storybook/pull/14637))
+
 ## 6.3.0-alpha.14 (April 23, 2021)
 
 ### Bug Fixes
