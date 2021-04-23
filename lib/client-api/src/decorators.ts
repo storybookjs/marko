@@ -1,6 +1,16 @@
 import { StoryContext, StoryContextUpdate, PartialStoryFn, LegacyStoryFn } from '@storybook/addons';
 import { DecoratorFunction } from './types';
 
+const defaultContext: StoryContext = {
+  id: 'unspecified',
+  name: 'unspecified',
+  kind: 'unspecified',
+  parameters: {},
+  args: {},
+  argTypes: {},
+  globals: {},
+};
+
 /**
  * When you call the story function inside a decorator, e.g.:
  *
@@ -47,7 +57,7 @@ export const defaultDecorateStory = (
     (story, decorator) => decorateStory(story, decorator, () => contextStore),
     storyFn
   );
-  return (context) => {
+  return (context = defaultContext) => {
     contextStore = context;
     return decoratedWithContextStore(context); // Pass the context directly into the first decorator
   };
