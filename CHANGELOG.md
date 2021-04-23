@@ -83,6 +83,13 @@
 
 - Remove unused inquirer dependency ([#14590](https://github.com/storybookjs/storybook/pull/14590))
 
+## 6.2.8 (April 14, 2021)
+
+### Bug Fixes
+
+- CLI: Properly detect vuetify3 ([#14552](https://github.com/storybookjs/storybook/pull/14552))
+- Core: Fix build config inconsistency ([#14566](https://github.com/storybookjs/storybook/pull/14566))
+
 ## 6.3.0-alpha.7 (April 14, 2021)
 
 ### Features
