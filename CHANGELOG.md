@@ -1,3 +1,15 @@
+## 6.3.0-alpha.14 (April 23, 2021)
+
+### Bug Fixes
+
+- Core: Fix URL handling in Firefox ([#14556](https://github.com/storybookjs/storybook/pull/14556))
+- Build: Create webpack stats target directory if needed and accept boolean flag ([#14690](https://github.com/storybookjs/storybook/pull/14690))
+
+### Maintenance
+
+- Docs: Remove `babel-loader` and `@babel/core` peer deps ([#14689](https://github.com/storybookjs/storybook/pull/14689))
+- Use Storybook's built-in accessibility icon for VisionDeficiency tab. ([#14681](https://github.com/storybookjs/storybook/pull/14681))
+
 ## 6.3.0-alpha.13 (April 21, 2021)
 
 ### Bug Fixes
