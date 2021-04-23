@@ -113,7 +113,7 @@ const getSource = (
         source: null,
         actionItem: {
           title: 'No code available',
-          className: 'code-toggle code-toggle--disabled',
+          className: 'docblock-code-toggle docblock-code-toggle--disabled',
           disabled: true,
           onClick: () => setExpanded(false),
         },
@@ -124,7 +124,7 @@ const getSource = (
         source: <StyledSource {...withSource} dark />,
         actionItem: {
           title: 'Hide code',
-          className: 'code-toggle code-toggle--expanded',
+          className: 'docblock-code-toggle docblock-code-toggle--expanded',
           onClick: () => setExpanded(false),
         },
       };
@@ -134,7 +134,7 @@ const getSource = (
         source: null,
         actionItem: {
           title: 'Show code',
-          className: 'code-toggle',
+          className: 'docblock-code-toggle',
           onClick: () => setExpanded(true),
         },
       };
