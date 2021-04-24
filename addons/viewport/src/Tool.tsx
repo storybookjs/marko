@@ -146,8 +146,8 @@ export const ViewportTool: FunctionComponent = memo(
     }
 
     useEffect(() => {
-      registerShortcuts(api, setState);
-    }, []);
+      registerShortcuts(api, setState, Object.keys(viewports));
+    }, [viewports]);
 
     useEffect(() => {
       setState({

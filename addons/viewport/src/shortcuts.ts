@@ -1,23 +1,24 @@
 import { API } from '@storybook/api';
 import { ADDON_ID } from './constants';
-import { MINIMAL_VIEWPORTS } from './defaults';
 
-const viewportsKeys = Object.keys(MINIMAL_VIEWPORTS);
-const getCurrentViewportIndex = (current: string): number => viewportsKeys.indexOf(current);
-const getNextViewport = (current: string): string => {
-  const currentViewportIndex = getCurrentViewportIndex(current);
+const getCurrentViewportIndex = (viewportsKeys: string[], current: string): number =>
+  viewportsKeys.indexOf(current);
+
+const getNextViewport = (viewportsKeys: string[], current: string): string => {
+  const currentViewportIndex = getCurrentViewportIndex(viewportsKeys, current);
   return currentViewportIndex === viewportsKeys.length - 1
     ? viewportsKeys[0]
     : viewportsKeys[currentViewportIndex + 1];
 };
-const getPreviousViewport = (current: string): string => {
-  const currentViewportIndex = getCurrentViewportIndex(current);
+
+const getPreviousViewport = (viewportsKeys: string[], current: string): string => {
+  const currentViewportIndex = getCurrentViewportIndex(viewportsKeys, current);
   return currentViewportIndex < 1
     ? viewportsKeys[viewportsKeys.length - 1]
     : viewportsKeys[currentViewportIndex - 1];
 };
 
-export const registerShortcuts = async (api: API, setState: any) => {
+export const registerShortcuts = async (api: API, setState: any, viewportsKeys: string[]) => {
   await api.setAddonShortcut(ADDON_ID, {
     label: 'Previous viewport',
     defaultShortcut: ['shift', 'V'],
@@ -25,7 +26,7 @@ export const registerShortcuts = async (api: API, setState: any) => {
     action: () => {
       const { selected, isRotated } = api.getAddonState(ADDON_ID);
       setState({
-        selected: getPreviousViewport(selected),
+        selected: getPreviousViewport(viewportsKeys, selected),
         isRotated,
       });
     },
@@ -38,7 +39,7 @@ export const registerShortcuts = async (api: API, setState: any) => {
     action: () => {
       const { selected, isRotated } = api.getAddonState(ADDON_ID);
       setState({
-        selected: getNextViewport(selected),
+        selected: getNextViewport(viewportsKeys, selected),
         isRotated,
       });
     },

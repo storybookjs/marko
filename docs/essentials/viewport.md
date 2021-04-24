@@ -131,8 +131,9 @@ You can change your story through [parameters](../writing-stories/parameters.md)
 
 ### Keyboard shortcuts
 
-* Previous viewport: `shift + v`
-* Next viewport: `v`
-* Reset viewport: `control + v`
+* Previous viewport: <kbd>shift</kbd> + <kbd>v</kbd>
+* Next viewport: <kbd>v</kbd>
+* Reset viewport: <kbd>control</kbd> + <kbd>v</kbd>
+
 
 These shortcuts can be edited in Storybook's Keyboard shortcuts page.
