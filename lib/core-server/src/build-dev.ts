@@ -86,7 +86,8 @@ export async function buildDevStandalone(options: CLIOptions & LoadOptions & Bui
   const managerStats = managerResult && managerResult.stats;
 
   if (options.webpackStatsJson) {
-    await outputStats(options.webpackStatsJson, previewStats, managerStats);
+    const target = options.webpackStatsJson === true ? options.outputDir : options.webpackStatsJson;
+    await outputStats(target, previewStats, managerStats);
   }
 
   if (options.smokeTest) {

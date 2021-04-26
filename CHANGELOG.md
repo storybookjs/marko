@@ -1,3 +1,27 @@
+## 6.2.9 (April 23, 2021)
+
+### Bug Fixes
+
+- Angular: set the @ViewChild with a non-empty value in StorybookWrapperComponent ([#14586](https://github.com/storybookjs/storybook/pull/14586))
+- Addon-docs: Fix ArgsTable sorting when using of={Component} ([#14669](https://github.com/storybookjs/storybook/pull/14669))
+- Server: Fix string escaping in CSF compiler ([#14615](https://github.com/storybookjs/storybook/pull/14615))
+
+### Maintenance
+
+- Examples: Move from placehold.it to place-hold.it for mock images ([#14637](https://github.com/storybookjs/storybook/pull/14637))
+
+## 6.3.0-alpha.14 (April 23, 2021)
+
+### Bug Fixes
+
+- Core: Fix URL handling in Firefox ([#14556](https://github.com/storybookjs/storybook/pull/14556))
+- Build: Create webpack stats target directory if needed and accept boolean flag ([#14690](https://github.com/storybookjs/storybook/pull/14690))
+
+### Maintenance
+
+- Docs: Remove `babel-loader` and `@babel/core` peer deps ([#14689](https://github.com/storybookjs/storybook/pull/14689))
+- Use Storybook's built-in accessibility icon for VisionDeficiency tab. ([#14681](https://github.com/storybookjs/storybook/pull/14681))
+
 ## 6.3.0-alpha.13 (April 21, 2021)
 
 ### Bug Fixes
@@ -70,6 +94,13 @@
 ### Dependency Upgrades
 
 - Remove unused inquirer dependency ([#14590](https://github.com/storybookjs/storybook/pull/14590))
+
+## 6.2.8 (April 14, 2021)
+
+### Bug Fixes
+
+- CLI: Properly detect vuetify3 ([#14552](https://github.com/storybookjs/storybook/pull/14552))
+- Core: Fix build config inconsistency ([#14566](https://github.com/storybookjs/storybook/pull/14566))
 
 ## 6.3.0-alpha.7 (April 14, 2021)
 

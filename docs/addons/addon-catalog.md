@@ -31,12 +31,12 @@ We rely on metadata to organize your addon in the catalog. You must add the <cod
 
 Customize your addon's appearance by adding the `storybook` property with the following fields.
 
-| Property                | Description                       | Example                               |
-| ----------------------- | --------------------------------- | ------------------------------------- |
-| `displayName`           | Display name                      | Outline                               |
-| `icon`                  | Link to custom icon for the addon | https://yoursite.com/outline-icon.png |
-| `unsupportedFrameworks` | List of unsupported frameworks    | `["vue"]`                             |
-| `supportedFrameworks`   | List of supported frameworks      | `["react", "angular"]`                |
+| Property                | Description                                               | Example                               |
+| ----------------------- | --------------------------------------------------------- | ------------------------------------- |
+| `displayName`           | Display name                                              | Outline                               |
+| `icon`                  | Link to custom icon for the addon (SVG are not supported) | https://yoursite.com/outline-icon.png |
+| `unsupportedFrameworks` | List of unsupported frameworks                            | `["vue"]`                             |
+| `supportedFrameworks`   | List of supported frameworks                              | `["react", "angular"]`                |
 
 
 Use the table below as a reference when filling in the values for both the `supportedFrameworks` and `unsupportedFrameworks` metadata properties.

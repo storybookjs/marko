@@ -18,6 +18,6 @@ export async function outputStats(directory: string, previewStats?: any, manager
 
 export const writeStats = async (directory: string, name: string, stats: Stats) => {
   const filePath = path.join(directory, `${name}-stats.json`);
-  await fs.writeFile(filePath, JSON.stringify(stats.toJson(), null, 2), 'utf8');
+  await fs.outputFile(filePath, JSON.stringify(stats.toJson(), null, 2), 'utf8');
   return filePath;
 };
