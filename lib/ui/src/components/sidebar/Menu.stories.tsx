@@ -58,6 +58,7 @@ export const Expanded = () => {
     {
       // @ts-ignore
       getShortcutKeys: () => ({}),
+      getAddonsShortcuts: () => ({}),
       versionUpdateAvailable: () => false,
       releaseNotesVersion: () => '6.0.0',
     },
@@ -74,6 +75,7 @@ export const ExpandedWithoutReleaseNotes = () => {
     {
       // @ts-ignore
       getShortcutKeys: () => ({}),
+      getAddonsShortcuts: () => ({}),
       versionUpdateAvailable: () => false,
       releaseNotesVersion: () => undefined,
     },
