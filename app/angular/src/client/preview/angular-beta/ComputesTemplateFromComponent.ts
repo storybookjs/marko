@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { ArgType, ArgTypes } from '@storybook/api';
 import { ICollection } from '../types';
 import {
   ComponentInputsOutputs,
@@ -25,7 +26,7 @@ const separateInputsOutputsAttributes = (
 };
 
 /**
- * Converted a component into a template with inputs/outputs present in initial props
+ * Converts a component into a template with inputs/outputs present in initial props
  * @param component
  * @param initialProps
  * @param innerTemplate
@@ -37,6 +38,11 @@ export const computesTemplateFromComponent = (
 ) => {
   const ngComponentMetadata = getComponentDecoratorMetadata(component);
   const ngComponentInputsOutputs = getComponentInputsOutputs(component);
+
+  if (!ngComponentMetadata.selector) {
+    // Allow to add renderer component when NgComponent selector is undefined
+    return `<ng-container *ngComponentOutlet="storyComponent"></ng-container>`;
+  }
 
   const { inputs: initialInputs, outputs: initialOutputs } = separateInputsOutputsAttributes(
     ngComponentInputsOutputs,
@@ -50,5 +56,106 @@ export const computesTemplateFromComponent = (
       ? ` ${initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ')}`
       : '';
 
-  return `<${ngComponentMetadata.selector}${templateInputs}${templateOutputs}>${innerTemplate}</${ngComponentMetadata.selector}>`;
+  return buildTemplate(
+    ngComponentMetadata.selector,
+    innerTemplate,
+    templateInputs,
+    templateOutputs
+  );
+};
+
+const createAngularInputProperty = ({
+  propertyName,
+  value,
+  argType,
+}: {
+  propertyName: string;
+  value: any;
+  argType?: ArgType;
+}) => {
+  const { name: type = null, summary = null } = argType?.type || {};
+  let templateValue = type === 'enum' && !!summary ? `${summary}.${value}` : value;
+
+  const actualType = type === 'enum' && summary ? 'enum' : typeof value;
+  const requiresBrackets = ['object', 'any', 'boolean', 'enum', 'number'].includes(actualType);
+
+  if (typeof value === 'object') {
+    templateValue = propertyName;
+  }
+
+  return `${requiresBrackets ? '[' : ''}${propertyName}${
+    requiresBrackets ? ']' : ''
+  }="${templateValue}"`;
+};
+
+/**
+ * Converts a component into a template with inputs/outputs present in initial props
+ * @param component
+ * @param initialProps
+ * @param innerTemplate
+ */
+export const computesTemplateSourceFromComponent = (
+  component: Type<unknown>,
+  initialProps?: ICollection,
+  argTypes?: ArgTypes
+) => {
+  const ngComponentMetadata = getComponentDecoratorMetadata(component);
+  if (!ngComponentMetadata) {
+    return null;
+  }
+
+  if (!ngComponentMetadata.selector) {
+    // Allow to add renderer component when NgComponent selector is undefined
+    return `<ng-container *ngComponentOutlet="${component.name}"></ng-container>`;
+  }
+
+  const ngComponentInputsOutputs = getComponentInputsOutputs(component);
+  const { inputs: initialInputs, outputs: initialOutputs } = separateInputsOutputsAttributes(
+    ngComponentInputsOutputs,
+    initialProps
+  );
+
+  const templateInputs =
+    initialInputs.length > 0
+      ? ` ${initialInputs
+          .map((propertyName) =>
+            createAngularInputProperty({
+              propertyName,
+              value: initialProps[propertyName],
+              argType: argTypes?.[propertyName],
+            })
+          )
+          .join(' ')}`
+      : '';
+  const templateOutputs =
+    initialOutputs.length > 0
+      ? ` ${initialOutputs.map((i) => `(${i})="${i}($event)"`).join(' ')}`
+      : '';
+
+  return buildTemplate(ngComponentMetadata.selector, '', templateInputs, templateOutputs);
+};
+
+const buildTemplate = (
+  selector: string,
+  innerTemplate: string,
+  inputs: string,
+  outputs: string
+) => {
+  const templateReplacers: [
+    string | RegExp,
+    string | ((substring: string, ...args: any[]) => string)
+  ][] = [
+    [/(^\..+)/, 'div$1'],
+    [/(^\[.+?])/, 'div$1'],
+    [/([\w[\]]+)(\s*,[\w\s-[\],]+)+/, `$1`],
+    [/#([\w-]+)/, ` id="$1"`],
+    [/((\.[\w-]+)+)/, (_, c) => ` class="${c.split`.`.join` `.trim()}"`],
+    [/(\[.+?])/g, (_, a) => ` ${a.slice(1, -1)}`],
+    [/([\S]+)(.*)/, `<$1$2${inputs}${outputs}>${innerTemplate}</$1>`],
+  ];
+
+  return templateReplacers.reduce(
+    (prevSelector, [searchValue, replacer]) => prevSelector.replace(searchValue, replacer as any),
+    selector
+  );
 };

@@ -220,6 +220,17 @@ describe('decorateStory', () => {
         component: FooComponent,
       });
     });
+
+    it('should keep template with an empty value', () => {
+      const decorators: DecoratorFunction<StoryFnAngularReturnType>[] = [
+        componentWrapperDecorator(ParentComponent),
+      ];
+      const decorated = decorateStory(() => ({ template: '' }), decorators);
+
+      expect(decorated(makeContext({ parameters: { component: FooComponent } }))).toEqual({
+        template: '<parent></parent>',
+      });
+    });
   });
 
   describe('default behavior', () => {

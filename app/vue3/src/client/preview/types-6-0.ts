@@ -4,7 +4,7 @@ import { StoryFnVueReturnType } from './types';
 
 export type { Args, ArgTypes, Parameters, StoryContext } from '@storybook/addons';
 
-type VueComponent = ConcreteComponent;
+type VueComponent = ConcreteComponent<any>;
 type VueReturnType = StoryFnVueReturnType;
 
 /**
@@ -21,3 +21,5 @@ export type Meta<Args = DefaultArgs> = BaseMeta<VueComponent> & Annotations<Args
  */
 export type Story<Args = DefaultArgs> = BaseStory<Args, VueReturnType> &
   Annotations<Args, VueReturnType>;
+
+export type Decorators = Story['decorators'];

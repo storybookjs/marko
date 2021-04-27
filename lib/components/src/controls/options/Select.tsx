@@ -20,6 +20,7 @@ const styleResets: CSSObject = {
 const OptionsSelect = styled.select(({ theme }) => ({
   ...styleResets,
 
+  boxSizing: 'border-box',
   position: 'relative',
   padding: '6px 10px',
   width: '100%',

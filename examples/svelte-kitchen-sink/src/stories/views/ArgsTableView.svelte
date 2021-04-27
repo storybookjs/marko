@@ -22,14 +22,14 @@
     /** @typedef {object} TypeA */
     /** @typedef {number} TypeB */
     /** @type {TypeA|TypeB}*/
-    export let union;
+    export let union = null;
 
     /**
      * @required
      */
     export let required = '';
 
-    export let unknown;
+    export let unknown = undefined;
 
     function onClick() {
         /**

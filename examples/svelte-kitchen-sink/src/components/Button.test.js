@@ -8,7 +8,7 @@ describe('Button Component', () => {
   beforeEach(() => {
     target = document.createElement('div');
 
-    component = new Button.default({ target }); // eslint-disable-line new-cap
+    component = new Button({ target });
   });
 
   it('should render `text` property', () => {

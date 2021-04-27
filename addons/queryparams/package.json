@@ -1,11 +1,12 @@
 {
   "name": "@storybook/addon-queryparams",
-  "version": "6.2.0-alpha.24",
+  "version": "6.3.0-alpha.14",
   "description": "parameter addon for storybook",
   "keywords": [
     "addon",
     "query",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook#readme",
   "bugs": {
@@ -15,6 +16,10 @@
     "type": "git",
     "url": "git+https://github.com/storybookjs/storybook.git",
     "directory": "addons/addon-queryparams"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -37,15 +42,15 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.24",
-    "@storybook/api": "6.2.0-alpha.24",
-    "@storybook/client-logger": "6.2.0-alpha.24",
-    "@storybook/components": "6.2.0-alpha.24",
-    "@storybook/core-events": "6.2.0-alpha.24",
-    "@storybook/theming": "6.2.0-alpha.24",
+    "@storybook/addons": "6.3.0-alpha.14",
+    "@storybook/api": "6.3.0-alpha.14",
+    "@storybook/client-logger": "6.3.0-alpha.14",
+    "@storybook/components": "6.3.0-alpha.14",
+    "@storybook/core-events": "6.3.0-alpha.14",
+    "@storybook/theming": "6.3.0-alpha.14",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
-    "qs": "^6.9.5",
+    "qs": "^6.10.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
@@ -67,5 +72,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8001ec00b1023170e0a57f53edad61f3afe1b111"
+  "gitHead": "eb1e3a913f3c5329539a7a908e7cb955ffaa8100",
+  "storybook": {
+    "displayName": "Query params",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

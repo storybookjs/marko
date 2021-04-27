@@ -5,19 +5,19 @@ import { Meta, Story } from '@storybook/angular';
 
 import { YourComponent } from './your.component';
 
-// This default export determines where your story goes in the story list
+//👇 This default export determines where your story goes in the story list
 export default {
   title: 'YourComponent',
   component: YourComponent,
 } as Meta;
 
+//👇 We create a “template” of how args map to rendering
 const Template: Story<YourComponent> = (args) => ({
-  component: YourComponent,
   props: args,
 });
 
 export const YourStory = Template.bind({});
 YourStory.args = {
-  /* the args you need here will depend on your component */
+  /* 👇 The args you need here will depend on your component */
 };
 ```

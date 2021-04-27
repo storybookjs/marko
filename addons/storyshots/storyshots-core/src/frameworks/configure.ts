@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { toRequireContext } from '@storybook/core/server';
+import { toRequireContext } from '@storybook/core-common';
 import registerRequireContextHook from 'babel-plugin-require-context-hook/register';
 import global from 'global';
 import { ArgTypesEnhancer, DecoratorFunction } from '@storybook/client-api';

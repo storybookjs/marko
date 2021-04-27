@@ -1,4 +1,4 @@
-import { document, window } from 'global';
+import { document, window as globalWindow } from 'global';
 import axe from 'axe-core';
 import addons from '@storybook/addons';
 import { EVENTS } from './constants';
@@ -66,7 +66,7 @@ const run = async (storyId: string) => {
 
 /** Returns story parameters or default ones. */
 const getParams = (storyId: string): A11yParameters => {
-  const { parameters } = window.__STORYBOOK_STORY_STORE__.fromId(storyId) || {};
+  const { parameters } = globalWindow.__STORYBOOK_STORY_STORE__.fromId(storyId) || {};
   return (
     parameters.a11y || {
       config: {},

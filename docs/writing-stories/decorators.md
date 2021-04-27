@@ -21,6 +21,7 @@ Some components require a “harness” to render in a useful way. For instance 
     'vue/your-component-with-decorator.js.mdx',
     'angular/your-component-with-decorator.ts.mdx',
     'svelte/your-component-with-decorator.js.mdx',
+    'web-components/your-component-with-decorator.js.mdx',
   ]}
 />
 
@@ -30,7 +31,7 @@ Some components require a “harness” to render in a useful way. For instance 
 
 ## “Context” for mocking
 
-Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that add this context to to all stories in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
+Some libraries require components higher up in the component hierarchy to render properly. For example in Styled Components, a `ThemeProvider` is required if your components make use of themes. Add a single global decorator that adds this context to all stories in [`.storybook/preview.js`](../configure/overview.md#configure-story-rendering):
 
 <!-- prettier-ignore-start -->
 
@@ -67,6 +68,7 @@ To define a decorator for a single story, use the `decorators` key on a named ex
     'vue/button-story-decorator.js.mdx',
     'angular/button-story-decorator.ts.mdx',
     'svelte/button-story-decorator.js.mdx',
+    'web-components/button-story-decorator.js.mdx',
   ]}
 />
 
@@ -87,6 +89,7 @@ To define a decorator for all stories of a component, use the `decorators` key o
     'vue/button-story-component-decorator.js.mdx',
     'angular/button-story-component-decorator.ts.mdx',
     'svelte/button-story-component-decorator.js.mdx',
+    'web-components/button-story-component-decorator.js.mdx',
   ]}
 />
 
@@ -104,6 +107,7 @@ We can also set a decorator for **all stories** via the `decorators` export of y
     'vue/storybook-preview-global-decorator.js.mdx',
     'angular/storybook-preview-global-decorator.ts.mdx',
     'svelte/storybook-preview-global-decorator.js.mdx',
+    'web-components/storybook-preview-global-decorator.js.mdx',
   ]}
 />
 

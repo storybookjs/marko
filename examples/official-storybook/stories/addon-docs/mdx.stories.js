@@ -1,5 +1,6 @@
 import React from 'react';
 import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { themes } from '@storybook/theming';
 import markdown from './markdown.stories.mdx';
 
 export default {
@@ -15,3 +16,16 @@ export const Typography = () => {
   const Docs = markdown.parameters.docs.page;
   return <Docs />;
 };
+
+export const DarkModeDocs = () => {
+  const Docs = markdown.parameters.docs.page;
+  return <Docs />;
+};
+
+DarkModeDocs.decorators = [
+  (storyFn) => (
+    <DocsContainer context={{ parameters: { docs: { theme: themes.dark } } }}>
+      {storyFn()}
+    </DocsContainer>
+  ),
+];

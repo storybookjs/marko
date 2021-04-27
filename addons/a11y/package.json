@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-a11y",
-  "version": "6.2.0-alpha.24",
+  "version": "6.3.0-alpha.14",
   "description": "Test component compliance with web accessibility standards",
   "keywords": [
     "a11y",
@@ -8,7 +8,8 @@
     "addon",
     "storybook",
     "valid",
-    "verify"
+    "verify",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook#readme",
   "bugs": {
@@ -18,6 +19,10 @@
     "type": "git",
     "url": "git+https://github.com/storybookjs/storybook.git",
     "directory": "addons/a11y"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -40,25 +45,25 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.24",
-    "@storybook/api": "6.2.0-alpha.24",
-    "@storybook/channels": "6.2.0-alpha.24",
-    "@storybook/client-api": "6.2.0-alpha.24",
-    "@storybook/client-logger": "6.2.0-alpha.24",
-    "@storybook/components": "6.2.0-alpha.24",
-    "@storybook/core-events": "6.2.0-alpha.24",
-    "@storybook/theming": "6.2.0-alpha.24",
+    "@storybook/addons": "6.3.0-alpha.14",
+    "@storybook/api": "6.3.0-alpha.14",
+    "@storybook/channels": "6.3.0-alpha.14",
+    "@storybook/client-api": "6.3.0-alpha.14",
+    "@storybook/client-logger": "6.3.0-alpha.14",
+    "@storybook/components": "6.3.0-alpha.14",
+    "@storybook/core-events": "6.3.0-alpha.14",
+    "@storybook/theming": "6.3.0-alpha.14",
     "axe-core": "^4.1.1",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
     "lodash": "^4.17.20",
-    "react-sizeme": "^2.6.12",
+    "react-sizeme": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0",
     "util-deprecate": "^1.0.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^10.4.9",
+    "@testing-library/react": "^11.2.2",
     "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
@@ -76,5 +81,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8001ec00b1023170e0a57f53edad61f3afe1b111"
+  "gitHead": "eb1e3a913f3c5329539a7a908e7cb955ffaa8100",
+  "storybook": {
+    "displayName": "Accessibility",
+    "icon": "https://user-images.githubusercontent.com/263385/101991665-47042f80-3c7c-11eb-8f00-64b5a18f498a.png",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

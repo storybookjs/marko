@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-jest",
-  "version": "6.2.0-alpha.24",
+  "version": "6.3.0-alpha.14",
   "description": "React storybook addon that show component jest report",
   "keywords": [
     "addon",
@@ -9,7 +9,8 @@
     "report",
     "results",
     "storybook",
-    "unit-testing"
+    "unit-testing",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/jest",
   "bugs": {
@@ -19,6 +20,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/jest"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com> (https://github.com/renaudtertrais)",
@@ -42,14 +47,14 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.24",
-    "@storybook/api": "6.2.0-alpha.24",
-    "@storybook/components": "6.2.0-alpha.24",
-    "@storybook/core-events": "6.2.0-alpha.24",
-    "@storybook/theming": "6.2.0-alpha.24",
+    "@storybook/addons": "6.3.0-alpha.14",
+    "@storybook/api": "6.3.0-alpha.14",
+    "@storybook/components": "6.3.0-alpha.14",
+    "@storybook/core-events": "6.3.0-alpha.14",
+    "@storybook/theming": "6.3.0-alpha.14",
     "core-js": "^3.8.2",
     "global": "^4.4.0",
-    "react-sizeme": "^2.6.12",
+    "react-sizeme": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
     "upath": "^1.2.0"
   },
@@ -71,5 +76,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8001ec00b1023170e0a57f53edad61f3afe1b111"
+  "gitHead": "eb1e3a913f3c5329539a7a908e7cb955ffaa8100",
+  "storybook": {
+    "displayName": "Jest",
+    "icon": "https://pbs.twimg.com/profile_images/821713465245102080/mMtKIMax_400x400.jpg",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

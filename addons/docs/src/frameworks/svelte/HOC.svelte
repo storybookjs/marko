@@ -1,7 +1,7 @@
 <script>
-  export let component;
-  export let props;
+  export let storyFn;
+
+  let { Component: component, props } = storyFn();
 </script>
 
-<svelte:options accessors={true} />
 <svelte:component this={component} {...props}/>

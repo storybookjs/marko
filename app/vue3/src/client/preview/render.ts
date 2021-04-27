@@ -1,10 +1,8 @@
-import type { Args } from '@storybook/addons';
 import dedent from 'ts-dedent';
 import { createApp, h, shallowRef, ComponentPublicInstance } from 'vue';
 import { RenderContext, StoryFnVueReturnType } from './types';
 
 const activeStoryComponent = shallowRef<StoryFnVueReturnType | null>(null);
-const activeProps = shallowRef<Args>({});
 
 let root: ComponentPublicInstance | null = null;
 
@@ -18,7 +16,7 @@ export const storybookApp = createApp({
     return () => {
       if (!activeStoryComponent.value)
         throw new Error('No Vue 3 Story available. Was it set correctly?');
-      return h(activeStoryComponent.value, activeProps.value);
+      return h(activeStoryComponent.value);
     };
   },
 });
@@ -51,7 +49,6 @@ export default function render({
   showMain();
 
   activeStoryComponent.value = element;
-  activeProps.value = args;
 
   if (!root) {
     root = storybookApp.mount('#root');

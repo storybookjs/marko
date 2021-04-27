@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import dedent from 'ts-dedent';
 
 import { Subject } from 'rxjs';
-import { deprecate } from 'util';
+import deprecate from 'util-deprecate';
 import { ICollection, StoryFnAngularReturnType } from '../types';
 import { Parameters } from '../types-6-0';
 import { storyPropsProvider } from './StorybookProvider';
@@ -45,7 +45,7 @@ export const getStorybookModuleMetadata = (
   }
   const component = storyComponent ?? parameters.component;
 
-  if (!template && component) {
+  if (hasNoTemplate(template) && component) {
     template = computesTemplateFromComponent(component, props, '');
   }
 
@@ -82,3 +82,7 @@ export const createStorybookModule = (ngModule: NgModule): Type<unknown> => {
   class StorybookModule {}
   return StorybookModule;
 };
+
+function hasNoTemplate(template: string | null | undefined): template is undefined {
+  return template === null || template === undefined;
+}

@@ -3,7 +3,7 @@ test('true should be true', () => {
   expect(true).toBe(true);
 });
 
-describe('In a describe: ', () => {
+describe('In a describe:', () => {
   test('true should still be true', () => {
     expect(true).toBe(true);
   });
@@ -17,7 +17,7 @@ describe('In a describe: ', () => {
   });
 });
 
-describe('A bunch of failing tests: ', () => {
+describe('A bunch of failing tests:', () => {
   test('true should still be true', () => {
     expect(true).toBe(false);
   });

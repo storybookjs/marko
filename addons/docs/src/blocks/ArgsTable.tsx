@@ -1,16 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 import React, { FC, useContext, useEffect, useState, useCallback } from 'react';
 import mapValues from 'lodash/mapValues';
-import pickBy from 'lodash/pickBy';
 import {
   ArgsTable as PureArgsTable,
   ArgsTableProps as PureArgsTableProps,
   ArgsTableError,
   ArgTypes,
+  SortType,
   TabbedArgsTable,
 } from '@storybook/components';
 import { Args } from '@storybook/addons';
-import { StoryStore } from '@storybook/client-api';
+import { StoryStore, filterArgTypes } from '@storybook/client-api';
+import type { PropDescriptor } from '@storybook/client-api';
 import Events from '@storybook/core-events';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -19,11 +20,10 @@ import { getComponentName, getDocsStories } from './utils';
 import { ArgTypesExtractor } from '../lib/docgen/types';
 import { lookupStoryId } from './Story';
 
-type PropDescriptor = string[] | RegExp;
-
 interface BaseProps {
   include?: PropDescriptor;
   exclude?: PropDescriptor;
+  sort?: SortType;
 }
 
 type OfProps = BaseProps & {
@@ -73,22 +73,6 @@ const useArgs = (
   return [args, updateArgs, resetArgs];
 };
 
-const matches = (name: string, descriptor: PropDescriptor) =>
-  Array.isArray(descriptor) ? descriptor.includes(name) : name.match(descriptor);
-
-const filterArgTypes = (argTypes: ArgTypes, include?: PropDescriptor, exclude?: PropDescriptor) => {
-  if (!include && !exclude) {
-    return argTypes;
-  }
-  return (
-    argTypes &&
-    pickBy(argTypes, (argType, key) => {
-      const name = argType.name || key;
-      return (!include || matches(name, include)) && (!exclude || !matches(name, exclude));
-    })
-  );
-};
-
 export const extractComponentArgTypes = (
   component: Component,
   { parameters }: DocsContextProps,
@@ -129,11 +113,13 @@ const addComponentTabs = (
   components: Record<string, Component>,
   context: DocsContextProps,
   include?: PropDescriptor,
-  exclude?: PropDescriptor
+  exclude?: PropDescriptor,
+  sort?: SortType
 ) => ({
   ...tabs,
   ...mapValues(components, (comp) => ({
     rows: extractComponentArgTypes(comp, context, include, exclude),
+    sort,
   })),
 });
 
@@ -146,7 +132,7 @@ export const StoryTable: FC<
     parameters: { argTypes },
     storyStore,
   } = context;
-  const { story, component, subcomponents, showComponent, include, exclude } = props;
+  const { story, component, subcomponents, showComponent, include, exclude, sort } = props;
   let storyArgTypes;
   try {
     let storyId;
@@ -170,9 +156,11 @@ export const StoryTable: FC<
     }
     storyArgTypes = filterArgTypes(storyArgTypes, include, exclude);
 
+    const mainLabel = getComponentName(component) || 'Story';
+
     // eslint-disable-next-line prefer-const
     let [args, updateArgs, resetArgs] = useArgs(storyId, storyStore);
-    let tabs = { Story: { rows: storyArgTypes, args, updateArgs, resetArgs } } as Record<
+    let tabs = { [mainLabel]: { rows: storyArgTypes, args, updateArgs, resetArgs } } as Record<
       string,
       PureArgsTableProps
     >;
@@ -188,7 +176,6 @@ export const StoryTable: FC<
     }
 
     if (component && (!storyHasArgsWithControls || showComponent)) {
-      const mainLabel = getComponentName(component);
       tabs = addComponentTabs(tabs, { [mainLabel]: component }, context, include, exclude);
     }
 
@@ -200,7 +187,7 @@ export const StoryTable: FC<
       }
       tabs = addComponentTabs(tabs, subcomponents, context, include, exclude);
     }
-    return <TabbedArgsTable tabs={tabs} />;
+    return <TabbedArgsTable tabs={tabs} sort={sort} />;
   } catch (err) {
     return <PureArgsTable error={err.message} />;
   }
@@ -208,22 +195,24 @@ export const StoryTable: FC<
 
 export const ComponentsTable: FC<ComponentsProps> = (props) => {
   const context = useContext(DocsContext);
-  const { components, include, exclude } = props;
+  const { components, include, exclude, sort } = props;
 
   const tabs = addComponentTabs({}, components, context, include, exclude);
-  return <TabbedArgsTable tabs={tabs} />;
+  return <TabbedArgsTable tabs={tabs} sort={sort} />;
 };
 
 export const ArgsTable: FC<ArgsTableProps> = (props) => {
   const context = useContext(DocsContext);
-  const { parameters: { subcomponents } = {} } = context;
+  const { parameters: { subcomponents, controls } = {} } = context;
 
-  const { include, exclude, components } = props as ComponentsProps;
+  const { include, exclude, components, sort: sortProp } = props as ComponentsProps;
   const { story } = props as StoryProps;
+
+  const sort = sortProp || controls?.sort;
 
   const main = getComponent(props, context);
   if (story) {
-    return <StoryTable {...(props as StoryProps)} component={main} subcomponents={subcomponents} />;
+    return <StoryTable {...(props as StoryProps)} component={main} {...{ subcomponents, sort }} />;
   }
 
   if (!components && !subcomponents) {
@@ -233,11 +222,12 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     } catch (err) {
       mainProps = { error: err.message };
     }
-    return <PureArgsTable {...mainProps} />;
+
+    return <PureArgsTable {...mainProps} sort={sort} />;
   }
 
   if (components) {
-    return <ComponentsTable {...(props as ComponentsProps)} components={components} />;
+    return <ComponentsTable {...(props as ComponentsProps)} {...{ components, sort }} />;
   }
 
   const mainLabel = getComponentName(main);
@@ -245,6 +235,7 @@ export const ArgsTable: FC<ArgsTableProps> = (props) => {
     <ComponentsTable
       {...(props as ComponentsProps)}
       components={{ [mainLabel]: main, ...subcomponents }}
+      sort={sort}
     />
   );
 };

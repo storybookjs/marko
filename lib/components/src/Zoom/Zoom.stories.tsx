@@ -10,7 +10,7 @@ export default {
     },
   },
   parameters: {
-    chromatic: { delay: 300 },
+    chromatic: { delay: 500, diffThreshold: 0.2 },
   },
 };
 const EXAMPLE_ELEMENT = (

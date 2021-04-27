@@ -3,11 +3,12 @@
 
 import { Story } from '@storybook/angular/types-6-0';
 
+//👇 We create a “template” of how args map to rendering
 const Template: Story<Button> = (args) => ({
-  component: Button,
   props: args,
 });
 
+//👇 Each story then reuses that template
 export const Primary = Template.bind({});
 
 Primary.args = {

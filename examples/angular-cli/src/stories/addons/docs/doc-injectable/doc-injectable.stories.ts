@@ -1,7 +1,7 @@
 import { DocInjectableService } from './doc-injectable.service';
 
 export default {
-  title: 'Addon/Docs/DocInjectable',
+  title: 'Addons/Docs/DocInjectable',
   component: DocInjectableService,
   parameters: {
     controls: { hideNoControlsWarning: true },

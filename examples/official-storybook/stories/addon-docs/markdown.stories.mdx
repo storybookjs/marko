@@ -1,4 +1,5 @@
 import { Meta } from '@storybook/addon-docs/blocks';
+import { Icons } from '@storybook/components';
 
 <Meta title="Addons/Docs/markdown-docs" />
 
@@ -127,6 +128,15 @@ Right aligned columns
 | engine |    engine to be used for processing templates. Handlebars is the default. |
 |    ext |                                      extension to be used for dest files. |
 
+Table with icons
+
+| SVG                     | Name     |
+| ----------------------- | -------- |
+| <Icons icon="mobile" /> | `mobile` |
+| <Icons icon="grid" />   | `grid`   |
+| <Icons icon="alert" />  | `alert`  |
+| <Icons icon="check" />  | `check`  |
+
 ## Links
 
 [external link](https://hichroma.com)
@@ -134,6 +144,8 @@ Right aligned columns
 [external link with title](https://hichroma.com 'Insert title!')
 
 [link to in page anchor](#h1-heading)
+
+[link to another story (docs, without prefix)](/docs/addons-docs-docs-only--page)
 
 [link to another story (docs)](?path=/docs/addons-docs-docs-only--page)
 

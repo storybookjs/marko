@@ -84,6 +84,13 @@ export enum StoryFormat {
   MDX = 'mdx',
 }
 
+export enum CoreBuilder {
+  Webpack4 = 'webpack4',
+  Webpack5 = 'webpack5',
+}
+
+export type Builder = CoreBuilder | string;
+
 export enum SupportedLanguage {
   JAVASCRIPT = 'javascript',
   TYPESCRIPT = 'typescript',
@@ -121,7 +128,10 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
   {
     preset: ProjectType.SFC_VUE,
-    dependencies: ['vue-loader', 'vuetify'],
+    dependencies: {
+      'vue-loader': (versionRange) => ltMajor(versionRange, 16),
+      vuetify: (versionRange) => ltMajor(versionRange, 3),
+    },
     matcherFunction: ({ dependencies }) => {
       return dependencies.some(Boolean);
     },
@@ -201,9 +211,9 @@ export const supportedTemplates: TemplateConfiguration[] = [
   },
   {
     preset: ProjectType.WEB_COMPONENTS,
-    dependencies: ['lit-element'],
+    dependencies: ['lit-element', 'lit-html'],
     matcherFunction: ({ dependencies }) => {
-      return dependencies.every(Boolean);
+      return dependencies.some(Boolean);
     },
   },
   {

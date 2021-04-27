@@ -95,7 +95,9 @@ export const AnchorMdx: FC<AnchorMdxProps> = (props) => {
           href={href}
           onClick={(event: SyntheticEvent) => {
             event.preventDefault();
-            navigate(href);
+            // use the A element's href, which has been modified for
+            // local paths without a `?path=` query param prefix
+            navigate(event.currentTarget.getAttribute('href'));
           }}
           target={target}
           {...rest}

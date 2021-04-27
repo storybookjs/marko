@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, useState, useEffect } from 'react';
+import React, { FunctionComponent, ReactNode, useCallback, useState, useEffect } from 'react';
 import { styled } from '@storybook/theming';
 import { document } from 'global';
 
@@ -30,7 +30,7 @@ export interface WithTooltipPureProps {
   tooltip: ReactNode | ((p: WithHideFn) => ReactNode);
   children: ReactNode;
   tooltipShown?: boolean;
-  onVisibilityChange?: (visibility: boolean) => void;
+  onVisibilityChange?: (visibility: boolean) => void | boolean;
   onDoubleClick?: () => void;
 }
 
@@ -121,8 +121,15 @@ const WithToolTipState: FunctionComponent<
   WithTooltipPureProps & {
     startOpen?: boolean;
   }
-> = ({ startOpen, ...rest }) => {
-  const [tooltipShown, onVisibilityChange] = useState(startOpen || false);
+> = ({ startOpen, onVisibilityChange: onChange, ...rest }) => {
+  const [tooltipShown, setTooltipShown] = useState(startOpen || false);
+  const onVisibilityChange = useCallback(
+    (visibility) => {
+      if (onChange && onChange(visibility) === false) return;
+      setTooltipShown(visibility);
+    },
+    [onChange]
+  );
 
   useEffect(() => {
     const hide = () => onVisibilityChange(false);

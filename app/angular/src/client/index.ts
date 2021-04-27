@@ -11,7 +11,7 @@ export {
 
 export * from './preview/types-6-0';
 
-export { StoryFnAngularReturnType as IStory } from './preview/types';
+export type { StoryFnAngularReturnType as IStory } from './preview/types';
 
 export { moduleMetadata, componentWrapperDecorator } from './preview/decorators';
 

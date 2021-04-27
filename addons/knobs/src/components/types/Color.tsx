@@ -1,7 +1,7 @@
 import { document } from 'global';
 import PropTypes from 'prop-types';
 import React, { Component, Validator } from 'react';
-import { SketchPicker, ColorResult } from 'react-color';
+import { RgbaStringColorPicker } from 'react-colorful';
 
 import { styled } from '@storybook/theming';
 import { Form } from '@storybook/components';
@@ -103,10 +103,10 @@ export default class ColorType extends Component<ColorTypeProps, ColorTypeState>
     });
   };
 
-  private handleChange = (color: ColorResult) => {
+  private handleChange = (color: string) => {
     const { onChange } = this.props;
 
-    onChange(`rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`);
+    onChange(color);
   };
 
   popover!: HTMLDivElement;
@@ -133,7 +133,7 @@ export default class ColorType extends Component<ColorTypeProps, ColorTypeState>
               if (e) this.popover = e;
             }}
           >
-            <SketchPicker color={knob.value} onChange={this.handleChange} />
+            <RgbaStringColorPicker color={knob.value} onChange={this.handleChange} />
           </Popover>
         ) : null}
       </ColorButton>

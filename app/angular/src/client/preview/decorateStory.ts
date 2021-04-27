@@ -44,7 +44,7 @@ const prepareMain = (
 
   const component = story.component ?? context.parameters.component;
 
-  if (!template && component) {
+  if (hasNoTemplate(template) && component) {
     template = computesTemplateFromComponent(component, story.props, '');
   }
   return {
@@ -52,3 +52,7 @@ const prepareMain = (
     ...(template ? { template } : {}),
   };
 };
+
+function hasNoTemplate(template: string | null | undefined): template is undefined {
+  return template === null || template === undefined;
+}

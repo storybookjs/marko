@@ -1,11 +1,17 @@
-<script>
+<script lang="ts">
   import { createEventDispatcher, afterUpdate } from 'svelte';
+  /**
+   * Text
+   */
   export let text = '';
+  /**
+   * Border radius
+   */
   export let rounded = true;
 
-  const dispatch = createEventDispatcher();
+  const dispatch = createEventDispatcher<{ click: MouseEvent, afterUpdate: void}>();
 
-  function onClick(event) {
+  function onClick(event: MouseEvent) {
     rounded = !rounded;
 
     dispatch('click', event);
@@ -33,5 +39,6 @@
   <strong>{rounded ? 'Round' : 'Square'} corners</strong>
   <br />
   {text}
+  <!-- Button text -->
   <slot />
 </button>

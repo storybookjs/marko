@@ -3,18 +3,23 @@
 /* eslint-disable no-underscore-dangle */
 import {
   Component,
+  ElementRef,
   EventEmitter,
+  HostBinding,
+  HostListener,
   Input,
   Output,
   ViewChild,
-  HostListener,
-  HostBinding,
-  ElementRef,
 } from '@angular/core';
 
 export const exportedConstant = 'An exported constant';
 
 export type ButtonSize = 'small' | 'medium' | 'large' | 'xlarge';
+
+export enum ButtonAccent {
+  'Normal' = 'Normal',
+  'High' = 'High',
+}
 
 export interface ISomeInterface {
   one: string;
@@ -37,6 +42,7 @@ export interface ISomeInterface {
  */
 @Component({
   selector: 'doc-button',
+  template: '<button>{{ label }}</button>',
 })
 export class InputComponent<T> {
   @ViewChild('buttonRef', { static: false }) buttonRef: ElementRef;
@@ -44,6 +50,10 @@ export class InputComponent<T> {
   /** Appearance style of the button. */
   @Input()
   public appearance: 'primary' | 'secondary' = 'secondary';
+
+  /** Specify the accent-type of the button */
+  @Input()
+  public accent: ButtonAccent;
 
   /** Sets the button to a disabled state. */
   @Input()
@@ -60,6 +70,9 @@ export class InputComponent<T> {
   /** Size of the button. */
   @Input()
   public size?: ButtonSize = 'medium';
+
+  /** Specifies some arbitrary object */
+  @Input() public someDataObject: ISomeInterface;
 
   /**
    * Some input you shouldn't use.

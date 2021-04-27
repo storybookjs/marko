@@ -20,7 +20,6 @@ export default {
     },
     size: {
       type: String,
-      default: 'medium',
       validator: function (value) {
         return ['small', 'medium', 'large'].indexOf(value) !== -1;
       },
@@ -39,7 +38,7 @@ export default {
         'storybook-button': true,
         'storybook-button--primary': props.primary,
         'storybook-button--secondary': !props.primary,
-        [`storybook-button--${props.size}`]: true,
+        [`storybook-button--${props.size || 'medium'}`]: true,
       })),
       style: computed(() => ({
         backgroundColor: props.backgroundColor,

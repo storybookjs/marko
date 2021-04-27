@@ -2,15 +2,5 @@
 // Button.stories.js
 
 export const Primary = …
-Primary.decorators = [(storyFn) => {
-    const story = storyFun();
-
-    return {
-      Component: MarginDecorator,
-      props: {
-        child: story.Component,
-        props: story.props,
-      },
-    }
-  }]
+Primary.decorators = [() => MarginDecorator]
 ```

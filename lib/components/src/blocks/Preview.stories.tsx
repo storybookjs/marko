@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@storybook/theming';
-import { window } from 'global';
+import { window as globalWindow } from 'global';
 
 import { Spaced } from '../spaced/Spaced';
 import { Preview } from './Preview';
@@ -144,7 +144,7 @@ export const WithAdditionalActions = () => (
       {
         title: 'Open on GitHub',
         onClick: () => {
-          window.location.href =
+          globalWindow.location.href =
             'https://github.com/storybookjs/storybook/blob/next/lib/components/src/blocks/Preview.stories.tsx#L140-L147';
         },
       },

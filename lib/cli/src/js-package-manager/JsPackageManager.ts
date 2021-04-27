@@ -8,7 +8,13 @@ import storybookPackagesVersions from '../versions.json';
 
 const logger = console;
 
-function getPackageDetails(pkg: string): [string, string?] {
+/**
+ * Extract package name and version from input
+ *
+ * @param pkg A string like `@storybook/cli`, `react` or `react@^16`
+ * @return A tuple of 2 elements: [packageName, packageVersion]
+ */
+export function getPackageDetails(pkg: string): [string, string?] {
   const idx = pkg.lastIndexOf('@');
   // If the only `@` is the first character, it is a scoped package
   // If it isn't in the string, it will be -1
@@ -219,7 +225,7 @@ export abstract class JsPackageManager {
       eslintConfig: {
         ...packageJson.eslintConfig,
         overrides: [
-          ...(packageJson.eslintConfig.overrides || []),
+          ...(packageJson.eslintConfig?.overrides || []),
           {
             files: ['**/*.stories.*'],
             rules: {

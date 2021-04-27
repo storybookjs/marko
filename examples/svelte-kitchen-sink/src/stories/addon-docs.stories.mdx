@@ -26,7 +26,7 @@ export const rounded = () => ({
   Component: ButtonView,
   props: {
     rounded: true,
-    message: 'Rounded text',
+    text: 'Rounded text',
   },
 });
 
@@ -34,7 +34,7 @@ export const square = () => ({
   Component: ButtonView,
   props: {
     rounded: false,
-    message: 'Squared text',
+    text: 'Squared text',
   },
 });
 ```
@@ -48,7 +48,7 @@ Amd here's how `rounded` looks in MDX:
     Component: ButtonView,
     props: {
       rounded: true,
-      message: 'Rounded text',
+      text: 'Rounded text',
     },
   }}
 </Story>
@@ -60,7 +60,7 @@ And `square`:
     Component: ButtonView,
     props: {
       rounded: false,
-      message: 'Squared text',
+      text: 'Squared text',
     },
   }}
 </Story>

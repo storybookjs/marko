@@ -1,7 +1,7 @@
 import { DocDirective } from './doc-directive.directive';
 
 export default {
-  title: 'Addon/Docs/DocDirective',
+  title: 'Addons/Docs/DocDirective',
   component: DocDirective,
 };
 

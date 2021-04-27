@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoriesHash } from '@storybook/api';
+import type { StoriesHash } from '@storybook/api';
 
 import { Tree } from './Tree';
 import { stories } from './mockdata.large';
@@ -44,6 +44,7 @@ const singleStoryComponent = {
     isComponent: true,
     isLeaf: false,
     isRoot: false,
+    label: <span>🔥 Single</span>,
   },
   'single--single': {
     id: 'single--single',
@@ -58,6 +59,7 @@ const singleStoryComponent = {
     isLeaf: true,
     isComponent: false,
     isRoot: false,
+    label: <span>🔥 Single</span>,
   },
 };
 

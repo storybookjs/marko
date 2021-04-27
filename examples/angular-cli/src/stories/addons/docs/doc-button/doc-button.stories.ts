@@ -1,7 +1,7 @@
 import { DocButtonComponent } from './doc-button.component';
 
 export default {
-  title: 'Addon/Docs/DocButton',
+  title: 'Addons/Docs/DocButton',
   component: DocButtonComponent,
 };
 

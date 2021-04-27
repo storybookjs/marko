@@ -10,11 +10,11 @@ We recommend using a nesting scheme that mirrors the filesystem path of the comp
 
 ## Roots
 
-By default, Storybook will treat your highest level of groups as “roots”--which are displayed in the UI as “sections” of the hierarchy. Lower level groups are displayed as expandable items in the hierarchy:
+By default, Storybook will treat your top-level nodes as “roots”. Roots are displayed in the UI as “sections” of the hierarchy. Lower level groups are displayed as folders:
 
 ![Storybook sidebar story roots](./sidebar-roots.jpg)
 
-If you’d prefer all groups to be expandable, you can set the `showRoots` option to `false` in [`./storybook/manager.js`](./overview.md#configure-story-rendering):
+If you’d prefer to show top-level nodes as folders rather than roots, you can set the `sidebar.showRoots` option to `false` in [`./storybook/manager.js`](./overview.md#configure-story-rendering):
 
 <!-- prettier-ignore-start -->
 
@@ -30,7 +30,6 @@ If you’d prefer all groups to be expandable, you can set the `showRoots` optio
 
 As a CSF file is a JavaScript file, the exports (including the default export) can be generated dynamically. In particular you can use the `__dirname` variable to generate the title based on the path name (this example uses the paths.macro):
 
-
 <!-- prettier-ignore-start -->
 
 <CodeSnippets
@@ -40,7 +39,6 @@ As a CSF file is a JavaScript file, the exports (including the default export) c
 />
 
 <!-- prettier-ignore-end -->
-
 
 ## Permalinking to stories
 

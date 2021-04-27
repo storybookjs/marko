@@ -50,15 +50,17 @@ const startVerdaccio = (port: number) => {
       setTimeout(() => {
         if (!resolved) {
           resolved = true;
-          rej(new Error(`TIMEOUT - verdaccio didn't start within 60s`));
+          rej(new Error(`TIMEOUT - verdaccio didn't start within 10s`));
         }
-      }, 60000);
+      }, 10000);
     }),
   ]);
 };
 const registryUrl = (command: string, url?: string) =>
   new Promise<string>((res, rej) => {
-    const args = url ? ['config', 'set', 'registry', url] : ['config', 'get', 'registry'];
+    const args = url
+      ? ['config', 'set', 'npmRegistryServer', url]
+      : ['config', 'get', 'npmRegistryServer'];
     exec(`${command} ${args.join(' ')}`, (e, stdout) => {
       if (e) {
         rej(e);

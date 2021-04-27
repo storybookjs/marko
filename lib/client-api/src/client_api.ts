@@ -243,7 +243,7 @@ export default class ClientApi {
     api.addDecorator = (decorator: DecoratorFunction<StoryFnReturnType>) => {
       if (hasAdded)
         throw new Error(`You cannot add a decorator after the first story for a kind.
-Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decoratorsparameters-after-stories`);
 
       this._storyStore.addKindMetadata(kind, { decorators: [decorator] });
       return api;
@@ -259,7 +259,7 @@ Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.m
     api.addParameters = (parameters: Parameters) => {
       if (hasAdded)
         throw new Error(`You cannot add parameters after the first story for a kind.
-Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decoratorsparameters-after-stories`);
 
       this._storyStore.addKindMetadata(kind, { parameters });
       return api;

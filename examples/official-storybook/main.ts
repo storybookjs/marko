@@ -1,3 +1,5 @@
+/// <reference types="node" />
+
 import type { StorybookConfig } from '@storybook/react/types';
 
 module.exports = {
@@ -5,7 +7,7 @@ module.exports = {
     // FIXME: Breaks e2e tests './intro.stories.mdx',
     '../../lib/ui/src/**/*.stories.@(js|tsx|mdx)',
     '../../lib/components/src/**/*.stories.@(js|tsx|mdx)',
-    './stories/**/*.stories.@(js|ts|tsx|mdx)',
+    './stories/**/*stories.@(js|ts|tsx|mdx)',
     './../../addons/docs/**/*.stories.tsx',
   ],
   reactOptions: {
@@ -29,5 +31,8 @@ module.exports = {
     '@storybook/addon-graphql',
     '@storybook/addon-queryparams',
   ],
+  core: {
+    builder: 'webpack4',
+  },
   logLevel: 'debug',
 } as StorybookConfig;

@@ -11,7 +11,7 @@ import DocumentList from './DocumentList.component';
 import DocumentHeader from './DocumentHeader.component';
 import PageLayout from './PageLayout.component';
 
-
+//👇 Imports the required stories
 import * as PageLayoutStories from './PageLayout.stories';
 import * as DocumentHeaderStories from './DocumentHeader.stories';
 import * as DocumentListStories from './DocumentList.stories';
@@ -29,7 +29,6 @@ export default {
 } as Meta;
 
 const Template: Story<DocumentScreen> = (args) => ({
-  component: DocumentScreen,
   props: args,
 });
 

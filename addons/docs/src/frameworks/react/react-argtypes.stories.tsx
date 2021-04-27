@@ -4,6 +4,7 @@ import { storiesOf, StoryContext } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
 import { Args } from '@storybook/api';
 import { inferControls } from '@storybook/client-api';
+import { useTheme, Theme } from '@storybook/theming';
 
 import { extractArgTypes } from './extractArgTypes';
 import { Component } from '../../blocks';
@@ -14,6 +15,23 @@ const argsTableProps = (component: Component) => {
   const rows = inferControls(({ parameters } as unknown) as StoryContext);
   return { rows };
 };
+
+function FormatArg({ arg }) {
+  const theme = useTheme<Theme>();
+  const badgeStyle = {
+    background: theme.background.hoverable,
+    border: `1px solid ${theme.background.hoverable}`,
+    borderRadius: 2,
+  };
+  if (typeof arg !== 'undefined') {
+    try {
+      return <code>{JSON.stringify(arg, null, 2)}</code>;
+    } catch (err) {
+      return <code style={badgeStyle}>{arg.toString()}</code>;
+    }
+  }
+  return <code style={badgeStyle}>undefined</code>;
+}
 
 const ArgsStory = ({ component }: any) => {
   const { rows } = argsTableProps(component);
@@ -32,8 +50,12 @@ const ArgsStory = ({ component }: any) => {
         <tbody>
           {Object.entries(args).map(([key, val]) => (
             <tr key={key}>
-              <td>{key}</td>
-              <td>{JSON.stringify(val, null, 2)}</td>
+              <td>
+                <code>{key}</code>
+              </td>
+              <td>
+                <FormatArg arg={val} />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -75,7 +97,11 @@ proptypesFixtures.forEach((fixture) => {
 
 const issuesFixtures = [
   'js-class-component',
+  'js-function-component',
+  'js-function-component-inline-defaults',
+  'js-function-component-inline-defaults-no-propTypes',
   'ts-function-component',
+  'ts-function-component-inline-defaults',
   '9399-js-proptypes-shape',
   '8663-js-styled-components',
   '9626-js-default-values',

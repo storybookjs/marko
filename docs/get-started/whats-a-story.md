@@ -21,6 +21,7 @@ Let’s start with the `Button` component. A story is a function that describes 
     'vue/button-story.js.mdx',
     'svelte/button-story.js.mdx',
     'svelte/button-story.mdx.mdx',
+    'web-components/button-story.js.mdx',
   ]}
 />
 
@@ -38,8 +39,10 @@ The above story definition can be further improved to take advantage of [Storybo
   paths={[
     'react/button-story-with-args.js.mdx',
     'react/button-story-with-args.ts.mdx',
-    'vue/button-story-with-args.js.mdx',
+    'vue/button-story-with-args.2.js.mdx',
+    'vue/button-story-with-args.3.js.mdx',
     'angular/button-story-with-args.ts.mdx',
+    'web-components/button-story-with-args.js.mdx',
   ]}
 />
 

@@ -61,7 +61,7 @@ export function webpack(
         /@angular(\\|\/)core(\\|\/)(fesm5|bundles)/,
         path.resolve(__dirname, '..')
       ),
-      createForkTsCheckerInstance(tsLoaderOptions),
+      (createForkTsCheckerInstance(tsLoaderOptions) as any) as Configuration['plugins'][0],
     ],
   };
 }

@@ -2,21 +2,10 @@
 import { Configuration } from 'webpack';
 
 export function webpack(config: Configuration) {
-  return {
-    ...config,
-    module: {
-      ...config.module,
-      rules: [
-        ...config.module.rules,
-        {
-          test: /\.html$/,
-          use: [
-            {
-              loader: require.resolve('html-loader'),
-            },
-          ],
-        },
-      ],
-    },
-  };
+  config.module.rules.push({
+    test: /\.html$/,
+    use: require.resolve('html-loader') as string,
+  });
+
+  return config;
 }

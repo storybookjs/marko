@@ -38,7 +38,8 @@ export const NumberControl: FC<NumberProps> = ({
         onChange={handleChange}
         size="flex"
         placeholder="Adjust number dynamically"
-        {...{ name, value, min, max, step, onFocus, onBlur }}
+        value={value === null ? undefined : value}
+        {...{ name, min, max, step, onFocus, onBlur }}
       />
     </Wrapper>
   );

@@ -49,8 +49,8 @@ Once you've gone through the prompts your `package.json` should look like:
 We'll need to add the necessary dependencies and make some adjustments. Run the following commands:
 
 ```shell
-# Installs React
-yarn add react react-dom
+# Installs React and Babel CLI
+yarn add react react-dom @babel/cli
 
 # Adds Storybook:
 npx -p @storybook/cli sb init
@@ -87,7 +87,7 @@ Change your `package.json` and add the following script to build the addon:
 ```
 
 <div class="aside">
-Running <code>yarn build</code> at this stage will output the code into the <code>dist</code> directory, transpiled into a ES5 module ready to be installed into any Storybook. 
+Running <code>yarn build</code> at this stage will output the code into the <code>dist</code> directory, transpiled into a ES5 module ready to be installed into any Storybook.
 </div>
 
 Finally, create a new directory called `src` and inside a new file called `preset.js` with the following:
@@ -183,6 +183,7 @@ When Storybook was initialized it provided a small set of examples stories. Chan
 <CodeSnippets
   paths={[
     'react/button-story-with-addon-example.js.mdx',
+    'vue/button-story-with-addon-example.js.mdx',
     'angular/button-story-with-addon-example.ts.mdx',
   ]}
 />
@@ -234,10 +235,10 @@ Learn how to [add to the addon catalog](./addon-catalog.md).
 
 In the previous example, we introduced the structure of an addon, but barely scratched the surface of what addons can do.
 
-To dive deeper we recommend [Learn Storybook’s “creating addons”](https://www.learnstorybook.com/intro-to-storybook/react/en/creating-addons/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon.
+To dive deeper we recommend Storybook's [creating an addon](https://storybook.js.org/tutorials/create-an-addon/) tutorial. It’s an excellent walkthrough that covers the same ground as the above introduction, but goes further and leads you through the full process of creating a realistic addon.
 
 [How to build a Storybook addon](https://www.chromatic.com/blog/how-to-build-a-storybook-addon/) shows you how to create a standalone addon in great detail.
 
-### Dev kits
+### Addon kit
 
-To help you jumpstart the addon development, the Storybook maintainers created some [`dev-kits`](https://github.com/storybookjs/storybook/tree/next/dev-kits), use them as reference when building your next addon.
+To help you jumpstart the addon development, the Storybook maintainers created an [`addon-kit`](https://github.com/storybookjs/addon-kit), use it to bootstrap your next addon.

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/angular",
-  "version": "6.2.0-alpha.24",
+  "version": "6.3.0-alpha.14",
   "description": "Storybook for Angular: Develop Angular Components in isolation with Hot Reloading.",
   "keywords": [
     "storybook"
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "app/angular"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/ts3.9/client/index.js",
@@ -41,9 +45,11 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.24",
-    "@storybook/core": "6.2.0-alpha.24",
-    "@storybook/node-logger": "6.2.0-alpha.24",
+    "@storybook/addons": "6.3.0-alpha.14",
+    "@storybook/api": "6.3.0-alpha.14",
+    "@storybook/core": "6.3.0-alpha.14",
+    "@storybook/core-common": "6.3.0-alpha.14",
+    "@storybook/node-logger": "6.3.0-alpha.14",
     "@types/webpack-env": "^1.16.0",
     "autoprefixer": "^9.8.6",
     "core-js": "^3.8.2",
@@ -56,28 +62,28 @@
     "react-dom": "16.14.0",
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
-    "sass-loader": "^8.0.2",
+    "sass-loader": "^10.1.0",
     "strip-json-comments": "3.1.1",
     "ts-dedent": "^2.0.0",
-    "ts-loader": "^6.2.2",
+    "ts-loader": "^8.0.14",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
     "util-deprecate": "^1.0.2",
-    "webpack": "^4.46.0"
+    "webpack": "4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1101.0",
-    "@angular-devkit/core": "^11.1.0",
-    "@angular/common": "^11.1.0",
-    "@angular/compiler": "^11.1.0",
-    "@angular/compiler-cli": "^11.1.0",
-    "@angular/core": "^11.1.0",
-    "@angular/elements": "^11.1.0",
-    "@angular/forms": "^11.1.0",
-    "@angular/platform-browser": "^11.1.0",
-    "@angular/platform-browser-dynamic": "^11.1.0",
+    "@angular-devkit/build-angular": "~0.1102.0",
+    "@angular-devkit/core": "^11.2.0",
+    "@angular/common": "^11.2.0",
+    "@angular/compiler": "^11.2.0",
+    "@angular/compiler-cli": "^11.2.0",
+    "@angular/core": "^11.2.0",
+    "@angular/elements": "^11.2.0",
+    "@angular/forms": "^11.2.0",
+    "@angular/platform-browser": "^11.2.0",
+    "@angular/platform-browser-dynamic": "^11.2.0",
     "@nrwl/workspace": "^11.1.5",
     "@types/autoprefixer": "^9.7.2",
-    "@types/jest": "^25.2.3",
+    "@types/jest": "^26.0.16",
     "@webcomponents/custom-elements": "^1.4.3",
     "jest": "^26.6.3",
     "jest-preset-angular": "^8.3.2",
@@ -118,5 +124,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8001ec00b1023170e0a57f53edad61f3afe1b111"
+  "gitHead": "eb1e3a913f3c5329539a7a908e7cb955ffaa8100"
 }

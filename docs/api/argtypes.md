@@ -85,6 +85,12 @@ These values--description, table.type, and controls.type--get merged over the de
 
 In particular, this would render a row with a modified description, a type display with a dropdown that shows the detail, and no control.
 
+<div class="aside">
+
+As it happens with other properties such as `args`, `argTypes` can be overridden in a single story.
+
+</div>
+
 #### Using argTypes in addons
 
 If you want to access the argTypes of the current component inside an addon, you can use the `useArgTypes` hook from the `@storybook/api` package:

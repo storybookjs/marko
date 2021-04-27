@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-knobs",
-  "version": "6.2.0-alpha.24",
-  "description": "Storybook Addon Prop Editor Component",
+  "version": "6.3.0-alpha.14",
+  "description": "Storybook addon prop editor component",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/knobs",
   "bugs": {
@@ -14,6 +15,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/knobs"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -36,13 +41,13 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.24",
-    "@storybook/api": "6.2.0-alpha.24",
-    "@storybook/channels": "6.2.0-alpha.24",
-    "@storybook/client-api": "6.2.0-alpha.24",
-    "@storybook/components": "6.2.0-alpha.24",
-    "@storybook/core-events": "6.2.0-alpha.24",
-    "@storybook/theming": "6.2.0-alpha.24",
+    "@storybook/addons": "6.3.0-alpha.14",
+    "@storybook/api": "6.3.0-alpha.14",
+    "@storybook/channels": "6.3.0-alpha.14",
+    "@storybook/client-api": "6.3.0-alpha.14",
+    "@storybook/components": "6.3.0-alpha.14",
+    "@storybook/core-events": "6.3.0-alpha.14",
+    "@storybook/theming": "6.3.0-alpha.14",
     "copy-to-clipboard": "^3.3.1",
     "core-js": "^3.8.2",
     "escape-html": "^1.0.3",
@@ -50,16 +55,15 @@
     "global": "^4.4.0",
     "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
-    "qs": "^6.9.5",
-    "react-color": "^2.19.3",
+    "qs": "^6.10.0",
+    "react-colorful": "^5.1.2",
     "react-lifecycles-compat": "^3.0.4",
     "react-select": "^3.2.0",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.8",
-    "@types/escape-html": "0.0.20",
-    "@types/react-color": "^3.0.4",
+    "@types/escape-html": "1.0.0",
     "@types/react-lifecycles-compat": "^3.0.1",
     "@types/react-select": "^3.1.2",
     "@types/webpack-env": "^1.16.0",
@@ -80,5 +84,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "8001ec00b1023170e0a57f53edad61f3afe1b111"
+  "gitHead": "eb1e3a913f3c5329539a7a908e7cb955ffaa8100",
+  "storybook": {
+    "displayName": "Knobs",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { IStory, StoryContext } from '@storybook/angular';
-import { ElementRendererService } from '@storybook/angular/element-renderer';
 import { StoryFn } from '@storybook/addons';
+import { logger } from '@storybook/client-logger';
 
 const customElementsVersions: Record<string, number> = {};
 
@@ -27,6 +27,15 @@ export const prepareForInline = (storyFn: StoryFn<IStory>, { id, parameters }: S
     }
 
     async componentDidMount() {
+      const { ElementRendererService } = await import('@storybook/angular/element-renderer').catch(
+        (error) => {
+          logger.error(
+            'Check the documentation to activate `inlineStories`. The `@angular/elements` & `@webcomponents/custom-elements` dependencies are required.'
+          );
+          throw error;
+        }
+      );
+
       // eslint-disable-next-line no-undef
       customElements.define(
         customElementsName,
