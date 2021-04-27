@@ -59,7 +59,7 @@ const getPreviewProps = (
     withSource: sourceProps,
     isExpanded: withSource
       ? withSource === SourceState.OPEN
-      : docsContext?.parameters?.docs?.isExpanded,
+      : docsContext?.parameters?.docs?.isCodeExpanded,
   };
 };
 

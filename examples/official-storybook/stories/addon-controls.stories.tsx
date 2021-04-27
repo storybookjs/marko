@@ -30,10 +30,10 @@ export default {
     },
   },
   parameters: {
-    docs: {
-      isExpanded: false,
-    },
     chromatic: { disable: true },
+    docs: {
+      isCodeExpanded: true,
+    },
   },
 };
 
