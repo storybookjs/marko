@@ -9,9 +9,13 @@ import { executor as managerExecutor } from './manager/builder';
 import { buildDevStandalone } from './build-dev';
 import { buildStaticStandalone } from './build-static';
 
+// nx-ignore-next-line
 import reactOptions from '../../../app/react/src/server/options';
+// nx-ignore-next-line
 import vue3Options from '../../../app/vue3/src/server/options';
+// nx-ignore-next-line
 import htmlOptions from '../../../app/html/src/server/options';
+// nx-ignore-next-line
 import webComponentsOptions from '../../../app/web-components/src/server/options';
 import { outputStats } from './utils/output-stats';
 

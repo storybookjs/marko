@@ -24,6 +24,7 @@ export const readAngularWorkspaceConfig = async (
 
     const nxWorkspace = require('@nrwl/workspace').readWorkspaceConfig({
       format: 'angularCli',
+      path: dirToSearch,
     });
 
     // Use the workspace version of nx when angular looks for the angular.json file

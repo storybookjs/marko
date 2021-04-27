@@ -95,8 +95,8 @@ function run() {
       command: () => {
         log.info(prefix, 'prepare');
         spawn(
-          `lerna run prepare ${
-            process.env.CI ? `--concurrency ${maxConcurrentTasks} --stream` : ''
+          `nx run-many --target=prepare --all --parallel ${
+            process.env.CI ? `--max-parallel=${maxConcurrentTasks}` : ''
           }`
         );
       },
