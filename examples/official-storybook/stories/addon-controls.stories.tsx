@@ -29,7 +29,12 @@ export default {
       },
     },
   },
-  parameters: { chromatic: { disable: true } },
+  parameters: {
+    docs: {
+      isExpanded: false,
+    },
+    chromatic: { disable: true },
+  },
 };
 
 const DEFAULT_NESTED_OBJECT = { a: 4, b: { c: 'hello', d: [1, 2, 3] } };
