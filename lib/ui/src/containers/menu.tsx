@@ -205,6 +205,20 @@ export const useMenu = (
     [api, enableShortcuts, shortcutKeys]
   );
 
+  const getAddonsShortcuts = (): any[] => {
+    const addonsShortcuts = api.getAddonsShortcuts();
+    const keys = shortcutKeys as any;
+    return Object.entries(addonsShortcuts)
+      .filter(([actionName, { showInMenu }]) => showInMenu)
+      .map(([actionName, { label, action }]) => ({
+        id: actionName,
+        title: label,
+        onClick: () => action(),
+        right: enableShortcuts ? <Shortcut keys={keys[actionName]} /> : null,
+        left: <MenuItemIcon />,
+      }));
+  };
+
   return useMemo(
     () => [
       about,
@@ -221,6 +235,7 @@ export const useMenu = (
       prev,
       next,
       collapse,
+      ...getAddonsShortcuts(),
     ],
     [
       about,

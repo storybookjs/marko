@@ -394,7 +394,9 @@ export default class StoryStore {
           return acc;
         }, {} as Args),
       };
-      return passArgsFirst ? (original as ArgsStoryFn)(mapped.args, mapped) : original(mapped);
+      return passArgsFirst
+        ? (original as ArgsStoryFn)(mapped.args, mapped)
+        : (original as LegacyStoryFn)(mapped);
     };
 
     // lazily decorate the story when it's loaded

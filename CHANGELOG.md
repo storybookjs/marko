@@ -1,3 +1,19 @@
+## 6.3.0-alpha.15 (April 28, 2021)
+
+### Features
+
+- Storyshots: Add `beforeAxeTest` hook ([#14563](https://github.com/storybookjs/storybook/pull/14563))
+- API: Add addon keyboard shortcuts & create shortcuts for addon-viewport ([#14658](https://github.com/storybookjs/storybook/pull/14658))
+
+### Bug Fixes
+
+- Storyshots/Preact: Add pragma @jsxRuntime classic ([#13849](https://github.com/storybookjs/storybook/pull/13849))
+- Core: Don't recreate a bound story function each time we call a decorated story ([#14692](https://github.com/storybookjs/storybook/pull/14692))
+
+### Maintenance
+
+- Build: Add NX bootstrap optimization ([#14535](https://github.com/storybookjs/storybook/pull/14535))
+
 ## 6.2.9 (April 23, 2021)
 
 ### Bug Fixes
