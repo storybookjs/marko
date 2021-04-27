@@ -76,14 +76,14 @@ describe('client-api.decorators', () => {
     const decoratedOne = defaultDecorateStory((c) => contexts.push(c), decorators);
     const decoratedTwo = defaultDecorateStory((c) => contexts.push(c), decorators);
 
-    decoratedOne(makeContext({ story: 1 }));
-    decoratedTwo(makeContext({ story: 2 }));
+    decoratedOne(makeContext({ value: 1 }));
+    decoratedTwo(makeContext({ value: 2 }));
 
     resolve();
     await fence;
 
-    expect(contexts[0].story).toBe(1);
-    expect(contexts[1].story).toBe(2);
+    expect(contexts[0].value).toBe(1);
+    expect(contexts[1].value).toBe(2);
   });
 
   it('merges contexts', () => {
