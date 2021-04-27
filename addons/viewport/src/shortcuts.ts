@@ -47,7 +47,7 @@ export const registerShortcuts = async (api: API, setState: any, viewportsKeys: 
 
   await api.setAddonShortcut(ADDON_ID, {
     label: 'Reset viewport',
-    defaultShortcut: ['control', 'V'],
+    defaultShortcut: ['alt', 'V'],
     actionName: 'reset',
     action: () => {
       const { isRotated } = api.getAddonState(ADDON_ID);
