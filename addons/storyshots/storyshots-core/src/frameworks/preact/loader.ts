@@ -1,4 +1,4 @@
-/**@jsxRuntime classic */
+/** @jsxRuntime classic */
 /** @jsx h */
 
 import global from 'global';
