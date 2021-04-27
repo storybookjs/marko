@@ -44,7 +44,7 @@ const getPreviewProps = (
   const stories = childArray.filter(
     (c: ReactElement) => c.props && (c.props.id || c.props.name)
   ) as ReactElement[];
-  const { mdxComponentMeta, mdxStoryNameToKey } = docsContext;
+  const { mdxComponentMeta, mdxStoryNameToKey, parameters } = docsContext;
   const targetIds = stories.map(
     (s) =>
       s.props.id ||
@@ -59,7 +59,7 @@ const getPreviewProps = (
     withSource: sourceProps,
     isExpanded: withSource
       ? withSource === SourceState.OPEN
-      : docsContext?.parameters?.docs?.isCodeExpanded,
+      : parameters?.docs?.isCodeExpanded,
   };
 };
 
