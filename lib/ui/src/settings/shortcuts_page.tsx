@@ -7,10 +7,17 @@ import { ShortcutsScreen } from './shortcuts';
 const ShortcutsPage: FunctionComponent<{}> = () => (
   <Consumer>
     {({
-      api: { getShortcutKeys, setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts },
+      api: {
+        getShortcutKeys,
+        getAddonsShortcutLabels,
+        setShortcut,
+        restoreDefaultShortcut,
+        restoreAllDefaultShortcuts,
+      },
     }) => (
       <ShortcutsScreen
         shortcutKeys={getShortcutKeys()}
+        addonsShortcutLabels={getAddonsShortcutLabels()}
         {...{ setShortcut, restoreDefaultShortcut, restoreAllDefaultShortcuts }}
       />
     )}

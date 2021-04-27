@@ -20,8 +20,13 @@ export interface SubState {
 
 export interface SubAPI {
   getShortcutKeys(): Shortcuts;
+  getDefaultShortcuts(): Shortcuts | AddonShortcutDefaults;
+  getAddonsShortcuts(): AddonShortcuts;
+  getAddonsShortcutLabels(): AddonShortcutLabels;
+  getAddonsShortcutDefaults(): AddonShortcutDefaults;
   setShortcuts(shortcuts: Shortcuts): Promise<Shortcuts>;
   setShortcut(action: Action, value: KeyCollection): Promise<KeyCollection>;
+  setAddonShortcut(addon: string, shortcut: AddonShortcut): Promise<AddonShortcut>;
   restoreAllDefaultShortcuts(): Promise<Shortcuts>;
   restoreDefaultShortcut(action: Action): Promise<KeyCollection>;
   handleKeydownEvent(event: Event): void;
@@ -52,6 +57,17 @@ export interface Shortcuts {
 
 export type Action = keyof Shortcuts;
 
+interface AddonShortcut {
+  label: string;
+  defaultShortcut: KeyCollection;
+  actionName: string;
+  showInMenu?: boolean;
+  action: (...args: any[]) => any;
+}
+type AddonShortcuts = Record<string, AddonShortcut>;
+type AddonShortcutLabels = Record<string, string>;
+type AddonShortcutDefaults = Record<string, KeyCollection>;
+
 export const defaultShortcuts: Shortcuts = Object.freeze({
   fullScreen: ['F'],
   togglePanel: ['A'],
@@ -73,6 +89,7 @@ export const defaultShortcuts: Shortcuts = Object.freeze({
   expandAll: [controlOrMetaKey(), 'shift', 'ArrowDown'],
 });
 
+const addonsShortcuts: AddonShortcuts = {};
 export interface Event extends KeyboardEvent {
   target: {
     tagName: string;
@@ -96,20 +113,54 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
     getShortcutKeys(): Shortcuts {
       return store.getState().shortcuts;
     },
+    getDefaultShortcuts(): Shortcuts | AddonShortcutDefaults {
+      return {
+        ...defaultShortcuts,
+        ...api.getAddonsShortcutDefaults(),
+      };
+    },
+    getAddonsShortcuts(): AddonShortcuts {
+      return addonsShortcuts;
+    },
+    getAddonsShortcutLabels(): AddonShortcutLabels {
+      const labels: AddonShortcutLabels = {};
+      Object.entries(api.getAddonsShortcuts()).forEach(([actionName, { label }]) => {
+        labels[actionName] = label;
+      });
+
+      return labels;
+    },
+    getAddonsShortcutDefaults(): AddonShortcutDefaults {
+      const defaults: AddonShortcutDefaults = {};
+      Object.entries(api.getAddonsShortcuts()).forEach(([actionName, { defaultShortcut }]) => {
+        defaults[actionName] = defaultShortcut;
+      });
+
+      return defaults;
+    },
     async setShortcuts(shortcuts: Shortcuts) {
       await store.setState({ shortcuts }, { persistence: 'permanent' });
       return shortcuts;
     },
     async restoreAllDefaultShortcuts() {
-      return api.setShortcuts(defaultShortcuts);
+      return api.setShortcuts(api.getDefaultShortcuts() as Shortcuts);
     },
     async setShortcut(action, value) {
       const shortcuts = api.getShortcutKeys();
       await api.setShortcuts({ ...shortcuts, [action]: value });
       return value;
     },
+    async setAddonShortcut(addon: string, shortcut: AddonShortcut) {
+      const shortcuts = api.getShortcutKeys();
+      await api.setShortcuts({
+        ...shortcuts,
+        [`${addon}-${shortcut.actionName}`]: shortcut.defaultShortcut,
+      });
+      addonsShortcuts[`${addon}-${shortcut.actionName}`] = shortcut;
+      return shortcut;
+    },
     async restoreDefaultShortcut(action) {
-      const defaultShortcut = defaultShortcuts[action];
+      const defaultShortcut = api.getDefaultShortcuts()[action];
       return api.setShortcut(action, defaultShortcut);
     },
 
@@ -277,6 +328,7 @@ export const init: ModuleFn = ({ store, fullAPI }) => {
           break;
         }
         default:
+          addonsShortcuts[feature].action();
           break;
       }
     },
