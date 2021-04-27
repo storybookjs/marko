@@ -57,9 +57,7 @@ const getPreviewProps = (
   return {
     ...props, // pass through columns etc.
     withSource: sourceProps,
-    isExpanded: withSource
-      ? withSource === SourceState.OPEN
-      : parameters?.docs?.isCodeExpanded,
+    isExpanded: withSource === SourceState.OPEN || parameters?.docs?.isCodeExpanded,
   };
 };
 
