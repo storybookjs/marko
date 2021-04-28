@@ -229,12 +229,14 @@ export interface StorybookConfig {
         options?: any;
       }
   >;
+  core?: CoreConfig;
+  logLevel?: string;
   /**
    * Allows to disable deprecated implicit PostCSS loader.
    */
   features?: {
-    postcss?: boolean
-  }
+    postcss?: boolean;
+  };
   /**
    * Tells Storybook where to find stories.
    *
