@@ -7,7 +7,7 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import { normalize, resolve, workspaces } from '@angular-devkit/core';
+import { normalize, resolve, workspaces, getSystemPath } from '@angular-devkit/core';
 import { createConsoleLogger } from '@angular-devkit/core/node';
 
 // Only type, so not dependent on the client version
@@ -91,13 +91,19 @@ const buildWebpackConfigOptions = async (
     );
   }
 
-  const workspaceRoot = normalize(dirToSearch);
-  const projectRoot = resolve(workspaceRoot, normalize((project.root as string) || ''));
-  const sourceRoot = project.sourceRoot
-    ? resolve(workspaceRoot, normalize(project.sourceRoot))
+  const workspaceRootNormalized = normalize(dirToSearch);
+  const projectRootNormalized = resolve(
+    workspaceRootNormalized,
+    normalize((project.root as string) || '')
+  );
+  const sourceRootNormalized = project.sourceRoot
+    ? resolve(workspaceRootNormalized, normalize(project.sourceRoot))
     : undefined;
 
-  const tsConfigPath = path.resolve(workspaceRoot, projectBuildOptions.tsConfig as string);
+  const tsConfigPath = path.resolve(
+    getSystemPath(workspaceRootNormalized),
+    projectBuildOptions.tsConfig as string
+  );
   const tsConfig = importAngularCliReadTsconfigUtil().readTsconfig(tsConfigPath);
 
   const ts = await import('typescript');
@@ -118,9 +124,9 @@ const buildWebpackConfigOptions = async (
     ...projectBuildOptions,
     assets: normalizeAssetPatterns(
       (projectBuildOptions.assets as any[]) || [],
-      workspaceRoot,
-      projectRoot,
-      sourceRoot
+      workspaceRootNormalized,
+      projectRootNormalized,
+      sourceRootNormalized
     ),
     optimization: (projectBuildOptions.optimization as any) ?? {
       styles: {},
@@ -134,11 +140,11 @@ const buildWebpackConfigOptions = async (
   };
 
   return {
-    root: workspaceRoot,
+    root: getSystemPath(workspaceRootNormalized),
     // The dependency of `@angular-devkit/build-angular` to `@angular-devkit/core` is not exactly the same version as the one for storybook (node modules of node modules ^^)
     logger: (createConsoleLogger() as unknown) as WebpackConfigOptions['logger'],
-    projectRoot,
-    sourceRoot,
+    projectRoot: getSystemPath(projectRootNormalized),
+    sourceRoot: getSystemPath(sourceRootNormalized),
     buildOptions,
     tsConfig,
     tsConfigPath,
