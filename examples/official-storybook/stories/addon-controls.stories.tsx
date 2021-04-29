@@ -32,7 +32,9 @@ export default {
   parameters: {
     chromatic: { disable: true },
     docs: {
-      isCodeExpanded: true,
+      source: {
+        state: 'open',
+      },
     },
   },
 };

@@ -13,6 +13,7 @@ When you install [Storybook Docs](../README.md), `DocsPage` is the zero-config d
   - [Remixing DocsPage using doc blocks](#remixing-docspage-using-doc-blocks)
 - [Story file names](#story-file-names)
 - [Inline stories vs. Iframe stories](#inline-stories-vs-iframe-stories)
+- [Show/Hide code](#showhide-code)
 - [More resources](#more-resources)
 
 ## Motivation
@@ -185,23 +186,21 @@ With that function, anyone using the docs addon for `@storybook/vue` can make th
 
 ## Show/Hide code
 
-By default, the code block under the Preview is collapsed.
+By default, the code block under the Preview is collapsed and you have to click on "Show code" to reveal it.
 
-You have to click on "Show code" to reveal it.
-
-You can override this default behavior:
+You can override this default behavior in `.storybook/preview.js` (or in any of your components/stories):
 
 ```js
-import { addParameters } from '@storybook/react';
-
-addParameters({
+export const parameters = {
   docs: {
-    isCodeExpanded: true,
+    source: {
+      state: 'open',
+    },
   },
-});
+};
 ```
 
-With that flag, now the docs addon will show all code blocks by default.
+With that flag, now the docs addon will show all code blocks open by default.
 
 ## More resources
 
