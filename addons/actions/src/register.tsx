@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { addons, types } from '@storybook/addons';
 import { STORY_CHANGED } from '@storybook/core-events';
 import ActionLogger from './containers/ActionLogger';
@@ -7,11 +7,18 @@ import { ADDON_ID, EVENT_ID, PANEL_ID, PARAM_KEY } from './constants';
 addons.register(ADDON_ID, (api) => {
   addons.addPanel(PANEL_ID, {
     title() {
-      const [actionsCount, setActionsCount] = React.useState(0);
-      api.on(EVENT_ID, () => {
-        setActionsCount(actionsCount + 1);
+      const [actionsCount, setActionsCount] = useState(0);
+      const onEvent = () => setActionsCount(actionsCount + 1);
+      const onChange = () => setActionsCount(0);
+
+      useEffect(() => {
+        api.on(EVENT_ID, onEvent);
+        api.on(STORY_CHANGED, onChange);
+        return () => {
+          api.off(EVENT_ID, onEvent);
+          api.off(STORY_CHANGED, onChange);
+        };
       });
-      api.on(STORY_CHANGED, () => setActionsCount(0));
       const suffix = actionsCount === 0 ? '' : ` (${actionsCount})`;
       return `Actions${suffix}`;
     },
