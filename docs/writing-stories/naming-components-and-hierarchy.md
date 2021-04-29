@@ -54,7 +54,7 @@ We recommend naming components according to the file hierarchy.
 
 ## Single story hoisting
 
-Stories which have **no siblings** (i.e. the component has only one story) and which name **exactly matches** the component name will be hoisted up to replace their parent component in the sidebar. This means you can have stories files like this:
+Stories which have **no siblings** (i.e. the component has only one story) and which **display name** exactly matches the component name (last part of `title`) will be hoisted up to replace their parent component in the sidebar. This means you can have stories files like this:
 
 <!-- prettier-ignore-start -->
 
@@ -69,6 +69,8 @@ Stories which have **no siblings** (i.e. the component has only one story) and w
 This will then be visually presented in the sidebar like this:
 
 ![Stories hierarchy with single story hoisting](./naming-hierarchy-single-story-hoisting.png)
+
+Because story exports are automatically "start cased" (`myStory` becomes `"My Story"`), your component name should match that. Alternatively you can override the story name using `myStory.name = '...'` to match the component name.
 
 ## Sorting stories
 
