@@ -581,6 +581,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@axe-core/puppeteer@npm:^4.0.0":
+  version: 4.1.1
+  resolution: "@axe-core/puppeteer@npm:4.1.1"
+  dependencies:
+    axe-core: ^4.1.1
+  peerDependencies:
+    puppeteer: ">=1.10.0 < 6"
+  checksum: 7bbaf64c3d9d7f7fea2917c46618006a1afdcbbcdb6749a176695ec0bce8e6be4613afb431508656629829312671a2b7244966a13429108c7364ac5754e9fe21
+  languageName: node
+  linkType: hard
+
 "@babel/cli@npm:^7.12.10":
   version: 7.13.0
   resolution: "@babel/cli@npm:7.13.0"
@@ -2924,6 +2935,15 @@ __metadata:
   dependencies:
     regenerator-runtime: ^0.13.4
   checksum: 3c5c10a7beb8c501b5542b1a96629e219d67ca8eeb16f84290f3a42889805d1bb34bac32c9ce1ef312f62f5591752d986f6d933d81f17b6755f38ea9d39b02fe
+  languageName: node
+  linkType: hard
+
+"@babel/runtime@npm:^7.13.10":
+  version: 7.13.17
+  resolution: "@babel/runtime@npm:7.13.17"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: 09085efb30048fba0158be3ec35b1312f934cc106f56fd99ce0ebee4810ca3e802ac34e9d4407defd40a1efb8e4717cbd18abfac633dae6bea39241265f55bc2
   languageName: node
   linkType: hard
 
@@ -5897,7 +5917,7 @@ __metadata:
     "@storybook/theming": 6.3.0-alpha.15
     "@testing-library/react": ^11.2.2
     "@types/webpack-env": ^1.16.0
-    axe-core: ^4.1.1
+    axe-core: ^4.2.0
     core-js: ^3.8.2
     global: ^4.4.0
     lodash: ^4.17.20
@@ -6487,7 +6507,7 @@ __metadata:
     "@storybook/node-logger": 6.3.0-alpha.15
     "@types/jest-image-snapshot": ^4.1.3
     "@types/puppeteer": ^5.4.0
-    "@wordpress/jest-puppeteer-axe": ^1.10.0
+    "@wordpress/jest-puppeteer-axe": ^3.0.3
     core-js: ^3.8.2
     jest-image-snapshot: ^4.3.0
     regenerator-runtime: ^0.13.7
@@ -11608,16 +11628,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@wordpress/jest-puppeteer-axe@npm:^1.10.0":
-  version: 1.10.0
-  resolution: "@wordpress/jest-puppeteer-axe@npm:1.10.0"
+"@wordpress/jest-puppeteer-axe@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@wordpress/jest-puppeteer-axe@npm:3.0.3"
   dependencies:
-    "@babel/runtime": ^7.11.2
-    axe-puppeteer: ^1.1.0
+    "@axe-core/puppeteer": ^4.0.0
+    "@babel/runtime": ^7.13.10
   peerDependencies:
-    jest: ">=24"
+    jest: ">=26"
     puppeteer: ">=1.19.0"
-  checksum: 0972c8edc0819aa7711e2bf4fa46bab23ac1a9ba509e6e52e9f09266b30e4127ffb6196dc0e5eeea4e081ea611a3549bc21bd412e22da92fa59717b656b5baae
+  checksum: 9a5f5bade9863c151fb64d6be2274363deade6dbf2eb325de64a6c034016534d02444bad0d77c34f8d8e9bacb604308590ff8f93cd51f93a0362060054f81cf1
   languageName: node
   linkType: hard
 
@@ -13032,28 +13052,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axe-core@npm:^3.5.3":
-  version: 3.5.5
-  resolution: "axe-core@npm:3.5.5"
-  checksum: 7f7a3110fd1f56877956f3abb50b364121fd44846d5453e88578a821c3604ccc7d8a5a11b0ec3fa16c5f183e0f06d85d28ba6f42d19d2888cd46fe2b8e0d5dc8
-  languageName: node
-  linkType: hard
-
-"axe-core@npm:^4.0.2, axe-core@npm:^4.1.1":
-  version: 4.1.2
-  resolution: "axe-core@npm:4.1.2"
-  checksum: 3a258edf047801e4f29bf1da9a5dcac113e03462acf68969d0fd9d87b0623b15b0be7fc3e308c0c65cecfd7f2399d46b7470de76ef6f775f15b08bbf4f728b3b
-  languageName: node
-  linkType: hard
-
-"axe-puppeteer@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "axe-puppeteer@npm:1.1.1"
-  dependencies:
-    axe-core: ^3.5.3
-  peerDependencies:
-    puppeteer: ">=1.10.0"
-  checksum: 19e399409a5e0b64009b17d1a2db0805ae1acc8125386392578708e555a0c5ead267bcf2a594e8ec8bac0d4813e098564c2cd478bc7f7f09becef131a226ec9b
+"axe-core@npm:^4.0.2, axe-core@npm:^4.1.1, axe-core@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "axe-core@npm:4.2.0"
+  checksum: 642bd33d5ca15400f171766b1d60e996fe0362303b15a6cdf46f6481c040b51d24dab6a9c422609a897c89b30725125c82dd6a2663261c661d9dd27ec0ec517a
   languageName: node
   linkType: hard
 
