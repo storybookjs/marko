@@ -89,7 +89,7 @@ Inaccessible.parameters = {
 };
 ```
 
-Tip: clearly explain in a comment why a rule was overriden, it’ll help you and your team trace back why certain violations aren’t being reported or need to be addressed. For example:
+Tip: clearly explain in a comment why a rule was overridden, it’ll help you and your team trace back why certain violations aren’t being reported or need to be addressed. For example:
 
 ```js
 MyStory.parameters = {
