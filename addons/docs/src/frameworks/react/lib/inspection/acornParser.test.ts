@@ -14,37 +14,37 @@ describe('parse', () => {
   describe('expression', () => {
     it('support HTML element', () => {
       const result = parse('<div>Hello!</div>');
-      const inferedType = result.inferedType as InspectionElement;
+      const inferredType = result.inferredType as InspectionElement;
 
-      expect(inferedType.type).toBe(InspectionType.ELEMENT);
-      expect(inferedType.identifier).toBe('div');
+      expect(inferredType.type).toBe(InspectionType.ELEMENT);
+      expect(inferredType.identifier).toBe('div');
       expect(result.ast).toBeDefined();
     });
 
     it('support React declaration', () => {
       const result = parse('<FunctionalComponent />');
-      const inferedType = result.inferedType as InspectionElement;
+      const inferredType = result.inferredType as InspectionElement;
 
-      expect(inferedType.type).toBe(InspectionType.ELEMENT);
-      expect(inferedType.identifier).toBe('FunctionalComponent');
+      expect(inferredType.type).toBe(InspectionType.ELEMENT);
+      expect(inferredType.identifier).toBe('FunctionalComponent');
       expect(result.ast).toBeDefined();
     });
 
     it('support anonymous functional React component', () => {
       const result = parse('() => { return <div>Hey!</div>; }');
-      const inferedType = result.inferedType as InspectionElement;
+      const inferredType = result.inferredType as InspectionElement;
 
-      expect(inferedType.type).toBe(InspectionType.ELEMENT);
-      expect(inferedType.identifier).toBeUndefined();
+      expect(inferredType.type).toBe(InspectionType.ELEMENT);
+      expect(inferredType.identifier).toBeUndefined();
       expect(result.ast).toBeDefined();
     });
 
     it('support named functional React component', () => {
       const result = parse('function NamedFunctionalComponent() { return <div>Hey!</div>; }');
-      const inferedType = result.inferedType as InspectionElement;
+      const inferredType = result.inferredType as InspectionElement;
 
-      expect(inferedType.type).toBe(InspectionType.ELEMENT);
-      expect(inferedType.identifier).toBe('NamedFunctionalComponent');
+      expect(inferredType.type).toBe(InspectionType.ELEMENT);
+      expect(inferredType.identifier).toBe('NamedFunctionalComponent');
       expect(result.ast).toBeDefined();
     });
 
@@ -55,55 +55,55 @@ describe('parse', () => {
             return <div>Hey!</div>;
           }
       }`);
-      const inferedType = result.inferedType as InspectionElement;
+      const inferredType = result.inferredType as InspectionElement;
 
-      expect(inferedType.type).toBe(InspectionType.ELEMENT);
-      expect(inferedType.identifier).toBe('ClassComponent');
+      expect(inferredType.type).toBe(InspectionType.ELEMENT);
+      expect(inferredType.identifier).toBe('ClassComponent');
       expect(result.ast).toBeDefined();
     });
 
     it('support PropTypes.shape', () => {
       const result = parse('PropTypes.shape({ foo: PropTypes.string })');
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(1);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(1);
       expect(result.ast).toBeDefined();
     });
 
     it('support deep PropTypes.shape', () => {
       const result = parse('PropTypes.shape({ foo: PropTypes.shape({ bar: PropTypes.string }) })');
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(2);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(2);
       expect(result.ast).toBeDefined();
     });
 
     it('support shape', () => {
       const result = parse('shape({ foo: string })');
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(1);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(1);
       expect(result.ast).toBeDefined();
     });
 
     it('support deep shape', () => {
       const result = parse('shape({ foo: shape({ bar: string }) })');
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(2);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(2);
       expect(result.ast).toBeDefined();
     });
 
     it('support single prop object literal', () => {
       const result = parse('{ foo: PropTypes.string }');
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(1);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(1);
       expect(result.ast).toBeDefined();
     });
 
@@ -113,10 +113,10 @@ describe('parse', () => {
           foo: PropTypes.string,
           bar: PropTypes.string
       }`);
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(1);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(1);
       expect(result.ast).toBeDefined();
     });
 
@@ -131,99 +131,99 @@ describe('parse', () => {
             ho: PropTypes.string
           }
       }`);
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(2);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(2);
       expect(result.ast).toBeDefined();
     });
 
     it('support required prop', () => {
       const result = parse('{ foo: PropTypes.string.isRequired }');
-      const inferedType = result.inferedType as InspectionObject;
+      const inferredType = result.inferredType as InspectionObject;
 
-      expect(inferedType.type).toBe(InspectionType.OBJECT);
-      expect(inferedType.depth).toBe(1);
+      expect(inferredType.type).toBe(InspectionType.OBJECT);
+      expect(inferredType.depth).toBe(1);
       expect(result.ast).toBeDefined();
     });
 
     it('support array', () => {
       const result = parse("['bottom-left', 'botton-center', 'bottom-right']");
-      const inferedType = result.inferedType as InspectionArray;
+      const inferredType = result.inferredType as InspectionArray;
 
-      expect(inferedType.type).toBe(InspectionType.ARRAY);
-      expect(inferedType.depth).toBe(1);
+      expect(inferredType.type).toBe(InspectionType.ARRAY);
+      expect(inferredType.depth).toBe(1);
       expect(result.ast).toBeDefined();
     });
 
     it('support deep array', () => {
       const result = parse("['bottom-left', { foo: string }, [['hey', 'ho']]]");
-      const inferedType = result.inferedType as InspectionArray;
+      const inferredType = result.inferredType as InspectionArray;
 
-      expect(inferedType.type).toBe(InspectionType.ARRAY);
-      expect(inferedType.depth).toBe(3);
+      expect(inferredType.type).toBe(InspectionType.ARRAY);
+      expect(inferredType.depth).toBe(3);
       expect(result.ast).toBeDefined();
     });
 
     it('support object identifier', () => {
       const result = parse('NAMED_OBJECT');
-      const inferedType = result.inferedType as InspectionIdentifier;
+      const inferredType = result.inferredType as InspectionIdentifier;
 
-      expect(inferedType.type).toBe(InspectionType.IDENTIFIER);
-      expect(inferedType.identifier).toBe('NAMED_OBJECT');
+      expect(inferredType.type).toBe(InspectionType.IDENTIFIER);
+      expect(inferredType.identifier).toBe('NAMED_OBJECT');
       expect(result.ast).toBeDefined();
     });
 
     it('support anonymous function', () => {
       const result = parse('() => {}');
-      const inferedType = result.inferedType as InspectionFunction;
+      const inferredType = result.inferredType as InspectionFunction;
 
-      expect(inferedType.type).toBe(InspectionType.FUNCTION);
-      expect(inferedType.identifier).toBeUndefined();
-      expect(inferedType.hasParams).toBeFalsy();
-      expect(inferedType.params.length).toBe(0);
+      expect(inferredType.type).toBe(InspectionType.FUNCTION);
+      expect(inferredType.identifier).toBeUndefined();
+      expect(inferredType.hasParams).toBeFalsy();
+      expect(inferredType.params.length).toBe(0);
       expect(result.ast).toBeDefined();
     });
 
     it('support anonymous function with arguments', () => {
       const result = parse('(a, b) => {}');
-      const inferedType = result.inferedType as InspectionFunction;
+      const inferredType = result.inferredType as InspectionFunction;
 
-      expect(inferedType.type).toBe(InspectionType.FUNCTION);
-      expect(inferedType.identifier).toBeUndefined();
-      expect(inferedType.hasParams).toBeTruthy();
-      expect(inferedType.params.length).toBe(2);
+      expect(inferredType.type).toBe(InspectionType.FUNCTION);
+      expect(inferredType.identifier).toBeUndefined();
+      expect(inferredType.hasParams).toBeTruthy();
+      expect(inferredType.params.length).toBe(2);
       expect(result.ast).toBeDefined();
     });
 
     it('support named function', () => {
       const result = parse('function concat() {}');
-      const inferedType = result.inferedType as InspectionFunction;
+      const inferredType = result.inferredType as InspectionFunction;
 
-      expect(inferedType.type).toBe(InspectionType.FUNCTION);
-      expect(inferedType.identifier).toBe('concat');
-      expect(inferedType.hasParams).toBeFalsy();
-      expect(inferedType.params.length).toBe(0);
+      expect(inferredType.type).toBe(InspectionType.FUNCTION);
+      expect(inferredType.identifier).toBe('concat');
+      expect(inferredType.hasParams).toBeFalsy();
+      expect(inferredType.params.length).toBe(0);
       expect(result.ast).toBeDefined();
     });
 
     it('support named function with arguments', () => {
       const result = parse('function concat(a, b) {}');
-      const inferedType = result.inferedType as InspectionFunction;
+      const inferredType = result.inferredType as InspectionFunction;
 
-      expect(inferedType.type).toBe(InspectionType.FUNCTION);
-      expect(inferedType.identifier).toBe('concat');
-      expect(inferedType.hasParams).toBeTruthy();
-      expect(inferedType.params.length).toBe(2);
+      expect(inferredType.type).toBe(InspectionType.FUNCTION);
+      expect(inferredType.identifier).toBe('concat');
+      expect(inferredType.hasParams).toBeTruthy();
+      expect(inferredType.params.length).toBe(2);
       expect(result.ast).toBeDefined();
     });
 
     it('support class', () => {
       const result = parse('class Foo {}');
-      const inferedType = result.inferedType as InspectionFunction;
+      const inferredType = result.inferredType as InspectionFunction;
 
-      expect(inferedType.type).toBe(InspectionType.CLASS);
-      expect(inferedType.identifier).toBe('Foo');
+      expect(inferredType.type).toBe(InspectionType.CLASS);
+      expect(inferredType.identifier).toBe('Foo');
       expect(result.ast).toBeDefined();
     });
 
@@ -236,18 +236,18 @@ describe('parse', () => {
     ].forEach((x) => {
       it(`support ${x.name}`, () => {
         const result = parse(x.value);
-        const inferedType = result.inferedType as InspectionLiteral;
+        const inferredType = result.inferredType as InspectionLiteral;
 
-        expect(inferedType.type).toBe(InspectionType.LITERAL);
+        expect(inferredType.type).toBe(InspectionType.LITERAL);
         expect(result.ast).toBeDefined();
       });
     });
 
     it("returns Unknown when it's not supported", () => {
       const result = parse("Symbol('foo')");
-      const inferedType = result.inferedType as InspectionUnknown;
+      const inferredType = result.inferredType as InspectionUnknown;
 
-      expect(inferedType.type).toBe(InspectionType.UNKNOWN);
+      expect(inferredType.type).toBe(InspectionType.UNKNOWN);
       expect(result.ast).toBeDefined();
     });
   });

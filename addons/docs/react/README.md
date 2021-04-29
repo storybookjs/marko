@@ -67,12 +67,6 @@ storiesOf('InfoButton', module)
 
 [MDX](../docs/mdx.md) is a convenient way to document your components in Markdown and embed documentation components, such as stories and props tables, inline.
 
-Docs has peer dependencies on `react`, `react-is`, and `babel-loader`. If you want to write stories in MDX, you may need to add these dependencies as well:
-
-```sh
-yarn add -D react react-is babel-loader
-```
-
 Then update your `.storybook/main.js` to make sure you load MDX files:
 
 ```js
@@ -84,7 +78,7 @@ module.exports = {
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { Button } from './Button';
 
 <Meta title='Button' component={Button} />
@@ -97,9 +91,9 @@ Some **markdown** description, or whatever you want.
   <Button>Label</Button>
 </Story>
 
-## Props
+## ArgsTable
 
-<Props of={Button} />
+<ArgsTable of={Button} />
 ```
 
 ## Inline stories
@@ -107,13 +101,11 @@ Some **markdown** description, or whatever you want.
 Storybook Docs renders all React stories inline on the page by default. If you want to render stories in an `iframe` so that they are better isolated. To do this, update `.storybook/preview.js`:
 
 ```js
-import { addParameters } from '@storybook/react';
-
-addParameters({
+export const parameters = {
   docs: {
     inlineStories: false,
   },
-});
+};
 ```
 
 ## TypeScript props with `react-docgen`

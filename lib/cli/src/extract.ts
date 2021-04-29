@@ -17,28 +17,7 @@ const read = async (url: string) => {
   const data = JSON.parse(
     await page.evaluate(async () => {
       // eslint-disable-next-line no-undef
-      const d = window.__STORYBOOK_STORY_STORE__.extract();
-
-      const result = Object.entries(d).reduce(
-        (acc, [k, v]: [string, any]) => ({
-          ...acc,
-          [k]: {
-            ...v,
-            parameters: {
-              globalArgs: v.parameters.globalArgs,
-              globalArgTypes: v.parameters.globalArgTypes,
-              options: v.parameters.options,
-              args: v.parameters.args,
-              argTypes: v.parameters.argTypes,
-              framework: v.parameters.framework,
-              fileName: v.parameters.fileName,
-              docsOnly: v.parameters.docsOnly,
-            },
-          },
-        }),
-        {}
-      );
-      return JSON.stringify(result, null, 2);
+      return JSON.stringify(window.__STORYBOOK_STORY_STORE__.getStoriesJsonData(), null, 2);
     })
   );
 
@@ -59,12 +38,8 @@ const useLocation: (input: string) => Promise<[string, () => void]> = async (inp
 
   const port = await getPort();
 
-  return new Promise((resolve, reject) => {
-    const server = app.listen(port, (e) => {
-      if (e) {
-        reject(e);
-      }
-
+  return new Promise((resolve) => {
+    const server = app.listen(port, () => {
       const result = `http://localhost:${port}/iframe.html`;
 
       logger.info(`connecting to: ${result}`);
@@ -95,9 +70,9 @@ export async function extract(input: string, targetPath: string) {
   if (input && targetPath) {
     const [location, exit] = await useLocation(input);
 
-    const stories = await read(location);
+    const data = await read(location);
 
-    await writeFile(targetPath, JSON.stringify({ stories }, null, 2));
+    await writeFile(targetPath, JSON.stringify(data, null, 2));
 
     await exit();
   } else {

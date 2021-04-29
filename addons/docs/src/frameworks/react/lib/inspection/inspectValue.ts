@@ -10,5 +10,5 @@ export function inspectValue(value: string): InspectionResult {
     // do nothing.
   }
 
-  return { inferedType: { type: InspectionType.UNKNOWN } };
+  return { inferredType: { type: InspectionType.UNKNOWN } };
 }

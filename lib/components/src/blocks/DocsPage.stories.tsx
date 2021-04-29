@@ -1,4 +1,6 @@
 import React from 'react';
+import { Global, css } from '@emotion/core';
+
 import { Title, Subtitle, DocsPageWrapper } from './DocsPage';
 import { ArgsTable, Source, Description } from './index';
 import * as Story from './Story.stories';
@@ -10,10 +12,28 @@ import * as description from './Description.stories';
 export default {
   title: 'Docs/DocsPage',
   component: DocsPageWrapper,
+  // The goal of this decorator is to mimic some CSS reset.
+  // Like Tailwind CSS or Bulma do, for example.
+  decorators: [
+    (storyFn) => (
+      <>
+        <Global
+          styles={css`
+            ul,
+            ol {
+              list-style: none;
+            }
+          `}
+        />
+        {storyFn()}
+      </>
+    ),
+  ],
   parameters: {
     layout: 'fullscreen',
   },
 };
+
 export const WithSubtitle = () => (
   <DocsPageWrapper>
     <Title>DocsPage</Title>

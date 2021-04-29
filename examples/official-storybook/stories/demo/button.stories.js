@@ -9,6 +9,9 @@ export default {
   parameters: {
     docs: {
       inlineStories: false,
+      description: {
+        component: 'Component description **markdown** override',
+      },
     },
   },
 };
@@ -35,6 +38,8 @@ WithCounter.storyName = 'with counter';
 
 WithCounter.parameters = {
   docs: {
-    storyDescription: 'This demonstrates react hooks working inside stories. Go team! 🚀',
+    description: {
+      story: 'This demonstrates react hooks working inside stories. **Go team!** 🚀',
+    },
   },
 };

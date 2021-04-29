@@ -78,7 +78,7 @@ export default class DateType extends Component<DateTypeProps, DateTypeState> {
     }
   }
 
-  onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+  private onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { knob, onChange } = this.props;
     const { state } = this;
 
@@ -86,9 +86,7 @@ export default class DateType extends Component<DateTypeProps, DateTypeState> {
     const [year, month, day] = e.target.value.split('-');
     const result = new Date(knob.value);
     if (result.getTime()) {
-      result.setFullYear(parseInt(year, 10));
-      result.setMonth(parseInt(month, 10) - 1);
-      result.setDate(parseInt(day, 10));
+      result.setFullYear(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
       if (result.getTime()) {
         valid = true;
         onChange(result.getTime());
@@ -99,7 +97,7 @@ export default class DateType extends Component<DateTypeProps, DateTypeState> {
     }
   };
 
-  onTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
+  private onTimeChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { knob, onChange } = this.props;
     const { state } = this;
 

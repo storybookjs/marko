@@ -1,13 +1,12 @@
 import fs from 'fs';
+import { remove } from 'fs-extra';
 import { spawn } from 'child_process';
 import trash from 'trash';
-import del from 'del';
 
 const logger = console;
 
 fs.writeFileSync('reset.log', '');
 
-// let results = [];
 const cleaningProcess = spawn('git', [
   'clean',
   '-xdf',
@@ -28,11 +27,11 @@ cleaningProcess.stdout.on('data', (data) => {
           if (
             uri.match(/node_modules/) ||
             uri.match(/dist/) ||
-            uri.match(/ts3\.5/) ||
+            uri.match(/ts3\.4/) ||
             uri.match(/\.cache/) ||
             uri.match(/dll/)
           ) {
-            del(uri).then(() => {
+            remove(uri).then(() => {
               logger.log(`deleted ${uri}`);
             });
           } else {
@@ -42,7 +41,7 @@ cleaningProcess.stdout.on('data', (data) => {
               })
               .catch((e) => {
                 logger.log('failed to trash, will try permanent delete');
-                trash(uri);
+                remove(uri);
               });
           }
         }

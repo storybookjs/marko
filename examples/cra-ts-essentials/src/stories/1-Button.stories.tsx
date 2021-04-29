@@ -7,14 +7,14 @@ export default {
   argTypes: { onClick: { action: 'clicked' } },
 };
 
-const ButtonStory = (args: any) => <Button {...args} />;
+const Template = (args: any) => <Button {...args} />;
 
-export const Text = ButtonStory.bind({});
+export const Text = Template.bind({});
 Text.args = {
   children: 'Hello button',
 };
 
-export const Emoji = ButtonStory.bind({});
+export const Emoji = Template.bind({});
 Emoji.args = {
   children: '😀 😎 👍 💯',
 };

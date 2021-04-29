@@ -1,68 +1,85 @@
-import React, { Fragment, Component, FunctionComponent, SyntheticEvent } from 'react';
+import React, { Component, SyntheticEvent, useCallback, MouseEventHandler } from 'react';
 
 import { Icons, IconButton, Separator } from '@storybook/components';
 import { Addon } from '@storybook/addons';
 
-const Context = React.createContext({ value: 1, set: (v: number) => {} });
+const initialZoom = 1 as const;
 
-class ZoomProvider extends Component<{}, { value: number }> {
+const Context = React.createContext({ value: initialZoom, set: (v: number) => {} });
+
+class ZoomProvider extends Component<{ shouldScale: boolean }, { value: number }> {
   state = {
-    value: 1,
+    value: initialZoom,
   };
 
   set = (value: number) => this.setState({ value });
 
   render() {
-    const { children } = this.props;
+    const { children, shouldScale } = this.props;
     const { set } = this;
     const { value } = this.state;
-
-    return <Context.Provider value={{ value, set }}>{children}</Context.Provider>;
+    return (
+      <Context.Provider value={{ value: shouldScale ? value : initialZoom, set }}>
+        {children}
+      </Context.Provider>
+    );
   }
 }
 
 const { Consumer: ZoomConsumer } = Context;
 
-const cancel = (e: SyntheticEvent) => {
-  e.preventDefault();
-  return false;
-};
-
-const Zoom: FunctionComponent<{ set: Function; reset: Function }> = ({ set, reset }) => (
-  <Fragment>
-    <IconButton key="zoomin" onClick={(e: SyntheticEvent) => cancel(e) || set(0.8)} title="Zoom in">
+const Zoom = React.memo<{
+  zoomIn: MouseEventHandler;
+  zoomOut: MouseEventHandler;
+  reset: MouseEventHandler;
+}>(({ zoomIn, zoomOut, reset }) => (
+  <>
+    <IconButton key="zoomin" onClick={zoomIn} title="Zoom in">
       <Icons icon="zoom" />
     </IconButton>
-    <IconButton
-      key="zoomout"
-      onClick={(e: SyntheticEvent) => cancel(e) || set(1.25)}
-      title="Zoom out"
-    >
+    <IconButton key="zoomout" onClick={zoomOut} title="Zoom out">
       <Icons icon="zoomout" />
     </IconButton>
-    <IconButton
-      key="zoomreset"
-      onClick={(e: SyntheticEvent) => cancel(e) || reset()}
-      title="Reset zoom"
-    >
+    <IconButton key="zoomreset" onClick={reset} title="Reset zoom">
       <Icons icon="zoomreset" />
     </IconButton>
-  </Fragment>
-);
+  </>
+));
 
 export { Zoom, ZoomConsumer, ZoomProvider };
+
+const ZoomWrapper = React.memo<{ set: Function; value: number }>(({ set, value }) => {
+  const zoomIn = useCallback(
+    (e: SyntheticEvent) => {
+      e.preventDefault();
+      set(0.8 * value);
+    },
+    [set, value]
+  );
+  const zoomOut = useCallback(
+    (e: SyntheticEvent) => {
+      e.preventDefault();
+      set(1.25 * value);
+    },
+    [set, value]
+  );
+  const reset = useCallback(
+    (e) => {
+      e.preventDefault();
+      set(initialZoom);
+    },
+    [set, initialZoom]
+  );
+  return <Zoom key="zoom" {...{ zoomIn, zoomOut, reset }} />;
+});
 
 export const zoomTool: Addon = {
   title: 'zoom',
   match: ({ viewMode }) => viewMode === 'story',
-  render: () => (
-    <Fragment>
-      <ZoomConsumer>
-        {({ set, value }) => (
-          <Zoom key="zoom" set={(v: number) => set(value * v)} reset={() => set(1)} />
-        )}
-      </ZoomConsumer>
+  render: React.memo(() => (
+    <>
+      <ZoomConsumer>{({ set, value }) => <ZoomWrapper {...{ set, value }} />}</ZoomConsumer>
       <Separator />
-    </Fragment>
-  ),
+    </>
+  )),
 };

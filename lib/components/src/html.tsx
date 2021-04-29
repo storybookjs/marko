@@ -1,15 +1,15 @@
-import { createElement, ElementType } from 'react';
+import dedent from 'ts-dedent';
+import deprecate from 'util-deprecate';
 
-import { components as rawComponents } from './typography/DocumentFormatting';
+const deprecatedHtmlEndpoint = deprecate(
+  () => {},
+  dedent`
+    The entry point '@storybook/components/html' is deprecated. Please use '@storybook/components' directly instead.
+
+    See https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-storybook-components-html-entry-point
+  `
+);
+deprecatedHtmlEndpoint();
 
 export * from './typography/DocumentFormatting';
-
-export { rawComponents as components };
-
-const resetComponents: Record<string, ElementType> = {};
-
-Object.keys(rawComponents).forEach((key) => {
-  resetComponents[key] = (props: any) => createElement(key, props);
-});
-
-export { resetComponents };
+export { components, resetComponents } from './index';

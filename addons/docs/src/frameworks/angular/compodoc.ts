@@ -25,7 +25,7 @@ export const setCompodocJson = (compodocJson: CompodocJson) => {
 };
 
 // @ts-ignore
-export const getCompdocJson = (): CompodocJson => window.__STORYBOOK_COMPODOC_JSON__;
+export const getCompodocJson = (): CompodocJson => window.__STORYBOOK_COMPODOC_JSON__;
 
 export const checkValidComponentOrDirective = (component: Component | Directive) => {
   if (!component.name) {
@@ -90,10 +90,17 @@ const getComponentData = (component: Component | Directive) => {
     return null;
   }
   checkValidComponentOrDirective(component);
-  const compodocJson = getCompdocJson();
+  const compodocJson = getCompodocJson();
+  if (!compodocJson) {
+    return null;
+  }
   checkValidCompodocJson(compodocJson);
   const { name } = component;
-  return findComponentByName(name, compodocJson);
+  const metadata = findComponentByName(name, compodocJson);
+  if (!metadata) {
+    logger.warn(`Component not found in compodoc JSON: '${name}'`);
+  }
+  return metadata;
 };
 
 const displaySignature = (item: Method): string => {
@@ -105,10 +112,17 @@ const displaySignature = (item: Method): string => {
 
 const extractTypeFromValue = (defaultValue: any) => {
   const valueType = typeof defaultValue;
-  return defaultValue || valueType === 'boolean' ? valueType : null;
+  return defaultValue || valueType === 'boolean' || valueType === 'string' ? valueType : null;
 };
 
 const extractEnumValues = (compodocType: any) => {
+  const compodocJson = getCompodocJson();
+  const enumType = compodocJson?.miscellaneous.enumerations.find((x) => x.name === compodocType);
+
+  if (enumType?.childs.every((x) => x.value)) {
+    return enumType.childs.map((x) => x.value);
+  }
+
   if (typeof compodocType !== 'string' || compodocType.indexOf('|') === -1) {
     return null;
   }
@@ -131,7 +145,8 @@ export const extractType = (property: Property, defaultValue: any) => {
     case null:
       return { name: 'void' };
     default: {
-      const enumValues = extractEnumValues(compodocType);
+      const resolvedType = resolveTypealias(compodocType);
+      const enumValues = extractEnumValues(resolvedType);
       return enumValues ? { name: 'enum', value: enumValues } : { name: 'object' };
     }
   }
@@ -146,6 +161,12 @@ const extractDefaultValue = (property: Property) => {
     logger.debug(`Error extracting ${property.name}: ${property.defaultValue}`);
     return undefined;
   }
+};
+
+const resolveTypealias = (compodocType: string): string => {
+  const compodocJson = getCompodocJson();
+  const typeAlias = compodocJson?.miscellaneous.typealiases.find((x) => x.name === compodocType);
+  return typeAlias ? resolveTypealias(typeAlias.rawtype) : compodocType;
 };
 
 export const extractArgTypesFromData = (componentData: Class | Directive | Injectable | Pipe) => {
@@ -170,11 +191,13 @@ export const extractArgTypesFromData = (componentData: Class | Directive | Injec
         isMethod(item) || section !== 'inputs'
           ? { name: 'void' }
           : extractType(item as Property, defaultValue);
+      const action = section === 'outputs' ? { action: item.name } : {};
       const argType = {
         name: item.name,
         description: item.description,
         defaultValue,
         type,
+        ...action,
         table: {
           category: section,
           type: {
@@ -221,8 +244,5 @@ export const extractArgTypes = (component: Component | Directive) => {
 
 export const extractComponentDescription = (component: Component | Directive) => {
   const componentData = getComponentData(component);
-  if (!componentData) {
-    return null;
-  }
-  return componentData.rawdescription || componentData.description;
+  return componentData && (componentData.rawdescription || componentData.description);
 };

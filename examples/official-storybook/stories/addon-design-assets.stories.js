@@ -65,7 +65,7 @@ NamedAssets.parameters = {
 };
 
 export const UrlReplacement = () => (
-  <div>This story should have a webpge, with within it's url the storyId</div>
+  <div>This story should have a webpage, with within it's url the storyId</div>
 );
 
 UrlReplacement.storyName = 'url replacement';

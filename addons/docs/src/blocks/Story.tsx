@@ -1,8 +1,8 @@
-import React, { FunctionComponent, ReactNode, ComponentProps } from 'react';
+import React, { FunctionComponent, ReactNode, ElementType, ComponentProps } from 'react';
 import { MDXProvider } from '@mdx-js/react';
-import { resetComponents } from '@storybook/components/html';
-import { Story as PureStory } from '@storybook/components';
+import { resetComponents, Story as PureStory } from '@storybook/components';
 import { toId, storyNameFromExport } from '@storybook/csf';
+import { Args, BaseAnnotations } from '@storybook/addons';
 import { CURRENT_SELECTION } from './types';
 
 import { DocsContext, DocsContextProps } from './DocsContext';
@@ -11,21 +11,26 @@ export const storyBlockIdFromId = (storyId: string) => `story--${storyId}`;
 
 type PureStoryProps = ComponentProps<typeof PureStory>;
 
-interface CommonProps {
+type CommonProps = BaseAnnotations<Args, any> & {
   height?: string;
   inline?: boolean;
-}
+};
 
 type StoryDefProps = {
   name: string;
   children: ReactNode;
-} & CommonProps;
+};
 
 type StoryRefProps = {
   id?: string;
-} & CommonProps;
+};
 
-export type StoryProps = StoryDefProps | StoryRefProps;
+type StoryImportProps = {
+  name: string;
+  story: ElementType;
+};
+
+export type StoryProps = (StoryDefProps | StoryRefProps | StoryImportProps) & CommonProps;
 
 export const lookupStoryId = (
   storyName: string,
@@ -51,7 +56,7 @@ export const getStoryProps = (props: StoryProps, context: DocsContextProps): Pur
     return null;
   }
 
-  // prefer block props, then story parameters defined by the framework-specific settings and optionally overriden by users
+  // prefer block props, then story parameters defined by the framework-specific settings and optionally overridden by users
   const { inlineStories = false, iframeHeight = 100, prepareForInline } = docs;
   const storyIsInline = typeof inline === 'boolean' ? inline : inlineStories;
   if (storyIsInline && !prepareForInline) {

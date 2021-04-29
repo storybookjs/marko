@@ -15,11 +15,12 @@ exports[`Storyshots Button Rounded 1`] = `
       Round
        corners
     </strong>
+     
     <br />
      
     
      
-    You clicked
+    Rounded
     : 
     0
   </button>
@@ -57,11 +58,12 @@ exports[`Storyshots Button Square 1`] = `
       Square
        corners
     </strong>
+     
     <br />
      
     
      
-    You clicked
+    Square
     : 
     0
   </button>

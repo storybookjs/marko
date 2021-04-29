@@ -18,7 +18,7 @@ Button.propTypes = {
   label: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired
 };
-const MemoButton = React.memo(Button);
+const MemoButton = /*#__PURE__*/React.memo(Button);
 export const component = MemoButton;
 Button.__docgenInfo = {
   \\"description\\": \\"\\",

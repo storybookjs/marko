@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import shallow from 'react-test-renderer/shallow';
 
 function getRenderedTree(story: any, context: any, { renderer, serializer }: any) {

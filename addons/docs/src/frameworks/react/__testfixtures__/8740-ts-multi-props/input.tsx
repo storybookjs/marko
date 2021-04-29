@@ -4,7 +4,7 @@ export interface ElemAProps {
   size?: 'a' | 'b' | 'c' | 'd';
 }
 
-export const Header: React.SFC<ElemAProps> = ({ size = 'a', children }) => (
+export const Header: React.FC<ElemAProps> = ({ size = 'a', children }) => (
   <div className={size}>{children}</div>
 );
 
@@ -12,7 +12,7 @@ export interface ElemBProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const Paragraph: React.SFC<ElemBProps> = ({ size, children }) => (
+export const Paragraph: React.FC<ElemBProps> = ({ size, children }) => (
   <div className={size}>{children}</div>
 );
 

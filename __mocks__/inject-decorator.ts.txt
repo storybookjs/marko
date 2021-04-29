@@ -4,7 +4,7 @@ import { storiesOf, moduleMetadata } from '@storybook/angular';
 
 @Component({
   selector: 'storybook-comp-with-store',
-  template: '<div>{{this.getSotreState()}}</div>',
+  template: '<div>{{this.getStoreState()}}</div>',
 })
 class WithStoreComponent {
   private store: Store<any>;
@@ -13,7 +13,7 @@ class WithStoreComponent {
     this.store = store;
   }
 
-  getSotreState(): string {
+  getStoreState(): string {
     return this.store === undefined ? 'Store is NOT injected' : 'Store is injected';
   }
 }

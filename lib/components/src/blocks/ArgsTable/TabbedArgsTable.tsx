@@ -1,10 +1,10 @@
-import React, { FC, Fragment } from 'react';
-import { styled } from '@storybook/theming';
-import { ArgsTable, ArgsTableProps } from './ArgsTable';
+import React, { FC } from 'react';
+import { ArgsTable, ArgsTableProps, SortType } from './ArgsTable';
 import { TabsState } from '../../tabs/tabs';
 
 export interface TabbedArgsTableProps {
   tabs: Record<string, ArgsTableProps>;
+  sort?: SortType;
 }
 
 export const TabbedArgsTable: FC<TabbedArgsTableProps> = ({ tabs, ...props }) => {

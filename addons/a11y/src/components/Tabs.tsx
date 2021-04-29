@@ -112,7 +112,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs }) => {
   const highlightLabel = `Highlight results`;
   return (
     <SizeMe refreshMode="debounce">
-      {({ size }: { size: any }) => (
+      {({ size }) => (
         <Container>
           <List>
             <TabsWrapper>
@@ -130,7 +130,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs }) => {
             </TabsWrapper>
           </List>
           {tabs[activeTab].items.length > 0 ? (
-            <GlobalToggle elementWidth={size.width}>
+            <GlobalToggle elementWidth={size.width || 0}>
               <HighlightToggleLabel htmlFor={highlightToggleId}>
                 {highlightLabel}
               </HighlightToggleLabel>

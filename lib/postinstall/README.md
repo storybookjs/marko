@@ -11,7 +11,7 @@ If these files are present in the addon, the CLI will run them on the existing f
 To add a preset to `presets.js`, simply create a file `postinstall/presets.js` in your addon:
 
 ```js
-improt { presetsAddPreset } = require('@storybook/postinstall');
+import { presetsAddPreset } = require('@storybook/postinstall');
 export default function transformer(file, api) {
   const root = api.jscodeshift(file.source);
   presetsAddPreset(`@storybook/addon-docs/preset`, { some: 'options' }, { root, api });

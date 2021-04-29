@@ -14,15 +14,13 @@ exports[`Storyshots Addon/Links Go to welcome view 1`] = `
     <button
       class="link"
     >
-      
-    Return to the 
+      Return to the 
       <code
         class="code"
       >
         Welcome
       </code>
        view story.
-  
     </button>
   </div>
 </section>

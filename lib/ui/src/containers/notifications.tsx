@@ -1,19 +1,23 @@
 import React, { FunctionComponent } from 'react';
 
-import { Consumer, Combo } from '@storybook/api';
+import { Consumer, Combo, useStorybookApi } from '@storybook/api';
 
-import Notifications from '../components/notifications/notifications';
+import NotificationList from '../components/notifications/NotificationList';
 
 export const mapper = ({ state }: Combo) => {
+  const { clearNotification } = useStorybookApi();
   const { notifications } = state;
 
   return {
     notifications,
+    clearNotification,
   };
 };
 
 const NotificationConnect: FunctionComponent<any> = (props) => (
-  <Consumer filter={mapper}>{(fromState) => <Notifications {...props} {...fromState} />}</Consumer>
+  <Consumer filter={mapper}>
+    {(fromState) => <NotificationList {...props} {...fromState} />}
+  </Consumer>
 );
 
 export default NotificationConnect;

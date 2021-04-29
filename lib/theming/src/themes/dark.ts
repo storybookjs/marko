@@ -10,7 +10,7 @@ const theme: ThemeVars = {
 
   // UI
   appBg: '#2f2f2f',
-  appContentBg: '#333',
+  appContentBg: color.darkest,
   appBorderColor: 'rgba(255,255,255,.1)',
   appBorderRadius: 4,
 
@@ -21,6 +21,7 @@ const theme: ThemeVars = {
   // Text colors
   textColor: color.lightest,
   textInverseColor: color.darkest,
+  textMutedColor: color.mediumdark,
 
   // Toolbar default and active colors
   barTextColor: '#999999',

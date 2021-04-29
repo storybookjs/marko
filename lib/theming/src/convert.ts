@@ -49,15 +49,15 @@ const createColors = (vars: ThemeVars): Color => ({
   ultraviolet: color.ultraviolet,
 
   // Monochrome
-  lightest: vars.base === 'dark' ? color.darkest : color.lightest,
-  lighter: vars.base === 'dark' ? color.darker : color.lighter,
-  light: vars.base === 'dark' ? color.dark : color.light,
-  mediumlight: vars.base === 'dark' ? color.mediumdark : color.mediumlight,
+  lightest: color.lightest,
+  lighter: color.lighter,
+  light: color.light,
+  mediumlight: color.mediumlight,
   medium: color.medium,
-  mediumdark: vars.base === 'dark' ? color.mediumlight : color.mediumdark,
-  dark: vars.base === 'dark' ? color.light : color.dark,
-  darker: vars.base === 'dark' ? color.lighter : color.darker,
-  darkest: vars.base === 'dark' ? color.lightest : color.darkest,
+  mediumdark: color.mediumdark,
+  dark: color.dark,
+  darker: color.darker,
+  darkest: color.darkest,
 
   // For borders
   border: color.border,

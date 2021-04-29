@@ -2,7 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
-    "types": ["node"],
+    "types": ["node", "jest"],
     "strict": false,
     "strictNullChecks": false,
     "forceConsistentCasingInFileNames": true,

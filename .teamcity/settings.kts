@@ -46,8 +46,6 @@ project {
     buildType(E2E)
     buildType(SmokeTests)
     buildType(Frontpage)
-    buildType(Docs)
-    buildType(Lint)
     buildType(Test)
     buildType(Coverage)
 
@@ -59,8 +57,6 @@ project {
             RelativeId("E2E"),
             RelativeId("SmokeTests"),
             RelativeId("Frontpage"),
-            RelativeId("Docs"),
-            RelativeId("Lint"),
             RelativeId("Test"),
             RelativeId("Coverage")
     )
@@ -129,11 +125,10 @@ object Build : BuildType({
                 #!/bin/bash
                 set -e -x
                 
-                yarn install
-                yarn repo-dirty-check
+                yarn install --immutable
                 yarn bootstrap --core
             """.trimIndent()
-            dockerImage = "node:10"
+            dockerImage = "node:12"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -177,7 +172,7 @@ object ExamplesTemplate : Template({
             scriptContent = """
                 #!/bin/bash
                 set -e -x
-
+                
                 yarn install
                 rm -rf built-storybooks
                 mkdir -p built-storybooks
@@ -319,15 +314,15 @@ object E2E : BuildType({
             scriptContent = """
                 #!/bin/bash
                 set -e -x
-
-                yarn install
+                
+                yarn install --immutable
                 yarn cypress install
                 yarn serve-storybooks &
                 yarn await-serve-storybooks
                 yarn cypress run --reporter teamcity || :
                 yarn ts-node --transpile-only cypress/report-teamcity-metadata.ts || :
             """.trimIndent()
-            dockerImage = "cypress/base:10.18.1"
+            dockerImage = "cypress/base:12.19.0"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -361,51 +356,57 @@ object SmokeTests : BuildType({
         }
     }
 
+    params {
+        // Disable ESLint when running smoke tests to improve perf and as of CRA 4.0.3, CRA kitchen sinks are throwing
+        // because of some ESLint warnings, related to: https://github.com/facebook/create-react-app/pull/10590
+        param("env.DISABLE_ESLINT_PLUGIN", "true")
+    }
+
     steps {
         script {
             scriptContent = """
                 #!/bin/bash
                 set -e -x
-
-                yarn install
-
+                
+                yarn install --immutable
+                
                 cd examples/cra-kitchen-sink
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../cra-ts-kitchen-sink
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../vue-kitchen-sink
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../svelte-kitchen-sink
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../angular-cli
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../ember-cli
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../marko-cli
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../official-storybook
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../mithril-kitchen-sink
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../riot-kitchen-sink
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../preact-kitchen-sink
                 yarn storybook --smoke-test --quiet
-          
+                
                 cd ../cra-react15
                 yarn storybook --smoke-test --quiet
             """.trimIndent()
-            dockerImage = "node:10"
+            dockerImage = "node:12"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -420,11 +421,12 @@ object Frontpage : BuildType({
             scriptContent = """
                 #!/bin/bash
                 set -e -x
-                
+
+                yarn install --immutable
                 yarn bootstrap --install
                 node ./scripts/build-frontpage.js
             """.trimIndent()
-            dockerImage = "node:10"
+            dockerImage = "node:12"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -434,87 +436,6 @@ object Frontpage : BuildType({
             quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
             triggerRules = "-:.teamcity/**"
             branchFilter = "+:master"
-        }
-    }
-})
-
-object Docs : BuildType({
-    name = "Docs"
-    type = Type.DEPLOYMENT
-
-    steps {
-        script {
-            workingDir = "docs"
-            scriptContent = """
-                #!/bin/bash
-                set -e -x
-                
-                yarn install
-                yarn build
-            """.trimIndent()
-            dockerImage = "node:10"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-
-    triggers {
-        vcs {
-            quietPeriodMode = VcsTrigger.QuietPeriodMode.USE_DEFAULT
-            triggerRules = "-:.teamcity/**"
-            branchFilter = """
-                +:<default>
-                +:next
-                +:master
-                +:pull/*
-            """.trimIndent()
-        }
-    }
-})
-
-object Lint : BuildType({
-    name = "Lint"
-
-    dependencies {
-        dependency(Build) {
-            snapshot {
-                onDependencyFailure = FailureAction.CANCEL
-            }
-            artifacts {
-                artifactRules = "dist.tar.gz!** => ."
-            }
-        }
-    }
-
-    steps {
-        script {
-            scriptContent = """
-                #!/bin/bash
-                set -e -x
-                
-                yarn install
-                
-                # TODO remove after merging
-                mkdir temp-eslint-teamcity
-                cd temp-eslint-teamcity
-                yarn init -y
-                yarn add -D eslint-teamcity
-                cd ..
-                
-                yarn lint:js --format ./temp-eslint-teamcity/node_modules/eslint-teamcity/index.js .
-                yarn lint:md .
-            """.trimIndent()
-            dockerImage = "node:10"
-            dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
-        }
-    }
-
-    failureConditions {
-        failOnMetricChange {
-            metric = BuildFailureOnMetric.MetricType.INSPECTION_ERROR_COUNT
-            threshold = 0
-            units = BuildFailureOnMetric.MetricUnit.DEFAULT_UNIT
-            comparison = BuildFailureOnMetric.MetricComparison.MORE
-            compareTo = value()
         }
     }
 })
@@ -545,12 +466,13 @@ object Test : BuildType({
                 mkdir temp-jest-teamcity
                 cd temp-jest-teamcity
                 yarn init -y
+                touch yarn.lock
                 yarn add -D jest-teamcity
                 cd ..
-                
+
                 yarn jest --coverage -w 2 --reporters=${'$'}PWD/temp-jest-teamcity/node_modules/jest-teamcity
             """.trimIndent()
-            dockerImage = "node:10"
+            dockerImage = "node:12"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -581,7 +503,7 @@ object Coverage : BuildType({
                 yarn install
                 yarn coverage
             """.trimIndent()
-            dockerImage = "node:10"
+            dockerImage = "node:12"
             dockerImagePlatform = ScriptBuildStep.ImagePlatform.Linux
         }
     }
@@ -595,7 +517,6 @@ object TestWorkflow : BuildType({
     dependencies {
         snapshot(E2E) {}
         snapshot(SmokeTests) {}
-        snapshot(Lint) {}
         snapshot(Coverage) {}
     }
 

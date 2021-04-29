@@ -56,7 +56,7 @@ export default class Store {
   }
 
   // The assumption is that this will be called once, to initialize the React state
-  // when the module is instanciated
+  // when the module is instantiated
   getInitialState(base: State) {
     // We don't only merge at the very top level (the same way as React setState)
     // when you set keys, so it makes sense to do the same in combining the two storage modes

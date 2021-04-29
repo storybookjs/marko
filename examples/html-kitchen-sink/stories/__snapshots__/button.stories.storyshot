@@ -36,3 +36,14 @@ exports[`Storyshots Demo Headings 1`] = `
   </h4>
 </section>
 `;
+
+exports[`Storyshots Demo Script 1`] = `
+<section>
+  <div>
+    JS alert
+  </div>
+  <script>
+    alert("hello")
+  </script>
+</section>
+`;

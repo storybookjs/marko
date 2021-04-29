@@ -1,3 +1,4 @@
+import { PREVIEW_URL } from 'global';
 import React from 'react';
 import { IconButton, Icons } from '@storybook/components';
 import { Consumer, Combo } from '@storybook/api';
@@ -10,9 +11,7 @@ const ejectMapper = ({ state }: Combo) => {
 
   return {
     refId,
-    baseUrl: ref
-      ? `${ref.url}/iframe.html`
-      : `${state.location.origin + state.location.pathname}iframe.html`,
+    baseUrl: ref ? `${ref.url}/iframe.html` : (PREVIEW_URL as string) || 'iframe.html',
     storyId,
     queryParams: state.customQueryParams,
   };

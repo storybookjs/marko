@@ -13,10 +13,8 @@ const Wrapper = styled.div<{}>(withReset, ({ theme }) => ({
   padding: 20,
   margin: '25px 0 40px',
 
-  color:
-    theme.base === 'light'
-      ? transparentize(0.4, theme.color.defaultText)
-      : transparentize(0.6, theme.color.defaultText),
+  color: transparentize(0.3, theme.color.defaultText),
+  fontSize: theme.typography.size.s2,
 }));
 
 export const EmptyBlock = (props: any) => <Wrapper {...props} className="docblock-emptyblock" />;

@@ -32,7 +32,7 @@ export default class TextType extends Component<TextTypeProps> {
     return nextProps.knob.value !== knob.value;
   }
 
-  handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  private handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { onChange } = this.props;
     const { value } = event.target;
 

@@ -1,10 +1,10 @@
 import { document } from 'global';
-import qs from 'qs';
+import { parse } from 'qs';
 
 export const getQueryParams = () => {
   // document.location is not defined in react-native
   if (document && document.location && document.location.search) {
-    return qs.parse(document.location.search, { ignoreQueryPrefix: true });
+    return parse(document.location.search, { ignoreQueryPrefix: true });
   }
   return {};
 };

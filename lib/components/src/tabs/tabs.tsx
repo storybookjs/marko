@@ -204,10 +204,10 @@ Tabs.displayName = 'Tabs';
   bordered: false,
 };
 
-type FuncChilden = () => void;
+type FuncChildren = () => void;
 
 export interface TabsStateProps {
-  children: (ReactNode | FuncChilden)[];
+  children: (ReactNode | FuncChildren)[];
   initial: string;
   absolute: boolean;
   bordered: boolean;

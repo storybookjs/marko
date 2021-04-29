@@ -4,12 +4,12 @@ import {
   InspectionType,
 } from '../inspection';
 
-export function getPrettyIdentifier(inferedType: InspectionIdentifiableInferedType): string {
-  const { type, identifier } = inferedType;
+export function getPrettyIdentifier(inferredType: InspectionIdentifiableInferedType): string {
+  const { type, identifier } = inferredType;
 
   switch (type) {
     case InspectionType.FUNCTION:
-      return getPrettyFuncIdentifier(identifier, (inferedType as InspectionFunction).hasParams);
+      return getPrettyFuncIdentifier(identifier, (inferredType as InspectionFunction).hasParams);
     case InspectionType.ELEMENT:
       return getPrettyElementIdentifier(identifier);
     default:

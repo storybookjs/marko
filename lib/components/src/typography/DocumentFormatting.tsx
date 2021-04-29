@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { styled, CSSObject } from '@storybook/theming';
 import { withReset, withMargin, headerCommon, codeCommon } from './shared';
-import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
+import { StyledSyntaxHighlighter } from '../blocks/Source';
 
 export const H1 = styled.h1<{}>(withReset, headerCommon, ({ theme }) => ({
   fontSize: `${theme.typography.size.l1}px`,
@@ -43,14 +43,14 @@ export const Pre = styled.pre<{}>(withReset, withMargin, ({ theme }) => ({
   borderRadius: 3,
   margin: '1rem 0',
 
-  '&:not(.hljs)': {
+  '&:not(.prismjs)': {
     background: 'transparent',
     border: 'none',
     borderRadius: 0,
     padding: 0,
     margin: 0,
   },
-  '& pre, &.hljs': {
+  '& pre, &.prismjs': {
     padding: 15,
     margin: 0,
     whiteSpace: 'pre-wrap',
@@ -73,8 +73,7 @@ export const Pre = styled.pre<{}>(withReset, withMargin, ({ theme }) => ({
 const Link: FunctionComponent<any> = ({ href: input, children, ...props }) => {
   const isStorybookPath = /^\//.test(input);
   const isAnchorUrl = /^#.*/.test(input);
-
-  const href = isStorybookPath ? `/?path=${input}` : input;
+  const href = isStorybookPath ? `?path=${input}` : input;
   const target = isAnchorUrl ? '_self' : '_top';
 
   return (
@@ -85,7 +84,7 @@ const Link: FunctionComponent<any> = ({ href: input, children, ...props }) => {
 };
 
 export const A = styled(Link)<{}>(withReset, ({ theme }) => ({
-  fontSize: theme.typography.size.s2,
+  fontSize: 'inherit',
   lineHeight: '24px',
 
   color: theme.color.secondary,
@@ -166,21 +165,23 @@ export const Table = styled.table<{}>(withReset, withMargin, ({ theme }) => ({
   borderCollapse: 'collapse',
   '& tr': {
     borderTop: `1px solid ${theme.appBorderColor}`,
-    backgroundColor: 'white',
+    backgroundColor: theme.appContentBg,
     margin: 0,
     padding: 0,
   },
   '& tr:nth-of-type(2n)': {
-    backgroundColor: `${theme.color.lighter}`,
+    backgroundColor: theme.base === 'dark' ? theme.color.darker : theme.color.lighter,
   },
   '& tr th': {
     fontWeight: 'bold',
+    color: theme.color.defaultText,
     border: `1px solid ${theme.appBorderColor}`,
     margin: 0,
     padding: '6px 13px',
   },
   '& tr td': {
     border: `1px solid ${theme.appBorderColor}`,
+    color: theme.color.defaultText,
     margin: 0,
     padding: '6px 13px',
   },
@@ -303,9 +304,9 @@ export const LI = styled.li<{}>(withReset, ({ theme }) => ({
   '& code': codeCommon({ theme }),
 }));
 
-export const UL = styled.ul<{}>(withReset, withMargin, listCommon, {});
+export const UL = styled.ul<{}>(withReset, withMargin, { ...listCommon, listStyle: 'disc' });
 
-export const OL = styled.ol<{}>(withReset, withMargin, listCommon);
+export const OL = styled.ol<{}>(withReset, withMargin, { ...listCommon, listStyle: 'decimal' });
 
 export const P = styled.p<{}>(withReset, withMargin, ({ theme }) => ({
   fontSize: theme.typography.size.s2,
@@ -329,14 +330,33 @@ const DefaultCodeBlock = styled.code<{}>(
   codeCommon
 );
 
-export const Code = ({ className, ...props }: React.ComponentProps<typeof DefaultCodeBlock>) => {
+export const Code = ({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof DefaultCodeBlock>) => {
   const language = (className || '').match(/lang-(\S+)/);
+  const isInlineCode = !(children as string).match(/[\n\r]/g);
 
-  if (!language) {
-    return <DefaultCodeBlock {...props} className={className} />;
+  if (isInlineCode) {
+    return (
+      <DefaultCodeBlock {...props} className={className}>
+        {children}
+      </DefaultCodeBlock>
+    );
   }
 
-  return <SyntaxHighlighter bordered copyable language={language[1]} format={false} {...props} />;
+  return (
+    <StyledSyntaxHighlighter
+      bordered
+      copyable
+      language={language?.[1] ?? 'plaintext'}
+      format={false}
+      {...props}
+    >
+      {children}
+    </StyledSyntaxHighlighter>
+  );
 };
 
 export const TT = styled.title<{}>(codeCommon);

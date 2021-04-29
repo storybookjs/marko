@@ -1,11 +1,12 @@
-import window from 'global';
+import { window as globalWindow } from 'global';
 import { logger } from '@storybook/client-logger';
 import {
   FORCE_RE_RENDER,
   STORY_RENDERED,
   DOCS_RENDERED,
   UPDATE_STORY_ARGS,
-  UPDATE_GLOBAL_ARGS,
+  RESET_STORY_ARGS,
+  UPDATE_GLOBALS,
 } from '@storybook/core-events';
 import { addons } from './index';
 import { StoryGetter, StoryContext, Args } from './types';
@@ -139,10 +140,10 @@ const hookify = (fn: AbstractFunction) => (...args: any[]) => {
   }
   hooks.nextHookIndex = 0;
 
-  const prevContext = window.STORYBOOK_HOOKS_CONTEXT;
-  window.STORYBOOK_HOOKS_CONTEXT = hooks;
+  const prevContext = globalWindow.STORYBOOK_HOOKS_CONTEXT;
+  globalWindow.STORYBOOK_HOOKS_CONTEXT = hooks;
   const result = fn(...args);
-  window.STORYBOOK_HOOKS_CONTEXT = prevContext;
+  globalWindow.STORYBOOK_HOOKS_CONTEXT = prevContext;
 
   if (hooks.currentPhase === 'UPDATE' && hooks.getNextHook() != null) {
     throw new Error(
@@ -195,7 +196,7 @@ const invalidHooksError = () =>
   new Error('Storybook preview hooks can only be called inside decorators and story functions.');
 
 function getHooksContextOrNull(): HooksContext | null {
-  return window.STORYBOOK_HOOKS_CONTEXT || null;
+  return globalWindow.STORYBOOK_HOOKS_CONTEXT || null;
 }
 
 function getHooksContextOrThrow(): HooksContext {
@@ -402,27 +403,32 @@ export function useParameter<S>(parameterKey: string, defaultValue?: S): S | und
 }
 
 /* Returns current value of story args */
-export function useArgs(): [Args, (newArgs: Args) => void] {
+export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: [string]) => void] {
   const channel = addons.getChannel();
   const { id: storyId, args } = useStoryContext();
 
   const updateArgs = useCallback(
-    (newArgs: Args) => channel.emit(UPDATE_STORY_ARGS, storyId, newArgs),
+    (updatedArgs: Args) => channel.emit(UPDATE_STORY_ARGS, { storyId, updatedArgs }),
     [channel, storyId]
   );
 
-  return [args, updateArgs];
+  const resetArgs = useCallback(
+    (argNames?: [string]) => channel.emit(RESET_STORY_ARGS, { storyId, argNames }),
+    [channel, storyId]
+  );
+
+  return [args, updateArgs, resetArgs];
 }
 
 /* Returns current value of global args */
-export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+export function useGlobals(): [Args, (newGlobals: Args) => void] {
   const channel = addons.getChannel();
-  const { globalArgs } = useStoryContext();
+  const { globals } = useStoryContext();
 
-  const updateGlobalArgs = useCallback(
-    (newGlobalArgs: Args) => channel.emit(UPDATE_GLOBAL_ARGS, newGlobalArgs),
+  const updateGlobals = useCallback(
+    (newGlobals: Args) => channel.emit(UPDATE_GLOBALS, { globals: newGlobals }),
     [channel]
   );
 
-  return [globalArgs, updateGlobalArgs];
+  return [globals, updateGlobals];
 }

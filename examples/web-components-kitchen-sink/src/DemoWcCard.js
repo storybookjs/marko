@@ -11,6 +11,8 @@ import { demoWcCardStyle } from './demoWcCardStyle.css.js';
  * @cssprop --demo-wc-card-header-font-size - Header font size
  * @cssprop --demo-wc-card-front-color - Font color for front
  * @cssprop --demo-wc-card-back-color - Font color for back
+ * @csspart front - Front of the card
+ * @csspart back - Back of the card
  */
 export class DemoWcCard extends LitElement {
   static get properties() {
@@ -54,10 +56,8 @@ export class DemoWcCard extends LitElement {
 
   render() {
     return html`
-      <div id="front">
-        <div class="header">
-          ${this.header}
-        </div>
+      <div id="front" part="front">
+        <div class="header">${this.header}</div>
         <div class="content">
           <slot></slot>
         </div>
@@ -66,10 +66,8 @@ export class DemoWcCard extends LitElement {
           <button @click=${this.toggle}>></button>
         </div>
       </div>
-      <div id="back">
-        <div class="header">
-          ${this.header}
-        </div>
+      <div id="back" part="back">
+        <div class="header">${this.header}</div>
 
         <div class="content">
           ${this.rows.length === 0

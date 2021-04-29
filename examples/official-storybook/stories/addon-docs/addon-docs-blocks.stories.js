@@ -4,7 +4,7 @@ import {
   Subtitle,
   Description,
   Primary,
-  Props,
+  ArgsTable,
   Stories,
 } from '@storybook/addon-docs/blocks';
 import { DocgenButton } from '../../components/DocgenButton';
@@ -22,7 +22,7 @@ export default {
           <Subtitle />
           <Description />
           <Primary />
-          <Props />
+          <ArgsTable />
           <Stories />
         </>
       ),
@@ -61,7 +61,7 @@ checkBoxProps.parameters = {
             <input type="checkbox" checked={showProps} onChange={() => setShowProps(!showProps)} />
             <span>display props</span>
           </label>
-          {showProps && <Props />}
+          {showProps && <ArgsTable />}
         </>
       );
     },
@@ -78,7 +78,7 @@ customLabels.parameters = {
         <Subtitle>Custom sub title</Subtitle>
         <Description>Custom description</Description>
         <Primary />
-        <Props />
+        <ArgsTable />
         <Stories title="Custom stories title" />
       </>
     ),
@@ -117,7 +117,7 @@ multipleComponents.parameters = {
         <Subtitle />
         <Description />
         <Primary name="Many Components" />
-        <Props />
+        <ArgsTable />
       </>
     ),
   },
@@ -138,7 +138,7 @@ componentsProps.parameters = {
         <Description>
           Here's what happens when your component has some related components
         </Description>
-        <Props
+        <ArgsTable
           components={{
             'ButtonGroup Custom': ButtonGroup,
             'Docgen Button': DocgenButton,

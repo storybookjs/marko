@@ -32,6 +32,8 @@ _This is italic text_
 
 _This is italic text_
 
+_**This is bold italic text**_
+
 ~~Strikethrough~~
 
 ## Blockquotes
@@ -125,7 +127,15 @@ Right aligned columns
 Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
 <!--lint enable no-literal-urls-->
 
+# [Link](https://storybook.js.org/) in heading
+## [Link](https://storybook.js.org/) in heading
+### [Link](https://storybook.js.org/) in heading
+#### [Link](https://storybook.js.org/) in heading
+##### [Link](https://storybook.js.org/) in heading
+###### [Link](https://storybook.js.org/) in heading
+
 ## Images
 
 ![Minion](https://octodex.github.com/images/minion.png)
 ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg 'The Stormtroopocat')
+

@@ -13,6 +13,7 @@ Storybook essentials includes the following addons. Addons can be disabled and r
 - [Controls](https://github.com/storybookjs/storybook/tree/next/addons/controls)
 - [Docs](https://github.com/storybookjs/storybook/tree/next/addons/docs)
 - [Viewport](https://github.com/storybookjs/storybook/tree/next/addons/viewport)
+- [Toolbars](https://github.com/storybookjs/storybook/tree/next/addons/toolbars)
 
 ## Installation
 
@@ -38,7 +39,7 @@ If you want to reconfigure an addon, simply install that addon per that addon's 
 
 ## Disabling addons
 
-Yuu can disable any of Essential's addons using the following configuration scheme in `.storybook/main.js`:
+You can disable any of Essential's addons using the following configuration scheme in `.storybook/main.js`:
 
 ```js
 module.exports = {
@@ -51,4 +52,4 @@ module.exports = {
 };
 ```
 
-Valid addon keys include: `actions`, `backgrounds`, `controls`, `docs`, `viewport`.
+Valid addon keys include: `actions`, `backgrounds`, `controls`, `docs`, `viewport`, `toolbars`.

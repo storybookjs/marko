@@ -1,6 +1,6 @@
 import mapValues from 'lodash/mapValues';
 import { ArgTypes } from '@storybook/api';
-import { SBType } from '../../lib/sbtypes';
+import { SBType } from '@storybook/client-api';
 
 const normalizeType = (type: SBType | string) => (typeof type === 'string' ? { name: type } : type);
 

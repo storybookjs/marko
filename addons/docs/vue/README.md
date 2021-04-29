@@ -93,10 +93,10 @@ storiesOf('InfoButton', module)
 
 [MDX](../docs/mdx.md) is a convenient way to document your components in Markdown and embed documentation components, such as stories and props tables, inline.
 
-Docs has peer dependencies on `react`, `react-is`, and `babel-loader`. If you want to write stories in MDX, you'll need to add these dependencies as well:
+Docs has peer dependencies on `react`. If you want to write stories in MDX, you may need to add this dependency as well:
 
 ```sh
-yarn add -D react react-is babel-loader
+yarn add -D react
 ```
 
 Then update your `.storybook/main.js` to make sure you load MDX files:
@@ -110,7 +110,7 @@ module.exports = {
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { InfoButton } from './InfoButton.vue';
 
 <Meta title='InfoButton' component={InfoButton} />
@@ -124,9 +124,9 @@ Some **markdown** description, or whatever you want.
   template: '<info-button label="I\'m a button!"/>',
 }}</Story>
 
-## Props
+## ArgsTable
 
-<Props of={InfoButton} />
+<ArgsTable of={InfoButton} />
 ```
 
 Yes, it's redundant to declare `component` twice. [Coming soon](https://github.com/storybookjs/storybook/issues/8685).

@@ -77,7 +77,7 @@ interface TypeScriptPropsProps {
   intersectionWithInlineType: ItemInterface & { inlineValue: string };
   unionOfPrimitive: string | number;
   unionOfComplexType: ItemInterface | InterfaceIntersection;
-  nullablePrimitve?: string;
+  nullablePrimitive?: string;
   nullableComplexType?: ItemInterface;
   nullableComplexTypeUndefinedDefaultValue?: ItemInterface;
   readonly readonlyPrimitive: string;

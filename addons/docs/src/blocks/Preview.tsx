@@ -1,69 +1,13 @@
-import React, { FunctionComponent, ReactElement, ReactNode, ReactNodeArray } from 'react';
-import { MDXProvider } from '@mdx-js/react';
-import { toId, storyNameFromExport } from '@storybook/csf';
-import { resetComponents } from '@storybook/components/html';
-import { Preview as PurePreview, PreviewProps as PurePreviewProps } from '@storybook/components';
-import { getSourceProps } from './Source';
-import { DocsContext, DocsContextProps } from './DocsContext';
+import React, { ComponentProps } from 'react';
+import deprecate from 'util-deprecate';
+import dedent from 'ts-dedent';
+import { Canvas } from './Canvas';
 
-export enum SourceState {
-  OPEN = 'open',
-  CLOSED = 'closed',
-  NONE = 'none',
-}
+export const Preview = deprecate(
+  (props: ComponentProps<typeof Canvas>) => <Canvas {...props} />,
+  dedent`
+    Preview doc block has been renamed to Canvas.
 
-type PreviewProps = PurePreviewProps & {
-  withSource?: SourceState;
-  mdxSource?: string;
-};
-
-const getPreviewProps = (
-  {
-    withSource = SourceState.CLOSED,
-    mdxSource,
-    children,
-    ...props
-  }: PreviewProps & { children?: ReactNode },
-  { mdxStoryNameToKey, mdxComponentMeta, storyStore }: DocsContextProps
-): PurePreviewProps => {
-  if (withSource === SourceState.NONE) {
-    return props;
-  }
-  if (mdxSource) {
-    return {
-      ...props,
-      withSource: getSourceProps({ code: decodeURI(mdxSource) }, { storyStore }),
-    };
-  }
-  const childArray: ReactNodeArray = Array.isArray(children) ? children : [children];
-  const stories = childArray.filter(
-    (c: ReactElement) => c.props && (c.props.id || c.props.name)
-  ) as ReactElement[];
-  const targetIds = stories.map(
-    (s) =>
-      s.props.id ||
-      toId(
-        mdxComponentMeta.id || mdxComponentMeta.title,
-        storyNameFromExport(mdxStoryNameToKey[s.props.name])
-      )
-  );
-  const sourceProps = getSourceProps({ ids: targetIds }, { storyStore });
-  return {
-    ...props, // pass through columns etc.
-    withSource: sourceProps,
-    isExpanded: withSource === SourceState.OPEN,
-  };
-};
-
-export const Preview: FunctionComponent<PreviewProps> = (props) => (
-  <DocsContext.Consumer>
-    {(context) => {
-      const previewProps = getPreviewProps(props, context);
-      return (
-        <MDXProvider components={resetComponents}>
-          <PurePreview {...previewProps}>{props.children}</PurePreview>
-        </MDXProvider>
-      );
-    }}
-  </DocsContext.Consumer>
+    https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#previewprops-renamed
+  `
 );

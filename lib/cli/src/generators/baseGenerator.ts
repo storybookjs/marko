@@ -1,12 +1,19 @@
 import { NpmOptions } from '../NpmOptions';
-import { StoryFormat, SupportedLanguage, SupportedFrameworks } from '../project_types';
+import {
+  StoryFormat,
+  SupportedLanguage,
+  SupportedFrameworks,
+  Builder,
+  CoreBuilder,
+} from '../project_types';
 import { getBabelDependencies, copyComponents } from '../helpers';
-import configure from './configure';
-import { JsPackageManager } from '../js-package-manager';
+import { configure } from './configure';
+import { getPackageDetails, JsPackageManager } from '../js-package-manager';
 
 export type GeneratorOptions = {
   language: SupportedLanguage;
   storyFormat: StoryFormat;
+  builder: Builder;
 };
 
 export interface FrameworkOptions {
@@ -15,6 +22,11 @@ export interface FrameworkOptions {
   staticDir?: string;
   addScripts?: boolean;
   addComponents?: boolean;
+  addBabel?: boolean;
+  addESLint?: boolean;
+  extraMain?: any;
+  extensions?: string[];
+  commonJs?: boolean;
 }
 
 export type Generator = (
@@ -29,52 +41,93 @@ const defaultOptions: FrameworkOptions = {
   staticDir: undefined,
   addScripts: true,
   addComponents: true,
+  addBabel: true,
+  addESLint: false,
+  extraMain: undefined,
+  extensions: undefined,
+  commonJs: false,
+};
+
+const builderDependencies = (builder: Builder) => {
+  switch (builder) {
+    case CoreBuilder.Webpack4:
+      return [];
+    case CoreBuilder.Webpack5:
+      return ['@storybook/builder-webpack5'];
+    default:
+      return [builder];
+  }
 };
 
 export async function baseGenerator(
   packageManager: JsPackageManager,
   npmOptions: NpmOptions,
-  { language }: GeneratorOptions,
+  { language, builder }: GeneratorOptions,
   framework: SupportedFrameworks,
   options: FrameworkOptions = defaultOptions
 ) {
-  const { extraAddons, extraPackages, staticDir, addScripts, addComponents } = {
+  const {
+    extraAddons,
+    extraPackages,
+    staticDir,
+    addScripts,
+    addComponents,
+    addBabel,
+    addESLint,
+    extraMain,
+    extensions,
+  } = {
     ...defaultOptions,
     ...options,
   };
 
-  const addons = [
-    '@storybook/addon-links',
-    '@storybook/addon-actions',
-    // If angular skip `docs` because docs is buggy for now (https://github.com/storybookjs/storybook/issues/9103)
-    // for others framework add `essentials` i.e. `actions`, `backgrounds`, `docs`, `viewport`
-    // API of essentials needs to be clarified whether we need to add dependencies or not
-    framework !== 'angular' && '@storybook/addon-docs',
-  ].filter(Boolean);
+  // added to main.js
+  // make sure to update `canUsePrebuiltManager` in dev-server.js and build-manager-config/main.js when this list changes
+  const addons = ['@storybook/addon-links', '@storybook/addon-essentials'];
+  // added to package.json
+  const addonPackages = [...addons, '@storybook/addon-actions'];
 
-  // ⚠️ Some addons have peer deps that must be added too, like '@storybook/addon-docs' => 'react-is'
-  const addonsPeerDeps = addons.some(
-    (addon) => addon === '@storybook/addon-essentials' || addon === '@storybook/addon-docs'
-  )
-    ? ['react-is']
-    : [];
+  const yarn2Dependencies =
+    packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
+
+  const packageJson = packageManager.retrievePackageJson();
+  const installedDependencies = new Set(Object.keys(packageJson.dependencies));
 
   const packages = [
     `@storybook/${framework}`,
-    ...addons,
+    ...addonPackages,
     ...extraPackages,
     ...extraAddons,
-    ...addonsPeerDeps,
-  ].filter(Boolean);
+    ...yarn2Dependencies,
+    ...builderDependencies(builder),
+  ]
+    .filter(Boolean)
+    .filter(
+      (packageToInstall) => !installedDependencies.has(getPackageDetails(packageToInstall)[0])
+    );
+
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
-  configure([...addons, ...extraAddons]);
+  const mainOptions =
+    builder !== CoreBuilder.Webpack4
+      ? {
+          core: {
+            builder,
+          },
+          ...extraMain,
+        }
+      : extraMain;
+  configure(framework, {
+    addons: [...addons, ...extraAddons],
+    extensions,
+    commonJs: options.commonJs,
+    ...mainOptions,
+  });
   if (addComponents) {
     copyComponents(framework, language);
   }
 
-  const packageJson = packageManager.retrievePackageJson();
-  const babelDependencies = await getBabelDependencies(packageManager, packageJson);
+  const babelDependencies = addBabel ? await getBabelDependencies(packageManager, packageJson) : [];
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,
     ...babelDependencies,
@@ -85,5 +138,9 @@ export async function baseGenerator(
       port: 6006,
       staticFolder: staticDir,
     });
+  }
+
+  if (addESLint) {
+    packageManager.addESLintConfig();
   }
 }

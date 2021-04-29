@@ -2,12 +2,17 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "./src",
-    "types": ["webpack-env"]
+    "types": ["webpack-env", "@testing-library/jest-dom"]
   },
   "include": [
     "src/**/*"
   ],
   "exclude": [
-    "src/__tests__/**/*"
+    "src/**/*.test.*",
+    "src/**/tests/**/*",
+    "src/**/__tests__/**/*",
+    "src/**/*.stories.*",
+    "src/**/*.mockdata.*",
+    "src/**/__testfixtures__/**"
   ]
 }

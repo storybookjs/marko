@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 import { ThemeProvider, themes, ensure } from '@storybook/theming';
-import { SyntaxHighlighter } from './syntaxhighlighter';
+import { SyntaxHighlighter } from './lazy-syntaxhighlighter';
 
 storiesOf('Basics/SyntaxHighlighter', module)
   .add('bash', () => (
@@ -79,6 +79,19 @@ storiesOf('Basics/SyntaxHighlighter', module)
         console.log(result);
 
         export { result as default };
+      `}
+    </SyntaxHighlighter>
+  ))
+  .add('graphql', () => (
+    <SyntaxHighlighter language="graphql" copyable={false}>
+      {`query HeroNameAndFriends($episode: Episode) {
+          hero(episode: $episode) {
+            name
+            friends {
+              name
+            }
+          }
+        }
       `}
     </SyntaxHighlighter>
   ))

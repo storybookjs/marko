@@ -1,4 +1,4 @@
-import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
 import { Button } from '@storybook/react/demo';
 
 <Meta
@@ -10,36 +10,36 @@ import { Button } from '@storybook/react/demo';
 
 # Layout parameter
 
-This tests Storybook's built-in `layout` parameter, both as its applied in the canvas, and also how it's handled by the `Preview` block in `addon-docs`.
+This tests Storybook's built-in `layout` parameter, both as its applied in the canvas, and also how it's handled by the `Canvas` block in `addon-docs`.
 
 ## Default
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story name="defaultValue">
     <Button>Hello world</Button>
   </Story>
-</Preview>
+</Canvas>
 
 ## Padded
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story name="padded" parameters={{ layout: 'padded' }}>
     <Button>Hello world</Button>
   </Story>
-</Preview>
+</Canvas>
 
 ## Fullscreen
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story name="fullscreen" parameters={{ layout: 'fullscreen' }}>
     <Button>Hello world</Button>
   </Story>
-</Preview>
+</Canvas>
 
 ## Centered
 
-<Preview withToolbar>
+<Canvas withToolbar>
   <Story name="centered" parameters={{ layout: 'centered' }}>
     <Button>Hello world</Button>
   </Story>
-</Preview>
+</Canvas>

@@ -4,6 +4,7 @@ import React, {
   FunctionComponent,
   ReactElement,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -23,23 +24,28 @@ import { Listener } from '@storybook/channels';
 import { createContext } from './context';
 import Store, { Options } from './store';
 import getInitialState from './initial-state';
-import { StoriesHash, Story, Root, Group, isGroup, isRoot, isStory } from './lib/stories';
+import type { StoriesHash, Story, Root, Group } from './lib/stories';
+import { isGroup, isRoot, isStory } from './lib/stories';
 
 import * as provider from './modules/provider';
 import * as addons from './modules/addons';
 import * as channel from './modules/channel';
 import * as notifications from './modules/notifications';
+import * as settings from './modules/settings';
+import * as releaseNotes from './modules/release-notes';
 import * as stories from './modules/stories';
 import * as refs from './modules/refs';
 import * as layout from './modules/layout';
 import * as shortcuts from './modules/shortcuts';
 import * as url from './modules/url';
 import * as version from './modules/versions';
-import * as globalArgs from './modules/globalArgs';
+import * as globals from './modules/globals';
 
 const { ActiveTabs } = layout;
 
-export { Options as StoreOptions, Listener as ChannelListener, ActiveTabs };
+export { default as merge } from './lib/merge';
+export type { Options as StoreOptions, Listener as ChannelListener };
+export { ActiveTabs };
 
 const ManagerContext = createContext({ api: undefined, state: getInitialState({}) });
 
@@ -58,7 +64,9 @@ export type State = layout.SubState &
   version.SubState &
   url.SubState &
   shortcuts.SubState &
-  globalArgs.SubState &
+  releaseNotes.SubState &
+  settings.SubState &
+  globals.SubState &
   RouterData &
   Other;
 
@@ -67,10 +75,12 @@ export type API = addons.SubAPI &
   provider.SubAPI &
   stories.SubAPI &
   refs.SubAPI &
-  globalArgs.SubAPI &
+  globals.SubAPI &
   layout.SubAPI &
   notifications.SubAPI &
   shortcuts.SubAPI &
+  releaseNotes.SubAPI &
+  settings.SubAPI &
   version.SubAPI &
   url.SubAPI &
   Other;
@@ -187,10 +197,12 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
       addons,
       layout,
       notifications,
+      settings,
+      releaseNotes,
       shortcuts,
       stories,
       refs,
-      globalArgs,
+      globals,
       url,
       version,
     ].map((m) => m.init({ ...routeData, ...apiData, state: this.state, fullAPI: this.api }));
@@ -220,16 +232,6 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     return null;
   };
 
-  componentDidMount() {
-    // Now every module has had a chance to set its API, call init on each module which gives it
-    // a chance to do things that call other modules' APIs.
-    this.modules.forEach(({ init }) => {
-      if (init) {
-        init();
-      }
-    });
-  }
-
   shouldComponentUpdate(nextProps: ManagerProviderProps, nextState: State) {
     const prevState = this.state;
     const prevProps = this.props;
@@ -243,6 +245,16 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     return false;
   }
 
+  initModules = () => {
+    // Now every module has had a chance to set its API, call init on each module which gives it
+    // a chance to do things that call other modules' APIs.
+    this.modules.forEach(({ init }) => {
+      if (init) {
+        init();
+      }
+    });
+  };
+
   render() {
     const { children } = this.props;
     const value = {
@@ -251,12 +263,27 @@ class ManagerProvider extends Component<ManagerProviderProps, State> {
     };
 
     return (
-      <ManagerContext.Provider value={value}>
-        <ManagerConsumer>{children}</ManagerConsumer>
-      </ManagerContext.Provider>
+      <EffectOnMount effect={this.initModules}>
+        <ManagerContext.Provider value={value}>
+          <ManagerConsumer>{children}</ManagerConsumer>
+        </ManagerContext.Provider>
+      </EffectOnMount>
     );
   }
 }
+
+// EffectOnMount exists to work around a bug in Reach Router where calling
+// navigate inside of componentDidMount (as could happen when we call init on any
+// of our modules) does not cause Reach Router's LocationProvider to update with
+// the correct path. Calling navigate inside on an effect does not have the
+// same problem. See https://github.com/reach/router/issues/404
+const EffectOnMount: FunctionComponent<{
+  children: ReactElement;
+  effect: () => void;
+}> = ({ children, effect }) => {
+  React.useEffect(effect, []);
+  return children;
+};
 
 interface ManagerConsumerProps<P = unknown> {
   filter?: (combo: Combo) => P;
@@ -300,17 +327,8 @@ export function useStorybookApi(): API {
   return api;
 }
 
-export {
-  ManagerConsumer as Consumer,
-  ManagerProvider as Provider,
-  StoriesHash,
-  Story,
-  Root,
-  Group,
-  isGroup,
-  isRoot,
-  isStory,
-};
+export type { StoriesHash, Story, Root, Group };
+export { ManagerConsumer as Consumer, ManagerProvider as Provider, isGroup, isRoot, isStory };
 
 export interface EventMap {
   [eventId: string]: Listener;
@@ -370,12 +388,16 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
     };
     const stateInitializationHandlers = {
       [SET_STORIES]: () => {
-        if (addonStateCache[stateId]) {
+        const currentState = api.getAddonState(stateId);
+        if (currentState) {
+          addonStateCache[stateId] = currentState;
+          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, currentState);
+        } else if (addonStateCache[stateId]) {
           // this happens when HMR
           setState(addonStateCache[stateId]);
           api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, addonStateCache[stateId]);
         } else if (defaultState !== undefined) {
-          // if not HMR, yet the defaults are form the manager
+          // if not HMR, yet the defaults are from the manager
           setState(defaultState);
           // initialize addonStateCache after first load, so its available for subsequent HMR
           addonStateCache[stateId] = defaultState;
@@ -383,8 +405,10 @@ export function useSharedState<S>(stateId: string, defaultState?: S) {
         }
       },
       [STORY_CHANGED]: () => {
-        if (api.getAddonState(stateId) !== undefined) {
-          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, api.getAddonState(stateId));
+        const currentState = api.getAddonState(stateId);
+
+        if (currentState !== undefined) {
+          api.emit(`${SHARED_STATE_SET}-manager-${stateId}`, currentState);
         }
       },
     };
@@ -409,28 +433,36 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
   return useSharedState<S>(addonId, defaultState);
 }
 
-export function useArgs(): [Args, (newArgs: Args) => void] {
-  const { getCurrentStoryData, updateStoryArgs } = useStorybookApi();
+export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: string[]) => void] {
+  const { getCurrentStoryData, updateStoryArgs, resetStoryArgs } = useStorybookApi();
 
   const data = getCurrentStoryData();
   const args = isStory(data) ? data.args : {};
+  const updateArgs = useCallback((newArgs: Args) => updateStoryArgs(data as Story, newArgs), [
+    data,
+    updateStoryArgs,
+  ]);
+  const resetArgs = useCallback((argNames?: string[]) => resetStoryArgs(data as Story, argNames), [
+    data,
+    resetStoryArgs,
+  ]);
 
-  return [args, (newArgs: Args) => updateStoryArgs(data.id, newArgs)];
+  return [args, updateArgs, resetArgs];
 }
 
-export function useGlobalArgs(): [Args, (newGlobalArgs: Args) => void] {
+export function useGlobals(): [Args, (newGlobals: Args) => void] {
   const {
-    state: { globalArgs: oldGlobalArgs },
-    api: { updateGlobalArgs },
+    state: { globals: oldGlobals },
+    api: { updateGlobals },
   } = useContext(ManagerContext);
 
-  return [oldGlobalArgs, updateGlobalArgs];
+  return [oldGlobals, updateGlobals];
 }
 
 export function useArgTypes(): ArgTypes {
   return useParameter<ArgTypes>('argTypes', {});
 }
 
-export function useGlobalArgTypes(): ArgTypes {
-  return useParameter<ArgTypes>('globalArgTypes', {});
+export function useGlobalTypes(): ArgTypes {
+  return useParameter<ArgTypes>('globalTypes', {});
 }

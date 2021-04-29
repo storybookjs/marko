@@ -1,111 +1,174 @@
-import React, { FunctionComponent, MouseEvent, useMemo, useState, useRef } from 'react';
+import React, {
+  FunctionComponent,
+  useMemo,
+  useState,
+  useRef,
+  useCallback,
+  MutableRefObject,
+} from 'react';
+import { useStorybookApi } from '@storybook/api';
 import { styled } from '@storybook/theming';
+import { transparentize } from 'polished';
 
-import { ExpanderContext, useDataset } from './Tree/State';
-import { Expander } from './Tree/ListItem';
+import { AuthBlock, ErrorBlock, LoaderBlock, EmptyBlock } from './RefBlocks';
 import { RefIndicator } from './RefIndicator';
-import { AuthBlock, ErrorBlock, LoaderBlock, ContentBlock, EmptyBlock } from './RefBlocks';
-import { getStateType, RefType } from './RefHelpers';
+import { Tree } from './Tree';
+import { CollapseIcon } from './TreeNode';
+import { DEFAULT_REF_ID } from './data';
+import { Highlight, RefType } from './types';
+import { getStateType } from './utils';
 
 export interface RefProps {
-  storyId: string;
-  filter: string;
-  isHidden: boolean;
+  isLoading: boolean;
+  isBrowsing: boolean;
+  selectedStoryId: string | null;
+  highlightedRef: MutableRefObject<Highlight>;
+  setHighlighted: (highlight: Highlight) => void;
 }
-
-const RefHead = styled.button({
-  alignItems: 'center',
-  background: 'transparent',
-  border: 'none',
-  boxSizing: 'content-box',
-  cursor: 'pointer',
-  display: 'flex',
-  marginLeft: -20,
-  padding: 0,
-  paddingLeft: 20,
-  position: 'relative',
-  textAlign: 'left',
-  width: '100%',
-});
-
-const RefTitle = styled.header(({ theme }) => ({
-  fontWeight: theme.typography.weight.bold,
-  fontSize: theme.typography.size.s2,
-  color: theme.color.darkest,
-
-  flex: 1,
-  height: 24,
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-  paddingRight: theme.layoutMargin,
-  overflow: 'hidden',
-
-  lineHeight: '24px',
-}));
 
 const Wrapper = styled.div<{ isMain: boolean }>(({ isMain }) => ({
   position: 'relative',
   marginLeft: -20,
   marginRight: -20,
-  marginTop: isMain ? undefined : 4,
+  marginTop: isMain ? undefined : 0,
 }));
 
-export const Ref: FunctionComponent<RefType & RefProps> = (ref) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+const RefHead = styled.div(({ theme }) => ({
+  fontWeight: theme.typography.weight.black,
+  fontSize: theme.typography.size.s2 - 1,
+
+  // Similar to ListItem.tsx
+  textDecoration: 'none',
+  lineHeight: '16px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  background: 'transparent',
+
+  width: '100%',
+  marginTop: 20,
+  paddingTop: 16,
+  borderTop: `1px solid ${theme.appBorderColor}`,
+
+  color:
+    theme.base === 'light' ? theme.color.defaultText : transparentize(0.2, theme.color.defaultText),
+}));
+
+const RefTitle = styled.span(({ theme }) => ({
+  display: 'block',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  flex: 1,
+  overflow: 'hidden',
+  marginLeft: 2,
+}));
+
+const CollapseButton = styled.button(({ theme }) => ({
+  // Reset button
+  background: 'transparent',
+  border: '1px solid transparent',
+  borderRadius: 26,
+  outline: 'none',
+  boxSizing: 'content-box',
+  cursor: 'pointer',
+  position: 'relative',
+  textAlign: 'left',
+  lineHeight: 'normal',
+  font: 'inherit',
+  color: 'inherit',
+
+  display: 'flex',
+  padding: 3,
+  paddingLeft: 1,
+  paddingRight: 12,
+  margin: 0,
+  marginLeft: -20,
+  overflow: 'hidden',
+
+  'span:first-of-type': {
+    marginTop: 5,
+  },
+
+  '&:focus': {
+    borderColor: theme.color.secondary,
+    'span:first-of-type': {
+      borderLeftColor: theme.color.secondary,
+    },
+  },
+}));
+
+export const Ref: FunctionComponent<RefType & RefProps> = React.memo((props) => {
+  const api = useStorybookApi();
+  const {
+    stories,
+    id: refId,
+    title = refId,
+    isLoading: isLoadingMain,
+    isBrowsing,
+    selectedStoryId,
+    highlightedRef,
+    setHighlighted,
+    loginUrl,
+    type,
+    ready,
+    error,
+  } = props;
+  const length = useMemo(() => (stories ? Object.keys(stories).length : 0), [stories]);
   const indicatorRef = useRef<HTMLElement>(null);
 
-  const { stories, id: key, title = key, storyId, filter, isHidden = false, loginUrl, error } = ref;
-  const { dataSet, expandedSet, length, others, roots, setExpanded, selectedSet } = useDataset(
-    stories,
-    filter,
-    storyId
-  );
-
-  const handleClick = ({ target }: MouseEvent) => {
-    // Don't fire if the click is from the indicator.
-    if (target === indicatorRef.current || indicatorRef.current?.contains(target as Node)) return;
-    setIsExpanded(!isExpanded);
-  };
-
-  const combo = useMemo(() => ({ setExpanded, expandedSet }), [setExpanded, expandedSet]);
-
-  const isMain = key === 'storybook_internal';
-
-  const isLoadingMain = !ref.ready && isMain;
-  const isLoadingInjected = ref.type === 'auto-inject' && !ref.ready;
-
-  const isLoading = isLoadingMain || isLoadingInjected || ref.type === 'unknown';
+  const isMain = refId === DEFAULT_REF_ID;
+  const isLoadingInjected = type === 'auto-inject' && !ready;
+  const isLoading = isLoadingMain || isLoadingInjected || type === 'unknown';
   const isError = !!error;
   const isEmpty = !isLoading && length === 0;
   const isAuthRequired = !!loginUrl && length === 0;
 
   const state = getStateType(isLoading, isAuthRequired, isError, isEmpty);
+  const [isExpanded, setExpanded] = useState<boolean>(true);
+  const handleClick = useCallback(() => setExpanded((value) => !value), [setExpanded]);
 
-  return isHidden ? null : (
-    <ExpanderContext.Provider value={combo}>
-      {isMain ? null : (
+  const setHighlightedItemId = useCallback((itemId: string) => setHighlighted({ itemId, refId }), [
+    setHighlighted,
+  ]);
+
+  const onSelectStoryId = useCallback(
+    (storyId: string) => api && api.selectStory(storyId, undefined, { ref: !isMain && refId }),
+    [api, isMain, refId]
+  );
+  return (
+    <>
+      {isMain || (
         <RefHead
           aria-label={`${isExpanded ? 'Hide' : 'Show'} ${title} stories`}
           aria-expanded={isExpanded}
-          type="button"
-          onClick={handleClick}
         >
-          <Expander className="sidebar-ref-expander" depth={0} isExpanded={isExpanded} />
-          <RefTitle title={title}>{title}</RefTitle>
-          <RefIndicator {...ref} state={state} ref={indicatorRef} />
+          <CollapseButton data-action="collapse-ref" onClick={handleClick}>
+            <CollapseIcon isExpanded={isExpanded} />
+            <RefTitle title={title}>{title}</RefTitle>
+          </CollapseButton>
+          <RefIndicator {...props} state={state} ref={indicatorRef} />
         </RefHead>
       )}
       {isExpanded && (
         <Wrapper data-title={title} isMain={isMain}>
-          {state === 'auth' && <AuthBlock id={ref.id} loginUrl={loginUrl} />}
+          {state === 'auth' && <AuthBlock id={refId} loginUrl={loginUrl} />}
           {state === 'error' && <ErrorBlock error={error} />}
           {state === 'loading' && <LoaderBlock isMain={isMain} />}
           {state === 'empty' && <EmptyBlock isMain={isMain} />}
           {state === 'ready' && (
-            <ContentBlock {...{ others, dataSet, selectedSet, expandedSet, roots }} />
+            <Tree
+              isBrowsing={isBrowsing}
+              isMain={isMain}
+              refId={refId}
+              data={stories}
+              selectedStoryId={selectedStoryId}
+              onSelectStoryId={onSelectStoryId}
+              highlightedRef={highlightedRef}
+              setHighlightedItemId={setHighlightedItemId}
+            />
           )}
         </Wrapper>
       )}
-    </ExpanderContext.Provider>
+    </>
   );
-};
+});

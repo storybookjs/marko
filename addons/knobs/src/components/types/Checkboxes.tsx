@@ -78,7 +78,7 @@ export default class CheckboxesType extends Component<CheckboxesTypeProps, Check
     };
   }
 
-  handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  private handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { onChange } = this.props;
     const currentValue = (e.target as HTMLInputElement).value;
     const { values } = this.state;
@@ -94,10 +94,10 @@ export default class CheckboxesType extends Component<CheckboxesTypeProps, Check
     onChange(values);
   };
 
-  renderCheckboxList = ({ options }: CheckboxesTypeKnob) =>
+  private renderCheckboxList = ({ options }: CheckboxesTypeKnob) =>
     Object.keys(options).map((key) => this.renderCheckbox(key, options[key]));
 
-  renderCheckbox = (label: string, value: string) => {
+  private renderCheckbox = (label: string, value: string) => {
     const { knob } = this.props;
     const { name } = knob;
     const id = `${name}-${value}`;

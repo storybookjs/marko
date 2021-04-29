@@ -33,6 +33,20 @@ Now run your Jest test command. (Usually, `npm test`.) Then you can see all of y
 
 ![Screenshot](https://raw.githubusercontent.com/storybookjs/storybook/HEAD/addons/storyshots/storyshots-core/docs/storyshots.png)
 
+### Testing stories that rely on addon-added decorators
+
+If you have stories in your Storybook that can only render inside a decorator (for instance the [`apollo-storybook-decorator`](https://github.com/abhiaiyer91/apollo-storybook-decorator)), you'll need to ensure those decorators are applied in Storyshots.
+
+If you export those decorators from your `.storybook/preview.js` then Storyshots will apply those decorators for you in the same way that Storybook does. However if the addon _automatically_ adds the decorator for you (which is a new feature in Storybook 6.0), you will find the decorator does not get added in Storyshots. This is a limitation in Storyshots currently.
+
+To ensure such decorators get added, export them from `.storybook/preview.js`:
+
+```js
+import addonDecorator from 'some-addon';
+
+export const decorators = [addonDecorator];
+```
+
 ## Configure your app for Jest
 
 In many cases, for example Create React App, it's already configured for Jest. You need to create a filename with the extension `.test.js`.
@@ -52,7 +66,7 @@ If you still need to configure jest you can use the resources mentioned below:
 
 **NOTE**: if you are using Storybook 5.3's `main.js` to list story files, this is no longer needed.
 
-Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/basics/writing-stories/#loading-stories).
+Sometimes it's useful to configure Storybook with Webpack's require.context feature. You could be loading stories [one of two ways](https://storybook.js.org/docs/react/writing-stories/loading-stories).
 
 1. If you're using the `storiesOf` API, you can integrate it this way:
 
@@ -196,14 +210,43 @@ module.exports = {
 };
 ```
 
-### Configure Jest for Preact
+### Configure Jest for Vue 3
 
-StoryShots addon for Preact is dependent on [preact-render-to-json](https://github.com/nathancahill/preact-render-to-json), but
+StoryShots addon for Vue is dependent on [vue-jest v5](https://www.npmjs.com/package/vue-jest/v/5.0.0-alpha.8), but
 [doesn't](#deps-issue) install it, so you need to install it separately.
 
 ```sh
-yarn add preact-render-to-json --dev
+yarn add vue-jest@5.0.0-alpha.8
 ```
+
+If you already use Jest for testing your vue app - probably you already have the needed jest configuration.
+Anyway you can add these lines to your jest config:
+
+```js
+module.exports = {
+  transform: {
+    '^.+\\.jsx?$': 'babel-jest',
+    '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest',
+  },
+  transformIgnorePatterns: ['/node_modules/(?!(@storybook/.*\\.vue$))'],
+  moduleFileExtensions: ['vue', 'js', 'jsx', 'json', 'node'],
+};
+```
+
+### Configure Jest for Preact
+
+StoryShots addon for Preact is dependent on [preact-render-to-string](https://github.com/preactjs/preact-render-to-string), but
+[doesn't](#deps-issue) install it, so you need to install it separately.
+
+```sh
+yarn add preact-render-to-string --dev
+```
+
+### Configure Jest for Web Components
+
+StoryShots addon for Web Components requires [jsdom](https://github.com/jsdom/jsdom) 16 or later to fully support the
+web component shadow dom. To use jsdom 16 or later you can set the Jest `testEnvironment` configuration key to
+`jest-environment-jsdom-sixteen`. This should work back to Jest 24 and is the default in Jest 26 and later.
 
 ### Configure Jest for MDX Docs Add-On Stories
 
@@ -274,6 +317,41 @@ initStoryshots({
   })),
 });
 ```
+
+### Using a custom renderer
+
+By design, [`react-test-renderer` doesn't use a browser environment or JSDOM](https://github.com/facebook/react/issues/20589). Because of this difference, some stories might render in your browser, but not in Storyshots. If you encounter this problem, you may want to switch for an higher level renderer such as `mount` from Enzyme or `render` from React Testing Library.
+
+#### Example with React Testing Library
+
+```js
+import initStoryshots from '@storybook/addon-storyshots';
+import { render } from '@testing-library/react';
+
+const reactTestingLibrarySerializer = {
+  print: (val, serialize, indent) => serialize(val.container.firstChild),
+  test: (val) => val && val.hasOwnProperty('container'),
+};
+
+initStoryshots({
+  renderer: render,
+  snapshotSerializers: [reactTestingLibrarySerializer],
+});
+```
+
+#### Example with Enzyme
+
+```js
+import initStoryshots from '@storybook/addon-storyshots';
+import { mount } from 'enzyme';
+
+initStoryshots({
+  renderer: mount,
+});
+```
+
+If you are using enzyme, you need to make sure jest knows how to serialize rendered components.
+For that, you can pass an enzyme-compatible snapshotSerializer (like [enzyme-to-json](https://github.com/adriantoine/enzyme-to-json), [jest-serializer-enzyme](https://github.com/rogeliog/jest-serializer-enzyme) etc.) with the `snapshotSerializer` option (see below).
 
 ### StoryShots for async rendered components
 
@@ -390,6 +468,10 @@ This is a really powerful technique to write stories of Relay components because
 
 Whenever you change your data requirements by adding (and rendering) or (accidentally) deleting fields in your graphql query fragments, you'll get a different snapshot and thus an error in the StoryShot test.
 
+## Using a custom directory
+
+Depending on your project's needs, you can configure the `@storybook/addon-storyshots` to use a custom directory for the snapshots. You can read more about it in the [official docs](https://storybook.js.org/docs/react/workflows/snapshot-testing).
+
 ## Options
 
 ### `config`
@@ -425,7 +507,7 @@ initStoryshots({
 });
 ```
 
-Or, as a more complex example, if we have a package in our `lerna` project called `app` with the path `./packages/app/src/__tests__/storsyhots.js` and the storybook config directory `./packages/app/.storybook`:
+Or, as a more complex example, if we have a package in our `lerna` project called `app` with the path `./packages/app/src/__tests__/storyshots.js` and the storybook config directory `./packages/app/.storybook`:
 
 ```js
 import path from 'path';
@@ -503,6 +585,30 @@ initStoryshots({
 
 If you are running tests from outside of your app's directory, storyshots' detection of which framework you are using may fail. Pass `"react"` or `"react-native"` to short-circuit this.
 
+For example:
+
+```js
+// storybook.test.js
+
+import path from 'path';
+import initStoryshots from '@storybook/addon-storyshots';
+
+initStoryshots({
+  framework: 'react', // Manually specify the project's framework
+  configPath: path.join(__dirname, '.storybook'),
+  integrityOptions: { cwd: path.join(__dirname, 'src', 'stories') },
+  // Other configurations
+});
+```
+
+Use this table as a reference for manually specifying the framework.
+
+| angular        | html | preact       |
+| -------------- | ---- | ------------ |
+| react          | riot | react-native |
+| svelte         | vue  | vue3         |
+| web-components | rax  |              |
+
 ### `test`
 
 Run a custom test function for each story, rather than the default (a vanilla snapshot test).
@@ -526,18 +632,6 @@ Pass a custom renderer (such as enzymes `mount`) to record snapshots.
 This may be necessary if you want to use React features that are not supported by the default test renderer,
 such as **ref** or **Portals**.
 Note that setting `test` overrides `renderer`.
-
-```js
-import initStoryshots from '@storybook/addon-storyshots';
-import { mount } from 'enzyme';
-
-initStoryshots({
-  renderer: mount,
-});
-```
-
-If you are using enzyme, you need to make sure jest knows how to serialize rendered components.
-For that, you can pass an enzyme-compatible snapshotSerializer (like [enzyme-to-json](https://github.com/adriantoine/enzyme-to-json), [jest-serializer-enzyme](https://github.com/rogeliog/jest-serializer-enzyme) etc.) with the `snapshotSerializer` option (see below).
 
 ### `snapshotSerializers`
 
@@ -625,7 +719,7 @@ Like the default, but allows you to specify a set of options for the renderer, j
 ### `multiSnapshotWithOptions(options)`
 
 Like `snapshotWithOptions`, but generate a separate snapshot file for each stories file rather than a single monolithic file (as is the convention in Jest). This makes it dramatically easier to review changes. If you'd like the benefit of separate snapshot files, but don't have custom options to pass, you can pass an empty object.
-If you use [Component Story Format](https://storybook.js.org/docs/formats/component-story-format/), you may also need to add an additional Jest transform to automate detecting story file names:
+If you use [Component Story Format](https://storybook.js.org/docs/react/api/csf), you may also need to add an additional Jest transform to automate detecting story file names:
 
 ```js
 // jest.config.js

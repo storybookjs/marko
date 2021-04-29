@@ -7,14 +7,13 @@ import {
 } from './types';
 
 import { stringifySection } from './stringifier';
-import { decorateSection } from './decorators';
 
 function createStory(storyArgs: CompileStorybookStoryArgs): StorybookStory {
   const { name, ...options } = storyArgs;
 
   return {
     name,
-    storyFn: '() => {}',
+    storyFn: '(args) => {}',
     ...options,
   };
 }
@@ -31,8 +30,5 @@ function createSection(args: CompileStorybookSectionArgs): StorybookSection {
 }
 
 export function compileCsfModule(args: CompileCsfModuleArgs): string {
-  const { addons = [], ...compileSectionArgs } = args;
-  const storybookSection = createSection(compileSectionArgs);
-  const decoratedSection = decorateSection(storybookSection, addons);
-  return stringifySection(decoratedSection);
+  return stringifySection(createSection(args));
 }

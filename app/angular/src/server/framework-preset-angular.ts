@@ -19,7 +19,7 @@ export function webpack(
           test: /\.tsx?$/,
           use: [
             {
-              loader: 'ts-loader',
+              loader: require.resolve('ts-loader'),
               options: tsLoaderOptions,
             },
             { loader: path.resolve(__dirname, 'ngx-template-loader') },
@@ -31,20 +31,22 @@ export function webpack(
         },
         {
           test: /\.html$/,
-          loader: 'raw-loader',
+          loader: require.resolve('raw-loader'),
           exclude: /\.async\.html$/,
         },
         {
           test: /\.s(c|a)ss$/,
           use: [
-            { loader: 'raw-loader' },
+            { loader: require.resolve('raw-loader') },
             {
               loader: require.resolve('postcss-loader'),
               options: {
-                plugins: [autoprefixer()],
+                postcssOptions: {
+                  plugins: [autoprefixer()],
+                },
               },
             },
-            { loader: 'sass-loader' },
+            { loader: require.resolve('sass-loader') },
           ],
         },
       ],
@@ -59,7 +61,7 @@ export function webpack(
         /@angular(\\|\/)core(\\|\/)(fesm5|bundles)/,
         path.resolve(__dirname, '..')
       ),
-      createForkTsCheckerInstance(tsLoaderOptions),
+      (createForkTsCheckerInstance(tsLoaderOptions) as any) as Configuration['plugins'][0],
     ],
   };
 }

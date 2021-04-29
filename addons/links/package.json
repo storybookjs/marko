@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-links",
-  "version": "6.0.0-beta.37",
-  "description": "Story Links addon for storybook",
+  "version": "6.3.0-alpha.16",
+  "description": "Link stories together to build demos and prototypes with your UI components",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "organize"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/links",
   "bugs": {
@@ -15,50 +16,69 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/links"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
-    "*.d.ts",
-    "ts3.5/**/*"
+    "*.d.ts"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-beta.37",
-    "@storybook/client-logger": "6.0.0-beta.37",
-    "@storybook/core-events": "6.0.0-beta.37",
+    "@storybook/addons": "6.3.0-alpha.16",
+    "@storybook/client-logger": "6.3.0-alpha.16",
+    "@storybook/core-events": "6.3.0-alpha.16",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.0.0-beta.37",
-    "@types/qs": "^6.9.0",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/router": "6.3.0-alpha.16",
+    "@types/qs": "^6.9.5",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "prop-types": "^15.7.2",
-    "qs": "^6.6.0",
-    "regenerator-runtime": "^0.13.3",
-    "ts-dedent": "^1.1.1"
+    "qs": "^6.10.0",
+    "regenerator-runtime": "^0.13.7",
+    "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.2",
-    "enzyme": "^3.11.0"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff",
-  "typesVersions": {
-    "<=3.5": {
-      "*": [
-        "ts3.5/*"
-      ]
-    }
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843",
+  "storybook": {
+    "displayName": "Links",
+    "icon": "https://user-images.githubusercontent.com/263385/101991673-48355c80-3c7c-11eb-9b6e-b627c96a75f6.png",
+    "unsupportedFrameworks": [
+      "marko",
+      "react-native"
+    ]
   }
 }

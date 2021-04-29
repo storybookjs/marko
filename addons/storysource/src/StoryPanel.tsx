@@ -1,16 +1,17 @@
 import React from 'react';
-import { API } from '@storybook/api';
+import { API, Story } from '@storybook/api';
 import { styled } from '@storybook/theming';
 import { Link } from '@storybook/router';
 import {
   SyntaxHighlighter,
   SyntaxHighlighterProps,
   SyntaxHighlighterRendererProps,
-  createSyntaxHighlighterElement,
 } from '@storybook/components';
 
+// @ts-expect-error Typedefs don't currently expose `createElement` even though it exists
+import { createElement as createSyntaxHighlighterElement } from 'react-syntax-highlighter';
+
 import { SourceBlock, LocationsMap } from '@storybook/source-loader';
-import { Story } from '@storybook/api/dist/lib/stories';
 
 const StyledStoryLink = styled(Link)<{ to: string; key: string }>(({ theme }) => ({
   display: 'block',
@@ -87,7 +88,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
         node,
         stylesheet,
         useInlineStyles,
-        key: `code-segement${i}`,
+        key: `code-segment${i}`,
       })
     );
 
@@ -155,7 +156,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
   }: SyntaxHighlighterRendererProps): React.ReactNode => {
     // because of the usage of lineRenderer, all lines will be wrapped in a span
     // these spans will receive all classes on them for some reason
-    // which makes colours casecade incorrectly
+    // which makes colours cascade incorrectly
     // this removed that list of classnames
     const myrows = rows.map(({ properties, ...rest }) => ({
       ...rest,
@@ -170,7 +171,7 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
 
     return <span>{parts}</span>;
   };
-  return (
+  return story ? (
     <StyledSyntaxHighlighter
       language="jsx"
       showLineNumbers
@@ -181,5 +182,5 @@ export const StoryPanel: React.FC<StoryPanelProps> = ({ api }) => {
     >
       {source}
     </StyledSyntaxHighlighter>
-  );
+  ) : null;
 };

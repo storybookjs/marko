@@ -1,10 +1,13 @@
 import { navigate as navigateRouter, NavigateOptions } from '@reach/router';
-import { queryFromLocation } from '@storybook/router';
-import { toId } from '@storybook/csf';
+import { NAVIGATE_URL, STORY_ARGS_UPDATED, SET_CURRENT_STORY } from '@storybook/core-events';
+import { queryFromLocation, navigate as queryNavigate, buildArgsParam } from '@storybook/router';
+import { toId, sanitize } from '@storybook/csf';
+import deepEqual from 'fast-deep-equal';
+import { window as globalWindow } from 'global';
 
-import { NAVIGATE_URL } from '@storybook/core-events';
 import { ModuleArgs, ModuleFn } from '../index';
 import { PanelPositions } from './layout';
+import { isStory } from '../lib/stories';
 
 interface Additions {
   isFullscreen?: boolean;
@@ -28,9 +31,9 @@ export interface SubState {
 //     - nav: 0/1 -- show or hide the story list
 //
 //   We also support legacy URLs from storybook <5
+let prevParams: ReturnType<typeof queryFromLocation>;
 const initialUrlSupport = ({
-  navigate,
-  state: { location, path, viewMode, storyId },
+  state: { location, path, viewMode, storyId: storyIdFromUrl },
 }: ModuleArgs) => {
   const addition: Additions = {};
   const query = queryFromLocation(location);
@@ -47,7 +50,7 @@ const initialUrlSupport = ({
     selectedKind,
     selectedStory,
     path: queryPath,
-    ...customQueryParams
+    ...otherParams
   } = query;
 
   if (full === '1') {
@@ -79,19 +82,20 @@ const initialUrlSupport = ({
     selectedPanel = addonPanel;
   }
 
-  if (selectedKind && selectedStory) {
-    const id = toId(selectedKind, selectedStory);
-    setTimeout(() => navigate(`/${viewMode}/${id}`, { replace: true }), 1);
-  } else if (selectedKind) {
-    // Create a "storyId" of the form `kind-sanitized--*`
-    const standInId = toId(selectedKind, 'star').replace(/star$/, '*');
-    setTimeout(() => navigate(`/${viewMode}/${standInId}`, { replace: true }), 1);
-  } else if (!queryPath || queryPath === '/') {
-    setTimeout(() => navigate(`/${viewMode}/*`, { replace: true }), 1);
-  } else if (Object.keys(query).length > 1) {
-    // remove other queries
-    setTimeout(() => navigate(`${queryPath}`, { replace: true }), 1);
+  // If the user hasn't set the storyId on the URL, we support legacy URLs (selectedKind/selectedStory)
+  // NOTE: this "storyId" can just be a prefix of a storyId, really it is a storyIdSpecifier.
+  let storyId = storyIdFromUrl;
+  if (!storyId) {
+    if (selectedKind && selectedStory) {
+      storyId = toId(selectedKind, selectedStory);
+    } else if (selectedKind) {
+      storyId = sanitize(selectedKind);
+    }
   }
+
+  // Avoid returning a new object each time if no params actually changed.
+  const customQueryParams = deepEqual(prevParams, otherParams) ? prevParams : otherParams;
+  prevParams = customQueryParams;
 
   return { viewMode, layout: addition, selectedPanel, location, path, customQueryParams, storyId };
 };
@@ -115,39 +119,28 @@ export interface SubAPI {
 
 export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...rest }) => {
   const api: SubAPI = {
-    getQueryParam: (key) => {
+    getQueryParam(key) {
       const { customQueryParams } = store.getState();
-      if (customQueryParams) {
-        return customQueryParams[key];
-      }
-      return undefined;
+      return customQueryParams ? customQueryParams[key] : undefined;
     },
-    getUrlState: () => {
-      const { path, viewMode, storyId, url, customQueryParams } = store.getState();
-      const queryParams = customQueryParams;
-
-      return {
-        queryParams,
-        path,
-        viewMode,
-        storyId,
-        url,
-      };
+    getUrlState() {
+      const { path, customQueryParams, storyId, url, viewMode } = store.getState();
+      return { path, queryParams: customQueryParams, storyId, url, viewMode };
     },
     setQueryParams(input) {
       const { customQueryParams } = store.getState();
       const queryParams: QueryParams = {};
-      store.setState({
-        customQueryParams: {
-          ...customQueryParams,
-          ...Object.entries(input).reduce((acc, [key, value]) => {
-            if (value !== null) {
-              acc[key] = value;
-            }
-            return acc;
-          }, queryParams),
-        },
-      });
+      const update = {
+        ...customQueryParams,
+        ...Object.entries(input).reduce((acc, [key, value]) => {
+          if (value !== null) {
+            acc[key] = value;
+          }
+          return acc;
+        }, queryParams),
+      };
+      const equal = deepEqual(customQueryParams, update);
+      if (!equal) store.setState({ customQueryParams: update });
     },
     navigateUrl(url: string, options: NavigateOptions<{}>) {
       navigateRouter(url, options);
@@ -155,9 +148,41 @@ export const init: ModuleFn = ({ store, navigate, state, provider, fullAPI, ...r
   };
 
   const initModule = () => {
+    // Sets `args` parameter in URL, omitting any args that have their initial value or cannot be unserialized safely.
+    const updateArgsParam = () => {
+      const { path, viewMode } = fullAPI.getUrlState();
+      if (viewMode !== 'story') return;
+
+      const currentStory = fullAPI.getCurrentStoryData();
+      if (!isStory(currentStory)) return;
+
+      const { args, initialArgs } = currentStory;
+      const argsString = buildArgsParam(initialArgs, args);
+      const argsParam = argsString.length ? `&args=${argsString}` : '';
+      queryNavigate(`${path}${argsParam}`, { replace: true });
+      api.setQueryParams({ args: argsString });
+    };
+
+    fullAPI.on(SET_CURRENT_STORY, () => updateArgsParam());
+
+    let handleOrId: any;
+    fullAPI.on(STORY_ARGS_UPDATED, ({ args }) => {
+      if ('requestIdleCallback' in globalWindow) {
+        if (handleOrId) globalWindow.cancelIdleCallback(handleOrId);
+        handleOrId = globalWindow.requestIdleCallback(updateArgsParam, { timeout: 1000 });
+      } else {
+        if (handleOrId) clearTimeout(handleOrId);
+        setTimeout(updateArgsParam, 100);
+      }
+    });
+
     fullAPI.on(NAVIGATE_URL, (url: string, options: { [k: string]: any }) => {
       fullAPI.navigateUrl(url, options);
     });
+
+    if (fullAPI.showReleaseNotesOnLaunch()) {
+      navigate('/settings/release-notes');
+    }
   };
 
   return {

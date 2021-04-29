@@ -31,6 +31,7 @@ describe('docs-mdx-compiler-plugin', () => {
     .filter((fileName) => inputRegExp.test(fileName))
     .filter((fileName) => fileName !== 'story-missing-props.mdx')
     .forEach((fixtureFile) => {
+      // eslint-disable-next-line jest/valid-title
       it(fixtureFile, async () => {
         const inputPath = path.join(transformFixturesDir, fixtureFile);
         const code = await generate(inputPath);
@@ -40,6 +41,6 @@ describe('docs-mdx-compiler-plugin', () => {
   it('errors on missing story props', async () => {
     await expect(
       generate(path.resolve(__dirname, './__testfixtures__/story-missing-props.mdx'))
-    ).rejects.toThrow('Expected a story name or ID attribute');
+    ).rejects.toThrow('Expected a Story name, id, or story attribute');
   });
 });

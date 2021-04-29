@@ -2,7 +2,7 @@
 import deprecate from 'util-deprecate';
 import dedent from 'ts-dedent';
 import { logger } from '@storybook/client-logger';
-import { StoryFn, Parameters, DecorateStoryFunction } from '@storybook/addons';
+import { StoryFn, Parameters, LoaderFunction, DecorateStoryFunction } from '@storybook/addons';
 import { toId } from '@storybook/csf';
 
 import {
@@ -20,17 +20,49 @@ import { defaultDecorateStory } from './decorators';
 // relevant framework instanciates them via `start.js`. The good news is this happens right away.
 let singleton: ClientApi;
 
-export const addDecorator = (decorator: DecoratorFunction) => {
+const addDecoratorDeprecationWarning = deprecate(
+  () => {},
+  `\`addDecorator\` is deprecated, and will be removed in Storybook 7.0.
+Instead, use \`export const decorators = [];\` in your \`preview.js\`.
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-addparameters-and-adddecorator).`
+);
+export const addDecorator = (decorator: DecoratorFunction, deprecationWarning = true) => {
   if (!singleton)
     throw new Error(`Singleton client API not yet initialized, cannot call addDecorator`);
 
+  if (deprecationWarning) addDecoratorDeprecationWarning();
+
   singleton.addDecorator(decorator);
 };
-export const addParameters = (parameters: Parameters) => {
+
+const addParametersDeprecationWarning = deprecate(
+  () => {},
+  `\`addParameters\` is deprecated, and will be removed in Storybook 7.0.
+Instead, use \`export const parameters = {};\` in your \`preview.js\`.
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-addparameters-and-adddecorator).`
+);
+export const addParameters = (parameters: Parameters, deprecationWarning = true) => {
   if (!singleton)
     throw new Error(`Singleton client API not yet initialized, cannot call addParameters`);
 
+  if (deprecationWarning) addParametersDeprecationWarning();
+
   singleton.addParameters(parameters);
+};
+
+const addLoaderDeprecationWarning = deprecate(
+  () => {},
+  `\`addLoader\` is deprecated, and will be removed in Storybook 7.0.
+Instead, use \`export const loaders = [];\` in your \`preview.js\`.
+Read more at https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-addparameters-and-adddecorator).`
+);
+export const addLoader = (loader: LoaderFunction, deprecationWarning = true) => {
+  if (!singleton)
+    throw new Error(`Singleton client API not yet initialized, cannot call addParameters`);
+
+  if (deprecationWarning) addLoaderDeprecationWarning();
+
+  singleton.addLoader(loader);
 };
 
 export const addArgTypesEnhancer = (enhancer: ArgTypesEnhancer) => {
@@ -75,51 +107,37 @@ export default class ClientApi {
       };
     },
     dedent`
-      setAddon is deprecated and will be removed in Storybook 7.0
+      \`setAddon\` is deprecated and will be removed in Storybook 7.0.
 
       https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-setaddon
     `
   );
 
-  getSeparators = () => {
-    const { hierarchySeparator, hierarchyRootSeparator, showRoots } =
-      this._storyStore._globalMetadata.parameters.options || {};
-
-    // Note these checks will be removed in 6.0, leaving this much simpler
-    if (
-      typeof hierarchySeparator !== 'undefined' ||
-      typeof hierarchyRootSeparator !== 'undefined'
-    ) {
-      return { hierarchySeparator, hierarchyRootSeparator };
-    }
-    if (
-      typeof showRoots === 'undefined' &&
-      this.store()
-        .getStoryKinds()
-        .some((kind) => kind.match(/\.|\|/))
-    ) {
-      return {
-        hierarchyRootSeparator: '|',
-        hierarchySeparator: /\/|\./,
-      };
-    }
-    return { hierarchySeparator: '/' };
-  };
-
   addDecorator = (decorator: DecoratorFunction) => {
-    this._storyStore.addGlobalMetadata({ decorators: [decorator], parameters: {} });
+    this._storyStore.addGlobalMetadata({ decorators: [decorator] });
   };
+
+  clearDecorators = deprecate(
+    () => {
+      this._storyStore.clearGlobalDecorators();
+    },
+    dedent`
+      \`clearDecorators\` is deprecated and will be removed in Storybook 7.0.
+
+      https://github.com/storybookjs/storybook/blob/next/MIGRATION.md#deprecated-cleardecorators
+    `
+  );
 
   addParameters = (parameters: Parameters) => {
-    this._storyStore.addGlobalMetadata({ decorators: [], parameters });
+    this._storyStore.addGlobalMetadata({ parameters });
+  };
+
+  addLoader = (loader: LoaderFunction) => {
+    this._storyStore.addGlobalMetadata({ loaders: [loader] });
   };
 
   addArgTypesEnhancer = (enhancer: ArgTypesEnhancer) => {
     this._storyStore.addArgTypesEnhancer(enhancer);
-  };
-
-  clearDecorators = () => {
-    this._storyStore.clearGlobalDecorators();
   };
 
   // what are the occasions that "m" is a boolean vs an obj
@@ -162,6 +180,7 @@ export default class ClientApi {
       kind: kind.toString(),
       add: () => api,
       addDecorator: () => api,
+      addLoader: () => api,
       addParameters: () => api,
     };
 
@@ -187,6 +206,12 @@ export default class ClientApi {
         throw new Error(`Invalid or missing storyName provided for a "${kind}" story.`);
       }
 
+      if (typeof storyFn !== 'function') {
+        throw new Error(
+          `Cannot load story "${storyName}" in "${kind}" due to invalid format. Storybook expected a function but received ${typeof storyFn} instead.`
+        );
+      }
+
       if (!this._noStoryModuleAddMethodHotDispose && m && m.hot && m.hot.dispose) {
         m.hot.dispose(() => {
           const { _storyStore } = this;
@@ -197,7 +222,7 @@ export default class ClientApi {
 
       const fileName = m && m.id ? `${m.id}` : undefined;
 
-      const { decorators, ...storyParameters } = parameters;
+      const { decorators, loaders, ...storyParameters } = parameters;
       this._storyStore.addStory(
         {
           id,
@@ -206,6 +231,7 @@ export default class ClientApi {
           storyFn,
           parameters: { fileName, ...storyParameters },
           decorators,
+          loaders,
         },
         {
           applyDecorators: applyHooks(this._decorateStory),
@@ -217,18 +243,25 @@ export default class ClientApi {
     api.addDecorator = (decorator: DecoratorFunction<StoryFnReturnType>) => {
       if (hasAdded)
         throw new Error(`You cannot add a decorator after the first story for a kind.
-Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decoratorsparameters-after-stories`);
 
-      this._storyStore.addKindMetadata(kind, { decorators: [decorator], parameters: [] });
+      this._storyStore.addKindMetadata(kind, { decorators: [decorator] });
+      return api;
+    };
+
+    api.addLoader = (loader: LoaderFunction) => {
+      if (hasAdded) throw new Error(`You cannot add a loader after the first story for a kind.`);
+
+      this._storyStore.addKindMetadata(kind, { loaders: [loader] });
       return api;
     };
 
     api.addParameters = (parameters: Parameters) => {
       if (hasAdded)
         throw new Error(`You cannot add parameters after the first story for a kind.
-Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decorators-parameters-after-stories`);
+Read more here: https://github.com/storybookjs/storybook/blob/master/MIGRATION.md#can-no-longer-add-decoratorsparameters-after-stories`);
 
-      this._storyStore.addKindMetadata(kind, { decorators: [], parameters });
+      this._storyStore.addKindMetadata(kind, { parameters });
       return api;
     };
 

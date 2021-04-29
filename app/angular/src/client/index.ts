@@ -9,9 +9,11 @@ export {
   raw,
 } from './preview';
 
-export { StoryFnAngularReturnType as IStory } from './preview/types';
+export * from './preview/types-6-0';
 
-export { moduleMetadata } from './preview/angular/decorators';
+export type { StoryFnAngularReturnType as IStory } from './preview/types';
+
+export { moduleMetadata, componentWrapperDecorator } from './preview/decorators';
 
 if (module && module.hot && module.hot.decline) {
   module.hot.decline();

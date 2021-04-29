@@ -96,10 +96,10 @@ storiesOf('App Component', module)
 
 [MDX](../docs/mdx.md) is a convenient way to document your components in Markdown and embed documentation components, such as stories and props tables, inline.
 
-Docs has peer dependencies on `react`, `react-is`, and `babel-loader`. If you want to write stories in MDX, you'll need to add these dependencies as well:
+Docs has peer dependencies on `react`. If you want to write stories in MDX, you may need to add this dependency as well:
 
 ```sh
-yarn add -D react react-is babel-loader
+yarn add -D react
 ```
 
 Then update your `.storybook/main.js` to make sure you load MDX files:
@@ -113,7 +113,7 @@ module.exports = {
 Finally, you can create MDX files like this:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { AppComponent } from './app.component';
 
 <Meta title='App Component' component={AppComponent} />
@@ -127,9 +127,9 @@ Some **markdown** description, or whatever you want.
   props: {},
 }}</Story>
 
-## Props
+## ArgsTable
 
-<Props of={AppComponent} />
+<ArgsTable of={AppComponent} />
 ```
 
 Yes, it's redundant to declare `component` twice. [Coming soon](https://github.com/storybookjs/storybook/issues/8673).
@@ -139,7 +139,7 @@ Also, to use the `Props` doc block, you need to set up Compodoc, [as described a
 When you are using `template`, `moduleMetadata` and/or `addDecorators` with `storiesOf` then you can easily translate your story to MDX, too:
 
 ```md
-import { Meta, Story, Props } from '@storybook/addon-docs/blocks';
+import { Meta, Story, ArgsTable } from '@storybook/addon-docs/blocks';
 import { CheckboxComponent, RadioButtonComponent } from './my-components';
 import { moduleMetadata } from '@storybook/angular';
 
@@ -204,6 +204,28 @@ And for `MDX` you can modify it as an attribute on the `Story` element:
 
 ```md
 <Story name='basic' height='400px'>{...}</Story>
+```
+
+## Inline Stories
+
+Storybook Docs renders all Angular stories inside IFrames by default. But it is possible to use an inline rendering:
+
+To get this, you'll first need to install Angular elements:
+
+```sh
+yarn add -D @angular/elements @webcomponents/custom-elements
+```
+
+Then update `.storybook/preview.js`:
+
+```js
+import { addParameters } from '@storybook/angular';
+
+addParameters({
+  docs: {
+    inlineStories: true,
+  },
+});
 ```
 
 ## More resources

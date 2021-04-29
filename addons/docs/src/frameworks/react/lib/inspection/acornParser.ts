@@ -17,7 +17,7 @@ import {
 } from './types';
 
 interface ParsingResult<T> {
-  inferedType: T;
+  inferredType: T;
   ast: any;
 }
 
@@ -60,7 +60,7 @@ function calculateNodeDepth(node: estree.Expression): number {
 
 function parseIdentifier(identifierNode: estree.Identifier): ParsingResult<InspectionIdentifier> {
   return {
-    inferedType: {
+    inferredType: {
       type: InspectionType.IDENTIFIER,
       identifier: extractIdentifierName(identifierNode),
     },
@@ -70,7 +70,7 @@ function parseIdentifier(identifierNode: estree.Identifier): ParsingResult<Inspe
 
 function parseLiteral(literalNode: estree.Literal): ParsingResult<InspectionLiteral> {
   return {
-    inferedType: { type: InspectionType.LITERAL },
+    inferredType: { type: InspectionType.LITERAL },
     ast: literalNode,
   };
 }
@@ -94,7 +94,7 @@ function parseFunction(
 
   const isJsx = innerJsxElementNode != null;
 
-  const inferedType: InspectionFunction | InspectionElement = {
+  const inferredType: InspectionFunction | InspectionElement = {
     type: isJsx ? InspectionType.ELEMENT : InspectionType.FUNCTION,
     params: funcNode.params,
     hasParams: funcNode.params.length !== 0,
@@ -102,11 +102,11 @@ function parseFunction(
 
   const identifierName = extractIdentifierName((funcNode as estree.FunctionExpression).id);
   if (identifierName != null) {
-    inferedType.identifier = identifierName;
+    inferredType.identifier = identifierName;
   }
 
   return {
-    inferedType,
+    inferredType,
     ast: funcNode,
   };
 }
@@ -128,29 +128,29 @@ function parseClass(
     ACORN_WALK_VISITORS
   );
 
-  const inferedType: any = {
+  const inferredType: any = {
     type: innerJsxElementNode != null ? InspectionType.ELEMENT : InspectionType.CLASS,
     identifier: extractIdentifierName(classNode.id),
   };
 
   return {
-    inferedType,
+    inferredType,
     ast: classNode,
   };
 }
 
 function parseJsxElement(jsxElementNode: any): ParsingResult<InspectionElement> {
-  const inferedType: InspectionElement = {
+  const inferredType: InspectionElement = {
     type: InspectionType.ELEMENT,
   };
 
   const identifierName = extractIdentifierName(jsxElementNode.openingElement.name);
   if (identifierName != null) {
-    inferedType.identifier = identifierName;
+    inferredType.identifier = identifierName;
   }
 
   return {
-    inferedType,
+    inferredType,
     ast: jsxElementNode,
   };
 }
@@ -169,14 +169,14 @@ function parseCall(callNode: estree.CallExpression): ParsingResult<InspectionObj
 
 function parseObject(objectNode: estree.ObjectExpression): ParsingResult<InspectionObject> {
   return {
-    inferedType: { type: InspectionType.OBJECT, depth: calculateNodeDepth(objectNode) },
+    inferredType: { type: InspectionType.OBJECT, depth: calculateNodeDepth(objectNode) },
     ast: objectNode,
   };
 }
 
 function parseArray(arrayNode: estree.ArrayExpression): ParsingResult<InspectionArray> {
   return {
-    inferedType: { type: InspectionType.ARRAY, depth: calculateNodeDepth(arrayNode) },
+    inferredType: { type: InspectionType.ARRAY, depth: calculateNodeDepth(arrayNode) },
     ast: arrayNode,
   };
 }
@@ -210,7 +210,7 @@ export function parse(value: string): ParsingResult<InspectionInferedType> {
   const ast = (acornParser.parse(`(${value})`) as unknown) as estree.Program;
 
   let parsingResult: ParsingResult<InspectionUnknown> = {
-    inferedType: { type: InspectionType.UNKNOWN },
+    inferredType: { type: InspectionType.UNKNOWN },
     ast,
   };
 

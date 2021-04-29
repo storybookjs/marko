@@ -6,23 +6,26 @@ import Button from './button';
 export default {
   title: 'Button',
   component: Button,
+  argTypes: {
+    text: { control: 'text' },
+  },
 };
 
-export const Text = () => ({
+const Template = (args) => ({
   component: Button,
-  props: {
-    text: 'Hello Button',
-  },
+  props: args,
 });
 
-export const Emoji = () => ({
-  component: Button,
-  props: {
-    text: '😀 😎 👍 💯',
-  },
-});
+export const Text = Template.bind({});
+Text.args = {
+  text: 'Button',
+  onClick: action('onClick'),
+};
 
-Emoji.parameters = { notes: 'My notes on a button with emojis' };
+export const Emoji = Template.bind({});
+Emoji.args = {
+  text: '😀 😎 👍 💯',
+};
 
 export const TextWithAction = () => ({
   component: Button,
@@ -39,7 +42,7 @@ export const ButtonWithLinkToAnotherStory = () => ({
   component: Button,
   props: {
     text: 'Go to Welcome Story',
-    onClick: linkTo('Welcome'),
+    onClick: linkTo('example-introduction--page'),
   },
 });
 

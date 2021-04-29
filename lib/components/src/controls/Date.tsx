@@ -7,9 +7,7 @@ import { ControlProps, DateValue, DateConfig } from './types';
 const parseDate = (value: string) => {
   const [year, month, day] = value.split('-');
   const result = new Date();
-  result.setFullYear(parseInt(year, 10));
-  result.setMonth(parseInt(month, 10) - 1);
-  result.setDate(parseInt(day, 10));
+  result.setFullYear(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10));
   return result;
 };
 
@@ -36,7 +34,7 @@ const formatTime = (value: Date | number) => {
   return `${hours}:${minutes}`;
 };
 
-const FlexSpaced = styled.div({
+const FlexSpaced = styled.div(({ theme }) => ({
   flex: 1,
   display: 'flex',
 
@@ -48,15 +46,16 @@ const FlexSpaced = styled.div({
     '&::-webkit-calendar-picker-indicator': {
       opacity: 0.5,
       height: 12,
+      filter: theme.base === 'light' ? undefined : 'invert(1)',
     },
   },
   'input:first-of-type': {
     marginLeft: 0,
   },
-});
+}));
 
 export type DateProps = ControlProps<DateValue> & DateConfig;
-export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
+export const DateControl: FC<DateProps> = ({ name, value, onChange, onFocus, onBlur }) => {
   const [valid, setValid] = useState(true);
   const dateRef = useRef<HTMLInputElement>();
   const timeRef = useRef<HTMLInputElement>();
@@ -74,11 +73,9 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
   const onDateChange = (e: ChangeEvent<HTMLInputElement>) => {
     const parsed = parseDate(e.target.value);
     const result = new Date(value);
-    result.setFullYear(parsed.getFullYear());
-    result.setMonth(parsed.getMonth());
-    result.setDate(parsed.getDate());
+    result.setFullYear(parsed.getFullYear(), parsed.getMonth(), parsed.getDate());
     const time = result.getTime();
-    if (time) onChange(name, time);
+    if (time) onChange(time);
     setValid(!!time);
   };
 
@@ -88,7 +85,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
     result.setHours(parsed.getHours());
     result.setMinutes(parsed.getMinutes());
     const time = result.getTime();
-    if (time) onChange(name, time);
+    if (time) onChange(time);
     setValid(!!time);
   };
 
@@ -101,6 +98,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
         id={`${name}date`}
         name={`${name}date`}
         onChange={onDateChange}
+        {...{ onFocus, onBlur }}
       />
       <Form.Input
         type="time"
@@ -108,6 +106,7 @@ export const DateControl: FC<DateProps> = ({ name, value, onChange }) => {
         name={`${name}time`}
         ref={timeRef as RefObject<HTMLInputElement>}
         onChange={onTimeChange}
+        {...{ onFocus, onBlur }}
       />
       {!valid ? <div>invalid</div> : null}
     </FlexSpaced>

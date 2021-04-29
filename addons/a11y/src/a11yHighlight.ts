@@ -3,7 +3,7 @@ import addons from '@storybook/addons';
 import { STORY_CHANGED } from '@storybook/core-events';
 import { EVENTS, HIGHLIGHT_STYLE_ID } from './constants';
 
-import { higlightStyle } from './highlight';
+import { highlightStyle } from './highlight';
 
 if (module && module.hot && module.hot.decline) {
   module.hot.decline();
@@ -27,7 +27,7 @@ const highlight = (infos: HighlightInfo) => {
     .map(
       (target) =>
         `${target}{ 
-          ${higlightStyle(infos.color)}
+          ${highlightStyle(infos.color)}
          }`
     )
     .join(' ');

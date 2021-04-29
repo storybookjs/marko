@@ -10,6 +10,8 @@ import nodeCleanup from 'node-cleanup';
 
 import startVerdaccioServer from 'verdaccio';
 import pLimit from 'p-limit';
+// @ts-ignore
+import { maxConcurrentTasks } from './utils/concurrency';
 import { listOfPackages, Package } from './utils/list-packages';
 
 program
@@ -29,7 +31,9 @@ const startVerdaccio = (port: number) => {
     new Promise((resolve) => {
       const cache = path.join(__dirname, '..', '.verdaccio-cache');
       const config = {
-        ...yaml.safeLoad(fs.readFileSync(path.join(__dirname, 'verdaccio.yaml'), 'utf8')),
+        ...(yaml.safeLoad(
+          fs.readFileSync(path.join(__dirname, 'verdaccio.yaml'), 'utf8')
+        ) as Record<string, any>),
         self_path: cache,
       };
 
@@ -46,15 +50,17 @@ const startVerdaccio = (port: number) => {
       setTimeout(() => {
         if (!resolved) {
           resolved = true;
-          rej(new Error(`TIMEOUT - verdaccio didn't start within 60s`));
+          rej(new Error(`TIMEOUT - verdaccio didn't start within 10s`));
         }
-      }, 60000);
+      }, 10000);
     }),
   ]);
 };
 const registryUrl = (command: string, url?: string) =>
   new Promise<string>((res, rej) => {
-    const args = url ? ['config', 'set', 'registry', url] : ['config', 'get', 'registry'];
+    const args = url
+      ? ['config', 'set', 'npmRegistryServer', url]
+      : ['config', 'get', 'npmRegistryServer'];
     exec(`${command} ${args.join(' ')}`, (e, stdout) => {
       if (e) {
         rej(e);
@@ -87,26 +93,16 @@ const applyRegistriesUrl = (
   return registriesUrl(yarnUrl, npmUrl);
 };
 
-const addUser = (url: string) =>
-  new Promise((res, rej) => {
-    logger.log(`👤 add temp user to verdaccio`);
-
-    exec(`npx npm-cli-adduser -r "${url}" -a -u user -p password -e user@example.com`, (e) => {
-      if (e) {
-        rej(e);
-      } else {
-        res();
-      }
-    });
-  });
-
 const currentVersion = async () => {
   const { version } = (await import('../lerna.json')).default;
   return version;
 };
 
 const publish = (packages: { name: string; location: string }[], url: string) => {
-  const limit = pLimit(3);
+  logger.log(`Publishing packages with a concurrency of ${maxConcurrentTasks}`);
+
+  const limit = pLimit(maxConcurrentTasks);
+  let i = 0;
 
   return Promise.all(
     packages.map(({ name, location }) =>
@@ -114,13 +110,14 @@ const publish = (packages: { name: string; location: string }[], url: string) =>
         () =>
           new Promise((res, rej) => {
             logger.log(`🛫 publishing ${name} (${location})`);
-            const command = `cd ${location} && npm publish --registry ${url} --force --access restricted`;
+            const command = `cd ${location} && npm publish --registry ${url} --force --access restricted --ignore-scripts`;
             exec(command, (e) => {
               if (e) {
                 rej(e);
               } else {
-                logger.log(`🛬 successful publish of ${name}!`);
-                res();
+                i += 1;
+                logger.log(`${i}/${packages.length} 🛬 successful publish of ${name}!`);
+                res(undefined);
               }
             });
           })

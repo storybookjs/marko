@@ -1,20 +1,37 @@
 import React, { useState } from 'react';
 import mapValues from 'lodash/mapValues';
-import { storiesOf } from '@storybook/react';
+import { storiesOf, StoryContext } from '@storybook/react';
 import { ArgsTable } from '@storybook/components';
 import { Args } from '@storybook/api';
-import { combineParameters } from '@storybook/client-api';
+import { inferControls } from '@storybook/client-api';
+import { useTheme, Theme } from '@storybook/theming';
 
 import { extractArgTypes } from './extractArgTypes';
-import { inferControls } from '../common/inferControls';
 import { Component } from '../../blocks';
 
 const argsTableProps = (component: Component) => {
   const argTypes = extractArgTypes(component);
-  const controls = inferControls(argTypes);
-  const rows = combineParameters(argTypes, controls);
+  const parameters = { __isArgsStory: true, argTypes };
+  const rows = inferControls(({ parameters } as unknown) as StoryContext);
   return { rows };
 };
+
+function FormatArg({ arg }) {
+  const theme = useTheme<Theme>();
+  const badgeStyle = {
+    background: theme.background.hoverable,
+    border: `1px solid ${theme.background.hoverable}`,
+    borderRadius: 2,
+  };
+  if (typeof arg !== 'undefined') {
+    try {
+      return <code>{JSON.stringify(arg, null, 2)}</code>;
+    } catch (err) {
+      return <code style={badgeStyle}>{arg.toString()}</code>;
+    }
+  }
+  return <code style={badgeStyle}>undefined</code>;
+}
 
 const ArgsStory = ({ component }: any) => {
   const { rows } = argsTableProps(component);
@@ -33,8 +50,12 @@ const ArgsStory = ({ component }: any) => {
         <tbody>
           {Object.entries(args).map(([key, val]) => (
             <tr key={key}>
-              <td>{key}</td>
-              <td>{JSON.stringify(val, null, 2)}</td>
+              <td>
+                <code>{key}</code>
+              </td>
+              <td>
+                <FormatArg arg={val} />
+              </td>
             </tr>
           ))}
         </tbody>
@@ -55,12 +76,13 @@ const typescriptFixtures = [
   'scalars',
   'tuples',
   'unions',
+  'optionals',
 ];
 
 const typescriptStories = storiesOf('ArgTypes/TypeScript', module);
 typescriptFixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require, no-shadow
-  const { Component } = require(`../../lib/sbtypes/__testfixtures__/typescript/${fixture}`);
+  const { Component } = require(`../../lib/convert/__testfixtures__/typescript/${fixture}`);
   typescriptStories.add(fixture, () => <ArgsStory component={Component} />);
 });
 
@@ -69,13 +91,17 @@ const proptypesFixtures = ['arrays', 'enums', 'misc', 'objects', 'react', 'scala
 const proptypesStories = storiesOf('ArgTypes/PropTypes', module);
 proptypesFixtures.forEach((fixture) => {
   // eslint-disable-next-line import/no-dynamic-require, global-require, no-shadow
-  const { Component } = require(`../../lib/sbtypes/__testfixtures__/proptypes/${fixture}`);
+  const { Component } = require(`../../lib/convert/__testfixtures__/proptypes/${fixture}`);
   proptypesStories.add(fixture, () => <ArgsStory component={Component} />);
 });
 
 const issuesFixtures = [
   'js-class-component',
+  'js-function-component',
+  'js-function-component-inline-defaults',
+  'js-function-component-inline-defaults-no-propTypes',
   'ts-function-component',
+  'ts-function-component-inline-defaults',
   '9399-js-proptypes-shape',
   '8663-js-styled-components',
   '9626-js-default-values',

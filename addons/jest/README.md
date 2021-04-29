@@ -128,6 +128,9 @@ defaultView.parameters = {
 };
 ```
 
+The jest parameter will default to inferring from your story file name if not provided. For example, if your story file is `MyComponent.stories.js`,
+then "MyComponent" will be used to find your test file results. This currently doesn't work in production environments.
+
 ### Disabling
 
 You can disable the addon for a single story by setting the `jest` parameter to `{disable: true}`:
@@ -152,7 +155,7 @@ defaultView.parameters = {
 
 ## Usage with Angular
 
-Assuming that you have created test files `my.component.spec.ts` and `my-other.comonent.spec.ts`
+Assuming that you have created test files `my.component.spec.ts` and `my-other.component.spec.ts`
 
 Configure Jest with [jest-preset-angular](https://www.npmjs.com/package/jest-preset-angular)
 

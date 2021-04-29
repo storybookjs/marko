@@ -80,7 +80,7 @@ export default class NumberType extends Component<NumberTypeProps> {
     return nextProps.knob.value !== knob.value;
   }
 
-  handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  private handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { onChange } = this.props;
     const { value } = event.target;
 

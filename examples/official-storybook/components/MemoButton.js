@@ -1,4 +1,5 @@
 import React from 'react';
-import { DocgenButton } from './DocgenButton';
 
-export const MemoButton = React.memo((props) => <DocgenButton {...props} />);
+import BaseButton from './BaseButton';
+
+export const MemoButton = React.memo(BaseButton);

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/codemod",
-  "version": "6.0.0-beta.37",
+  "version": "6.3.0-alpha.16",
   "description": "A collection of codemod scripts written with JSCodeshift",
   "keywords": [
     "storybook"
@@ -14,38 +14,51 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/codemod"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
-  "main": "dist/index.js",
+  "sideEffects": false,
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "jsnext:main": "src/index.js",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
     "*.js",
     "*.d.ts",
-    "ts3.5/**/*"
+    "!__testfixtures__"
   ],
   "scripts": {
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@mdx-js/mdx": "^1.5.1",
+    "@mdx-js/mdx": "^1.6.22",
     "@storybook/csf": "0.0.1",
-    "@storybook/node-logger": "6.0.0-beta.37",
-    "core-js": "^3.0.1",
-    "cross-spawn": "^7.0.0",
-    "globby": "^11.0.0",
+    "@storybook/node-logger": "6.3.0-alpha.16",
+    "core-js": "^3.8.2",
+    "cross-spawn": "^7.0.3",
+    "globby": "^11.0.2",
     "jscodeshift": "^0.7.0",
-    "lodash": "^4.17.15",
-    "prettier": "^2.0.5",
+    "lodash": "^4.17.20",
+    "prettier": "~2.2.1",
     "recast": "^0.19.0",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "jest": "^26.0.0",
-    "jest-specific-snapshot": "^3.0.0"
+    "jest": "^26.6.3",
+    "jest-specific-snapshot": "^4.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "4b9d901add9452525135caae98ae5f78dd8da9ff"
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843"
 }

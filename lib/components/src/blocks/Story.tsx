@@ -1,7 +1,6 @@
 import React, { createElement, ElementType, FunctionComponent, Fragment } from 'react';
 
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { Parameters } from '@storybook/api';
+import type { Parameters } from '@storybook/api';
 
 import { IFrame } from './IFrame';
 import { EmptyBlock } from './EmptyBlock';
@@ -36,7 +35,9 @@ type StoryProps = InlineStoryProps | IFrameStoryProps;
 
 const InlineStory: FunctionComponent<InlineStoryProps> = ({ storyFn, height, id }) => (
   <Fragment>
-    {height ? <style>{`#story--${id} { min-height: ${height} }`}</style> : null}
+    {height ? (
+      <style>{`#story--${id} { min-height: ${height}; transform: translateZ(0); overflow: auto }`}</style>
+    ) : null}
     <Fragment>
       {storyFn ? createElement(storyFn) : <EmptyBlock>{MISSING_STORY(id)}</EmptyBlock>}
     </Fragment>

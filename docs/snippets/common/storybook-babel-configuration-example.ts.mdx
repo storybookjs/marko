@@ -1,0 +1,13 @@
+```ts
+// mithril/src/server/framework-preset-mithril.ts
+
+export function babelDefault(config: TransformOptions) {
+  return {
+    ...config,
+    plugins: [
+      ...config.plugins, 
+      require.resolve('@babel/plugin-transform-react-jsx')
+    ],
+  };
+}
+```

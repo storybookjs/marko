@@ -39,18 +39,18 @@ export type KnobControlType = ComponentType<any> & {
 // Note: this is a utility function that helps in resolving types more orderly
 export const getKnobControl = (type: KnobType) => KnobControls[type] as KnobControlType;
 
-export { TextTypeKnob } from './Text';
-export { NumberTypeKnob, NumberTypeKnobOptions } from './Number';
-export { ColorTypeKnob } from './Color';
-export { BooleanTypeKnob } from './Boolean';
-export { ObjectTypeKnob } from './Object';
-export { SelectTypeKnob, SelectTypeOptionsProp, SelectTypeKnobValue } from './Select';
-export { RadiosTypeKnob, RadiosTypeOptionsProp, RadiosTypeKnobValue } from './Radio';
-export { ArrayTypeKnob, ArrayTypeKnobValue } from './Array';
-export { DateTypeKnob } from './Date';
-export { ButtonTypeKnob, ButtonTypeOnClickProp } from './Button';
-export { FileTypeKnob } from './Files';
-export {
+export type { TextTypeKnob } from './Text';
+export type { NumberTypeKnob, NumberTypeKnobOptions } from './Number';
+export type { ColorTypeKnob } from './Color';
+export type { BooleanTypeKnob } from './Boolean';
+export type { ObjectTypeKnob } from './Object';
+export type { SelectTypeKnob, SelectTypeOptionsProp, SelectTypeKnobValue } from './Select';
+export type { RadiosTypeKnob, RadiosTypeOptionsProp, RadiosTypeKnobValue } from './Radio';
+export type { ArrayTypeKnob, ArrayTypeKnobValue } from './Array';
+export type { DateTypeKnob } from './Date';
+export type { ButtonTypeKnob, ButtonTypeOnClickProp } from './Button';
+export type { FileTypeKnob } from './Files';
+export type {
   OptionsTypeKnob,
   OptionsKnobOptions,
   OptionsTypeOptionsProp,

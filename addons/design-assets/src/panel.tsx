@@ -29,7 +29,7 @@ const Asset = ({ url }: { url: string | undefined }): ReactElement => {
   if (!url) {
     return null;
   }
-  if (url.match(/\.(png|gif|jpeg|tiff|svg|anpg|webp)/)) {
+  if (url.match(/\.(png|apng|gif|jpeg|tiff|svg|webp)/)) {
     // do image viewer
     return <Img alt="" src={url} />;
   }

@@ -17,22 +17,22 @@ export default {
   ],
 };
 
-const Story = (args) => <SectionRow {...args} />;
+const Template = (args) => <SectionRow {...args} />;
 
-export const Section = Story.bind({});
+export const Section = Template.bind({});
 Section.args = { level: 'section', label: 'Props' };
 
-export const Subsection = Story.bind({});
+export const Subsection = Template.bind({});
 Subsection.args = { level: 'subsection', label: 'HTMLElement' };
 
-export const Collapsed = Story.bind({});
+export const Collapsed = Template.bind({});
 Collapsed.args = { ...Section.args, initialExpanded: false };
 
 export const Nested = () => (
   <SectionRow {...Section.args}>
     <SectionRow {...Subsection.args}>
       <tr>
-        <td>Some content</td>
+        <td colSpan={2}>Some content</td>
       </tr>
     </SectionRow>
   </SectionRow>

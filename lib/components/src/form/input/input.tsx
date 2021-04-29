@@ -21,14 +21,14 @@ const styleResets: CSSObject = {
 const styles = ({ theme }: { theme: Theme }): CSSObject => ({
   ...styleResets,
 
-  transition: 'all 200ms ease-out',
+  transition: 'box-shadow 200ms ease-out, opacity 200ms ease-out',
   color: theme.input.color || 'inherit',
   background: theme.input.background,
   boxShadow: `${theme.input.border} 0 0 0 1px inset`,
   borderRadius: theme.input.borderRadius,
   fontSize: theme.typography.size.s2 - 1,
   lineHeight: '20px',
-  padding: '.46em 1em', // 32
+  padding: '6px 10px', // 32
 
   '&:focus': {
     boxShadow: `${theme.color.secondary} 0 0 0 1px inset`,

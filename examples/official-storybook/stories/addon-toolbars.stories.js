@@ -26,7 +26,7 @@ const Themed = styled.div(({ theme }) => ({
   background: theme.background.content,
 }));
 
-export const Locale = (_args, { globalArgs: { locale } }) => {
+export const Locale = (_args, { globals: { locale } }) => {
   return (
     <Themed style={{ fontSize: 30 }}>
       Your locale is '{locale}', so I say:

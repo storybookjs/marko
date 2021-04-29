@@ -64,9 +64,9 @@ export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active
         : prevHighlighted.filter((t) => !target.includes(t))
     );
   }, []);
-  const handleRun = React.useCallback(() => {
-    emit(EVENTS.REQUEST, storyId);
-  }, [storyId]);
+  const handleRun = (renderedStoryId: string) => {
+    emit(EVENTS.REQUEST, renderedStoryId);
+  };
   const handleClearHighlights = React.useCallback(() => setHighlighted([]), []);
   const handleSetTab = React.useCallback((index: number) => {
     handleClearHighlights();
@@ -90,7 +90,7 @@ export const A11yContextProvider: React.FC<A11yContextProviderProps> = ({ active
 
   React.useEffect(() => {
     if (active) {
-      handleRun();
+      handleRun(storyId);
     } else {
       handleClearHighlights();
     }

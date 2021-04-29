@@ -9,6 +9,8 @@ import {
   RouteComponentProps,
   LocationContext,
   NavigateFn,
+  NavigateOptions,
+  History,
 } from '@reach/router';
 import { ToggleVisibility } from './visibility';
 import { queryFromString, parsePath, getMatch, StoryData } from './utils';
@@ -47,8 +49,8 @@ export interface QueryLinkProps {
 
 const getBase = () => `${document.location.pathname}?`;
 
-const queryNavigate: NavigateFn = (to: string | number) =>
-  typeof to === 'number' ? navigate(to) : navigate(`${getBase()}path=${to}`);
+const queryNavigate: NavigateFn = (to: string | number, options?: NavigateOptions<{}>) =>
+  typeof to === 'number' ? navigate(to) : navigate(`${getBase()}path=${to}`, options);
 
 // A component that will navigate to a new location/path when clicked
 const QueryLink = ({ to, children, ...rest }: QueryLinkProps) => (
@@ -74,7 +76,7 @@ QueryLocation.displayName = 'QueryLocation';
 
 // A render-prop component for rendering when a certain path is hit.
 // It's immensely similar to `Location` but it receives an addition data property: `match`.
-// match has a truethy value when the path is hit.
+// match has a truthy value when the path is hit.
 const QueryMatch = ({ children, path: targetPath, startsWith = false }: QueryMatchProps) => (
   <QueryLocation>
     {({ path: urlPath, ...rest }) =>
@@ -106,3 +108,4 @@ export { QueryLocation as Location };
 export { Route };
 export { queryNavigate as navigate };
 export { LocationProvider };
+export type { History };

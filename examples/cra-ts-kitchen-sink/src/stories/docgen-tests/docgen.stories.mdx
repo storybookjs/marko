@@ -1,4 +1,4 @@
-import { Meta, Props, Description } from '@storybook/addon-docs/blocks';
+import { Meta, ArgsTable, Description } from '@storybook/addon-docs/blocks';
 import * as DocgenJS from './DocgenJS';
 import * as DocgenTS from './DocgenTS';
 
@@ -8,7 +8,7 @@ export const DescriptionProps = ({ of }) => (
   <>
     <h2>{of.displayName}</h2>
     <Description of={of} />
-    <Props of={of} />
+    <ArgsTable of={of} />
   </>
 );
 

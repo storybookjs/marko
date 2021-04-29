@@ -1,1 +1,1 @@
-export * from './dist/register';
+import './dist/esm/register';

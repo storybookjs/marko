@@ -4,6 +4,7 @@ import {
   editStorybookTsConfig,
   getAngularAppTsConfigJson,
   getAngularAppTsConfigPath,
+  getBaseTsConfigName,
 } from './angular-helpers';
 import { writeFileAsJson, copyTemplate } from '../../helpers';
 import { baseGenerator, Generator } from '../baseGenerator';
@@ -30,11 +31,24 @@ const generator: Generator = async (packageManager, npmOptions, options) => {
       'Could not find a default project in your Angular workspace.\nSet a defaultProject in your angular.json and re-run the installation.'
     );
   }
-  baseGenerator(packageManager, npmOptions, options, 'angular');
+  baseGenerator(packageManager, npmOptions, options, 'angular', {
+    extraPackages: ['@compodoc/compodoc'],
+    addScripts: false,
+  });
   copyTemplate(__dirname, options.storyFormat);
 
   editAngularAppTsConfig();
   editStorybookTsConfig(path.resolve('./.storybook/tsconfig.json'));
+
+  // edit scripts to generate docs
+  const tsConfigFile = await getBaseTsConfigName();
+  packageManager.addScripts({
+    'docs:json': `compodoc -p ./${tsConfigFile} -e json -d .`,
+  });
+  packageManager.addStorybookCommandInScripts({
+    port: 6006,
+    preCommand: 'docs:json',
+  });
 };
 
 export default generator;

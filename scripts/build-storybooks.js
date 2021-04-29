@@ -4,6 +4,7 @@ import { readdir as readdirRaw, writeFile as writeFileRaw, readFileSync } from '
 import { join } from 'path';
 
 import { getDeployables } from './utils/list-examples';
+import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
 const readdir = promisify(readdirRaw);
 const writeFile = promisify(writeFileRaw);
@@ -132,20 +133,10 @@ const handleExamples = async (deployables) => {
 
 const run = async () => {
   const list = getDeployables(await readdir(p(['examples'])), hasBuildScript);
-
-  const { length } = list;
-  const [a, b] = [process.env.CIRCLE_NODE_INDEX || 0, process.env.CIRCLE_NODE_TOTAL || 1];
-  const step = Math.ceil(length / b);
-  const offset = step * a;
-
-  const deployables = list.slice().splice(offset, step);
+  const deployables = filterDataForCurrentCircleCINode(list);
 
   if (deployables.length) {
-    logger.log(
-      `will build: ${deployables.join(', ')} (${
-        deployables.length
-      } total - offset: ${offset} | step: ${step} | length: ${length} | node_index: ${a} | total: ${b} |)`
-    );
+    logger.log(`🏗 Will build Storybook for: ${deployables.join(', ')}`);
     await handleExamples(deployables);
   }
 

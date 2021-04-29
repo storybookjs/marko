@@ -23,7 +23,7 @@ const optionsHelper = (options, type, isMulti) => {
         options={options}
         value={value}
         type={type}
-        onChange={(_name, newVal) => setValue(newVal)}
+        onChange={(newVal) => setValue(newVal)}
       />
       {value && Array.isArray(value) ? (
         // eslint-disable-next-line react/no-array-index-key

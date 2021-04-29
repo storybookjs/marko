@@ -2,31 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default {
-  title: 'addons/useGlobalArgs',
+  title: 'addons/useGlobals',
 };
 
-export const PassedToStory = ({ globalArgs }) => {
+export const PassedToStory = ({ globals }) => {
   return (
     <div>
       <h3>Global args:</h3>
-      <pre>{JSON.stringify(globalArgs)}</pre>
+      <pre>{JSON.stringify(globals)}</pre>
     </div>
   );
 };
 
 PassedToStory.propTypes = {
-  globalArgs: PropTypes.shape({}).isRequired,
+  globals: PropTypes.shape({}).isRequired,
 };
 
-export const SecondStory = ({ globalArgs }) => {
+export const SecondStory = ({ globals }) => {
   return (
     <div>
       <h3>Global args (2):</h3>
-      <pre>{JSON.stringify(globalArgs)}</pre>
+      <pre>{JSON.stringify(globals)}</pre>
     </div>
   );
 };
 
 SecondStory.propTypes = {
-  globalArgs: PropTypes.shape({}).isRequired,
+  globals: PropTypes.shape({}).isRequired,
 };

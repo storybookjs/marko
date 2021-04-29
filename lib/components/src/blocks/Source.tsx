@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { styled, ThemeProvider, convert, themes } from '@storybook/theming';
 import { EmptyBlock } from './EmptyBlock';
 
-import { SyntaxHighlighter } from '../syntaxhighlighter/syntaxhighlighter';
+import { SyntaxHighlighter } from '../syntaxhighlighter/lazy-syntaxhighlighter';
 
 const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<{}>(({ theme }) => ({
   // DocBlocks-specific styling and overrides
@@ -12,8 +12,7 @@ const StyledSyntaxHighlighter = styled(SyntaxHighlighter)<{}>(({ theme }) => ({
   borderRadius: theme.appBorderRadius,
   boxShadow:
     theme.base === 'light' ? 'rgba(0, 0, 0, 0.10) 0 1px 3px 0' : 'rgba(0, 0, 0, 0.20) 0 2px 5px 0',
-
-  'pre.hljs': {
+  'pre.prismjs': {
     padding: 20,
     background: 'inherit',
   },
@@ -45,7 +44,7 @@ export type SourceProps = SourceErrorProps & SourceCodeProps;
 const Source: FunctionComponent<SourceProps> = (props) => {
   const { error } = props as SourceErrorProps;
   if (error) {
-    return <EmptyBlock {...props}>{error}</EmptyBlock>;
+    return <EmptyBlock>{error}</EmptyBlock>;
   }
 
   const { language, code, dark, format, ...rest } = props as SourceCodeProps;
@@ -72,4 +71,4 @@ const Source: FunctionComponent<SourceProps> = (props) => {
 Source.defaultProps = {
   format: false,
 };
-export { Source };
+export { Source, StyledSyntaxHighlighter };

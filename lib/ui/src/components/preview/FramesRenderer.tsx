@@ -18,11 +18,15 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
   scale,
   viewMode = 'story',
   refId,
-  queryParams,
+  queryParams = {},
   baseUrl,
   storyId = '*',
 }) => {
-  const stringifiedQueryParams = stringifyQueryParams(queryParams);
+  const version = refs[refId]?.version;
+  const stringifiedQueryParams = stringifyQueryParams({
+    ...queryParams,
+    ...(version && { version }),
+  });
   const active = getActive(refId);
 
   const styles = useMemo<CSSObject>(() => {
@@ -58,7 +62,7 @@ export const FramesRenderer: FunctionComponent<FramesRendererProps> = ({
       .reduce((acc, r) => {
         return {
           ...acc,
-          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${storyId}&viewMode=${viewMode}${stringifiedQueryParams}`,
+          [`storybook-ref-${r.id}`]: `${r.url}/iframe.html?id=${storyId}&viewMode=${viewMode}&refId=${r.id}${stringifiedQueryParams}`,
         };
       }, frames);
 

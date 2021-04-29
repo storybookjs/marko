@@ -4,8 +4,8 @@ import { InspectionResult, InspectionArray } from '../inspection';
 import { createSummaryValue, isTooLongForDefaultValueSummary } from '../../../../lib';
 import { generateObjectCode } from '../generateCode';
 
-export function generateObject({ inferedType, ast }: InspectionResult): PropDefaultValue {
-  const { depth } = inferedType as InspectionArray;
+export function generateObject({ inferredType, ast }: InspectionResult): PropDefaultValue {
+  const { depth } = inferredType as InspectionArray;
 
   if (depth === 1) {
     const compactObject = generateObjectCode(ast, true);

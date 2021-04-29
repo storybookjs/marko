@@ -38,12 +38,12 @@ export default class ArrayType extends Component<ArrayTypeProps> {
 
   static serialize = (value: ArrayTypeKnobValue) => value;
 
-  static deserialize = (value: string[]) => {
+  static deserialize = (value: string[] | Record<string, string>) => {
     if (Array.isArray(value)) return value;
 
     return Object.keys(value)
       .sort()
-      .reduce((array, key) => [...array, value[key]], []);
+      .reduce((array, key) => [...array, value[key]], [] as string[]);
   };
 
   shouldComponentUpdate(nextProps: Readonly<ArrayTypeProps>) {

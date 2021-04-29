@@ -16,7 +16,7 @@ const Content = styled.div({
 
 storiesOf('basics/Tooltip/Tooltip', module)
   .add('basic, default', () => (
-    <Tooltip {...mockPopperProps} color="medium">
+    <Tooltip {...mockPopperProps}>
       <Content>Text</Content>
     </Tooltip>
   ))

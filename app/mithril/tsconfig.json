@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": ".",
-    "types": ["webpack-env"],
+    "types": ["webpack-env", "node"],
     "resolveJsonModule": true
   },
   "include": [

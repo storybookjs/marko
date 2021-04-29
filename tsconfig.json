@@ -8,10 +8,10 @@
     "emitDecoratorMetadata": true,
     "jsx": "react",
     "module": "commonjs",
-    "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "isolatedModules": true,
     "target": "es5",
     "types": ["jest"],
     "lib": ["es2017", "dom"]
@@ -22,6 +22,8 @@
     "**/node_modules",
     "**/*.spec.ts",
     "**/__tests__",
-    "**/*.test.ts"
+    "**/*.test.ts",
+    "**/FlowType*",
+    "**/setup-jest.ts"
   ]
 }

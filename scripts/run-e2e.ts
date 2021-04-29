@@ -1,14 +1,14 @@
 /* eslint-disable no-irregular-whitespace */
 import path from 'path';
-import { remove, ensureDir, pathExists, writeFile, readJSON, writeJSON } from 'fs-extra';
+import { remove, ensureDir, pathExists, writeFile, writeJSON } from 'fs-extra';
 import { prompt } from 'enquirer';
 import pLimit from 'p-limit';
 
-import shell from 'shelljs';
+import program from 'commander';
 import { serve } from './utils/serve';
 import { exec } from './utils/command';
 // @ts-ignore
-import { listOfPackages } from './utils/list-packages';
+import { filterDataForCurrentCircleCINode } from './utils/concurrency';
 
 import * as configs from './run-e2e-config';
 
@@ -48,10 +48,11 @@ const prepareDirectory = async ({
 
   if (!siblingExists) {
     await ensureDir(siblingDir);
-    await exec('git init', { cwd: siblingDir });
-    await exec('npm init -y', { cwd: siblingDir });
-    await writeFile(path.join(siblingDir, '.gitignore'), 'node_modules\n');
   }
+
+  await exec('git init', { cwd: siblingDir });
+  await exec('npm init -y', { cwd: siblingDir });
+  await writeFile(path.join(siblingDir, '.gitignore'), 'node_modules\n');
 
   const cwdExists = await pathExists(cwd);
 
@@ -69,14 +70,73 @@ const prepareDirectory = async ({
 const cleanDirectory = async ({ cwd }: Options): Promise<void> => {
   await remove(cwd);
   await remove(path.join(siblingDir, 'node_modules'));
+  await remove(path.join(siblingDir, 'package.json'));
+  await remove(path.join(siblingDir, 'yarn.lock'));
+  await remove(path.join(siblingDir, '.yarnrc.yml'));
+  await remove(path.join(siblingDir, '.yarn'));
+};
 
-  // TODO: Move this somewhere else
-  //   Remove Yarn 2 specific stuffs generated
-  await shell.rm('-rf', [path.join(siblingDir, '.yarn'), path.join(siblingDir, '.yarnrc.yml')]);
+const installYarn2 = async ({ cwd }: Options) => {
+  const commands = [`yarn set version berry`, `yarn config set enableGlobalCache true`];
+
+  if (!useYarn2Pnp) {
+    commands.push('yarn config set nodeLinker node-modules');
+  }
+
+  const command = commands.join(' && ');
+
+  logger.info(`🧶 Installing Yarn 2`);
+  logger.debug(command);
+
+  try {
+    await exec(command, { cwd });
+  } catch (e) {
+    logger.error(`🚨 Installing Yarn 2 failed`);
+    throw e;
+  }
+};
+
+const configureYarn2 = async ({ cwd }: Options) => {
+  const commands = [
+    // Create file to ensure yarn will be ok to set some config in the current directory and not in the parent
+    `touch yarn.lock`,
+    // ⚠️ Need to set registry because Yarn 2 is not using the conf of Yarn 1
+    `yarn config set npmScopes --json '{ "storybook": { "npmRegistryServer": "http://localhost:6000/" } }'`,
+    // Some required magic to be able to fetch deps from local registry
+    `yarn config set unsafeHttpWhitelist --json '["localhost"]'`,
+    // Disable fallback mode to make sure everything is required correctly
+    `yarn config set pnpFallbackMode none`,
+    `yarn config set enableGlobalCache true`,
+    // We need to be able to update lockfile when bootstrapping the examples
+    `yarn config set enableImmutableInstalls false`,
+    // Add package extensions
+    // https://github.com/facebook/create-react-app/pull/9872
+    `yarn config set "packageExtensions.react-scripts@*.peerDependencies.react" "*"`,
+    `yarn config set "packageExtensions.react-scripts@*.dependencies.@pmmmwh/react-refresh-webpack-plugin" "*"`,
+  ];
+
+  if (!useYarn2Pnp) {
+    commands.push('yarn config set nodeLinker node-modules');
+  }
+
+  const command = commands.join(' && ');
+  logger.info(`🎛 Configuring Yarn 2`);
+  logger.debug(command);
+
+  try {
+    await exec(command, { cwd });
+  } catch (e) {
+    logger.error(`🚨 Configuring Yarn 2 failed`);
+    throw e;
+  }
 };
 
 const generate = async ({ cwd, name, version, generator }: Options) => {
-  const command = generator.replace(/{{name}}/g, name).replace(/{{version}}/g, version);
+  let command = generator.replace(/{{name}}/g, name).replace(/{{version}}/g, version);
+  if (useYarn2Pnp) {
+    command = command.replace(/npx/g, `yarn dlx`);
+  }
+
   logger.info(`🏗  Bootstrapping ${name} project`);
   logger.debug(command);
 
@@ -92,46 +152,27 @@ const initStorybook = async ({ cwd, autoDetect = true, name }: Options) => {
   logger.info(`🎨 Initializing Storybook with @storybook/cli`);
   try {
     const type = autoDetect ? '' : `--type ${name}`;
-    await exec(`npx -p @storybook/cli sb init --yes ${type}`, { cwd });
+
+    const sbCLICommand = useLocalSbCli
+      ? 'node ../../storybook/lib/cli/dist/esm/generate'
+      : 'yarn dlx -p @storybook/cli sb';
+
+    await exec(`${sbCLICommand} init --yes ${type}`, { cwd });
   } catch (e) {
     logger.error(`🚨 Storybook initialization failed`);
     throw e;
   }
 };
 
-// Verdaccio doesn't resolve *
-// So we set resolutions manually in package.json
-const setResolutions = async ({ cwd }: Options) => {
-  logger.info(`🔒 Setting yarn resolutions`);
-
-  const packages = await listOfPackages();
-
-  const packageJsonPath = path.resolve(cwd, 'package.json');
-  const packageJson = await readJSON(packageJsonPath, { encoding: 'utf8' });
-
-  packageJson.resolutions = {
-    ...packageJson.resolutions,
-    ...packages.reduce(
-      (acc, { name, version }) => ({
-        ...acc,
-        [name]: version,
-      }),
-      {}
-    ),
-  };
-
-  await writeJSON(packageJsonPath, packageJson, { encoding: 'utf8', spaces: 2 });
-};
-
 const addRequiredDeps = async ({ cwd, additionalDeps }: Options) => {
   logger.info(`🌍 Adding needed deps & installing all deps`);
   try {
     if (additionalDeps && additionalDeps.length > 0) {
-      await exec(`yarn add -D ${additionalDeps.join(' ')} --silent`, {
+      await exec(`yarn add -D ${additionalDeps.join(' ')}`, {
         cwd,
       });
     } else {
-      await exec(`yarn install --silent`, {
+      await exec(`yarn install`, {
         cwd,
       });
     }
@@ -195,6 +236,7 @@ const runCypress = async ({ name, version }: Options, location: string, open: bo
     logger.info(`🎉 Storybook is working great with ${name} ${version}!`);
   } catch (e) {
     logger.error(`🚨 E2E tests fails`);
+    logger.info(`🥺 Storybook has some issues with ${name} ${version}!`);
     throw e;
   }
 };
@@ -204,30 +246,36 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
     name,
     version,
     ...rest,
-    cwd: path.join(siblingDir, `${name}-v${version}`),
+    cwd: path.join(siblingDir, `${name}-${version}`),
   };
 
+  logger.log();
   logger.info(`🏃‍♀️ Starting for ${name} ${version}`);
   logger.log();
   logger.debug(options);
   logger.log();
 
   if (!(await prepareDirectory(options))) {
+    // We need to install Yarn 2 to be able to bootstrap the different apps used
+    // for the tests with `yarn dlx`
+    await installYarn2({ ...options, cwd: siblingDir });
+
     await generate({ ...options, cwd: siblingDir });
     logger.log();
 
-    await setResolutions(options);
-    logger.log();
+    // Configure Yarn 2 in the bootstrapped project to make it use the local
+    // verdaccio registry
+    await configureYarn2(options);
 
     if (options.typescript) {
       await addTypescript(options);
       logger.log();
     }
 
-    await initStorybook(options);
+    await addRequiredDeps(options);
     logger.log();
 
-    await addRequiredDeps(options);
+    await initStorybook(options);
     logger.log();
 
     await buildStorybook(options);
@@ -255,14 +303,19 @@ const runTests = async ({ name, version, ...rest }: Parameters) => {
 };
 
 // Run tests!
-const runE2E = (parameters: Parameters) =>
-  runTests(parameters)
+const runE2E = async (parameters: Parameters) => {
+  const { name, version } = parameters;
+  const cwd = path.join(siblingDir, `${name}-${version}`);
+  if (startWithCleanSlate) {
+    logger.log();
+    logger.info(`♻️  Starting with a clean slate, removing existing ${name} folder`);
+    await cleanDirectory({ ...parameters, cwd });
+  }
+
+  return runTests(parameters)
     .then(async () => {
       if (!process.env.CI) {
-        const { name, version } = parameters;
-        const cwd = path.join(siblingDir, `${name}-v${version}`);
-
-        const { cleanup } = await prompt({
+        const { cleanup } = await prompt<{ cleanup: boolean }>({
           type: 'confirm',
           name: 'cleanup',
           message: 'Should perform cleanup?',
@@ -285,41 +338,66 @@ const runE2E = (parameters: Parameters) =>
       logger.log();
       process.exitCode = 1;
     });
+};
 
-const frameworkArgs = process.argv.slice(2);
+program.option('--clean', 'Clean up existing projects before running the tests', false);
+program.option('--use-yarn-2-pnp', 'Run tests using Yarn 2 PnP instead of Yarn 1 + npx', false);
+program.option(
+  '--use-local-sb-cli',
+  'Run tests using local @storybook/cli package (⚠️ Be sure @storybook/cli is properly build as it will not be rebuild before running the tests)',
+  false
+);
+program.option(
+  '--skip <value>',
+  'Skip a framework, can be used multiple times "--skip angular@latest --skip preact"',
+  (value, previous) => previous.concat([value]),
+  []
+);
+program.parse(process.argv);
+
+const {
+  useYarn2Pnp,
+  useLocalSbCli,
+  clean: startWithCleanSlate,
+  args: frameworkArgs,
+  skip: frameworksToSkip,
+} = program;
+
 const typedConfigs: { [key: string]: Parameters } = configs;
-let e2eConfigs: { [key: string]: Parameters } = {};
+const e2eConfigs: { [key: string]: Parameters } = {};
 
 if (frameworkArgs.length > 0) {
   // eslint-disable-next-line no-restricted-syntax
   for (const [framework, version = 'latest'] of frameworkArgs.map((arg) => arg.split('@'))) {
-    e2eConfigs[framework] = {
-      ...typedConfigs[framework],
-      version,
-    };
+    e2eConfigs[`${framework}-${version}`] = Object.values(typedConfigs).find(
+      (c) => c.name === framework && c.version === version
+    );
   }
 } else {
-  e2eConfigs = typedConfigs;
-  // FIXME: For now Yarn 2 E2E tests must be run by explicitly call `yarn test:e2e-framework yarn2Cra@latest`
-  //   Because it is telling Yarn to use version 2
-  delete e2eConfigs.yarn2Cra;
+  Object.values(typedConfigs).forEach((config) => {
+    e2eConfigs[`${config.name}-${config.version}`] = config;
+  });
+
+  // CRA Bench is a special case of E2E tests, it requires Node 12 as `@storybook/bench` is using `@hapi/hapi@19.2.0`
+  // which itself need Node 12.
+  delete e2eConfigs['cra_bench-latest'];
+}
+
+if (frameworksToSkip.length > 0) {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [framework, version = 'latest'] of frameworksToSkip.map((arg: string) =>
+    arg.split('@')
+  )) {
+    delete e2eConfigs[`${framework}-${version}`];
+  }
 }
 
 const perform = () => {
   const limit = pLimit(1);
   const narrowedConfigs = Object.values(e2eConfigs);
-  const nodeIndex = +process.env.CIRCLE_NODE_INDEX || 0;
-  const numberOfNodes = +process.env.CIRCLE_NODE_TOTAL || 1;
+  const list = filterDataForCurrentCircleCINode(narrowedConfigs) as Parameters[];
 
-  const list = narrowedConfigs.filter((_, index) => {
-    return index % numberOfNodes === nodeIndex;
-  });
-
-  logger.info(
-    `📑 Assigning jobs ${list
-      .map((c) => c.name)
-      .join(', ')} to node ${nodeIndex} (on ${numberOfNodes})`
-  );
+  logger.info(`📑 Will run E2E tests for:${list.map((c) => `${c.name}@${c.version}`).join(', ')}`);
 
   return Promise.all(list.map((config) => limit(() => runE2E(config))));
 };

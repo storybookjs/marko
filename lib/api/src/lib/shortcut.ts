@@ -63,11 +63,10 @@ export const shortcutMatchesShortcut = (
   inputShortcut: KeyCollection,
   shortcut: KeyCollection
 ): boolean => {
-  return (
-    inputShortcut &&
-    inputShortcut.length === shortcut.length &&
-    !inputShortcut.find((key, i) => key !== shortcut[i])
-  );
+  if (!inputShortcut || !shortcut) return false;
+  if (inputShortcut.join('') === 'shift/') inputShortcut.shift(); // shift is optional for `/`
+  if (inputShortcut.length !== shortcut.length) return false;
+  return !inputShortcut.find((key, i) => key !== shortcut[i]);
 };
 
 // Should this keyboard event trigger this keyboard shortcut?

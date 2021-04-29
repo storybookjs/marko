@@ -20,7 +20,7 @@ describe('Actions', () => {
     expect(Object.keys(actionsResult)).toEqual(['test-action']);
     actionsResult['test-action']('one');
 
-    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: ['one'] });
+    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: 'one' });
   });
 
   it('with multiple arguments', () => {
@@ -33,8 +33,8 @@ describe('Actions', () => {
     actionsResult['test-action']('one');
     actionsResult['test-action2']('two');
 
-    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: ['one'] });
-    expect(getChannelData(channel, 1)).toEqual({ name: 'test-action2', args: ['two'] });
+    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: 'one' });
+    expect(getChannelData(channel, 1)).toEqual({ name: 'test-action2', args: 'two' });
   });
 
   it('with multiple arguments + config', () => {
@@ -47,8 +47,8 @@ describe('Actions', () => {
     actionsResult['test-action']('one');
     actionsResult['test-action2']('two');
 
-    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: ['one'] });
-    expect(getChannelData(channel, 1)).toEqual({ name: 'test-action2', args: ['two'] });
+    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: 'one' });
+    expect(getChannelData(channel, 1)).toEqual({ name: 'test-action2', args: 'two' });
 
     expect(getChannelOptions(channel, 0).some).toEqual('config');
     expect(getChannelOptions(channel, 1).some).toEqual('config');
@@ -67,8 +67,8 @@ describe('Actions', () => {
     actionsResult['test-action']('one');
     actionsResult['test-action2']('two');
 
-    expect(getChannelData(channel, 0)).toEqual({ name: 'test action', args: ['one'] });
-    expect(getChannelData(channel, 1)).toEqual({ name: 'test action two', args: ['two'] });
+    expect(getChannelData(channel, 0)).toEqual({ name: 'test action', args: 'one' });
+    expect(getChannelData(channel, 1)).toEqual({ name: 'test action two', args: 'two' });
   });
 
   it('with first argument as array of arguments + config', () => {
@@ -81,8 +81,8 @@ describe('Actions', () => {
     actionsResult['test-action']('one');
     actionsResult['test-action2']('two');
 
-    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: ['one'] });
-    expect(getChannelData(channel, 1)).toEqual({ name: 'test-action2', args: ['two'] });
+    expect(getChannelData(channel, 0)).toEqual({ name: 'test-action', args: 'one' });
+    expect(getChannelData(channel, 1)).toEqual({ name: 'test-action2', args: 'two' });
 
     expect(getChannelOptions(channel, 0).some).toEqual('config');
     expect(getChannelOptions(channel, 1).some).toEqual('config');

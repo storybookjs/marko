@@ -15,6 +15,7 @@ const mapper = ({ state, api }: Combo) => ({
   selectedPanel: api.getSelectedPanel(),
   panelPosition: state.layout.panelPosition,
   actions: createPanelActions(api),
+  shortcuts: api.getShortcutKeys(),
 });
 
 const Panel: FunctionComponent<any> = (props) => (

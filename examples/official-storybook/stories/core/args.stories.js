@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-
 import { useArgs } from '@storybook/client-api';
 
 // eslint-disable-next-line react/prop-types
-const ArgUpdater = ({ args, updateArgs }) => {
+const ArgUpdater = ({ args, updateArgs, resetArgs }) => {
   const [argsInput, updateArgsInput] = useState(JSON.stringify(args));
 
   return (
@@ -20,6 +18,9 @@ const ArgUpdater = ({ args, updateArgs }) => {
         <textarea value={argsInput} onChange={(e) => updateArgsInput(e.target.value)} />
         <br />
         <button type="submit">Change</button>
+        <button type="button" onClick={() => resetArgs()}>
+          Reset all
+        </button>
       </form>
     </div>
   );
@@ -29,29 +30,37 @@ export default {
   title: 'Core/Args',
   decorators: [
     (story) => {
-      const [args, updateArgs] = useArgs();
+      const [args, updateArgs, resetArgs] = useArgs();
 
       return (
         <>
           {story()}
-          <ArgUpdater args={args} updateArgs={updateArgs} />
+          <ArgUpdater args={args} updateArgs={updateArgs} resetArgs={resetArgs} />
         </>
       );
     },
   ],
 };
 
-export const PassedToStory = (inputArgs) => {
+const Template = (args) => {
   return (
     <div>
       <h3>Input args:</h3>
-      <pre>{JSON.stringify(inputArgs)}</pre>
+      <pre>{JSON.stringify(args)}</pre>
     </div>
   );
 };
 
-PassedToStory.argTypes = { name: { defaultValue: 'initial' } };
+export const PassedToStory = Template.bind({});
 
-PassedToStory.propTypes = {
-  args: PropTypes.shape({}).isRequired,
+PassedToStory.argTypes = { name: { defaultValue: 'initial', control: 'text' } };
+
+export const OtherValues = Template.bind({});
+
+OtherValues.argTypes = { name: { control: 'text' } };
+
+export const DifferentSet = Template.bind({});
+DifferentSet.args = {
+  foo: 'bar',
+  bar: 2,
 };

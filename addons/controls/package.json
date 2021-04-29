@@ -1,13 +1,15 @@
 {
   "name": "@storybook/addon-controls",
-  "version": "6.0.0-beta.37",
-  "description": "Controls for component properties",
+  "version": "6.3.0-alpha.16",
+  "description": "Interact with component inputs dynamically in the Storybook UI",
   "keywords": [
     "addon",
     "storybook",
     "knobs",
     "controls",
-    "properties"
+    "properties",
+    "essentials",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/next/addons/controls",
   "bugs": {
@@ -18,8 +20,21 @@
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/controls"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
-  "main": "dist/register.js",
+  "main": "dist/cjs/register.js",
+  "module": "dist/esm/register.js",
+  "types": "dist/ts3.9/index.d.ts",
+  "typesVersions": {
+    "<3.8": {
+      "*": [
+        "dist/ts3.4/*"
+      ]
+    }
+  },
   "files": [
     "dist/**/*",
     "README.md",
@@ -30,18 +45,40 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.0.0-beta.37",
-    "@storybook/api": "6.0.0-beta.37",
-    "@storybook/client-api": "6.0.0-beta.37",
-    "@storybook/components": "6.0.0-beta.37",
-    "@storybook/theming": "6.0.0-beta.37",
-    "core-js": "^3.0.1"
+    "@storybook/addons": "6.3.0-alpha.16",
+    "@storybook/api": "6.3.0-alpha.16",
+    "@storybook/client-api": "6.3.0-alpha.16",
+    "@storybook/components": "6.3.0-alpha.16",
+    "@storybook/node-logger": "6.3.0-alpha.16",
+    "@storybook/theming": "6.3.0-alpha.16",
+    "core-js": "^3.8.2",
+    "ts-dedent": "^2.0.0"
   },
   "peerDependencies": {
-    "react": "*",
-    "react-dom": "*"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   },
   "publishConfig": {
     "access": "public"
+  },
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843",
+  "storybook": {
+    "displayName": "Controls",
+    "icon": "https://user-images.githubusercontent.com/263385/101991669-479cc600-3c7c-11eb-93d9-38b67e8371f2.png",
+    "supportedFrameworks": [
+      "react",
+      "vue",
+      "angular",
+      "web-components",
+      "ember"
+    ]
   }
 }

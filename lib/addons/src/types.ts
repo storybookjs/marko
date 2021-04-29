@@ -24,7 +24,8 @@ export type ViewMode = 'story' | 'docs';
 export interface Parameters {
   fileName?: string;
   options?: OptionsParameter;
-  layout?: 'centered' | 'fullscreen' | 'padded';
+  /** The layout property defines basic styles added to the preview body where the story is rendered. If you pass 'none', no styles are applied. */
+  layout?: 'centered' | 'fullscreen' | 'padded' | 'none';
   docsOnly?: boolean;
   [key: string]: any;
 }
@@ -52,12 +53,15 @@ export interface StoryIdentifier {
   name: StoryName;
 }
 
+export type StoryContextUpdate = Partial<StoryContext>;
 export type StoryContext = StoryIdentifier & {
   [key: string]: any;
   parameters: Parameters;
   args: Args;
-  globalArgs: Args;
+  argTypes: ArgTypes;
+  globals: Args;
   hooks?: HooksContext;
+  viewMode?: ViewMode;
 };
 
 export interface WrapperSettings {
@@ -74,13 +78,13 @@ export interface StorySortObjectParameter {
   order?: any[];
   locales?: string;
 }
-export type StorySortParameter = Comparator<any> | StorySortObjectParameter;
+// The `any` here is the story store's `StoreItem` record. Ideally we should probably only
+// pass a defined subset of that full data, but we pass it all so far :shrug:
+export type StorySortComparator = Comparator<[StoryId, any, Parameters, Parameters]>;
+export type StorySortParameter = StorySortComparator | StorySortObjectParameter;
 
 export interface OptionsParameter extends Object {
   storySort?: StorySortParameter;
-  hierarchyRootSeparator?: string;
-  hierarchySeparator?: RegExp;
-  showRoots?: boolean;
   theme?: {
     base: string;
     brandTitle?: string;
@@ -90,8 +94,13 @@ export interface OptionsParameter extends Object {
 
 export type StoryGetter = (context: StoryContext) => any;
 
+// This is the type of story function passed to a decorator -- does not rely on being passed any context
+export type PartialStoryFn<ReturnType = unknown> = (p?: StoryContextUpdate) => ReturnType;
+// This is a passArgsFirst: false user story function
 export type LegacyStoryFn<ReturnType = unknown> = (p?: StoryContext) => ReturnType;
+// This is a passArgsFirst: true user story function
 export type ArgsStoryFn<ReturnType = unknown> = (a?: Args, p?: StoryContext) => ReturnType;
+// This is either type of user story function
 export type StoryFn<ReturnType = unknown> = LegacyStoryFn<ReturnType> | ArgsStoryFn<ReturnType>;
 
 export type StoryWrapper = (
@@ -127,19 +136,22 @@ export interface StoryApi<StoryFnReturnType = unknown> {
     parameters?: Parameters
   ) => StoryApi<StoryFnReturnType>;
   addDecorator: (decorator: DecoratorFunction<StoryFnReturnType>) => StoryApi<StoryFnReturnType>;
+  addLoader: (decorator: LoaderFunction) => StoryApi<StoryFnReturnType>;
   addParameters: (parameters: Parameters) => StoryApi<StoryFnReturnType>;
   [k: string]: string | ClientApiReturnFn<StoryFnReturnType>;
 }
 
 export type DecoratorFunction<StoryFnReturnType = unknown> = (
-  fn: StoryFn<StoryFnReturnType>,
+  fn: PartialStoryFn<StoryFnReturnType>,
   c: StoryContext
-) => ReturnType<StoryFn<StoryFnReturnType>>;
+) => ReturnType<LegacyStoryFn<StoryFnReturnType>>;
+
+export type LoaderFunction = (c: StoryContext) => Promise<Record<string, any>>;
 
 export type DecorateStoryFunction<StoryFnReturnType = unknown> = (
-  storyFn: StoryFn<StoryFnReturnType>,
+  storyFn: LegacyStoryFn<StoryFnReturnType>,
   decorators: DecoratorFunction<StoryFnReturnType>[]
-) => StoryFn<StoryFnReturnType>;
+) => LegacyStoryFn<StoryFnReturnType>;
 
 export interface ClientStoryApi<StoryFnReturnType = unknown> {
   storiesOf(kind: StoryKind, module: NodeModule): StoryApi<StoryFnReturnType>;
@@ -150,3 +162,110 @@ export interface ClientStoryApi<StoryFnReturnType = unknown> {
 type LoadFn = () => any;
 type RequireContext = any; // FIXME
 export type Loadable = RequireContext | [RequireContext] | LoadFn;
+
+// CSF types, to be re-org'ed in 6.1
+
+export type BaseDecorators<StoryFnReturnType> = Array<
+  (story: () => StoryFnReturnType, context: StoryContext) => StoryFnReturnType
+>;
+
+export interface BaseAnnotations<Args, StoryFnReturnType> {
+  /**
+   * Dynamic data that are provided (and possibly updated by) Storybook and its addons.
+   * @see [Arg story inputs](https://storybook.js.org/docs/react/api/csf#args-story-inputs)
+   */
+  args?: Partial<Args>;
+
+  /**
+   * ArgTypes encode basic metadata for args, such as `name`, `description`, `defaultValue` for an arg. These get automatically filled in by Storybook Docs.
+   * @see [Control annotations](https://github.com/storybookjs/storybook/blob/91e9dee33faa8eff0b342a366845de7100415367/addons/controls/README.md#control-annotations)
+   */
+  argTypes?: ArgTypes;
+
+  /**
+   * Custom metadata for a story.
+   * @see [Parameters](https://storybook.js.org/docs/basics/writing-stories/#parameters)
+   */
+  parameters?: Parameters;
+
+  /**
+   * Wrapper components or Storybook decorators that wrap a story.
+   *
+   * Decorators defined in Meta will be applied to every story variation.
+   * @see [Decorators](https://storybook.js.org/docs/addons/introduction/#1-decorators)
+   */
+  decorators?: BaseDecorators<StoryFnReturnType>;
+}
+
+export interface Annotations<Args, StoryFnReturnType>
+  extends BaseAnnotations<Args, StoryFnReturnType> {
+  /**
+   * Used to only include certain named exports as stories. Useful when you want to have non-story exports such as mock data or ignore a few stories.
+   * @example
+   * includeStories: ['SimpleStory', 'ComplexStory']
+   * includeStories: /.*Story$/
+   *
+   * @see [Non-story exports](https://storybook.js.org/docs/formats/component-story-format/#non-story-exports)
+   */
+  includeStories?: string[] | RegExp;
+
+  /**
+   * Used to exclude certain named exports. Useful when you want to have non-story exports such as mock data or ignore a few stories.
+   * @example
+   * excludeStories: ['simpleData', 'complexData']
+   * excludeStories: /.*Data$/
+   *
+   * @see [Non-story exports](https://storybook.js.org/docs/formats/component-story-format/#non-story-exports)
+   */
+  excludeStories?: string[] | RegExp;
+}
+
+export interface BaseMeta<ComponentType> {
+  /**
+   * Title of the story which will be presented in the navigation. **Should be unique.**
+   *
+   * Stories can be organized in a nested structure using "/" as a separator.
+   *
+   * @example
+   * export default {
+   *   ...
+   *   title: 'Design System/Atoms/Button'
+   * }
+   *
+   * @see [Story Hierarchy](https://storybook.js.org/docs/basics/writing-stories/#story-hierarchy)
+   */
+  title: string;
+
+  /**
+   * The primary component for your story.
+   *
+   * Used by addons for automatic prop table generation and display of other component metadata.
+   */
+  component?: ComponentType;
+
+  /**
+   * Auxiliary subcomponents that are part of the stories.
+   *
+   * Used by addons for automatic prop table generation and display of other component metadata.
+   *
+   * @example
+   * import { Button, ButtonGroup } from './components';
+   *
+   * export default {
+   *   ...
+   *   subcomponents: { Button, ButtonGroup }
+   * }
+   *
+   * By defining them each component will have its tab in the args table.
+   */
+  subcomponents?: Record<string, ComponentType>;
+}
+
+export interface BaseStory<Args, StoryFnReturnType> {
+  (args: Args, context: StoryContext): StoryFnReturnType;
+
+  /**
+   * Override the display name in the UI
+   */
+  storyName?: string;
+}

@@ -21,5 +21,5 @@ For more information visit: [storybook.js.org](https://storybook.js.org)
 
 ---
 
-Storybook also comes with a lot of [addons](https://storybook.js.org/addons/introduction) and a great API to customize as you wish.
-You can also build a [static version](https://storybook.js.org/basics/exporting-storybook) of your storybook and deploy it anywhere you want.
+Storybook also comes with a lot of [addons](https://storybook.js.org/docs/marionette/configure/storybook-addons) and a great API to customize as you wish.
+You can also build a [static version](https://storybook.js.org/docs/marionette/workflows/publish-storybook) of your storybook and deploy it anywhere you want.

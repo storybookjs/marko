@@ -7,13 +7,13 @@ export default {
   },
 };
 
-const ButtonStory = (args) => ({
+const Template = (args) => ({
   template: hbs`<button>{{label}}</button>`,
   context: args,
 });
 
-export const Hello = ButtonStory.bind({});
+export const Hello = Template.bind({});
 Hello.args = { label: 'Hello!' };
 
-export const Bonjour = ButtonStory.bind({});
+export const Bonjour = Template.bind({});
 Bonjour.args = { label: 'Bonjour!' };

@@ -3,6 +3,7 @@ export type PackageJson = {
   devDependencies?: Record<string, string>;
   peerDependencies?: Record<string, string>;
   scripts?: Record<string, string>;
+  eslintConfig?: any;
 };
 
 export type PackageJsonWithDepsAndDevDeps = PackageJson &

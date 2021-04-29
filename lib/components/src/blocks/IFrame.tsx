@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import window from 'global';
+import { window as globalWindow } from 'global';
 
 interface IFrameProps {
   id: string;
@@ -23,7 +23,7 @@ export class IFrame extends Component<IFrameProps> {
 
   componentDidMount() {
     const { id } = this.props;
-    this.iframe = window.document.getElementById(id);
+    this.iframe = globalWindow.document.getElementById(id);
   }
 
   shouldComponentUpdate(nextProps: IFrameProps) {
@@ -48,11 +48,12 @@ export class IFrame extends Component<IFrameProps> {
     const { id, title, src, allowFullScreen, scale, ...rest } = this.props;
     return (
       <iframe
-        scrolling="yes"
         id={id}
         title={title}
         src={src}
         allowFullScreen={allowFullScreen}
+        // @ts-ignore
+        loading="lazy"
         {...rest}
       />
     );

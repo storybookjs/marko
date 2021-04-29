@@ -35,7 +35,7 @@ const BooleanType: FunctionComponent<BooleanTypeProps> & {
     name={knob.name}
     type="checkbox"
     onChange={(e) => onChange(e.target.checked)}
-    checked={knob.value}
+    checked={knob.value || false}
   />
 );
 

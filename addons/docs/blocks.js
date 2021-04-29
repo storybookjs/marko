@@ -1,1 +1,1 @@
-module.exports = require('./dist/blocks');
+export * from './dist/esm/blocks';
