@@ -24,7 +24,7 @@ You can also build a [static version](https://storybook.js.org/docs/vue3/workflo
 
 ## Extending the Vue application
 
-Storybook creates a [Vue 3 application](https://v3.vuejs.org/api/application-api.html#application-api) for your component preview, which can be imported as `import { app } from '@storybook/vue3'`.
+Storybook creates a [Vue 3 application](https://v3.vuejs.org/api/application-api.html#application-api) for your component preview which can be imported as `import { app } from '@storybook/vue3'`.
 
 When using global custom components (`app.component`), directives (`app.directive`), extensions (`app.use`), or other application methods, you will need to configure those in the `./storybook/preview.js` file.
 
