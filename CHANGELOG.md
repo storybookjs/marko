@@ -1,3 +1,18 @@
+## 6.3.0-alpha.16 (April 29, 2021)
+
+### Bug Fixes
+
+- Core: Fix `features`, `core`, `logLevel` in main.js config types ([#14745](https://github.com/storybookjs/storybook/pull/14745))
+- Angular: Fix windows path for tsconfig ([#14747](https://github.com/storybookjs/storybook/pull/14747))
+
+### Maintenance
+
+- Build: Change nx cloud access token to read-only token ([#14744](https://github.com/storybookjs/storybook/pull/14744))
+
+### Dependency Upgrades
+
+- Addon-a11y/Storyshots: Upgrade axe-core to 4.2.0 and related dependencies ([#14749](https://github.com/storybookjs/storybook/pull/14749))
+
 ## 6.3.0-alpha.15 (April 28, 2021)
 
 ### Features
