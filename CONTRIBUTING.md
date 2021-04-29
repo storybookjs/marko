@@ -10,7 +10,7 @@ This repo uses yarn workspaces, so you should install `yarn` as the package mana
 
 No software is bug-free. So, if you got an issue, follow these steps:
 
-- Search the [issue list](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=) for current and old issues.
+- Search the [issue list](https://github.com/storybookjs/storybook/issues) for current and old issues.
   - If you find an existing issue, please UPVOTE the issue by adding a "thumbs-up reaction". We use this to help prioritize issues!
 - If none of that is helping, create an issue with the following information:
   - Clear title (shorter is better).
@@ -30,7 +30,7 @@ cd storybook
 yarn bootstrap
 ```
 
-> NOTE: on windows you may need to run `yarn` before `yarn bootstrap`!
+> **_Note:_** On Windows, you may need to run `yarn` before `yarn bootstrap`!
 
 The bootstrap command might ask which sections of the codebase you want to bootstrap. Unless you're going to work with ReactNative or the Documentation, you can keep the default.
 
@@ -54,7 +54,7 @@ The options for running tests can be selected from the cli or be passed to `yarn
 
 You can use the `--update` flag (or `jest -u`) to update snapshots or screenshots as needed.
 
-> NOTE: on Windows, remember to make sure git config `core.autocrlf` is set to false, in order to not override EOL in snapshots ( `git config --global core.autocrlf false` to set it globally). It is also recommended to run tests from WSL2 to avoid errors with unix-style paths.
+> **_Note:_** On Windows, remember to make sure git config `core.autocrlf` is set to false, in order to not override EOL in snapshots ( `git config --global core.autocrlf false` to set it globally). It is also recommended to run tests from WSL2 to avoid errors with unix-style paths.
 
 You can also pick suites from CLI. Suites available are listed below.
 
@@ -137,7 +137,7 @@ git push -u <your-username> next
 
 If you follow that process, you can then link to the GitHub repository in the issue. See <https://github.com/storybookjs/storybook/issues/708#issuecomment-290589886> for an example.
 
-**NOTE**: If your issue involves a webpack config, create-react-app will prevent you from modifying the _app's_ webpack config, however, you can still modify storybook's to mirror your app's version of the storybook. Alternatively, use `yarn eject` in the CRA app to get a modifiable webpack config.
+**_Note:_** If your issue involves a webpack config, create-react-app will prevent you from modifying the _app's_ webpack config, however, you can still modify storybook's to mirror your app's version of the storybook. Alternatively, use `yarn eject` in the CRA app to get a modifiable webpack config.
 
 #### Outside the monorepo
 
@@ -169,6 +169,7 @@ If you've made a change to storybook's codebase and would want this change to be
 ### Updating Tests
 
 Before any contributions are submitted in a PR, make sure to add or update meaningful tests. A PR that has failing tests will be regarded as a “Work in Progress” and will not be merged until all tests pass.
+
 When creating new unit test files, the tests should adhere to a particular folder structure and naming convention, as defined below.
 
 ```sh
@@ -188,7 +189,7 @@ Before you submit a new PR, make sure you run `yarn test`. Do not submit a PR if
 
 **As a PR submitter**, you should reference the issue if there is one, include a short description of what you contributed and, if it is a code change, instructions for how to manually test out the change. This is informally enforced by our [PR template](https://github.com/storybookjs/storybook/blob/master/.github/PULL_REQUEST_TEMPLATE.md). If your PR is reviewed as only needing trivial changes (e.g. small typos etc), and you have commit access then you can merge the PR after making those changes.
 
-> NOTE: Although the latest stable version of storybook corresponds to the `master` branch, nearly all Storybook development happens in the `next` branch. If you submit a PR, branch off `next` and target your PR to `next`.
+> **_Note:_** Although the latest stable version of storybook corresponds to the `master` branch, nearly all Storybook development happens in the `next` branch. If you submit a PR, branch off `next` and target your PR to `next`.
 
 **As a PR reviewer**, you should read through the changes and comment on any potential problems. If you see something cool, a kind word never hurts either! Additionally, you should follow the testing instructions and manually test the changes. If the instructions are missing, unclear, or overly complex, feel free to request better instructions from the submitter. Unless the PR is tagged with the `do not merge` label, if you approve the review and there is no other required discussion or changes, you should also go ahead and merge the PR.
 
@@ -214,7 +215,7 @@ All issues should have a `type` label. `bug`/`feature`/`question`/`discussion` a
 
 They should also have one or more `area`/`status` labels. We use these labels to filter issues down so we can see all of the issues for a particular area, and keep the total number of open issues under control.
 
-For example, here is the list of [open, untyped issues](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20-label%3A%22bug%22%20-label%3A%22discussion%22%20-label%3A%22feature%22%20-label%3A%22maintenance%22%20-label%3A%22question%20%2F%20support%22%20-label%3A%22documentation%22%20-label%3A%22greenkeeper%22), or here is a list of [bugs that have not been modified since 2017-04-01](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3A%22bug%22%20updated%3A%3C%3D2017-04-01%20). For more info see [searching issues](https://help.github.com/articles/searching-issues/) in the Github docs.
+For example, here is the list of [open, untyped issues](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20-label%3A%22bug%22%20-label%3A%22discussion%22%20-label%3A%22feature%22%20-label%3A%22maintenance%22%20-label%3A%22question%20%2F%20support%22%20-label%3A%22documentation%22%20-label%3A%22greenkeeper%22), or here is a list of [bugs that have not been modified since 2017-04-01](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3A%22bug%22%20updated%3A%3C%3D2017-04-01%20). For more info see [searching issues](https://help.github.com/articles/searching-issues/) in the GitHub docs.
 
 If an issue is a `bug`, and it doesn't have a clear reproduction that you have personally confirmed, label it `needs reproduction` and ask the author to try and create a reproduction, or have a go yourself.
 
@@ -250,7 +251,7 @@ If you run into trouble here, make sure your node, npm, and **_yarn_** are on th
 5.  `yarn test`
 6.  `yarn dev` _You must have this running for your changes to show up_
 
-> NOTE: on windows you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).
+> **_Note:_** On Windows, you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).
 
 #### Bootstrapping everything
 
@@ -262,7 +263,7 @@ _This method is slow_
 
 #### Building specific packages
 
-If you're working on one or a few packages, for every change that you make, you have to rebuild those packages. To make the process easier, there is a CLI command for that:
+If you're working on one or several packages, for every change that you make, you have to rebuild those packages. To make the process easier, there is a CLI command for that:
 
 - Run `yarn build` to bring you a list of packages to select from. There will be also an option to run in watch mode.
 - Run `yarn build <package-name>` to build that package specifically. \
@@ -288,7 +289,8 @@ Not only do these show many of the options and add-ons available, they are also 
 #### Linking Storybook
 
 Storybook is broken up into sub-projects that you can install as you need them. For this example, we will be working with `@storybook/react`.
-**Note:** You need to `yarn link` from inside the subproject you are working on **_NOT_** the storybook root directory
+
+**_Note:_** You need to `yarn link` from inside the subproject you are working on **_NOT_** the storybook root directory.
 
 1.  `cd app/react`
 2.  `yarn link`
@@ -310,7 +312,7 @@ First we are going to install storybook, then we are going to link `@storybook/r
 
 ##### 2. Link
 
-**_Note_**: This process is the same for `@storybook/vue`, `@storybook/addon-foo`, etc
+**_Note:_** This process is the same for `@storybook/vue`, `@storybook/addon-foo`, etc
 
 1.  Go to your storybook _root_ directory
 2.  `yarn dev`
@@ -323,9 +325,9 @@ First we are going to install storybook, then we are going to link `@storybook/r
 
 You should now have a working storybook dev environment up and running.
 
-Save and go to `http://localhost:9011` (or wherever storybook is running)
+Save and go to `http://localhost:9011` (or wherever storybook is running).
 
-If you don't see the changes rerun `yarn storybook` again in your sandbox app
+If you don't see the changes rerun `yarn storybook` again in your sandbox app.
 
 ### Documentation
 
@@ -345,9 +347,9 @@ The current manual release sequence is as follows:
 - Generate a changelog and verify the release by hand
 - Push the changelog to master or the release branch
 - Clean, build and publish the release
-- Cut and paste the changelog to the github release page, and mark it as a (pre-) release
+- Cut and paste the changelog to the [GitHub release page](https://github.com/storybookjs/storybook/releases), and mark it as a (pre-) release
 
-**NOTE:** The very first time you publish a scoped package (`@storybook/x`) you need to make sure that it's package.json contains the following
+**_Note:_** The very first time you publish a scoped package (`@storybook/x`) you need to make sure that its package.json contains the following
 
 ```js
 "publishConfig": {
@@ -357,7 +359,7 @@ The current manual release sequence is as follows:
 
 This sequence applies to both releases and pre-releases, but differs slightly between the two.
 
-**NOTE: This is a work in progress. Don't try this unless you know what you're doing. We hope to automate this in CI, so this process is designed with that in mind.**
+**_Note:_ This is a work in progress. Don't try this unless you know what you're doing. We hope to automate this in CI, so this process is designed with that in mind.**
 
 #### Prerelease:
 
