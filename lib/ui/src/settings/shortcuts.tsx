@@ -143,10 +143,12 @@ export interface ShortcutsScreenState {
   activeFeature: Feature;
   successField: Feature;
   shortcutKeys: Record<Feature, any>;
+  addonsShortcutLabels?: Record<string, string>;
 }
 
 export interface ShortcutsScreenProps {
   shortcutKeys: Record<Feature, any>;
+  addonsShortcutLabels?: Record<string, string>;
   setShortcut: Function;
   restoreDefaultShortcut: Function;
   restoreAllDefaultShortcuts: Function;
@@ -162,6 +164,7 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
       // As the user interacts with the page, the state stores the temporary, unsaved shortcuts
       // This object also includes the error attached to each shortcut
       shortcutKeys: toShortcutState(props.shortcutKeys),
+      addonsShortcutLabels: props.addonsShortcutLabels,
     };
   }
 
@@ -261,10 +264,10 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
   };
 
   renderKeyInput = () => {
-    const { shortcutKeys } = this.state;
+    const { shortcutKeys, addonsShortcutLabels } = this.state;
     const arr = Object.entries(shortcutKeys).map(([feature, { shortcut }]: [Feature, any]) => (
       <Row key={feature}>
-        <Description>{shortcutLabels[feature]}</Description>
+        <Description>{shortcutLabels[feature] || addonsShortcutLabels[feature]}</Description>
 
         <TextInput
           spellCheck="false"
@@ -272,6 +275,7 @@ class ShortcutsScreen extends Component<ShortcutsScreenProps, ShortcutsScreenSta
           className="modalInput"
           onBlur={this.onBlur}
           onFocus={this.onFocus(feature)}
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           onKeyDown={this.onKeyDown}
           value={shortcut ? shortcutToHumanString(shortcut) : ''}

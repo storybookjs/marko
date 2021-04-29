@@ -1,10 +1,11 @@
 {
   "name": "@storybook/addon-links",
-  "version": "6.2.0-alpha.9",
+  "version": "6.3.0-alpha.16",
   "description": "Link stories together to build demos and prototypes with your UI components",
   "keywords": [
     "addon",
-    "storybook"
+    "storybook",
+    "organize"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/links",
   "bugs": {
@@ -14,6 +15,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/links"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -36,21 +41,21 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.9",
-    "@storybook/client-logger": "6.2.0-alpha.9",
-    "@storybook/core-events": "6.2.0-alpha.9",
+    "@storybook/addons": "6.3.0-alpha.16",
+    "@storybook/client-logger": "6.3.0-alpha.16",
+    "@storybook/core-events": "6.3.0-alpha.16",
     "@storybook/csf": "0.0.1",
-    "@storybook/router": "6.2.0-alpha.9",
-    "@types/qs": "^6.9.0",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/router": "6.3.0-alpha.16",
+    "@types/qs": "^6.9.5",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "prop-types": "^15.7.2",
-    "qs": "^6.6.0",
+    "qs": "^6.10.0",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -67,5 +72,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843",
+  "storybook": {
+    "displayName": "Links",
+    "icon": "https://user-images.githubusercontent.com/263385/101991673-48355c80-3c7c-11eb-9b6e-b627c96a75f6.png",
+    "unsupportedFrameworks": [
+      "marko",
+      "react-native"
+    ]
+  }
 }

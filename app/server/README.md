@@ -247,7 +247,7 @@ To configure controls, simple add `args` and `argTypes` keys to the story JSON m
         "server": { "id": "controls/button" }
       },
       "args": { "button_text": "Push Me", "color": "red" },
-      "argsTypes": { "button_text": { "control": { "type": "color" } } }
+      "argTypes": { "button_text": { "control": { "type": "color" } } }
     },
   ]
 }
@@ -286,7 +286,7 @@ For control over how `@storybook/server` fetches Html from the server you can pr
 ```javascript
 // .storybook/preview.js
 
-const fetchStoryHtml = async (url, path, params) => {
+const fetchStoryHtml = async (url, path, params, context) => {
   // Custom fetch implementation
   // ....
   return html;
@@ -303,9 +303,10 @@ export const parameters = {
 `fetchStoryHtml` should be an async function with the following signature
 
 ```javascript
-type FetchStoryHtmlType = (url: string, id: string, params: any) => Promise<string | Node>;
+type FetchStoryHtmlType = (url: string, id: string, params: any, context: StoryContext) => Promise<string | Node>;
 ```
 
  * url: Server url configured by the `parameters.server.url`
  * id: Id of the story being rendered given by `parameters.server.id`
  * params: Merged story params `parameters.server.params`and story args
+ * context: The context of the story

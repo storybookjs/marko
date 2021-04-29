@@ -16,7 +16,7 @@ describe('Action', () => {
 
     action('test-action')('one');
 
-    expect(getChannelData(channel)[0]).toEqual('one');
+    expect(getChannelData(channel)).toEqual('one');
   });
 
   it('with multiple arguments', () => {
@@ -46,7 +46,7 @@ describe('Depth config', () => {
       },
     });
 
-    expect(getChannelData(channel)[0]).toEqual({
+    expect(getChannelData(channel)).toEqual({
       root: {
         one: {
           two: 'foo',
@@ -76,7 +76,7 @@ describe('Depth config', () => {
       },
     });
 
-    expect(getChannelData(channel)[0]).toEqual({
+    expect(getChannelData(channel)).toEqual({
       root: {
         one: {
           two: {
@@ -111,7 +111,7 @@ describe('allowFunction config', () => {
       },
     });
 
-    expect(getChannelData(channel)[0]).toEqual({
+    expect(getChannelData(channel)).toEqual({
       root: {
         one: {
           a: 1,
@@ -140,7 +140,7 @@ describe('allowFunction config', () => {
       },
     });
 
-    expect(getChannelData(channel)[0]).toEqual({
+    expect(getChannelData(channel)).toEqual({
       root: {
         one: {
           a: 1,

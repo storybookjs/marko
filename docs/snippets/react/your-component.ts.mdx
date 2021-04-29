@@ -2,22 +2,22 @@
 // YourComponent.stories.tsx
 
 import React, { ComponentProps } from 'react';
+
 import { Story } from '@storybook/react';
 
 import { YourComponent } from './YourComponent';
 
-// This default export determines where your story goes in the story list
+//👇 This default export determines where your story goes in the story list
 export default {
   title: 'YourComponent',
   component: YourComponent,
 };
 
-const Template: Story<ComponentProps<typeof YourComponent>> = (args) => (
-  <YourComponent {...args} />
-);
+//👇 We create a “template” of how args map to rendering
+const Template: Story<ComponentProps<typeof YourComponent>> = (args) => <YourComponent {...args} />;
 
 export const FirstStory = Template.bind({});
 FirstStory.args = {
-  /* the args you need here will depend on your component */
+  /*👇 The args you need here will depend on your component */
 };
 ```

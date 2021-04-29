@@ -20,7 +20,7 @@ exports[`Storyshots Button Rounded 1`] = `
      
     
      
-    You clicked
+    Rounded
     : 
     0
   </button>
@@ -63,7 +63,7 @@ exports[`Storyshots Button Square 1`] = `
      
     
      
-    You clicked
+    Square
     : 
     0
   </button>

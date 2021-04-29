@@ -38,7 +38,7 @@ export function extractFunctionName(func: Function, propName: string): string {
 }
 
 const stringResolver: TypeResolver = (rawDefaultProp) => {
-  return createSummaryValue(rawDefaultProp);
+  return createSummaryValue(JSON.stringify(rawDefaultProp));
 };
 
 function generateReactObject(rawDefaultProp: any) {

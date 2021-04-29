@@ -1,0 +1,24 @@
+```js
+// MyComponent.stories.js
+
+import imageFile from './static/image.png';
+
+export default {
+  title: 'img'
+};
+
+const image = {
+  src: imageFile,
+  alt: 'my image'
+};
+
+export const withAnImage = () => {
+  return {
+    setup() {
+       //👇 Returns the content of the image object create above.
+      return { image };
+    },
+    template: `<img v-bind="image"/>`,
+  };
+};
+```

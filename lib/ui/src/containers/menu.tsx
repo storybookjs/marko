@@ -40,6 +40,7 @@ const Shortcut: FunctionComponent<{ keys: string[] }> = ({ keys }) => (
 
 export const useMenu = (
   api: API,
+  isToolshown: boolean,
   isFullscreen: boolean,
   showPanel: boolean,
   showNav: boolean,
@@ -92,6 +93,17 @@ export const useMenu = (
       left: showNav ? <MenuItemIcon icon="check" /> : <MenuItemIcon />,
     }),
     [api, enableShortcuts, shortcutKeys, showNav]
+  );
+
+  const toolbarToogle = useMemo(
+    () => ({
+      id: 'T',
+      title: 'Show toolbar',
+      onClick: () => api.toggleToolbar(),
+      right: enableShortcuts ? <Shortcut keys={shortcutKeys.toolbar} /> : null,
+      left: isToolshown ? <MenuItemIcon icon="check" /> : <MenuItemIcon />,
+    }),
+    [api, enableShortcuts, shortcutKeys, isToolshown]
   );
 
   const addonsToggle = useMemo(
@@ -193,12 +205,27 @@ export const useMenu = (
     [api, enableShortcuts, shortcutKeys]
   );
 
+  const getAddonsShortcuts = (): any[] => {
+    const addonsShortcuts = api.getAddonsShortcuts();
+    const keys = shortcutKeys as any;
+    return Object.entries(addonsShortcuts)
+      .filter(([actionName, { showInMenu }]) => showInMenu)
+      .map(([actionName, { label, action }]) => ({
+        id: actionName,
+        title: label,
+        onClick: () => action(),
+        right: enableShortcuts ? <Shortcut keys={keys[actionName]} /> : null,
+        left: <MenuItemIcon />,
+      }));
+  };
+
   return useMemo(
     () => [
       about,
       ...(api.releaseNotesVersion() ? [releaseNotes] : []),
       shortcuts,
       sidebarToggle,
+      toolbarToogle,
       addonsToggle,
       addonsOrientationToggle,
       fullscreenToggle,
@@ -208,12 +235,14 @@ export const useMenu = (
       prev,
       next,
       collapse,
+      ...getAddonsShortcuts(),
     ],
     [
       about,
       ...(api.releaseNotesVersion() ? [releaseNotes] : []),
       shortcuts,
       sidebarToggle,
+      toolbarToogle,
       addonsToggle,
       addonsOrientationToggle,
       fullscreenToggle,

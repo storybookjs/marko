@@ -1,7 +1,7 @@
 import { Configuration } from 'webpack';
 import { logger } from '@storybook/node-logger';
+import type { Options } from '@storybook/core-common';
 import { isReactScriptsInstalled } from './cra-config';
-import type { StorybookOptions } from './types';
 
 type Preset = string | { name: string };
 
@@ -20,7 +20,7 @@ const checkForNewPreset = (presetsList: Preset[]) => {
   }
 };
 
-export function webpackFinal(config: Configuration, { presetsList }: StorybookOptions) {
+export function webpackFinal(config: Configuration, { presetsList }: Options) {
   if (isReactScriptsInstalled()) {
     checkForNewPreset(presetsList);
   }

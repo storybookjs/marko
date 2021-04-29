@@ -1,4 +1,8 @@
 <script>
+  /**
+   * Control Showcase
+   * @component
+   */
   import Button from '../../components/Button.svelte';
 
   /**

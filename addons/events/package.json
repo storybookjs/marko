@@ -1,12 +1,13 @@
 {
   "name": "@storybook/addon-events",
-  "version": "6.2.0-alpha.9",
+  "version": "6.3.0-alpha.16",
   "description": "Add events to your Storybook stories.",
   "keywords": [
     "addon",
     "events",
     "react",
-    "storybook"
+    "storybook",
+    "data-state"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/events",
   "bugs": {
@@ -16,6 +17,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/events"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -38,21 +43,21 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.9",
-    "@storybook/api": "6.2.0-alpha.9",
-    "@storybook/client-api": "6.2.0-alpha.9",
-    "@storybook/core-events": "6.2.0-alpha.9",
-    "@storybook/theming": "6.2.0-alpha.9",
-    "core-js": "^3.0.1",
+    "@storybook/addons": "6.3.0-alpha.16",
+    "@storybook/api": "6.3.0-alpha.16",
+    "@storybook/client-api": "6.3.0-alpha.16",
+    "@storybook/core-events": "6.3.0-alpha.16",
+    "@storybook/theming": "6.3.0-alpha.16",
+    "core-js": "^3.8.2",
     "format-json": "^1.0.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.20",
     "prop-types": "^15.7.2",
     "react-lifecycles-compat": "^3.0.4",
-    "react-textarea-autosize": "^8.1.1",
+    "react-textarea-autosize": "^8.3.0",
     "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -69,5 +74,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843",
+  "storybook": {
+    "displayName": "Events",
+    "unsupportedFrameworks": [
+      "react-native",
+      "svelte",
+      "riot"
+    ]
+  }
 }

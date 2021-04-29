@@ -228,6 +228,25 @@ initStoryshots({ suite: 'A11y checks', test: axeTest() });
 
 For configuration, it uses the same `story.parameters.a11y` parameter as [`@storybook/addon-a11y`](https://github.com/storybookjs/storybook/tree/next/addons/a11y#parameters)
 
+### Specifying options to `axeTest`
+
+```js
+import initStoryshots from '@storybook/addon-storyshots';
+import { axeTest } from '@storybook/addon-storyshots-puppeteer';
+
+const beforeAxeTest = (page, { context: { kind, story }, url }) => {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      resolve();
+    }, 600)
+  );
+};
+
+initStoryshots({ suite: 'A11y checks', test: axeTest({ beforeAxeTest }) });
+```
+
+`beforeAxeTest` receives the [Puppeteer page instance](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#class-page) and an object: `{ context: {kind, story}, url}`. _kind_ is the kind of the story and the _story_ its name. _url_ is the URL the browser will use to screenshot. `beforeAxeTest` is part of the promise chain and is called after the browser navigation is completed but before the screenshot is taken. It allows for triggering events on the page elements and delaying the axe test .
+
 ## _imageSnapshots_
 
 Generates and compares screenshots of your stories using [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot).

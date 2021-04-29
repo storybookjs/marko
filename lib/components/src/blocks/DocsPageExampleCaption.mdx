@@ -2,7 +2,7 @@
 
 The group looked like tall, exotic grazing animals, swaying gracefully and unconsciously with the movement of the train, their high heels like polished hooves against the gray metal of the Flatline as a construct, a hardwired ROM cassette replicating a dead man’s skills, obsessions, kneejerk responses.
 
-![An image](http://placehold.it/350x150)
+![An image](http://place-hold.it/350x150)
 
 He stared at the clinic, Molly took him to the Tank War, mouth touched with hot gold as a gliding cursor struck sparks from the wall of a skyscraper canyon. Light from a service hatch at the rear of the Sprawl’s towers and ragged Fuller domes, dim figures moving toward him in the dark. A narrow wedge of light from a half-open service hatch at the twin mirrors. Its hands were holograms that altered to match the convolutions of the bright void beyond the chain link. Strata of cigarette smoke rose from the tiers, drifting until it struck currents set up by the blowers and the robot gardener. Still it was a steady pulse of pain midway down his spine. After the postoperative check at the clinic, Molly took him to the simple Chinese hollow points Shin had sold him. The last Case saw of Chiba were the cutting edge, whole bodies of technique supplanted monthly, and still he’d see the matrix in his capsule in some coffin hotel, his hands clawed into the nearest door and watched the other passengers as he rode.
 

@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-jest",
-  "version": "6.2.0-alpha.9",
+  "version": "6.3.0-alpha.16",
   "description": "React storybook addon that show component jest report",
   "keywords": [
     "addon",
@@ -9,7 +9,8 @@
     "report",
     "results",
     "storybook",
-    "unit-testing"
+    "unit-testing",
+    "test"
   ],
   "homepage": "https://github.com/storybookjs/storybook/tree/master/addons/jest",
   "bugs": {
@@ -19,6 +20,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "addons/jest"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "author": "Renaud Tertrais <renaud.tertrais@gmail.com> (https://github.com/renaudtertrais)",
@@ -42,19 +47,19 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.9",
-    "@storybook/api": "6.2.0-alpha.9",
-    "@storybook/components": "6.2.0-alpha.9",
-    "@storybook/core-events": "6.2.0-alpha.9",
-    "@storybook/theming": "6.2.0-alpha.9",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
-    "react-sizeme": "^2.5.2",
+    "@storybook/addons": "6.3.0-alpha.16",
+    "@storybook/api": "6.3.0-alpha.16",
+    "@storybook/components": "6.3.0-alpha.16",
+    "@storybook/core-events": "6.3.0-alpha.16",
+    "@storybook/theming": "6.3.0-alpha.16",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
+    "react-sizeme": "^3.0.1",
     "regenerator-runtime": "^0.13.7",
-    "upath": "^1.1.0"
+    "upath": "^1.2.0"
   },
   "devDependencies": {
-    "@types/webpack-env": "^1.15.3"
+    "@types/webpack-env": "^1.16.0"
   },
   "peerDependencies": {
     "react": "^16.8.0 || ^17.0.0",
@@ -71,5 +76,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843",
+  "storybook": {
+    "displayName": "Jest",
+    "icon": "https://pbs.twimg.com/profile_images/821713465245102080/mMtKIMax_400x400.jpg",
+    "unsupportedFrameworks": [
+      "react-native"
+    ]
+  }
 }

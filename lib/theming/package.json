@@ -1,6 +1,6 @@
 {
   "name": "@storybook/theming",
-  "version": "6.2.0-alpha.9",
+  "version": "6.3.0-alpha.16",
   "description": "Core Storybook Components",
   "keywords": [
     "storybook"
@@ -13,6 +13,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "lib/theming"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "sideEffects": false,
@@ -38,14 +42,14 @@
   "dependencies": {
     "@emotion/core": "^10.1.1",
     "@emotion/is-prop-valid": "^0.8.6",
-    "@emotion/styled": "^10.0.23",
-    "@storybook/client-logger": "6.2.0-alpha.9",
-    "core-js": "^3.0.1",
+    "@emotion/styled": "^10.0.27",
+    "@storybook/client-logger": "6.3.0-alpha.16",
+    "core-js": "^3.8.2",
     "deep-object-diff": "^1.1.0",
-    "emotion-theming": "^10.0.19",
-    "global": "^4.3.2",
+    "emotion-theming": "^10.0.27",
+    "global": "^4.4.0",
     "memoizerific": "^1.11.3",
-    "polished": "^3.4.4",
+    "polished": "^4.0.5",
     "resolve-from": "^5.0.0",
     "ts-dedent": "^2.0.0"
   },
@@ -56,5 +60,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843"
 }

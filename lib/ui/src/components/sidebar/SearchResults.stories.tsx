@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoriesHash } from '@storybook/api';
+import type { StoriesHash } from '@storybook/api';
 
 import { mockDataset } from './mockdata';
 import { SearchResults } from './SearchResults';

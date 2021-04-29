@@ -1,7 +1,7 @@
 import webpack from 'webpack';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import type { Options } from '@storybook/core-common';
 import * as preset from './framework-preset-react';
-import type { StorybookOptions } from './types';
 
 const mockApply = jest.fn();
 jest.mock('@pmmmwh/react-refresh-webpack-plugin', () => {
@@ -20,9 +20,10 @@ describe('framework-preset-react', () => {
   };
   const babelConfigMock = {};
 
-  const storybookOptions: Partial<StorybookOptions> = {
+  const storybookOptions: Partial<Options> = {
     configType: 'DEVELOPMENT',
     presets: {
+      // @ts-ignore
       apply: async () => ({
         fastRefresh: true,
       }),
@@ -30,9 +31,10 @@ describe('framework-preset-react', () => {
     presetsList: [],
   };
 
-  const storybookOptionsDisabledRefresh: Partial<StorybookOptions> = {
+  const storybookOptionsDisabledRefresh: Partial<Options> = {
     configType: 'DEVELOPMENT',
     presets: {
+      // @ts-ignore
       apply: async () => ({
         fastRefresh: false,
       }),
@@ -41,7 +43,7 @@ describe('framework-preset-react', () => {
 
   describe('babel', () => {
     it('should return a config with fast refresh plugin when fast refresh is enabled', async () => {
-      const config = await preset.babel(babelConfigMock, storybookOptions as StorybookOptions);
+      const config = await preset.babel(babelConfigMock, storybookOptions as Options);
 
       expect(config.plugins).toEqual([[reactRefreshPath, {}, 'storybook-react-refresh']]);
     });
@@ -49,7 +51,7 @@ describe('framework-preset-react', () => {
     it('should return unchanged config without fast refresh plugin when fast refresh is disabled', async () => {
       const config = await preset.babel(
         babelConfigMock,
-        storybookOptionsDisabledRefresh as StorybookOptions
+        storybookOptionsDisabledRefresh as Options
       );
 
       expect(config).toEqual(babelConfigMock);
@@ -59,7 +61,7 @@ describe('framework-preset-react', () => {
       const config = await preset.babel(babelConfigMock, {
         ...storybookOptions,
         configType: 'PRODUCTION',
-      } as StorybookOptions);
+      } as Options);
 
       expect(config).toEqual(babelConfigMock);
     });
@@ -67,10 +69,7 @@ describe('framework-preset-react', () => {
 
   describe('webpackFinal', () => {
     it('should return a config with fast refresh plugin when fast refresh is enabled', async () => {
-      const config = await preset.webpackFinal(
-        webpackConfigMock,
-        storybookOptions as StorybookOptions
-      );
+      const config = await preset.webpackFinal(webpackConfigMock, storybookOptions as Options);
 
       expect(config.plugins).toEqual([new ReactRefreshWebpackPlugin()]);
     });
@@ -78,7 +77,7 @@ describe('framework-preset-react', () => {
     it('should return unchanged config without fast refresh plugin when fast refresh is disabled', async () => {
       const config = await preset.webpackFinal(
         webpackConfigMock,
-        storybookOptionsDisabledRefresh as StorybookOptions
+        storybookOptionsDisabledRefresh as Options
       );
 
       expect(config).toEqual(webpackConfigMock);
@@ -88,7 +87,7 @@ describe('framework-preset-react', () => {
       const config = await preset.webpackFinal(webpackConfigMock, {
         ...storybookOptions,
         configType: 'PRODUCTION',
-      } as StorybookOptions);
+      } as Options);
 
       expect(config).toEqual(webpackConfigMock);
     });

@@ -6,9 +6,9 @@ import { RenderContext, FetchStoryHtmlType } from './types';
 
 const rootElement = document.getElementById('root');
 
-const defaultFetchStoryHtml: FetchStoryHtmlType = async (url, path, params) => {
+const defaultFetchStoryHtml: FetchStoryHtmlType = async (url, path, params, storyContext) => {
   const fetchUrl = new URL(`${url}/${path}`);
-  fetchUrl.search = new URLSearchParams(params).toString();
+  fetchUrl.search = new URLSearchParams({ ...storyContext.globals, ...params }).toString();
 
   const response = await fetch(fetchUrl);
   return response.text();
@@ -52,6 +52,7 @@ export async function renderMain({
   showError,
   forceRender,
   parameters,
+  storyContext,
   storyFn,
   args,
   argTypes,
@@ -65,8 +66,8 @@ export async function renderMain({
   } = parameters;
 
   const fetchId = storyId || id;
-  const fetchParams = { ...params, ...storyArgs };
-  const element = await fetchStoryHtml(url, fetchId, fetchParams);
+  const storyParams = { ...params, ...storyArgs };
+  const element = await fetchStoryHtml(url, fetchId, storyParams, storyContext);
 
   showMain();
   if (typeof element === 'string') {

@@ -6,6 +6,7 @@ module.exports = {
   addons: [
     '@storybook/addon-storysource',
     '@storybook/addon-actions',
+    '@storybook/addon-docs',
     '@storybook/addon-links',
     '@storybook/addon-knobs',
     '@storybook/addon-viewport',
@@ -15,10 +16,13 @@ module.exports = {
   webpackFinal: (config) => {
     config.module.rules.push({
       test: [/\.stories\.js$/],
-      loaders: [require.resolve('@storybook/source-loader')],
+      use: [require.resolve('@storybook/source-loader')],
       include: [path.resolve(__dirname, '../src')],
       enforce: 'pre',
     });
     return config;
+  },
+  core: {
+    builder: 'webpack4',
   },
 };

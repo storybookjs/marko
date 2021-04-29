@@ -20,7 +20,7 @@ const inferType = (value: any, name: string, visited: Set<any>): SBType => {
   if (value) {
     if (visited.has(value)) {
       logger.warn(dedent`
-        We've detected a cycle in arg '${name}'. Args should be JSON-serializable (-ish, functions are ok).
+        We've detected a cycle in arg '${name}'. Args should be JSON-serializable.
 
         More info: https://storybook.js.org/docs/react/essentials/controls#fully-custom-args
       `);

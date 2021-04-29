@@ -1,12 +1,19 @@
 import { NpmOptions } from '../NpmOptions';
-import { StoryFormat, SupportedLanguage, SupportedFrameworks } from '../project_types';
+import {
+  StoryFormat,
+  SupportedLanguage,
+  SupportedFrameworks,
+  Builder,
+  CoreBuilder,
+} from '../project_types';
 import { getBabelDependencies, copyComponents } from '../helpers';
 import { configure } from './configure';
-import { JsPackageManager } from '../js-package-manager';
+import { getPackageDetails, JsPackageManager } from '../js-package-manager';
 
 export type GeneratorOptions = {
   language: SupportedLanguage;
   storyFormat: StoryFormat;
+  builder: Builder;
 };
 
 export interface FrameworkOptions {
@@ -17,6 +24,9 @@ export interface FrameworkOptions {
   addComponents?: boolean;
   addBabel?: boolean;
   addESLint?: boolean;
+  extraMain?: any;
+  extensions?: string[];
+  commonJs?: boolean;
 }
 
 export type Generator = (
@@ -33,12 +43,26 @@ const defaultOptions: FrameworkOptions = {
   addComponents: true,
   addBabel: true,
   addESLint: false,
+  extraMain: undefined,
+  extensions: undefined,
+  commonJs: false,
+};
+
+const builderDependencies = (builder: Builder) => {
+  switch (builder) {
+    case CoreBuilder.Webpack4:
+      return [];
+    case CoreBuilder.Webpack5:
+      return ['@storybook/builder-webpack5'];
+    default:
+      return [builder];
+  }
 };
 
 export async function baseGenerator(
   packageManager: JsPackageManager,
   npmOptions: NpmOptions,
-  { language }: GeneratorOptions,
+  { language, builder }: GeneratorOptions,
   framework: SupportedFrameworks,
   options: FrameworkOptions = defaultOptions
 ) {
@@ -50,6 +74,8 @@ export async function baseGenerator(
     addComponents,
     addBabel,
     addESLint,
+    extraMain,
+    extensions,
   } = {
     ...defaultOptions,
     ...options,
@@ -64,21 +90,43 @@ export async function baseGenerator(
   const yarn2Dependencies =
     packageManager.type === 'yarn2' ? ['@storybook/addon-docs', '@mdx-js/react'] : [];
 
+  const packageJson = packageManager.retrievePackageJson();
+  const installedDependencies = new Set(Object.keys(packageJson.dependencies));
+
   const packages = [
     `@storybook/${framework}`,
     ...addonPackages,
     ...extraPackages,
     ...extraAddons,
     ...yarn2Dependencies,
-  ].filter(Boolean);
+    ...builderDependencies(builder),
+  ]
+    .filter(Boolean)
+    .filter(
+      (packageToInstall) => !installedDependencies.has(getPackageDetails(packageToInstall)[0])
+    );
+
   const versionedPackages = await packageManager.getVersionedPackages(...packages);
 
-  configure(framework, [...addons, ...extraAddons]);
+  const mainOptions =
+    builder !== CoreBuilder.Webpack4
+      ? {
+          core: {
+            builder,
+          },
+          ...extraMain,
+        }
+      : extraMain;
+  configure(framework, {
+    addons: [...addons, ...extraAddons],
+    extensions,
+    commonJs: options.commonJs,
+    ...mainOptions,
+  });
   if (addComponents) {
     copyComponents(framework, language);
   }
 
-  const packageJson = packageManager.retrievePackageJson();
   const babelDependencies = addBabel ? await getBabelDependencies(packageManager, packageJson) : [];
   packageManager.addDependencies({ ...npmOptions, packageJson }, [
     ...versionedPackages,

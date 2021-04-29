@@ -1,6 +1,6 @@
 import { ClientStoryApi, Loadable } from '@storybook/addons';
 
-export { RenderContext } from '@storybook/core';
+export type { RenderContext } from '@storybook/core';
 
 export type StoryFnPreactReturnType = string | Node | preact.JSX.Element;
 

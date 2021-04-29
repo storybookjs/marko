@@ -1,6 +1,6 @@
 ```ts
 // vue/src/client/preview/globals.ts
 
-import { window } from 'global';
-window.STORYBOOK_ENV = 'vue';
+import { window as globalWindow } from 'global';
+globalWindow.STORYBOOK_ENV = 'vue';
 ```

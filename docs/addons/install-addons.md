@@ -41,7 +41,7 @@ Storybook preset addons are grouped collections of specific `babel`,`webpack` an
 For example, to use SCSS styling, run the following command to install the addon and the required dependencies:
 
 ```sh
-yarn add -D @storybook/preset-scss css-loader sass-loader style-loader
+yarn add -D @storybook/preset-scss css-loader sass sass-loader style-loader
 ```
 
 Next, update [`.storybook/main.js`](../configure/overview.md#configure-story-rendering) to the following:

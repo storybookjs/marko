@@ -1,3 +1,4 @@
+/* eslint-disable func-names */
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import { logger } from '@storybook/node-logger';
 

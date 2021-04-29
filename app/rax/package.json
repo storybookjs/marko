@@ -1,6 +1,6 @@
 {
   "name": "@storybook/rax",
-  "version": "6.2.0-alpha.9",
+  "version": "6.3.0-alpha.16",
   "description": "Storybook for Rax: Develop Rax Component in isolation.",
   "keywords": [
     "rax",
@@ -14,6 +14,10 @@
     "type": "git",
     "url": "https://github.com/storybookjs/storybook.git",
     "directory": "app/rax"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
   },
   "license": "MIT",
   "main": "dist/cjs/client/index.js",
@@ -42,19 +46,21 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/core": "6.2.0-alpha.9",
+    "@storybook/core": "6.3.0-alpha.16",
+    "@storybook/core-common": "6.3.0-alpha.16",
     "babel-preset-rax": "^1.0.0-beta.0",
-    "core-js": "^3.0.1",
-    "driver-dom": "^2.0.0",
-    "global": "^4.3.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
+    "core-js": "^3.8.2",
+    "driver-dom": "^2.2.0",
+    "global": "^4.4.0",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
     "read-pkg-up": "^7.0.1",
     "regenerator-runtime": "^0.13.7",
     "ts-dedent": "^2.0.0"
   },
   "devDependencies": {
-    "rax": "^1.1.0"
+    "@types/rax": "^1.0.2",
+    "rax": "^1.2.0"
   },
   "peerDependencies": {
     "@babel/core": "*",
@@ -63,5 +69,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "47341be6aa61d4fb38f2c0e058af32f1acb8e0a7"
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843"
 }

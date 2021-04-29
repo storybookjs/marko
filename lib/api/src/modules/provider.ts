@@ -2,9 +2,15 @@ import { ReactNode } from 'react';
 import { Channel } from '@storybook/channels';
 import { ThemeVars } from '@storybook/theming';
 
-import { API, State, ModuleFn } from '../index';
+import { API, State, ModuleFn, Root, Group, Story } from '../index';
 import { StoryMapper, Refs } from './refs';
 import { UIOptions } from './layout';
+
+interface SidebarOptions {
+  showRoots?: boolean;
+  collapsedRoots?: string[];
+  renderLabel?: (item: Root | Group | Story) => ReactNode;
+}
 
 type IframeRenderer = (
   storyId: string,
@@ -20,6 +26,7 @@ export interface Provider {
   renderPreview?: IframeRenderer;
   handleAPI(api: API): void;
   getConfig(): {
+    sidebar?: SidebarOptions;
     theme?: ThemeVars;
     refs?: Refs;
     StoryMapper?: StoryMapper;

@@ -31,6 +31,7 @@ describe('docs-mdx-compiler-plugin', () => {
     .filter((fileName) => inputRegExp.test(fileName))
     .filter((fileName) => fileName !== 'story-missing-props.mdx')
     .forEach((fixtureFile) => {
+      // eslint-disable-next-line jest/valid-title
       it(fixtureFile, async () => {
         const inputPath = path.join(transformFixturesDir, fixtureFile);
         const code = await generate(inputPath);

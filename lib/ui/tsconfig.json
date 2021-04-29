@@ -7,5 +7,10 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"]
   },
   "include": ["src/**/*"],
-  "exclude": ["src/**/*.test.*", "src/__tests__/**/*", "src/**/*.stories.*"]
+  "exclude": [
+    "src/**/*.test.*",
+    "src/**/__tests__/**/*",
+    "src/**/*.stories.*",
+    "src/**/*.mockdata.*"
+  ]
 }

@@ -1,5 +1,5 @@
 import '@wordpress/jest-puppeteer-axe';
-import { defaultCommonConfig, CommonConfig } from './config';
+import { defaultAxeConfig, AxeConfig } from './config';
 import { puppeteerTest } from './puppeteerTest';
 
 declare global {
@@ -11,13 +11,17 @@ declare global {
   }
 }
 
-export const axeTest = (customConfig: Partial<CommonConfig> = {}) =>
+export const axeTest = (customConfig: Partial<AxeConfig> = {}) => {
+  const config = { ...defaultAxeConfig, ...customConfig };
+  const { beforeAxeTest } = config;
+
   puppeteerTest({
-    ...defaultCommonConfig,
-    ...customConfig,
+    ...config,
     async testBody(page, options) {
       const parameters = options.context.parameters.a11y;
       const include = parameters?.element ?? '#root';
+      await beforeAxeTest(page, options);
       await expect(page).toPassAxeTests({ ...parameters, include });
     },
   });
+};

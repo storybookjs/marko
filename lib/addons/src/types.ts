@@ -53,6 +53,7 @@ export interface StoryIdentifier {
   name: StoryName;
 }
 
+export type StoryContextUpdate = Partial<StoryContext>;
 export type StoryContext = StoryIdentifier & {
   [key: string]: any;
   parameters: Parameters;
@@ -93,8 +94,13 @@ export interface OptionsParameter extends Object {
 
 export type StoryGetter = (context: StoryContext) => any;
 
+// This is the type of story function passed to a decorator -- does not rely on being passed any context
+export type PartialStoryFn<ReturnType = unknown> = (p?: StoryContextUpdate) => ReturnType;
+// This is a passArgsFirst: false user story function
 export type LegacyStoryFn<ReturnType = unknown> = (p?: StoryContext) => ReturnType;
+// This is a passArgsFirst: true user story function
 export type ArgsStoryFn<ReturnType = unknown> = (a?: Args, p?: StoryContext) => ReturnType;
+// This is either type of user story function
 export type StoryFn<ReturnType = unknown> = LegacyStoryFn<ReturnType> | ArgsStoryFn<ReturnType>;
 
 export type StoryWrapper = (
@@ -136,16 +142,16 @@ export interface StoryApi<StoryFnReturnType = unknown> {
 }
 
 export type DecoratorFunction<StoryFnReturnType = unknown> = (
-  fn: StoryFn<StoryFnReturnType>,
+  fn: PartialStoryFn<StoryFnReturnType>,
   c: StoryContext
-) => ReturnType<StoryFn<StoryFnReturnType>>;
+) => ReturnType<LegacyStoryFn<StoryFnReturnType>>;
 
 export type LoaderFunction = (c: StoryContext) => Promise<Record<string, any>>;
 
 export type DecorateStoryFunction<StoryFnReturnType = unknown> = (
-  storyFn: StoryFn<StoryFnReturnType>,
+  storyFn: LegacyStoryFn<StoryFnReturnType>,
   decorators: DecoratorFunction<StoryFnReturnType>[]
-) => StoryFn<StoryFnReturnType>;
+) => LegacyStoryFn<StoryFnReturnType>;
 
 export interface ClientStoryApi<StoryFnReturnType = unknown> {
   storiesOf(kind: StoryKind, module: NodeModule): StoryApi<StoryFnReturnType>;
@@ -163,10 +169,10 @@ export type BaseDecorators<StoryFnReturnType> = Array<
   (story: () => StoryFnReturnType, context: StoryContext) => StoryFnReturnType
 >;
 
-export interface Annotations<Args, StoryFnReturnType> {
+export interface BaseAnnotations<Args, StoryFnReturnType> {
   /**
    * Dynamic data that are provided (and possibly updated by) Storybook and its addons.
-   * @see [Arg story inputs](https://github.com/storybookjs/storybook/blob/next/docs/src/pages/formats/component-story-format/index.md#args-story-inputs)
+   * @see [Arg story inputs](https://storybook.js.org/docs/react/api/csf#args-story-inputs)
    */
   args?: Partial<Args>;
 
@@ -189,7 +195,10 @@ export interface Annotations<Args, StoryFnReturnType> {
    * @see [Decorators](https://storybook.js.org/docs/addons/introduction/#1-decorators)
    */
   decorators?: BaseDecorators<StoryFnReturnType>;
+}
 
+export interface Annotations<Args, StoryFnReturnType>
+  extends BaseAnnotations<Args, StoryFnReturnType> {
   /**
    * Used to only include certain named exports as stories. Useful when you want to have non-story exports such as mock data or ignore a few stories.
    * @example
