@@ -28,11 +28,11 @@ You can also build a [static version](https://storybook.js.org/docs/vue/workflow
 
 ## Vue Notes
 
-- When using global custom components or extension (e.g `Vue.use`). You will need to declare those in the `./storybook/preview.js`.
+- When using global custom components or extensions (e.g., `Vue.use`). You will need to declare those in the `./storybook/preview.js`.
 
 ## Known Limitations
 
-In Storybook story and decorator components you can not access the Vue instance
+In Storybook story and decorator components, you can not access the Vue instance
 in factory functions for default prop values:
 
 ```js
