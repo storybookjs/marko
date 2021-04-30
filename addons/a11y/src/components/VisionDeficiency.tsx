@@ -9,9 +9,9 @@ const iframeId = 'storybook-preview-iframe';
 const baseList = [
   'blurred vision',
   'deuteranomaly',
+  'deuteranopia',
   'protanomaly',
   'protanopia',
-  'deuteranopia',
   'tritanomaly',
   'tritanopia',
   'achromatomaly',
