@@ -1195,6 +1195,84 @@ describe('preview.story_store', () => {
       ]);
     });
 
+    it('sorts stories in specified order including story names or configure', () => {
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'configure',
+              order: ['b', ['bc', 'ba', 'bb'], 'a', 'c'],
+              includeNames: true,
+            },
+          },
+        },
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
+
+      const extracted = store.extract();
+
+      expect(Object.keys(extracted)).toEqual([
+        'b-bc--1',
+        'b-ba--1',
+        'b-bb--1',
+        'b-bd--1',
+        'b--1',
+        'a-b--1',
+        'a--2',
+        'a--1',
+        'c--1',
+      ]);
+    });
+
+    it('sorts stories in specified order including story names or alphabetically', () => {
+      const store = new StoryStore({ channel });
+      store.addGlobalMetadata({
+        decorators: [],
+        parameters: {
+          options: {
+            storySort: {
+              method: 'alphabetical',
+              order: ['b', ['bc', 'ba', 'bb'], 'a', 'c'],
+              includeNames: true,
+            },
+          },
+        },
+      });
+      addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
+      addStoryToStore(store, 'a', '1', () => 0);
+      addStoryToStore(store, 'c', '1', () => 0);
+      addStoryToStore(store, 'b/bd', '1', () => 0);
+      addStoryToStore(store, 'b/bb', '1', () => 0);
+      addStoryToStore(store, 'b/ba', '1', () => 0);
+      addStoryToStore(store, 'b/bc', '1', () => 0);
+      addStoryToStore(store, 'b', '1', () => 0);
+
+      const extracted = store.extract();
+
+      expect(Object.keys(extracted)).toEqual([
+        'b-bc--1',
+        'b-ba--1',
+        'b-bb--1',
+        'b--1',
+        'b-bd--1',
+        'a--1',
+        'a--2',
+        'a-b--1',
+        'c--1',
+      ]);
+    });
+
     it('passes kind and global parameters to sort', () => {
       const store = new StoryStore({ channel });
       const storySort = jest.fn();
