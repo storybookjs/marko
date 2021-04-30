@@ -1,3 +1,21 @@
+## 6.3.0-alpha.17 (April 30, 2021)
+
+### Features
+
+- Core: Add option to include story names when sorting ([#12520](https://github.com/storybookjs/storybook/pull/12520))
+- Addon-actions: Add 'New Action' indicator ([#14728](https://github.com/storybookjs/storybook/pull/14728))
+- Addon-docs: Add parameter to show code by default ([#14729](https://github.com/storybookjs/storybook/pull/14729))
+
+### Bug Fixes
+
+- Addon-docs: Add classnames for Preview block ([#14685](https://github.com/storybookjs/storybook/pull/14685))
+- UI: Fix toolbar text using theme color ([#14308](https://github.com/storybookjs/storybook/pull/14308))
+
+### Maintenance
+
+- Core: Protect core metadata from decorators ([#13512](https://github.com/storybookjs/storybook/pull/13512))
+- Addon-a11y: Reorder color blindness types by most common ([#14768](https://github.com/storybookjs/storybook/pull/14768))
+
 ## 6.3.0-alpha.16 (April 29, 2021)
 
 ### Bug Fixes
