@@ -459,7 +459,7 @@ function extractExports(root, options) {
 
   const defaultJsx = mdxToJsx.toJSX(root, {}, { ...options, skipExport: true });
   const fullJsx = [
-    'import { assertIsFn, AddContext } from "@storybook/addon-docs/blocks";',
+    'import { assertIsFn, AddContext } from "@storybook/addon-docs";',
     defaultJsx,
     ...storyExports,
     `const componentMeta = ${stringifyMeta(metaExport)};`,
