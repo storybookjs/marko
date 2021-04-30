@@ -8,7 +8,7 @@ addons.register(ADDON_ID, (api) => {
   addons.addPanel(PANEL_ID, {
     title() {
       const [actionsCount, setActionsCount] = useState(0);
-      const onEvent = () => setActionsCount(actionsCount + 1);
+      const onEvent = () => setActionsCount(previous => previous + 1);
       const onChange = () => setActionsCount(0);
 
       useEffect(() => {
