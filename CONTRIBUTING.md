@@ -32,7 +32,7 @@ yarn bootstrap
 
 > **_Note:_** On Windows, you may need to run `yarn` before `yarn bootstrap`!
 
-The bootstrap command might ask which sections of the codebase you want to bootstrap. Unless you're going to work with ReactNative or the Documentation, you can keep the default.
+The bootstrap command might ask which sections of the codebase you want to bootstrap. Unless you're doing something special you can keep the default.
 
 You can also pick directly from CLI:
 
@@ -248,10 +248,15 @@ If you run into trouble here, make sure your node, npm, and **_yarn_** are on th
 2.  `git clone https://github.com/storybookjs/storybook.git` _bonus_: use your own fork for this step
 3.  `cd storybook`
 4.  `yarn bootstrap --core`
-5.  `yarn test`
-6.  `yarn dev` _You must have this running for your changes to show up_
 
 > **_Note:_** On Windows, you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).
+
+This builds the entire project statically, but when you're updating Storybook code it's nice to see those changes show up in the example apps under `examples`. There are two ways to do this:
+
+1.  `yarn dev`
+2.  OR `yarn build <package1> <package2> --watch`
+
+The former watches ALL packages, which is extremely slow. The latter only watches a fixed list of packages, e.g. `yarn build add-docs components --watch` to build `@storybook/addon-docs` and `@storybook/components`. This is much more practical on slower machines or if you know ahead of time the packages you'll be updating.
 
 #### Bootstrapping everything
 
