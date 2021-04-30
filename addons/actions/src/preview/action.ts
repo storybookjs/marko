@@ -14,11 +14,12 @@ export function action(name: string, options: ActionOptions = {}): HandlerFuncti
     const channel = addons.getChannel();
     const id = uuidv4();
     const minDepth = 5; // anything less is really just storybook internals
+    const normalizedArgs = args.length > 1 ? args : args[0];
 
     const actionDisplayToEmit: ActionDisplay = {
       id,
       count: 0,
-      data: { name, args },
+      data: { name, args: normalizedArgs },
       options: {
         ...actionOptions,
         depth: minDepth + (actionOptions.depth || 3),

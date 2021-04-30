@@ -1,4 +1,3 @@
-import { addParameters, addDecorator } from '@storybook/angular';
 import { setCompodocJson } from '@storybook/addon-docs/angular';
 import addCssWarning from '../src/cssWarning';
 
@@ -16,9 +15,42 @@ setCompodocJson(filtered);
 
 addCssWarning();
 
-addParameters({
+export const parameters = {
   docs: {
-    // inlineStories: true,
-    iframeHeight: '60px',
+    inlineStories: true,
   },
-});
+  options: {
+    storySort: {
+      order: ['Welcome', 'Core ', 'Addons ', 'Basics '],
+    },
+  },
+};
+
+export const globalTypes = {
+  theme: {
+    name: 'Theme',
+    description: 'Global theme for components',
+    defaultValue: 'light',
+    toolbar: {
+      icon: 'paintbrush',
+      items: [
+        { value: 'light', title: 'Light theme' },
+        { value: 'dark', title: 'Dark theme' },
+      ],
+    },
+  },
+  locale: {
+    name: 'Locale',
+    description: 'Internationalization locale',
+    defaultValue: 'en',
+    toolbar: {
+      icon: 'globe',
+      items: [
+        { value: 'en', right: '🇺🇸', title: 'English' },
+        { value: 'es', right: '🇪🇸', title: 'Español' },
+        { value: 'zh', right: '🇨🇳', title: '中文' },
+        { value: 'kr', right: '🇰🇷', title: '한국어' },
+      ],
+    },
+  },
+};

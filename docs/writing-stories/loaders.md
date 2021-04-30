@@ -19,6 +19,7 @@ Loaders are useful when you need to load story data externally, e.g. from a remo
 <CodeSnippets
   paths={[
     'react/loader-story.js.mdx',
+    'svelte/loader-story.js.mdx',
   ]}
 />
 
@@ -35,6 +36,7 @@ We can also set a loader for **all stories** via the `loaders` export of your [`
 <CodeSnippets
   paths={[
     'react/storybook-preview-global-loader.js.mdx',
+    'svelte/storybook-preview-global-loader.js.mdx',
   ]}
 />
 

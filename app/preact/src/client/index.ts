@@ -8,3 +8,5 @@ export {
   forceReRender,
   raw,
 } from './preview';
+
+export * from './preview/types-6-0';

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 import { styled } from '@storybook/theming';
 import EventEmitter from 'eventemitter3';
-import uuid from 'uuid/v4';
+import uuid from 'uuid-browser/v4';
 
 const Wrapper = styled.div({
   padding: 20,

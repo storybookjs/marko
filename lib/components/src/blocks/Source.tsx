@@ -71,4 +71,4 @@ const Source: FunctionComponent<SourceProps> = (props) => {
 Source.defaultProps = {
   format: false,
 };
-export { Source };
+export { Source, StyledSyntaxHighlighter };

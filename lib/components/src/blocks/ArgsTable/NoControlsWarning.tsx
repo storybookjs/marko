@@ -12,13 +12,14 @@ const NoControlsWrapper = styled.div(({ theme }) => ({
 
 export const NoControlsWarning = () => (
   <NoControlsWrapper>
-    This story is not configured to handle controls.&nbsp;
+    This story is not configured to handle controls.{' '}
     <Link
-      href="https://github.com/storybookjs/storybook/blob/next/addons/controls/README.md#writing-stories"
+      href="https://storybook.js.org/docs/react/essentials/controls"
       target="_blank"
       cancel={false}
+      withArrow
     >
-      Learn how to add controls »
+      Learn how to add controls
     </Link>
   </NoControlsWrapper>
 );

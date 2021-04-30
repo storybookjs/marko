@@ -20,7 +20,7 @@ exports[`Storyshots Addon/Docs rounded 1`] = `
      
     
      
-    You clicked
+    Rounded text
     : 
     0
   </button>
@@ -63,7 +63,7 @@ exports[`Storyshots Addon/Docs square 1`] = `
      
     
      
-    You clicked
+    Squared text
     : 
     0
   </button>

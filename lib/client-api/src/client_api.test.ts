@@ -658,6 +658,18 @@ describe('preview.client_api', () => {
           expect(entry.stories[0].render()).toBe('story2');
         }
       });
+
+      it('should throw an error if story is in wrong format', () => {
+        const {
+          clientApi: { storiesOf },
+        } = getContext();
+
+        expect(() => {
+          storiesOf('kind', module).add('test', 'String that should be a function instead' as any);
+        }).toThrow(
+          'Cannot load story "test" in "kind" due to invalid format. Storybook expected a function but received string instead.'
+        );
+      });
     });
   });
 });

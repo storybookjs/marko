@@ -18,11 +18,46 @@ function createType(type: DocgenType) {
   return type != null ? createSummaryValue(type.name) : null;
 }
 
-function createDefaultValue(defaultValue: DocgenPropDefaultValue): PropDefaultValue {
+// A heuristic to tell if a defaultValue comes from RDT
+function isReactDocgenTypescript(defaultValue: DocgenPropDefaultValue) {
+  const { computed, func } = defaultValue;
+  return typeof computed === 'undefined' && typeof func === 'undefined';
+}
+
+function isStringValued(type?: DocgenType) {
+  if (!type) {
+    return false;
+  }
+
+  if (type.name === 'string') {
+    return true;
+  }
+
+  if (type.name === 'enum') {
+    return (
+      Array.isArray(type.value) &&
+      type.value.every(
+        ({ value: tv }) => typeof tv === 'string' && tv[0] === '"' && tv[tv.length - 1] === '"'
+      )
+    );
+  }
+  return false;
+}
+
+function createDefaultValue(
+  defaultValue: DocgenPropDefaultValue,
+  type: DocgenType
+): PropDefaultValue {
   if (defaultValue != null) {
     const { value } = defaultValue;
 
     if (!isDefaultValueBlacklisted(value)) {
+      // Work around a bug in `react-docgen-typescript-loader`, which returns 'string' for a string
+      // default, instead of "'string'" -- which is incorrect
+      if (isReactDocgenTypescript(defaultValue) && isStringValued(type)) {
+        return createSummaryValue(JSON.stringify(value));
+      }
+
       return createSummaryValue(value);
     }
   }
@@ -38,7 +73,7 @@ function createBasicPropDef(name: string, type: DocgenType, docgenInfo: DocgenIn
     type: createType(type),
     required,
     description,
-    defaultValue: createDefaultValue(defaultValue),
+    defaultValue: createDefaultValue(defaultValue, type),
   };
 }
 

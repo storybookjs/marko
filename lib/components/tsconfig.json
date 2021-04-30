@@ -10,7 +10,11 @@
     "src/**/*"
   ],
   "exclude": [
+    "src/**/*.test.*",
+    "src/**/tests/**/*",
     "src/**/__tests__/**/*",
-    "src/**/*.stories.*"
+    "src/**/*.stories.*",
+    "src/**/*.mockdata.*",
+    "src/**/__testfixtures__/**"
   ]
 }

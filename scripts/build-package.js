@@ -104,7 +104,7 @@ function run() {
     selection = Promise.resolve(
       Object.keys(tasks)
         .map((key) => tasks[key])
-        .filter((item) => item.value === true)
+        .filter((item) => item.name !== 'watch' && item.value === true)
     );
   }
 
@@ -139,7 +139,8 @@ function run() {
             )}`;
             const watchTsc = `${baseWatchCommand}/utils/watch-tsc.js`;
             const watchBabel = `${baseWatchCommand}/utils/watch-babel.js`;
-            const command = `concurrently --kill-others "${watchTsc}" "${watchBabel}"`;
+            const command = `concurrently --kill-others-on-fail "${watchTsc}" "${watchBabel}"`;
+
             spawn(command);
           };
 

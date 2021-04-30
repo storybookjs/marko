@@ -119,7 +119,7 @@ export const VisionDeficiency: FunctionComponent = () => {
         onDoubleClick={() => setFilter(null)}
       >
         <IconButton key="filter" active={!!filter} title="Vision Deficiency Emulation">
-          <Icons icon="mirror" />
+          <Icons icon="accessibility" />
         </IconButton>
       </WithTooltip>
       <Hidden>

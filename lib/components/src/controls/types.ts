@@ -20,8 +20,10 @@ export type BooleanValue = boolean;
 export interface BooleanConfig {}
 
 export type ColorValue = string;
+export type PresetColor = ColorValue | { color: ColorValue; title?: string };
 export interface ColorConfig {
-  presetColors?: string[];
+  presetColors?: PresetColor[];
+  startOpen?: boolean;
 }
 
 export type DateValue = Date | number;
@@ -54,6 +56,7 @@ export type OptionsControlType =
   | 'multi-select';
 
 export interface OptionsConfig {
+  labels: Record<any, string>;
   options: Options;
   type: OptionsControlType;
 }

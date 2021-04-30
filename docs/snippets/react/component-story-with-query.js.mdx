@@ -1,9 +1,9 @@
 ```js
 // my-component-with-query.stories.js
 
-import MyComponentThatHasAQuery, { MyQuery} from '../component-that-has-a-query';
+import MyComponentThatHasAQuery, { MyQuery } from '../component-that-has-a-query';
 
-const Template = (args) => <MyComponentThatHasAQuery {...args}/>;
+const Template = (args) => <MyComponentThatHasAQuery {...args} />;
 
 export const LoggedOut = Template.bind({});
 LoggedOut.parameters = {
@@ -15,11 +15,11 @@ LoggedOut.parameters = {
         },
         result: {
           data: {
-            viewer: null
+            viewer: null,
           },
         },
       },
     ],
   },
 };
- ```
+```

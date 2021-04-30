@@ -1,4 +1,4 @@
-import { StorybookConfig as BaseConfig } from '@storybook/core/types';
+import { StorybookConfig as BaseConfig } from '@storybook/core-common';
 
 /**
  * The interface for Storybook configuration in `main.ts` files.

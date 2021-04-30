@@ -93,7 +93,7 @@ export const getSourceProps = (
   docsContext: DocsContextProps,
   sourceContext: SourceContextProps
 ): PureSourceProps => {
-  const { id: currentId } = docsContext;
+  const { id: currentId, parameters = {} } = docsContext;
 
   const codeProps = props as CodeProps;
   const singleProps = props as SingleSourceProps;
@@ -112,8 +112,13 @@ export const getSourceProps = (
       })
       .join('\n\n');
   }
+
+  const { docs: docsParameters = {} } = parameters;
+  const { source: sourceParameters = {} } = docsParameters;
+  const { language: docsLanguage = null } = sourceParameters;
+
   return source
-    ? { code: source, language: props.language || 'jsx', dark: props.dark || false }
+    ? { code: source, language: props.language || docsLanguage || 'jsx', dark: props.dark || false }
     : { error: SourceError.SOURCE_UNAVAILABLE };
 };
 

@@ -1,12 +1,14 @@
 ```ts
 // Button.stories.ts
 
-// We create a “template” of how args map to rendering
-const Template = (args: Button) => ({
-  component: Button,
+import { Story } from '@storybook/angular/types-6-0';
+
+//👇 We create a “template” of how args map to rendering
+const Template: Story<Button> = (args) => ({
   props: args,
 });
 
+//👇 Each story then reuses that template
 export const Primary = Template.bind({});
 Primary.args = { background: '#ff0', label: 'Button' };
 

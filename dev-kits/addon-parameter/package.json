@@ -1,6 +1,6 @@
 {
   "name": "@storybook/addon-parameter",
-  "version": "6.2.0-alpha.10",
+  "version": "6.3.0-alpha.16",
   "description": "parameter addon for storybook",
   "keywords": [
     "addon",
@@ -17,6 +17,10 @@
     "url": "git+https://github.com/storybookjs/storybook.git",
     "directory": "dev-kit/addon-parameter"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/storybook"
+  },
   "license": "MIT",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -25,19 +29,19 @@
     "prepare": "node ../../scripts/prepare.js"
   },
   "dependencies": {
-    "@storybook/addons": "6.2.0-alpha.10",
-    "@storybook/api": "6.2.0-alpha.10",
-    "@storybook/client-logger": "6.2.0-alpha.10",
-    "@storybook/components": "6.2.0-alpha.10",
-    "@storybook/core-events": "6.2.0-alpha.10",
-    "@storybook/theming": "6.2.0-alpha.10",
-    "core-js": "^3.0.1",
-    "global": "^4.3.2",
+    "@storybook/addons": "6.3.0-alpha.16",
+    "@storybook/api": "6.3.0-alpha.16",
+    "@storybook/client-logger": "6.3.0-alpha.16",
+    "@storybook/components": "6.3.0-alpha.16",
+    "@storybook/core-events": "6.3.0-alpha.16",
+    "@storybook/theming": "6.3.0-alpha.16",
+    "core-js": "^3.8.2",
+    "global": "^4.4.0",
     "react": "^16.8.0 || ^17.0.0",
     "ts-dedent": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "bd7f2bbed53a0bde622977b2ed6e1addb67d5018"
+  "gitHead": "f09bb7bf0016bfbc2723f43b3e214e4a1c644843"
 }

@@ -1,7 +1,10 @@
+import semver from '@storybook/semver';
 import { JsPackageManager } from './JsPackageManager';
 
 export class NPMProxy extends JsPackageManager {
   readonly type = 'npm';
+
+  installArgs: string[] | undefined;
 
   initPackageJson() {
     return this.executeCommand('npm', ['init', '-y']);
@@ -15,8 +18,18 @@ export class NPMProxy extends JsPackageManager {
     return `npm run ${command}`;
   }
 
+  getInstallArgs(): string[] {
+    if (!this.installArgs) {
+      const version = this.executeCommand('npm', ['--version']);
+      this.installArgs = semver.gte(version, '7.0.0')
+        ? ['install', '--legacy-peer-deps']
+        : ['install'];
+    }
+    return this.installArgs;
+  }
+
   protected runInstall(): void {
-    this.executeCommand('npm', ['install'], 'inherit');
+    this.executeCommand('npm', this.getInstallArgs(), 'inherit');
   }
 
   protected runAddDeps(dependencies: string[], installAsDevDependencies: boolean): void {
@@ -26,7 +39,7 @@ export class NPMProxy extends JsPackageManager {
       args = ['-D', ...args];
     }
 
-    this.executeCommand('npm', ['install', ...args], 'inherit');
+    this.executeCommand('npm', [...this.getInstallArgs(), ...args], 'inherit');
   }
 
   protected runGetVersions<T extends boolean>(

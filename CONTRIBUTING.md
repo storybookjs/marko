@@ -1,4 +1,39 @@
-# Contributing to Storybook
+<h1>Contributing to Storybook</h1>
+
+- [Issues](#issues)
+  - [Testing against `master`](#testing-against-master)
+    - [1. Download the latest version of this project, and build it:](#1-download-the-latest-version-of-this-project-and-build-it)
+    - [2a. Run unit tests](#2a-run-unit-tests)
+      - [Core & Examples Tests](#core--examples-tests)
+    - [2b. Run Linter](#2b-run-linter)
+  - [2c. Run Cypress tests](#2c-run-cypress-tests)
+  - [Reproductions](#reproductions)
+    - [In the monorepo](#in-the-monorepo)
+    - [Outside the monorepo](#outside-the-monorepo)
+  - [Updating Tests](#updating-tests)
+- [Pull Requests (PRs)](#pull-requests-prs)
+  - [Reviewing PRs](#reviewing-prs)
+- [Issue Triage](#issue-triage)
+  - [Responding to issues](#responding-to-issues)
+  - [Triaging issues](#triaging-issues)
+  - [Closing issues](#closing-issues)
+- [Development Guide](#development-guide)
+  - [Prerequisites](#prerequisites)
+  - [Initial Setup](#initial-setup)
+    - [Bootstrapping everything](#bootstrapping-everything)
+    - [Building specific packages](#building-specific-packages)
+  - [Working with the kitchen sink apps](#working-with-the-kitchen-sink-apps)
+    - [React and Vue](#react-and-vue)
+  - [Working with your own app](#working-with-your-own-app)
+    - [Linking Storybook](#linking-storybook)
+    - [Connecting Your App To Storybook](#connecting-your-app-to-storybook)
+      - [1. Setup storybook in your project](#1-setup-storybook-in-your-project)
+      - [2. Link](#2-link)
+    - [Verify your local version is working](#verify-your-local-version-is-working)
+  - [Documentation](#documentation)
+- [Release Guide](#release-guide)
+    - [Prerelease:](#prerelease)
+    - [Full release:](#full-release)
 
 Thanks for your interest in improving Storybook! We are a community-driven project and welcome contributions of all kinds: from discussion to documentation to bugfixes to feature improvements.
 
@@ -10,7 +45,7 @@ This repo uses yarn workspaces, so you should install `yarn` as the package mana
 
 No software is bug-free. So, if you got an issue, follow these steps:
 
-- Search the [issue list](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=) for current and old issues.
+- Search the [issue list](https://github.com/storybookjs/storybook/issues) for current and old issues.
   - If you find an existing issue, please UPVOTE the issue by adding a "thumbs-up reaction". We use this to help prioritize issues!
 - If none of that is helping, create an issue with the following information:
   - Clear title (shorter is better).
@@ -30,9 +65,9 @@ cd storybook
 yarn bootstrap
 ```
 
-> NOTE: on windows you may need to run `yarn` before `yarn bootstrap`!
+> **_Note:_** On Windows, you may need to run `yarn` before `yarn bootstrap`!
 
-The bootstrap command might ask which sections of the codebase you want to bootstrap. Unless you're going to work with ReactNative or the Documentation, you can keep the default.
+The bootstrap command might ask which sections of the codebase you want to bootstrap. Unless you're doing something special you can keep the default.
 
 You can also pick directly from CLI:
 
@@ -52,32 +87,18 @@ yarn test
 
 The options for running tests can be selected from the cli or be passed to `yarn test` with specific parameters. Available modes include `--watch`, `--coverage`, and `--runInBand`, which will respectively run tests in watch mode, output code coverage, and run selected test suites serially in the current process.
 
-You can use the `--update` flag to update snapshots or screenshots as needed.
+You can use the `--update` flag (or `jest -u`) to update snapshots or screenshots as needed.
+
+> **_Note:_** On Windows, remember to make sure git config `core.autocrlf` is set to false, in order to not override EOL in snapshots ( `git config --global core.autocrlf false` to set it globally). It is also recommended to run tests from WSL2 to avoid errors with unix-style paths.
 
 You can also pick suites from CLI. Suites available are listed below.
 
 ##### Core & Examples Tests
 
-`yarn test --core`
+`yarn test`
 
 This option executes tests from `<rootdir>/app/react`, `<rootdir>/app/vue`, and `<rootdir>/lib`.
 Before the tests are run, the project must be bootstrapped with core. You can accomplish this with `yarn bootstrap --core`
-
-##### CRA-kitchen-sink - Image snapshots using Storyshots
-
-`yarn test --image`
-
-This option executes tests from `<rootdir>/examples/official-storybook`
-In order for the image snapshots to be correctly generated, you must have a static build of the storybook up-to-date :
-
-```sh
-cd examples/official-storybook
-yarn build-storybook
-cd ../..
-yarn test --image
-```
-
-Puppeteer is used to launch and grab screenshots of example pages, while jest is used to assert matching images. (just like integration tests)
 
 #### 2b. Run Linter
 
@@ -132,9 +153,8 @@ A good way to do that is using the example `cra-kitchen-sink` app embedded in th
 # Download and build this repository:
 git clone https://github.com/storybookjs/storybook.git
 cd storybook
+yarn
 yarn bootstrap --core
-
-# NOTE: on windows you may need to run `yarn` before `yarn bootstrap`!
 
 # make changes to try and reproduce the problem, such as adding components + stories
 cd examples/cra-kitchen-sink
@@ -147,12 +167,12 @@ git commit -m "reproduction for issue #123"
 
 # fork the storybook repo to your account, then add the resulting remote
 git remote add <your-username> https://github.com/<your-username>/storybook.git
-git push -u <your-username> master
+git push -u <your-username> next
 ```
 
 If you follow that process, you can then link to the GitHub repository in the issue. See <https://github.com/storybookjs/storybook/issues/708#issuecomment-290589886> for an example.
 
-**NOTE**: If your issue involves a webpack config, create-react-app will prevent you from modifying the _app's_ webpack config, however, you can still modify storybook's to mirror your app's version of the storybook. Alternatively, use `yarn eject` in the CRA app to get a modifiable webpack config.
+**_Note:_** If your issue involves a webpack config, create-react-app will prevent you from modifying the _app's_ webpack config, however, you can still modify storybook's to mirror your app's version of the storybook. Alternatively, use `yarn eject` in the CRA app to get a modifiable webpack config.
 
 #### Outside the monorepo
 
@@ -184,6 +204,7 @@ If you've made a change to storybook's codebase and would want this change to be
 ### Updating Tests
 
 Before any contributions are submitted in a PR, make sure to add or update meaningful tests. A PR that has failing tests will be regarded as a “Work in Progress” and will not be merged until all tests pass.
+
 When creating new unit test files, the tests should adhere to a particular folder structure and naming convention, as defined below.
 
 ```sh
@@ -197,13 +218,13 @@ When creating new unit test files, the tests should adhere to a particular folde
 
 We welcome all contributions. There are many ways you can help us. This is few of those ways:
 
-Before you submit a new PR, make sure you run `yarn test`. Do not submit a PR if tests are failing. If you need any help, the best way is to [join the discord server and ask in the maintenance channel](https://discord.gg/sMFvFsG).
+Before you submit a new PR, make sure you run `yarn test`. Do not submit a PR if tests are failing. If you need any help, the best way is to [join the discord server and ask in the maintenance channel](https://discord.gg/storybook).
 
 ### Reviewing PRs
 
 **As a PR submitter**, you should reference the issue if there is one, include a short description of what you contributed and, if it is a code change, instructions for how to manually test out the change. This is informally enforced by our [PR template](https://github.com/storybookjs/storybook/blob/master/.github/PULL_REQUEST_TEMPLATE.md). If your PR is reviewed as only needing trivial changes (e.g. small typos etc), and you have commit access then you can merge the PR after making those changes.
 
-> NOTE: Although the latest stable version of storybook corresponds to the `master` branch, nearly all Storybook development happens in the `next` branch. If you submit a PR, branch off `next` and target your PR to `next`.
+> **_Note:_** Although the latest stable version of storybook corresponds to the `master` branch, nearly all Storybook development happens in the `next` branch. If you submit a PR, branch off `next` and target your PR to `next`.
 
 **As a PR reviewer**, you should read through the changes and comment on any potential problems. If you see something cool, a kind word never hurts either! Additionally, you should follow the testing instructions and manually test the changes. If the instructions are missing, unclear, or overly complex, feel free to request better instructions from the submitter. Unless the PR is tagged with the `do not merge` label, if you approve the review and there is no other required discussion or changes, you should also go ahead and merge the PR.
 
@@ -229,7 +250,7 @@ All issues should have a `type` label. `bug`/`feature`/`question`/`discussion` a
 
 They should also have one or more `area`/`status` labels. We use these labels to filter issues down so we can see all of the issues for a particular area, and keep the total number of open issues under control.
 
-For example, here is the list of [open, untyped issues](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20-label%3A%22bug%22%20-label%3A%22discussion%22%20-label%3A%22feature%22%20-label%3A%22maintenance%22%20-label%3A%22question%20%2F%20support%22%20-label%3A%22documentation%22%20-label%3A%22greenkeeper%22), or here is a list of [bugs that have not been modified since 2017-04-01](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3A%22bug%22%20updated%3A%3C%3D2017-04-01%20). For more info see [searching issues](https://help.github.com/articles/searching-issues/) in the Github docs.
+For example, here is the list of [open, untyped issues](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20-label%3A%22bug%22%20-label%3A%22discussion%22%20-label%3A%22feature%22%20-label%3A%22maintenance%22%20-label%3A%22question%20%2F%20support%22%20-label%3A%22documentation%22%20-label%3A%22greenkeeper%22), or here is a list of [bugs that have not been modified since 2017-04-01](https://github.com/storybookjs/storybook/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20label%3A%22bug%22%20updated%3A%3C%3D2017-04-01%20). For more info see [searching issues](https://help.github.com/articles/searching-issues/) in the GitHub docs.
 
 If an issue is a `bug`, and it doesn't have a clear reproduction that you have personally confirmed, label it `needs reproduction` and ask the author to try and create a reproduction, or have a go yourself.
 
@@ -262,10 +283,15 @@ If you run into trouble here, make sure your node, npm, and **_yarn_** are on th
 2.  `git clone https://github.com/storybookjs/storybook.git` _bonus_: use your own fork for this step
 3.  `cd storybook`
 4.  `yarn bootstrap --core`
-5.  `yarn test --core`
-6.  `yarn dev` _You must have this running for your changes to show up_
 
-> NOTE: on windows you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).
+> **_Note:_** On Windows, you may need to run `yarn` before `yarn bootstrap` (between steps 3 and 4).
+
+This builds the entire project statically, but when you're updating Storybook code it's nice to see those changes show up in the example apps under `examples`. There are two ways to do this:
+
+1.  `yarn dev`
+2.  OR `yarn build <package1> <package2> --watch`
+
+The former watches ALL packages, which is extremely slow. The latter only watches a fixed list of packages, e.g. `yarn build add-docs components --watch` to build `@storybook/addon-docs` and `@storybook/components`. This is much more practical on slower machines or if you know ahead of time the packages you'll be updating.
 
 #### Bootstrapping everything
 
@@ -277,7 +303,7 @@ _This method is slow_
 
 #### Building specific packages
 
-If you're working on one or a few packages, for every change that you make, you have to rebuild those packages. To make the process easier, there is a CLI command for that:
+If you're working on one or several packages, for every change that you make, you have to rebuild those packages. To make the process easier, there is a CLI command for that:
 
 - Run `yarn build` to bring you a list of packages to select from. There will be also an option to run in watch mode.
 - Run `yarn build <package-name>` to build that package specifically. \
@@ -303,7 +329,8 @@ Not only do these show many of the options and add-ons available, they are also 
 #### Linking Storybook
 
 Storybook is broken up into sub-projects that you can install as you need them. For this example, we will be working with `@storybook/react`.
-**Note:** You need to `yarn link` from inside the subproject you are working on **_NOT_** the storybook root directory
+
+**_Note:_** You need to `yarn link` from inside the subproject you are working on **_NOT_** the storybook root directory.
 
 1.  `cd app/react`
 2.  `yarn link`
@@ -325,7 +352,7 @@ First we are going to install storybook, then we are going to link `@storybook/r
 
 ##### 2. Link
 
-**_Note_**: This process is the same for `@storybook/vue`, `@storybook/addon-foo`, etc
+**_Note:_** This process is the same for `@storybook/vue`, `@storybook/addon-foo`, etc
 
 1.  Go to your storybook _root_ directory
 2.  `yarn dev`
@@ -338,9 +365,9 @@ First we are going to install storybook, then we are going to link `@storybook/r
 
 You should now have a working storybook dev environment up and running.
 
-Save and go to `http://localhost:9011` (or wherever storybook is running)
+Save and go to `http://localhost:9011` (or wherever storybook is running).
 
-If you don't see the changes rerun `yarn storybook` again in your sandbox app
+If you don't see the changes rerun `yarn storybook` again in your sandbox app.
 
 ### Documentation
 
@@ -360,9 +387,9 @@ The current manual release sequence is as follows:
 - Generate a changelog and verify the release by hand
 - Push the changelog to master or the release branch
 - Clean, build and publish the release
-- Cut and paste the changelog to the github release page, and mark it as a (pre-) release
+- Cut and paste the changelog to the [GitHub release page](https://github.com/storybookjs/storybook/releases), and mark it as a (pre-) release
 
-**NOTE:** The very first time you publish a scoped package (`@storybook/x`) you need to make sure that it's package.json contains the following
+**_Note:_** The very first time you publish a scoped package (`@storybook/x`) you need to make sure that its package.json contains the following
 
 ```js
 "publishConfig": {
@@ -372,7 +399,7 @@ The current manual release sequence is as follows:
 
 This sequence applies to both releases and pre-releases, but differs slightly between the two.
 
-**NOTE: This is a work in progress. Don't try this unless you know what you're doing. We hope to automate this in CI, so this process is designed with that in mind.**
+**_Note:_ This is a work in progress. Don't try this unless you know what you're doing. We hope to automate this in CI, so this process is designed with that in mind.**
 
 #### Prerelease:
 

@@ -36,11 +36,82 @@ export const inaccessible = () => (
 );
 ```
 
+## Handling failing rules
+
+When a Story has failing rules (accessibility violations), there are mutliple ways to handle these failures.
+
+### Global overrides
+
+When an exception should apply to all stories, set `parameters.a11y.config.rules` in your Storybook’s `preview.ts` file.
+
+For example, to add support for autocomplete in Chrome across all your stories:
+
+```js
+// .storybook/preview.ts
+export const parameters = {
+  a11y: {
+    config: {
+      rules: [
+        {
+          // Add support for `autocomplete="nope"`, a workaround to prevent autocomplete in Chrome
+          // @link https://bugs.chromium.org/p/chromium/issues/detail?id=468153
+          id: 'autocomplete-valid',
+          selector: '*:not([autocomplete="nope"])',
+        },
+      ],
+    },
+  },
+};
+```
+
+At the Story level, instead of disabling a11y checks, override rules using `parameters.a11y.options.rules`.
+
+```js
+MyStory.parameters = {
+  a11y: {
+    // Avoid doing this! It will fully disable all accessibility checks for this story.
+    disable: true,
+
+    // Instead, override rules 👇
+    // axe-core optionsParameter (https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#options-parameter)
+    options: {
+      // Learn more about the rules API: https://github.com/dequelabs/axe-core/blob/develop/doc/API.md#parameters-1
+      rules: [
+        {
+          // You can exclude some elements from being checked by a specific rule
+          id: 'autocomplete-valid',
+          selector: '*:not([autocomplete="nope"])',
+        },
+        {
+          // When there’s a false positive, it's okay to disable a specific rule.
+          // For example, if an entire component is disabled, color contrast ratio doesn't need to meet 4.5:1.
+          // @link https://dequeuniversity.com/rules/axe/4.1/color-contrast?application=axeAPI
+          id: 'color-contrast',
+          enabled: false,
+        },
+        {
+          // Sometimes, you just need tests to pass so you can ship…
+          // Don’t set { a11y: { disable: true } }, as it will fully disable all accessibility checks for this story.
+          // Instead, signify that a violation will need to be fixed in the future:
+          id: 'landmark-complementary-is-top-level',
+          reviewOnFail: true, // Override the result of a rule to return "Needs Review" rather than "Violation" if the rule fails.
+        },
+      ],
+    },
+  },
+};
+```
+
+Tip: when you override a rule, expain why in a comment. That context will be helpful to you and your team when debugging particularly gnarly accessibility issues.
+
+### Disabling checks
+
 If you wish to selectively disable `a11y` checks for a subset of stories, you can control this with story parameters:
 
 ```js
 export const MyNonCheckedStory = () => <SomeComponent />;
 MyNonCheckedStory.parameters = {
+  // Avoid doing this, as it fully disables all accessibility checks for this story.
   a11y: { disable: true },
 };
 ```

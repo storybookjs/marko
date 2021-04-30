@@ -4,6 +4,7 @@ import React, {
   FunctionComponent,
   ReactElement,
   ReactNode,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -432,17 +433,21 @@ export function useAddonState<S>(addonId: string, defaultState?: S) {
   return useSharedState<S>(addonId, defaultState);
 }
 
-export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: [string]) => void] {
+export function useArgs(): [Args, (newArgs: Args) => void, (argNames?: string[]) => void] {
   const { getCurrentStoryData, updateStoryArgs, resetStoryArgs } = useStorybookApi();
 
   const data = getCurrentStoryData();
   const args = isStory(data) ? data.args : {};
+  const updateArgs = useCallback((newArgs: Args) => updateStoryArgs(data as Story, newArgs), [
+    data,
+    updateStoryArgs,
+  ]);
+  const resetArgs = useCallback((argNames?: string[]) => resetStoryArgs(data as Story, argNames), [
+    data,
+    resetStoryArgs,
+  ]);
 
-  return [
-    args,
-    (newArgs: Args) => updateStoryArgs(data as Story, newArgs),
-    (argNames?: [string]) => resetStoryArgs(data as Story, argNames),
-  ];
+  return [args, updateArgs, resetArgs];
 }
 
 export function useGlobals(): [Args, (newGlobals: Args) => void] {

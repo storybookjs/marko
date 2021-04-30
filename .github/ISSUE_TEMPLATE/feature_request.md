@@ -1,7 +1,7 @@
 ---
-name: Feature request
+name: Feature request 💡
 about: Suggest an idea for this project
-
+labels: needs triage, feature request
 ---
 
 **Is your feature request related to a problem? Please describe**

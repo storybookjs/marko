@@ -29,6 +29,21 @@ export const logger = {
     currentLogLevelNumber < levels.silent && console.log(message, ...rest),
 } as const;
 
+const logged = new Set();
+export const once = (type: keyof typeof logger) => (message: any, ...rest: any[]) => {
+  if (logged.has(message)) return undefined;
+  logged.add(message);
+  return logger[type](message, ...rest);
+};
+
+once.clear = () => logged.clear();
+once.trace = once('trace');
+once.debug = once('debug');
+once.info = once('info');
+once.warn = once('warn');
+once.error = once('error');
+once.log = once('log');
+
 export const pretty = (type: keyof typeof logger) => (...args: string[]) => {
   const argArray = [];
 

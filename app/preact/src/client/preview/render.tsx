@@ -7,16 +7,34 @@ const rootElement = document ? document.getElementById('root') : null;
 
 let renderedStory: Element;
 
-function preactRender(element: StoryFnPreactReturnType | null): void {
-  if ((preact as any).Fragment) {
+function preactRender(story: StoryFnPreactReturnType): void {
+  if (preact.Fragment) {
     // Preact 10 only:
-    preact.render(element, rootElement);
-  } else if (element) {
-    renderedStory = (preact.render(element, rootElement) as unknown) as Element;
+    preact.render(story, rootElement);
   } else {
-    preact.render(element, rootElement, renderedStory);
+    renderedStory = (preact.render(story, rootElement, renderedStory) as unknown) as Element;
   }
 }
+
+const StoryHarness: preact.FunctionalComponent<{
+  name: string;
+  kind: string;
+  showError: RenderContext['showError'];
+  storyFn: () => any;
+}> = ({ showError, name, kind, storyFn }) => {
+  const content = preact.h(storyFn as any, null);
+  if (!content) {
+    showError({
+      title: `Expecting a Preact element from the story: "${name}" of "${kind}".`,
+      description: dedent`
+        Did you forget to return the Preact element from the story?
+        Use "() => (<MyComp/>)" or "() => { return <MyComp/>; }" when defining the story.
+      `,
+    });
+    return null;
+  }
+  return content;
+};
 
 export default function renderMain({
   storyFn,
@@ -26,19 +44,6 @@ export default function renderMain({
   showError,
   forceRender,
 }: RenderContext) {
-  const element = storyFn();
-
-  if (!element) {
-    showError({
-      title: `Expecting a Preact element from the story: "${name}" of "${kind}".`,
-      description: dedent`
-        Did you forget to return the Preact element from the story?
-        Use "() => (<MyComp/>)" or "() => { return <MyComp/>; }" when defining the story.
-      `,
-    });
-    return;
-  }
-
   // But forceRender means that it's the same story, so we want to keep the state in that case.
   if (!forceRender) {
     preactRender(null);
@@ -46,5 +51,5 @@ export default function renderMain({
 
   showMain();
 
-  preactRender(element);
+  preactRender(preact.h(StoryHarness, { name, kind, showError, storyFn }));
 }

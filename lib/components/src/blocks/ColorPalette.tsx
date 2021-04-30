@@ -121,10 +121,10 @@ interface ColorProps {
   colors: Colors;
 }
 
-function renderSwatch(color: string) {
+function renderSwatch(color: string, index: number) {
   return (
     <Swatch
-      key={color}
+      key={`${color}-${index}`}
       title={color}
       style={{
         background: color,
@@ -133,9 +133,9 @@ function renderSwatch(color: string) {
   );
 }
 
-function renderSwatchLabel(color: string, colorDescription?: string) {
+function renderSwatchLabel(color: string, index: number, colorDescription?: string) {
   return (
-    <SwatchLabel key={color} title={color}>
+    <SwatchLabel key={`${color}-${index}`} title={color}>
       <div>
         {color}
         {colorDescription && <span>{colorDescription}</span>}
@@ -148,16 +148,18 @@ function renderSwatchSpecimen(colors: Colors) {
   if (Array.isArray(colors)) {
     return (
       <SwatchSpecimen>
-        <SwatchColors>{colors.map((color) => renderSwatch(color))}</SwatchColors>
-        <SwatchLabels>{colors.map((color) => renderSwatchLabel(color))}</SwatchLabels>
+        <SwatchColors>{colors.map((color, index) => renderSwatch(color, index))}</SwatchColors>
+        <SwatchLabels>{colors.map((color, index) => renderSwatchLabel(color, index))}</SwatchLabels>
       </SwatchSpecimen>
     );
   }
   return (
     <SwatchSpecimen>
-      <SwatchColors>{Object.values(colors).map((color) => renderSwatch(color))}</SwatchColors>
+      <SwatchColors>
+        {Object.values(colors).map((color, index) => renderSwatch(color, index))}
+      </SwatchColors>
       <SwatchLabels>
-        {Object.keys(colors).map((color) => renderSwatchLabel(color, colors[color]))}
+        {Object.keys(colors).map((color, index) => renderSwatchLabel(color, index, colors[color]))}
       </SwatchLabels>
     </SwatchSpecimen>
   );

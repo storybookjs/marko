@@ -11,7 +11,7 @@ const inputRegExp = /^input\..*$/;
 const runWebComponentsAnalyzer = (inputPath: string) => {
   const { name: tmpDir, removeCallback } = tmp.dirSync();
   const customElementsFile = `${tmpDir}/custom-elements.json`;
-  spawnSync('wca', ['analyze', inputPath, '--outFile', customElementsFile], {
+  spawnSync('yarn', ['wca', 'analyze', inputPath, '--outFile', customElementsFile], {
     stdio: 'inherit',
   });
   const output = fs.readFileSync(customElementsFile, 'utf8');
@@ -37,6 +37,7 @@ describe('web-components component properties', () => {
       const testDir = path.join(fixturesDir, testEntry.name);
       const testFile = fs.readdirSync(testDir).find((fileName) => inputRegExp.test(fileName));
       if (testFile) {
+        // eslint-disable-next-line jest/valid-title
         it(testEntry.name, () => {
           const inputPath = path.join(testDir, testFile);
 

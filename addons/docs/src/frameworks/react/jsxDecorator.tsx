@@ -76,7 +76,7 @@ export const renderJsx = (code: React.ReactElement, options: JSXOptions) => {
     if (typeof renderedJSX.props.children === 'undefined') {
       logger.warn('Not enough children to skip elements.');
 
-      if (typeof Type === 'function' && Type.name === '') {
+      if (typeof renderedJSX.type === 'function' && renderedJSX.type.name === '') {
         renderedJSX = <Type {...renderedJSX.props} />;
       }
     } else if (typeof renderedJSX.props.children === 'function') {

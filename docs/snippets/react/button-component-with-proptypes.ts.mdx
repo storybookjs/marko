@@ -14,15 +14,11 @@ export interface ButtonProps {
   content: string;
 }
 
-export const Button:React.FC<ButtonProps>=({
-    isDisabled= false,
-    content=''
-})=>{
+export const Button: React.FC<ButtonProps> = ({ isDisabled = false, content = '' }) => {
   return (
     <button type="button" disabled={isDisabled}>
       {content}
     </button>
   );
 };
-
 ```

@@ -42,6 +42,26 @@ You can also compose Storybook that are running locally. For instance, if you ha
 
 This composes the React and Angular Storybooks into your current Storybook. When either code base changes, hot-module-reload will work perfectly. That enables you to develop both frameworks in sync.
 
+## Compose Storybooks per environment
+
+You can also compose Storybooks based on the current development environment. For instance if the project you're working has already a published Storybook, but also includes a version with cutting edge features not yet released you can adjust the composition based on that. For instance:
+
+<!-- prettier-ignore-start -->
+
+<CodeSnippets
+  paths={[
+    'common/storybook-main-ref-per-environment.js.mdx',
+  ]}
+/>
+
+<!-- prettier-ignore-end -->
+
+<div class="aside">
+
+💡 <strong>Note</strong>: Same as with the majority of fields available within <code>main.js</code>, the <code>refs</code> field can also be a function and accept a <code>config</code> parameter that contains Storybook's configuration object. See the related [webpack documentation](../configure/webpack.md#extending-storybooks-webpack-config).
+
+</div>
+
 ### Improve your Storybook composition
 
 So far we've covered how we can use composition with local or published Storybooks. One thing worth mentioning as your Storybook will grow in time with your own stories, or through composition with other Storybooks, is that you can optimize the deployment process by including the following command in your workflow:
@@ -67,16 +87,13 @@ Once you add a reference to a Storybook deployed using this method, almost immed
 If required, you can also add additional arguments to this command. You can use the following to generate the `stories.json` file to a custom directory:
 
 ```shell
-npx sb extract my-built-storybook-directory my-other-directory
+npx sb extract my-built-storybook-directory my-other-directory/stories.json
 ```
 
-Once the command executes it will look for a built Storybook in the `my-built-storybook-directory` and create the file in `my-other-directory`.
+Once the command executes it will look for a built Storybook in the `my-built-storybook-directory` and create the `stories.json` file in `my-other-directory`.
 
 <div class="aside">
 
 If you need to use arguments, you'll need to use both of them, or the command will not be executed properly.
 
 </div>
-
-
- 
