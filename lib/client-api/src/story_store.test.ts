@@ -1210,6 +1210,7 @@ describe('preview.story_store', () => {
         },
       });
       addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
       addStoryToStore(store, 'a', '1', () => 0);
       addStoryToStore(store, 'c', '1', () => 0);
       addStoryToStore(store, 'b/bd', '1', () => 0);
@@ -1227,6 +1228,7 @@ describe('preview.story_store', () => {
         'b-bd--1',
         'b--1',
         'a-b--1',
+        'a--2',
         'a--1',
         'c--1',
       ]);
@@ -1247,6 +1249,7 @@ describe('preview.story_store', () => {
         },
       });
       addStoryToStore(store, 'a/b', '1', () => 0);
+      addStoryToStore(store, 'a', '2', () => 0);
       addStoryToStore(store, 'a', '1', () => 0);
       addStoryToStore(store, 'c', '1', () => 0);
       addStoryToStore(store, 'b/bd', '1', () => 0);
@@ -1264,6 +1267,7 @@ describe('preview.story_store', () => {
         'b--1',
         'b-bd--1',
         'a--1',
+        'a--2',
         'a-b--1',
         'c--1',
       ]);
