@@ -8,15 +8,15 @@ const iframeId = 'storybook-preview-iframe';
 
 const baseList = [
   'blurred vision',
-  'protanopia',
-  'protanomaly',
-  'deuteranopia',
   'deuteranomaly',
-  'tritanopia',
+  'deuteranopia',
+  'protanomaly',
+  'protanopia',
   'tritanomaly',
-  'achromatopsia',
+  'tritanopia',
   'achromatomaly',
-  'mono',
+  'achromatopsia',
+  'grayscale',
 ] as const;
 
 type Filter = typeof baseList[number] | null;
@@ -28,7 +28,7 @@ const getFilter = (filter: Filter) => {
   if (filter === 'blurred vision') {
     return 'blur(2px)';
   }
-  if (filter === 'mono') {
+  if (filter === 'grayscale') {
     return 'grayscale(100%)';
   }
   return `url('#${filter}')`;
@@ -91,7 +91,7 @@ const getColorList = (active: Filter, set: (i: Filter) => void): Link[] => [
   })),
 ];
 
-export const VisionDeficiency: FunctionComponent = () => {
+export const VisionSimulator: FunctionComponent = () => {
   const [filter, setFilter] = useState<Filter>(null);
 
   return (
@@ -118,7 +118,7 @@ export const VisionDeficiency: FunctionComponent = () => {
         closeOnClick
         onDoubleClick={() => setFilter(null)}
       >
-        <IconButton key="filter" active={!!filter} title="Vision Deficiency Emulation">
+        <IconButton key="filter" active={!!filter} title="Vision simulator">
           <Icons icon="accessibility" />
         </IconButton>
       </WithTooltip>
