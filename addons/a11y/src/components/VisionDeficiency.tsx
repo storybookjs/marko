@@ -16,7 +16,7 @@ const baseList = [
   'tritanopia',
   'achromatomaly',
   'achromatopsia',
-  'mono',
+  'grayscale',
 ] as const;
 
 type Filter = typeof baseList[number] | null;
@@ -28,7 +28,7 @@ const getFilter = (filter: Filter) => {
   if (filter === 'blurred vision') {
     return 'blur(2px)';
   }
-  if (filter === 'mono') {
+  if (filter === 'grayscale') {
     return 'grayscale(100%)';
   }
   return `url('#${filter}')`;
