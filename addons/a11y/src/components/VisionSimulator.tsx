@@ -91,7 +91,7 @@ const getColorList = (active: Filter, set: (i: Filter) => void): Link[] => [
   })),
 ];
 
-export const VisionDeficiency: FunctionComponent = () => {
+export const VisionSimulator: FunctionComponent = () => {
   const [filter, setFilter] = useState<Filter>(null);
 
   return (
@@ -118,7 +118,7 @@ export const VisionDeficiency: FunctionComponent = () => {
         closeOnClick
         onDoubleClick={() => setFilter(null)}
       >
-        <IconButton key="filter" active={!!filter} title="Vision Deficiency Emulation">
+        <IconButton key="filter" active={!!filter} title="Vision simulator">
           <Icons icon="accessibility" />
         </IconButton>
       </WithTooltip>
