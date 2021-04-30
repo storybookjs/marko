@@ -210,6 +210,7 @@ export const globalTypes = {
         { value: 'stacked', icon: 'bottombar', title: 'stacked' },
       ],
     },
+    showName: true,
   },
   locale: {
     name: 'Locale',
