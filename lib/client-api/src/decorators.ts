@@ -26,7 +26,7 @@ const bindWithContext = (
   getStoryContext: () => StoryContext
 ): PartialStoryFn =>
   // (NOTE: You cannot override the parameters key, it is fixed)
-  ({ parameters, ...contextUpdate }: StoryContextUpdate = {}) =>
+  ({ id, name, kind, parameters, ...contextUpdate }: StoryContextUpdate = {}) =>
     storyFn({ ...getStoryContext(), ...contextUpdate });
 
 export const decorateStory = (
