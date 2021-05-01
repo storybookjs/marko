@@ -231,6 +231,35 @@ describe('decorateStory', () => {
         template: '<parent></parent>',
       });
     });
+
+    it('should only keeps args with a control or an action in argTypes', () => {
+      const decorated = decorateStory(
+        (context: StoryContext) => ({
+          template: `Args available in the story : ${Object.keys(context.args).join()}`,
+        }),
+        []
+      );
+
+      expect(
+        decorated(
+          makeContext({
+            parameters: { component: FooComponent },
+            argTypes: {
+              withControl: { control: { type: 'object' }, name: 'withControl' },
+              withAction: { action: 'onClick', name: 'withAction' },
+              toRemove: { name: 'toRemove' },
+            },
+            args: {
+              withControl: 'withControl',
+              withAction: () => ({}),
+              toRemove: 'toRemove',
+            },
+          })
+        )
+      ).toEqual({
+        template: 'Args available in the story : withControl,withAction',
+      });
+    });
   });
 
   describe('default behavior', () => {

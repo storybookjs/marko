@@ -10,6 +10,13 @@ export default {
     moduleMetadata({
       imports: [FormsModule],
     }),
+    (storyFn) => {
+      const stroy = storyFn();
+
+      console.log(stroy);
+
+      return stroy;
+    },
   ],
 } as Meta;
 
