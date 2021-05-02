@@ -3,7 +3,7 @@
 exports[`docs-mdx-compiler-plugin csf-imports.mdx 1`] = `
 "/* @jsxRuntime classic */
 /* @jsx mdx */
-import { assertIsFn, AddContext } from '@storybook/addon-docs/blocks';
+import { assertIsFn, AddContext } from '@storybook/addon-docs';
 
 import { Story, Meta, Canvas } from '@storybook/addon-docs/blocks';
 import { Welcome, Button } from '@storybook/angular/demo';
