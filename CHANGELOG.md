@@ -1,3 +1,13 @@
+## 6.3.0-alpha.18 (May 2, 2021)
+
+### Features
+
+- Angular: Filter out args whose argType are missing a control or action ([#14779](https://github.com/storybookjs/storybook/pull/14779))
+
+### Maintenance
+
+- Addon-docs: Allow doc blocks to CJS imported ([#14769](https://github.com/storybookjs/storybook/pull/14769))
+
 ## 6.3.0-alpha.17 (April 30, 2021)
 
 ### Features
