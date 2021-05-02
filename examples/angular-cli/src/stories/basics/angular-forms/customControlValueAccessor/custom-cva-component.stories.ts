@@ -10,6 +10,11 @@ export default {
     moduleMetadata({
       imports: [FormsModule],
     }),
+    (storyFn) => {
+      const story = storyFn();
+      console.log(story);
+      return story;
+    },
   ],
 } as Meta;
 
