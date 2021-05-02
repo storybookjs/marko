@@ -11,11 +11,9 @@ export default {
       imports: [FormsModule],
     }),
     (storyFn) => {
-      const stroy = storyFn();
-
-      console.log(stroy);
-
-      return stroy;
+      const story = storyFn();
+      console.log(story);
+      return story;
     },
   ],
 } as Meta;
