@@ -9,8 +9,7 @@ export const MenuToolbar: FC<MenuToolbarProps> = ({
   id,
   name,
   description,
-  toolbar: { icon, items },
-  showName,
+  toolbar: { icon, items, showName },
 }) => {
   const [globals, updateGlobals] = useGlobals();
   const selectedValue = globals[id];

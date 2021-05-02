@@ -209,8 +209,8 @@ export const globalTypes = {
         { value: 'side-by-side', icon: 'sidebar', title: 'side by side' },
         { value: 'stacked', icon: 'bottombar', title: 'stacked' },
       ],
+      showName: true,
     },
-    showName: true,
   },
   locale: {
     name: 'Locale',
