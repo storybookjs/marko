@@ -1,3 +1,13 @@
+## 6.3.0-alpha.19 (May 3, 2021)
+
+### Features
+
+- Addon-toolbars: Add optional label for toolbar items ([#14776](https://github.com/storybookjs/storybook/pull/14776))
+
+### Maintenance
+
+- Core: Remove spurious package.json warning ([#14785](https://github.com/storybookjs/storybook/pull/14785))
+
 ## 6.3.0-alpha.18 (May 2, 2021)
 
 ### Features
