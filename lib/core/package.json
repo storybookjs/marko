@@ -44,7 +44,7 @@
     "@storybook/core-server": "6.3.0-alpha.18"
   },
   "peerDependencies": {
-    "@storybook/builder-webpack5": "6.3.0-alpha.18",
+    "@storybook/builder-webpack5": "6.3.0-alpha.19",
     "react": "^16.8.0 || ^17.0.0",
     "react-dom": "^16.8.0 || ^17.0.0"
   },
