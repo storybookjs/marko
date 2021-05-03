@@ -43,7 +43,7 @@ export const MenuToolbar: FC<MenuToolbarProps> = ({
       {selectedIcon ? (
         <IconButton key={name} active={active} title={description}>
           <Icons icon={selectedIcon} />
-          {showName ? `\xa0${name}` : ``}
+          {showName ? `\xa0${name}` : null}
         </IconButton>
       ) : (
         <TabButton active={active}>{name}</TabButton>
