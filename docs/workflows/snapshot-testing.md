@@ -39,7 +39,7 @@ You can name the file whatever you like as long as it's picked up by Jest (note 
 Run your first test. Storyshot will recognize all your CSF files (based on [`.storybook/main.js`](../configure/overview.md#configure-story-rendering)) and produces snapshots.
 
 ```shell
-npx test storybook.test.js
+npm test storybook.test.js
 ```
 
 <div class="aside">
@@ -89,7 +89,7 @@ Then you'll need to change your `storybook.test.js` file to the following:
 Don't forget to change the <code>your-custom-directory</code> to the one you're using.
 </div>
 
-When you run `npx test storybook.test.js`, your snapshots will be placed in the proper directory.
+When you run `npm test storybook.test.js`, your snapshots will be placed in the proper directory.
 
 Storyshots has many other options for advanced use cases such as this one. You can read more about them in the [addon’s documentation](https://github.com/storybookjs/storybook/tree/master/addons/storyshots/storyshots-core).
 
