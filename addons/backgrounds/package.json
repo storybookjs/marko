@@ -76,7 +76,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "d3942573e1cff3aa16066b798b22fd732259e67b",
+  "gitHead": "8ba485343b31df4e65fce2494a5f615d6d6c661d",
   "storybook": {
     "displayName": "Backgrounds",
     "icon": "https://user-images.githubusercontent.com/263385/101991667-479cc600-3c7c-11eb-96d3-410e936252e7.png",
