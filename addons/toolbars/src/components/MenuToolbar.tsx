@@ -9,7 +9,7 @@ export const MenuToolbar: FC<MenuToolbarProps> = ({
   id,
   name,
   description,
-  toolbar: { icon, items },
+  toolbar: { icon, items, showName },
 }) => {
   const [globals, updateGlobals] = useGlobals();
   const selectedValue = globals[id];
@@ -43,6 +43,7 @@ export const MenuToolbar: FC<MenuToolbarProps> = ({
       {selectedIcon ? (
         <IconButton key={name} active={active} title={description}>
           <Icons icon={selectedIcon} />
+          {showName ? `\xa0${name}` : null}
         </IconButton>
       ) : (
         <TabButton active={active}>{name}</TabButton>

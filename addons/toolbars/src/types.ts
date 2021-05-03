@@ -12,6 +12,7 @@ export interface ToolbarItem {
 export interface NormalizedToolbarConfig {
   icon?: IconsProps['icon'];
   items: ToolbarItem[];
+  showName?: boolean;
 }
 
 export type NormalizedToolbarArgType = ArgType & {
