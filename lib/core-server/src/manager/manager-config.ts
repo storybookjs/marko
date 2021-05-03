@@ -34,7 +34,6 @@ export const getAutoRefs = async (
           return { id: name, ...storybook, version };
         }
       } catch {
-        logger.warn(`unable to find package.json for ${d}`);
         return undefined;
       }
       return undefined;
