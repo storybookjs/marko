@@ -95,8 +95,8 @@ function run() {
       command: () => {
         log.info(prefix, 'prepare');
         spawn(
-          `nx run-many --target=prepare --all --parallel ${
-            process.env.CI ? `--max-parallel=${maxConcurrentTasks}` : ''
+          `lerna run prepare ${
+            process.env.CI ? `--concurrency ${maxConcurrentTasks} --stream` : ''
           }`
         );
       },
@@ -107,7 +107,7 @@ function run() {
       defaultValue: false,
       option: '--manager',
       command: () => {
-        spawn('yarn build-manager');
+        spawn('echo build-manager');
       },
       order: 3,
     }),

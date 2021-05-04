@@ -1,1 +1,0 @@
-{"version":"6.3.0-alpha.19","info":{"plain":"### Features\n\n- Addon-toolbars: Add optional label for toolbar items ([#14776](https://github.com/storybookjs/storybook/pull/14776))\n\n### Maintenance\n\n- Core: Remove spurious package.json warning ([#14785](https://github.com/storybookjs/storybook/pull/14785))"}}
