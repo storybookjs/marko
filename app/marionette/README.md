@@ -1,4 +1,4 @@
-# Storybook for Marionette.js 
+# Storybook for Marionette.js
 
 ---
 
@@ -14,7 +14,7 @@ So you can develop UI components in isolation without worrying about app specifi
 
 ```sh
 cd my-app
-npx -p @storybook/cli sb init
+npx sb init
 ```
 
 For more information visit: [storybook.js.org](https://storybook.js.org)

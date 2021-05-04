@@ -53,7 +53,7 @@ We'll need to add the necessary dependencies and make some adjustments. Run the 
 yarn add react react-dom @babel/cli
 
 # Adds Storybook:
-npx -p @storybook/cli sb init
+npx sb init
 ```
 
 <div class="aside">
