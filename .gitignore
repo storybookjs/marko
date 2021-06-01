@@ -1,43 +1,17 @@
-node_modules
-*.log
-.idea
-*.iml
-*.sw*
-npm-shrinkwrap.json
-dist
-.tern-port
-*.DS_Store
-.cache
-coverage/
-*.lerna_backup
-build
-packages/examples/automated-*
-/**/LICENSE
-docs/public
-packs/*.tgz
-package-lock.json
-.nvmrc
-storybook-static
-integration/__image_snapshots__/__diff_output__
-.jest-test-results.json
-/examples/cra-kitchen-sink/src/__image_snapshots__/__diff_output__/
-lib/*.jar
-lib/**/dll
-/false
-/addons/docs/common/config-*
-built-storybooks
-cypress/videos
-cypress/screenshots
-examples/ember-cli/ember-output
-.verdaccio-cache
-tsconfig.tsbuildinfo
-lib/core-server/prebuilt
-examples/angular-cli/addon-jest.testresults.json
+# Editor
+*.sublime*
+.vscode
 
-# Yarn stuff
-/.yarn/*
-!/.yarn/releases
-!/.yarn/plugins
-!/.yarn/sdks
-!/.yarn/versions
-/.pnp.*
+# OSX
+*.DS_Store
+
+# NPM
+node_modules
+npm-debug.log
+
+# Build
+dist
+
+# Coverage
+.nyc_output
+coverage
