@@ -6,11 +6,11 @@ daysUntilClose: 30
 exemptLabels:
   - todo
   - ready
-  - 'in progress'
-  - 'do not merge'
-  - 'needs review'
-  - 'high priority'
-  - 'good first issue'
+  - "in progress"
+  - "do not merge"
+  - "needs review"
+  - "high priority"
+  - "good first issue"
 
 # Label to use when marking an issue as stale
 staleLabel: inactive

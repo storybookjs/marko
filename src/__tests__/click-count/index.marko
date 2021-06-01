@@ -1,0 +1,18 @@
+class {
+  onInput(input) {
+    this.state = {
+      count: input.count || 0
+    };
+  }
+  increment() {
+    this.emit("increment", ++this.state.count);
+  }
+}
+
+<div.count>
+  Current Count: ${state.count}
+</div>
+
+<button.example-button on-click("increment")>
+  Click me!
+</button>

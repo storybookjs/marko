@@ -1,29 +1,20 @@
 {
-  "compileOnSave": false,
+  "include": ["src/**/*"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "incremental": false,
-    "noImplicitAny": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-    "jsx": "react",
-    "module": "commonjs",
-    "skipLibCheck": true,
+    "lib": ["dom", "ESNext", "scripthost"],
+    "strict": true,
+    "outDir": "dist",
+    "module": "ESNext",
+    "target": "ESNext",
+    "sourceMap": false,
+    "incremental": true,
+    "declaration": true,
+    "stripInternal": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "emitDeclarationOnly": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "target": "es5",
-    "types": ["jest"],
-    "lib": ["es2017", "dom"]
-  },
-  "exclude": [
-    "**/dist",
-    "node_modules",
-    "**/node_modules",
-    "**/*.spec.ts",
-    "**/__tests__",
-    "**/*.test.ts",
-    "**/FlowType*",
-    "**/setup-jest.ts"
-  ]
+    "forceConsistentCasingInFileNames": true
+  }
 }
