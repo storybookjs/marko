@@ -1,6 +1,6 @@
 <h1 align="center">
   <!-- Logo -->
-  <img src="https://user-images.githubusercontent.com/4985201/120356895-ad781b00-c2b9-11eb-94dc-2eacc348819b.png" height="118"/>
+  <img src="https://user-images.githubusercontent.com/4985201/120356895-ad781b00-c2b9-11eb-94dc-2eacc348819b.png" alt="Marko & Storybook Logo" height="118"/>
   <br/>
   <br/>
   Storybook for Marko
@@ -35,7 +35,9 @@
 Storybook for Marko is a UI development environment for your Marko components.
 With it, you can visualize different states of your UI components and develop them interactively.
 
-![Storybook Screenshot](https://github.com/storybookjs/storybook/blob/master/media/storybook-intro.gif)
+<p align="center">
+  <img src="https://github.com/storybookjs/storybook/blob/master/media/storybook-intro.gif" alt="Storybook Screenshot" height="118"/>
+</p>
 
 Storybook runs outside of your app.
 So you can develop UI components in isolation without worrying about app specific dependencies and requirements.
