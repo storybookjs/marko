@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/1671563/111436322-21b31180-8702-11eb-943f-93b5a0b02b50.png" alt="Storybook Marko Testing" width="100" />
+  <img src="https://user-images.githubusercontent.com/4985201/120356895-ad781b00-c2b9-11eb-94dc-2eacc348819b.png" height="118"/>
 </p>
 
 <p align="center">Testing utilities that allow you to reuse your stories in your unit tests</p>
