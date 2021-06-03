@@ -1,6 +1,6 @@
-import type * as playwright from "playwright";
 import * as assert from "assert";
-import { render } from "@marko/testing-library";
+import type * as playwright from "playwright";
+import { render, screen } from "@marko/testing-library";
 import * as stories from "./stories";
 import { composeStories } from "../../testing";
 
@@ -85,15 +85,18 @@ describe(stories.default.title, () => {
   });
 
   describe("testing", () => {
-    it("can render the composed stories", async () => {
-      const { Default, InitialCount } = composeStories(stories);
-      let { getByText } = await render(Default);
-      assert.ok(getByText("Current Count: 0"));
-      assert.strictEqual(Default.args.count, 0);
+    const { Default, InitialCount } = composeStories(stories);
 
-      ({ getByText } = await render(InitialCount));
+    it("can render the default story", async () => {
+      await render(Default);
+      assert.ok(screen.getByText("Current Count: 0"));
+      assert.strictEqual(Default.args.count, 0);
+    });
+
+    it("can render the initial count story", async () => {
+      await render(InitialCount);
+      assert.ok(screen.getByText("Current Count: 2"));
       assert.strictEqual(InitialCount.args.count, 2);
-      assert.ok(getByText("Current Count: 2"));
     });
   });
 });

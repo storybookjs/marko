@@ -8,7 +8,6 @@ const { build } = require("esbuild");
     "src/standalone.ts",
     ...(await glob("src/{bin,client,server}/**/*.ts")),
   ];
-  await fs.promises.rmdir("dist", { recursive: true }).catch(() => {});
 
   for (const format of ["esm", "cjs"]) {
     await build({

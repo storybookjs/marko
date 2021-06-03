@@ -88,7 +88,7 @@ export function setGlobalConfig(config: GlobalConfig) {
  *
  * @example
  *```js
- * import { render } from '@marko/testing-library';
+ * import { render, screen } from '@marko/testing-library';
  * import { composeStory } from '@storybook/marko/testing';
  * import Meta, { Primary as PrimaryStory } from './Button.stories';
  *
@@ -96,9 +96,9 @@ export function setGlobalConfig(config: GlobalConfig) {
  * // Primary is a proxy to a normal Marko template that can be rendered.
  * // You can also access properties in the story context on this proxy, eg `Primary.argTypes`.
  *
- * test('renders primary button with Hello World', () => {
- *   const { getByText } = render(Primary, { label: "Hello World" });
- *   expect(getByText(/Hello world/i)).not.toBeNull();
+ * test('renders primary button with Hello World', async () => {
+ *   await render(Primary, { label: "Hello World" });
+ *   expect(screen.getByText(/Hello world/i)).toBeInTheDocument();
  * });
  *```
  *
@@ -188,7 +188,7 @@ export function composeStory<GenericArgs>(
  *
  * @example
  *```js
- * import { render } from '@marko/testing-library';
+ * import { render, screen } from '@marko/testing-library';
  * import { composeStories } from '@storybook/marko/testing';
  * import * as stories from './Button.stories';
  *
@@ -196,9 +196,9 @@ export function composeStory<GenericArgs>(
  * // Primary is a proxy to a normal Marko template that can be rendered.
  * // You can also access properties in the story context on this proxy, eg `Primary.argTypes`.
  *
- * test('renders primary button with Hello World', () => {
- *   const { getByText } = render(Primary, { label: "Hello World" });
- *   expect(getByText(/Hello world/i)).not.toBeNull();
+ * test('renders primary button with Hello World', async () => {
+ *   await render(Primary, { label: "Hello World" });
+ *   expect(screen.getByText(/Hello world/i)).toBeInTheDocument();
  * });
  *```
  *
