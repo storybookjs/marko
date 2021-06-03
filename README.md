@@ -20,7 +20,7 @@
   </a>
   <!-- Coverage -->
   <a href="https://codecov.io/gh/storybookjs/marko">
-    <img src="https://codecov.io/gh/storybookjs/marko/branch/main/graph/badge.svg?token=SOKUXR8DLB"/>
+    <img src="https://codecov.io/gh/storybookjs/marko/branch/next/graph/badge.svg?token=SOKUXR8DLB"/>
   </a>
   <!-- NPM Version -->
   <a href="https://npmjs.org/package/@storybook/marko">

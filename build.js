@@ -1,4 +1,3 @@
-const fs = require("fs");
 const glob = require("tiny-glob");
 const { build } = require("esbuild");
 
