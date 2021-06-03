@@ -13,6 +13,10 @@ export = {
       "../../client/index.ts"
     );
 
+    config.stats = {
+      errorDetails: true,
+    };
+
     if (process.env.NYC_CONFIG) {
       config.devtool = "inline-nosources-source-map";
       config.module.rules.push({
@@ -25,18 +29,5 @@ export = {
     }
 
     return config;
-  },
-  babel: async (options: TransformOptions) => {
-    // https://github.com/storybookjs/storybook/issues/14805
-    return {
-      ...options,
-      plugins: [
-        ...(options.plugins || []),
-        [
-          require.resolve("@babel/plugin-proposal-private-property-in-object"),
-          { loose: true },
-        ],
-      ],
-    };
   },
 };
