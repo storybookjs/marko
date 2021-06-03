@@ -11,7 +11,15 @@ import type {
   Story,
   StoryFnMarkoReturnType,
 } from "./types";
-export * from "./types";
+export type {
+  Args,
+  ArgTypes,
+  Parameters,
+  StoryContext,
+  Meta,
+  Story,
+  StoryFnMarkoReturnType,
+} from "./types";
 
 /**
  * Object representing the preview.ts module
