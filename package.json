@@ -1,7 +1,7 @@
 {
   "name": "@storybook/marko",
   "description": "Storybook for Marko: Develop Marko Components in isolation.",
-  "version": "7.0.1",
+  "version": "7.0.2",
   "author": "Dylan Piercey <dpiercey@ebay.com>",
   "bin": {
     "build-storybook": "bin/build.js",
