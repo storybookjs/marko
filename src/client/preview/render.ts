@@ -1,15 +1,15 @@
 import { RenderStoryFunction } from "@storybook/core-client";
+import rootTemplate from "./template.marko";
 import win from "./globals";
 
 const document = win.document as Document;
 const rootEl = document.getElementById("root");
 const activeSubscriptions: Record<string, (...args: unknown[]) => void> = {};
-let activeComponent: any = null; // currently loaded marko component.
+let rootComponent: any = null; // a permanently mounted component which the current story is rendered into.
 let activeTemplate: any = null; // template for the currently loaded component.
 let activeStoryId: string | null = null; // used to determine if we've switched stories.
 
 const renderMain: RenderStoryFunction = (ctx) => {
-  const isSameStory = activeStoryId === (activeStoryId = ctx.id);
   const config = ctx.storyFn();
 
   if (!config || !(config.component || ctx.parameters.component)) {
@@ -24,7 +24,7 @@ const renderMain: RenderStoryFunction = (ctx) => {
     return;
   }
 
-  const template = config.component || ctx.parameters.component;
+  const component = config.component || ctx.parameters.component;
   const input: Record<string, unknown> = {};
   const subscriptions: typeof activeSubscriptions = {};
 
@@ -39,41 +39,42 @@ const renderMain: RenderStoryFunction = (ctx) => {
     }
   }
 
-  if (isSameStory && activeTemplate === template) {
-    // When rendering the same template with new input, we reuse the same instance.
-    for (const eventName in activeSubscriptions) {
-      const fn = activeSubscriptions[eventName];
-      if (subscriptions[eventName] !== fn) {
-        delete activeSubscriptions[eventName];
-        activeComponent.removeListener(eventName, fn);
-      }
-    }
-
-    activeComponent.input = input;
-    activeComponent.update();
+  if (!rootComponent) {
+    activeStoryId = ctx.id;
+    rootComponent = rootTemplate
+      .renderSync({ input, component })
+      .appendTo(rootEl)
+      .getComponent();
   } else {
-    if (activeComponent) {
+    if (activeStoryId === ctx.id && activeTemplate === component) {
+      // When rendering the same template with new input, we reuse the same instance.
+      for (const eventName in activeSubscriptions) {
+        const fn = activeSubscriptions[eventName];
+        if (subscriptions[eventName] !== fn) {
+          delete activeSubscriptions[eventName];
+          rootComponent.getComponent("story").removeListener(eventName, fn);
+        }
+      }
+    } else {
       for (const eventName in activeSubscriptions) {
         delete activeSubscriptions[eventName];
       }
-      activeComponent.destroy();
     }
 
-    activeTemplate = template;
-    activeComponent = activeTemplate
-      .renderSync(input)
-      .appendTo(rootEl)
-      .getComponent();
+    rootComponent.input = { input, component };
+    rootComponent.update();
   }
 
   for (const eventName in subscriptions) {
     const fn = subscriptions[eventName];
     if (activeSubscriptions[eventName] !== fn) {
       activeSubscriptions[eventName] = fn;
-      activeComponent.on(eventName, fn);
+      rootComponent.getComponent("story").on(eventName, fn);
     }
   }
 
+  activeStoryId = ctx.id;
+  activeTemplate = component;
   ctx.showMain();
 };
 
