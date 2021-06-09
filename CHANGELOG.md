@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.1.1](https://github.com/storybookjs/marko/compare/v7.1.0...v7.1.1) (2021-06-09)
+
+
+### Bug Fixes
+
+* ensure .marko files copied to dist folder ([e5c769c](https://github.com/storybookjs/marko/commit/e5c769c833bd5f874fe3b7c7dd34289ac59e3422))
+
 ## [7.1.0](https://github.com/storybookjs/marko/compare/v7.0.2...v7.1.0) (2021-06-08)
 
 
