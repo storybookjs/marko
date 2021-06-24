@@ -6,7 +6,7 @@ export function webpack(config: Configuration): Configuration {
     module: {
       ...config.module,
       rules: [
-        ...config.module!.rules,
+        ...config.module!.rules!,
         {
           test: /\.marko$/,
           loader: require.resolve("@marko/webpack/loader"),

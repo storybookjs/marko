@@ -44,7 +44,7 @@ describe(stories.default.title, () => {
       await frame.click("text=Click me!");
       assert.strictEqual(await $count.innerText(), "Current Count: 1");
 
-      await page.fill('[placeholder="Adjust number dynamically"]', "2");
+      await page.fill('[placeholder="Edit number..."]', "2");
       assert.strictEqual(await $count.innerText(), "Current Count: 2");
 
       await page.click("text=NameControl >> button");

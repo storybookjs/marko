@@ -2,7 +2,7 @@ declare module "file-system-cache" {
   export type FileSystemCache = any;
 }
 
-declare module "react-docgen-typescript-plugin" {
+declare module "@storybook/react-docgen-typescript-plugin" {
   export type PluginOptions = any;
 }
 
