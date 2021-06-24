@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.2.0](https://github.com/storybookjs/marko/compare/v7.1.1...v7.2.0) (2021-06-24)
+
+
+### Features
+
+* upgrade deps, including storybook@6.3.0 ([#3](https://github.com/storybookjs/marko/issues/3)) ([f7da4d2](https://github.com/storybookjs/marko/commit/f7da4d21dee1deecd1db1f8d989818b445f5658d))
+
 ### [7.1.1](https://github.com/storybookjs/marko/compare/v7.1.0...v7.1.1) (2021-06-09)
 
 
