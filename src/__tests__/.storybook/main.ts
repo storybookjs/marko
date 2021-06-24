@@ -1,5 +1,4 @@
 import type { Configuration } from "webpack";
-import type { TransformOptions } from "@babel/core";
 import path from "path";
 export = {
   stories: ["../**/stories.ts"],
@@ -25,18 +24,5 @@ export = {
     }
 
     return config;
-  },
-  babel: async (options: TransformOptions) => {
-    // https://github.com/storybookjs/storybook/issues/14805
-    return {
-      ...options,
-      plugins: [
-        ...(options.plugins || []),
-        [
-          require.resolve("@babel/plugin-proposal-private-property-in-object"),
-          { loose: true },
-        ],
-      ],
-    };
   },
 };

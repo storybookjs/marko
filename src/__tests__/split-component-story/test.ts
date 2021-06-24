@@ -32,7 +32,7 @@ describe(stories.default.title, () => {
       await page.click("text=Controls");
       assert.ok(await page.waitForSelector("text=name"));
       assert.strictEqual(await $el.innerText(), "Hello World");
-      await page.fill('[placeholder="Adjust string dynamically"]', "Marko");
+      await page.fill('textarea:has-text("World")', "Marko");
       assert.strictEqual(await $el.innerText(), "Hello Marko");
     });
 
