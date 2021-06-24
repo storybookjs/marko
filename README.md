@@ -86,6 +86,7 @@ This will act as the default `component` to render for each story function.
 import Button from "./button.marko";
 
 export default {
+  title: "Button",
   component: Button,
 };
 
@@ -116,6 +117,7 @@ import Button from "./button.marko";
 const Template = (args) => ({ input: args });
 
 export default {
+  title: "Button",
   component: Button,
 };
 
@@ -151,6 +153,7 @@ interface ButtonInput {
 const Template: Story<ButtonInput> = (args) => ({ input: args });
 
 export default {
+  title: "Button",
   component: Button,
 } as Meta<ButtonInput>;
 
