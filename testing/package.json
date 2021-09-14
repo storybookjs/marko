@@ -1,6 +1,6 @@
 {
-  "main": "../dist/cjs/testing.js",
-  "module": "../dist/esm/testing.js",
-  "jsnext": "../dist/esm/testing.js",
+  "main": "../dist/testing.js",
+  "module": "../dist/testing.mjs",
+  "jsnext": "../dist/testing.mjs",
   "types": "../dist/testing.d.ts"
 }

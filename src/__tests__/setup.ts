@@ -13,6 +13,11 @@ declare global {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-namespace
+declare namespace globalThis {
+  let page: playwright.Page;
+}
+
 declare function __report__(coverage: unknown): void;
 declare const __coverage__: unknown;
 
@@ -63,7 +68,7 @@ export async function mochaGlobalSetup() {
     ]);
   }
 
-  global.page = await context.newPage();
+  globalThis.page = await context.newPage();
 }
 
 export async function mochaGlobalTeardown() {

@@ -49,7 +49,7 @@ Primary.args = {
 If you have global decorators/parameters/etc and want them applied to your stories when testing them, you first need to set this up. You'll typically want to do this in a setup file for your favorite test framework.
 
 ```ts
-import { setGlobalConfig } from "@storybook/testing-react";
+import { setGlobalConfig } from "@storybook/marko";
 import * as globalStorybookConfig from "./.storybook/preview"; // path of your preview.js file
 
 setGlobalConfig(globalStorybookConfig);

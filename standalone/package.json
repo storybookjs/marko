@@ -1,6 +1,6 @@
 {
-  "main": "../dist/cjs/standalone.js",
-  "module": "../dist/esm/standalone.js",
-  "jsnext": "../dist/esm/standalone.js",
+  "main": "../dist/standalone.js",
+  "module": "../dist/standalone.mjs",
+  "jsnext": "../dist/standalone.mjs",
   "types": "../dist/standalone.d.ts"
 }
