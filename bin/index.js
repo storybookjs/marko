@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require("../dist/cjs/server");
+require("../dist/server");

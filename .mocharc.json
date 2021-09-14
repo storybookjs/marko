@@ -3,11 +3,10 @@
   "timeout": 30000,
   "enable-source-maps": true,
   "extension": ["js", "ts"],
-  "spec": ["src/**/__tests__/*/test.ts"],
   "watchFiles": ["src/**/*.ts", "src/**/*.marko"],
   "require": [
     "esbuild-register",
-    "marko/node-require",
+    "@marko/compiler/register",
     "src/__tests__/setup.ts"
   ]
 }

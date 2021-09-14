@@ -1,7 +1,8 @@
 import { start } from "@storybook/core/client";
 import render from "./render";
 
-const { configure: coreConfigure, clientApi, forceReRender } = start(render);
+const framework = "marko";
+const app = start(render);
 
 export const {
   setAddon,
@@ -10,12 +11,18 @@ export const {
   clearDecorators,
   getStorybook,
   raw,
-} = clientApi;
+} = app.clientApi;
 
-const framework = "marko";
+export const { forceReRender } = app;
+
+/**
+ * @deprecated
+ */
 export const storiesOf = (kind: string, m: any) =>
-  clientApi.storiesOf(kind, m).addParameters({ framework });
-export const configure = (loadable: any, m: any) =>
-  coreConfigure(framework, loadable, m);
+  app.clientApi.storiesOf(kind, m).addParameters({ framework });
 
-export { forceReRender };
+/**
+ * @deprecated
+ */
+export const configure = (loadable: any, m: any) =>
+  app.configure(framework, loadable, m);
