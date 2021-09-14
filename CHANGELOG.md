@@ -1,3 +1,11 @@
+## [7.2.2](https://github.com/storybookjs/marko/compare/v7.2.1...v7.2.2) (2021-09-14)
+
+
+### Bug Fixes
+
+* ensure changelog committed back during release ([54abbff](https://github.com/storybookjs/marko/commit/54abbffaa886ad44d9da74f22879e1bf8ff4ffac))
+* shorten generated commit messages ([da01a0d](https://github.com/storybookjs/marko/commit/da01a0d6262aa14e588f08327b213e20b045800e))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
