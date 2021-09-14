@@ -1,6 +1,4 @@
 {
   "main": "../dist/standalone.js",
-  "module": "../dist/standalone.mjs",
-  "jsnext": "../dist/standalone.mjs",
   "types": "../dist/standalone.d.ts"
 }

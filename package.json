@@ -71,7 +71,6 @@
     "url": "https://opencollective.com/storybook"
   },
   "homepage": "https://github.com/storybookjs/marko",
-  "jsnext": "dist/client/index.mjs",
   "keywords": [
     "marko",
     "playground",
@@ -80,7 +79,6 @@
   ],
   "license": "MIT",
   "main": "dist/client/index.js",
-  "module": "dist/client/index.mjs",
   "peerDependencies": {
     "marko": "^5",
     "webpack": "^4 || ^5"
