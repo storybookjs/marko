@@ -25,6 +25,7 @@
     "@marko/compiler": "^5.15.10",
     "@marko/testing-library": "^5.1.0",
     "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.1",
     "@storybook/addon-essentials": "^6.3.8",
     "@storybook/addons": "^6.3.8",
     "@storybook/builder-webpack5": "^6.3.8",
