@@ -1,3 +1,12 @@
+Changelog
+
+## [7.2.3](https://github.com/storybookjs/marko/compare/v7.2.2...v7.2.3) (2021-09-14)
+
+
+### Bug Fixes
+
+* disable mjs build for now ([270e282](https://github.com/storybookjs/marko/commit/270e2827370fa8b327d62d6b3f99b9928ca5e55f))
+
 # Changelog
 
 ## [7.2.2](https://github.com/storybookjs/marko/compare/v7.2.1...v7.2.2) (2021-09-14)
