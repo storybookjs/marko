@@ -4,7 +4,7 @@ on:
   pull_request:
     paths-ignore: ["**.md"]
   push:
-    branches: ["next"]
+    branches: ["next", "beta"]
     paths-ignore: ["**.md"]
 
 jobs:
