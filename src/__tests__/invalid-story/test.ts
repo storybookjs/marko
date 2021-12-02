@@ -11,11 +11,7 @@ describe(stories.default.title, () => {
     });
 
     it("shows error text", async () => {
-      assert.ok(
-        await page.waitForSelector(
-          `text=Did you forget to return the component from the story?`
-        )
-      );
+      assert.ok(await page.waitForSelector(`text=Did you forget`));
     });
   });
 

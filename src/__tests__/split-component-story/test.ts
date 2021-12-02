@@ -6,7 +6,7 @@ import { composeStories } from "../../testing";
 
 const id = "splitcomponent--hello-world";
 
-describe(stories.default.title, () => {
+describe(stories.default.title!, () => {
   describe("iframe", () => {
     before(async () => {
       await page.goto(`http://localhost:8080/iframe.html?id=${id}`);

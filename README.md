@@ -108,33 +108,32 @@ export const Secondary = () => ({
 ### Using Args
 
 [Storybooks `args`](https://storybook.js.org/docs/react/writing-stories/args) provide a way to better document, simplify and configure the input passed to your templates.
-Each story function will receive `args` as the first parameter.
+Each story function will receive `args` as the first parameter, or you can simply export an object with the story meta (including `args`).
 
 ```js
 import Button from "./button.marko";
-
-// The `Template` might look confusing, but all we are doing here is making a story function that provides storybooks args as Marko's input.
-const Template = (args) => ({ input: args });
 
 export default {
   title: "Button",
   component: Button,
 };
 
-export const Primary = Template.bind({});
+// When exporting a function, args are received.
+export const Primary = (args) => ({ input: args });
 Primary.args = {
   primary: true,
   label: "Button",
 };
 
-export const Secondary = Template.bind({});
-Secondary.args = {
-  primary: false,
-  label: "Button",
+// Alternatively export an object with args which
+// will always render the default exported component.
+export const Secondary = {
+  args: {
+    primary: false,
+    label: "Button",
+  },
 };
 ```
-
-> Note: [In the future](https://github.com/storybookjs/storybook/issues/14397) you will be able to directly export the story meta data without the `Template.bind({})` dance.
 
 ### Using with TypeScript
 
@@ -150,16 +149,15 @@ interface ButtonInput {
   label: string;
 }
 
-const Template: Story<ButtonInput> = (args) => ({ input: args });
-
 export default {
   title: "Button",
   component: Button,
 } as Meta<ButtonInput>;
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primarrrrry: true, // Will error with typescript!
+export const Primary: Story<ButtonInput> = {
+  args: {
+    primarrrrry: true, // Will error with typescript!
+  },
 };
 ```
 

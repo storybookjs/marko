@@ -1,6 +1,11 @@
-import { RenderStoryFunction } from "@storybook/core-client";
+import type { RenderContext } from "@storybook/store";
 import rootTemplate from "./template.marko";
 import win from "./globals";
+
+type MarkoFramework = {
+  component: any;
+  storyResult: any;
+};
 
 const document = win.document as Document;
 const rootEl = document.getElementById("root");
@@ -9,14 +14,17 @@ let rootComponent: any = null; // a permanently mounted component which the curr
 let activeTemplate: any = null; // template for the currently loaded component.
 let activeStoryId: string | null = null; // used to determine if we've switched stories.
 
-const renderMain: RenderStoryFunction = (ctx) => {
-  const config = ctx.storyFn();
+export const render = (input: any) => ({ input });
 
-  if (!config || !(config.component || ctx.parameters.component)) {
+export function renderToDOM(ctx: RenderContext<MarkoFramework>) {
+  const config = ctx.storyFn();
+  const component = config?.component || ctx.storyContext.component;
+
+  if (!component) {
     ctx.showError({
       title: `Expecting an object with a component property to be returned from the story: "${ctx.name}" of "${ctx.kind}".`,
       description: `\
-        Did you forget to return the component from the story?\
+        Did you forget to return the component from the story or specify a component in the default export?\
         Use "() => ({ component: MyComponent, input: { hello: 'world' } })" when defining the story.\
       `,
     });
@@ -24,7 +32,6 @@ const renderMain: RenderStoryFunction = (ctx) => {
     return;
   }
 
-  const component = config.component || ctx.parameters.component;
   const input: Record<string, unknown> = {};
   const subscriptions: typeof activeSubscriptions = {};
 
@@ -76,7 +83,7 @@ const renderMain: RenderStoryFunction = (ctx) => {
   activeStoryId = ctx.id;
   activeTemplate = component;
   ctx.showMain();
-};
+}
 
 function toEventName(method: string) {
   const match = /^on(-)?(.*)$/.exec(method);
@@ -89,5 +96,3 @@ function toEventName(method: string) {
 
   return false;
 }
-
-export { renderMain as default };

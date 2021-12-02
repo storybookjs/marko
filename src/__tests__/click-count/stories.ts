@@ -5,7 +5,6 @@ interface Input {
   count?: number;
   onIncrement?(ev: Event): void;
 }
-const Template: Story<Input> = (input) => ({ input });
 
 export default {
   title: "ClickCount",
@@ -24,7 +23,6 @@ export default {
       table: { category: "Events" },
     },
     count: {
-      defaultValue: 0,
       control: { type: "number" },
       description: "What the initial count of the counter should be",
       table: {
@@ -37,31 +35,33 @@ export default {
   },
 } as Meta<Input>;
 
-export const Default = Template.bind({});
-Default.argTypes = {
-  onIncrement: {
-    action: "increment from default",
+export const Default: Story<Input> = {
+  argTypes: {
+    onIncrement: {
+      action: "increment from default",
+    },
   },
-};
-Default.parameters = {
-  docs: {
-    source: {
-      code: `<click-count/>`,
+  parameters: {
+    docs: {
+      source: {
+        code: `<click-count/>`,
+      },
     },
   },
 };
 
-export const InitialCount = Template.bind({});
-InitialCount.args = { count: 2 };
-InitialCount.argTypes = {
-  "on-increment": {
-    action: "increment from initial count",
+export const InitialCount: Story<Input> = {
+  args: { count: 2 },
+  argTypes: {
+    "on-increment": {
+      action: "increment from initial count",
+    },
   },
-};
-InitialCount.parameters = {
-  docs: {
-    source: {
-      code: `<click-count count=${InitialCount.args.count}/>`,
+  parameters: {
+    docs: {
+      source: {
+        code: `<click-count count=2/>`,
+      },
     },
   },
 };

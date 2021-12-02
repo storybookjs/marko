@@ -1,8 +1,8 @@
 import { start } from "@storybook/core/client";
-import render from "./render";
+import { renderToDOM, render } from "./render";
 
 const framework = "marko";
-const app = start(render);
+const app = start(renderToDOM, { render });
 
 export const {
   setAddon,
@@ -24,5 +24,8 @@ export const storiesOf = (kind: string, m: any) =>
 /**
  * @deprecated
  */
-export const configure = (loadable: any, m: any) =>
-  app.configure(framework, loadable, m);
+export const configure = (
+  loadable: any,
+  m: any,
+  showDeprecationWarning: boolean
+) => app.configure(framework, loadable, m, showDeprecationWarning);
