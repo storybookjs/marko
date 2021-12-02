@@ -1,3 +1,8 @@
+declare module "interpret" {
+  let x: any;
+  export = x;
+}
+
 declare module "file-system-cache" {
   export type FileSystemCache = any;
 }

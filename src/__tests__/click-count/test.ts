@@ -6,7 +6,7 @@ import { composeStories } from "../../testing";
 
 const id = "clickcount--default";
 
-describe(stories.default.title, () => {
+describe(stories.default.title!, () => {
   describe("iframe", () => {
     before(async () => {
       await page.goto(`http://localhost:8080/iframe.html?id=${id}`);
@@ -44,6 +44,7 @@ describe(stories.default.title, () => {
       await frame.click("text=Click me!");
       assert.strictEqual(await $count.innerText(), "Current Count: 1");
 
+      await page.click("text=Set number");
       await page.fill('[placeholder="Edit number..."]', "2");
       assert.strictEqual(await $count.innerText(), "Current Count: 2");
 
@@ -90,7 +91,7 @@ describe(stories.default.title, () => {
     it("can render the default story", async () => {
       await render(Default);
       assert.ok(screen.getByText("Current Count: 0"));
-      assert.strictEqual(Default.args.count, 0);
+      assert.strictEqual(Default.args.count, undefined);
     });
 
     it("can render the initial count story", async () => {

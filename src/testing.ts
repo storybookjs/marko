@@ -9,6 +9,7 @@ import type {
   StoryContext,
   Meta,
   Story,
+  StoryFn,
   StoryFnMarkoReturnType,
 } from "./types";
 export type {
@@ -46,6 +47,8 @@ interface RenderableStory<T extends Story<any>> extends StoryContext {
 }
 
 let globalStorybookConfig: GlobalConfig = {};
+const pass = () => true;
+const fail = () => false;
 const emptyObj: any = {};
 const emptyArr: any = [];
 const renderMethods = new Set([
@@ -111,11 +114,12 @@ export function composeStory<GenericArgs>(
   meta: Meta = emptyObj,
   globalConfig: GlobalConfig = globalStorybookConfig
 ) {
-  if (!story || !(story instanceof Function)) {
-    // https://github.com/microsoft/TypeScript/issues/37663
-    throw new Error(
-      `Cannot compose story due to invalid format. @storybook/marko/testing expected a function but received ${typeof story} instead.`
-    );
+  if (!story) {
+    throw new Error("No story provided.");
+  }
+
+  if (!(typeof story === "function" || typeof story === "object")) {
+    throw new Error(`Invalid story provided, got ${story}.`);
   }
 
   if ((story as any).story !== undefined) {
@@ -125,56 +129,55 @@ export function composeStory<GenericArgs>(
     );
   }
 
+  const render =
+    typeof story === "function"
+      ? (story as StoryFn<GenericArgs>)
+      : story.render || ((input: any) => ({ input }));
   const decorated = defaultDecorateStory(
     ((context: StoryContext) =>
       toRenderable(
-        story(context.args as GenericArgs, context),
+        render(context.args as GenericArgs, context),
         context
       )) as any,
     [
       ...(story.decorators || emptyArr),
       ...(meta.decorators || emptyArr),
-      ...(globalConfig?.decorators || emptyArr),
+      ...(globalConfig.decorators || emptyArr),
     ]
   );
 
-  const argTypes = combineParameters(
-    globalConfig.argTypes || emptyObj,
-    meta.argTypes || emptyObj,
-    story.argTypes || emptyObj
-  );
-
-  const args: Partial<GenericArgs> = {
-    ...meta.args,
-    ...story.args,
-  };
-
-  for (const argName in argTypes) {
-    const argType = argTypes[argName];
-
-    if ("defaultValue" in argType && !(argName in args)) {
-      args[argName as keyof GenericArgs] = argType.defaultValue;
-    }
-  }
-
   return decorated({
     id: "",
-    kind: meta.title || "",
-    name: story.name || "",
-    args,
-    argTypes,
+    kind: "",
+    name: "",
+    story: "",
+    title: "",
+    componentId: "",
+    viewMode: "story",
+    originalStoryFn: story,
     component: meta.component,
-    globals: Object.fromEntries(
-      Object.entries(globalConfig.globalTypes || emptyObj)
-        .filter(([, v]) => "defaultValue" in (v as any))
-        .map(([k, v]) => [k, (v as any).defaultValue])
+    args: {
+      ...meta.args,
+      ...story.args,
+    },
+    globals: globalConfig.globalTypes
+      ? Object.fromEntries(
+          Object.entries(globalConfig.globalTypes)
+            .filter(([, v]) => "defaultValue" in (v as any))
+            .map(([k, v]) => [k, (v as any).defaultValue])
+        )
+      : {},
+    argTypes: combineParameters(
+      globalConfig.argTypes,
+      meta.argTypes,
+      story.argTypes
     ),
     parameters: combineParameters(
-      globalConfig.parameters || emptyObj,
-      meta.parameters || emptyObj,
-      story.parameters || emptyObj
+      globalConfig.parameters,
+      meta.parameters,
+      story.parameters
     ),
-  }) as RenderableStory<Story<GenericArgs>>;
+  } as StoryContext) as RenderableStory<Story<GenericArgs>>;
 }
 
 /**
@@ -209,14 +212,21 @@ export function composeStories<T extends { default?: Meta }>(
   storiesImport: T,
   globalConfig?: GlobalConfig
 ) {
-  const { default: meta, ...stories } = storiesImport;
+  const { default: meta = emptyObj, ...stories } = storiesImport;
   type Stories = typeof stories;
 
   const composedStories = {} as any;
-
+  const includeTest = patternToTest(meta.includeStories) || pass;
+  const excludeTest = patternToTest(meta.excludeStories) || fail;
   for (const key in stories) {
     const story = stories[key as keyof Stories] as any;
-    if (typeof story === "function") {
+
+    if (
+      story &&
+      (typeof story === "function" || typeof story === "object") &&
+      includeTest(key) &&
+      !excludeTest(key)
+    ) {
       composedStories[key] = composeStory(story, meta, globalConfig);
     }
   }
@@ -238,8 +248,7 @@ function toRenderable<T extends StoryFnMarkoReturnType>(
   storyResult: T,
   context: StoryContext
 ) {
-  const component =
-    storyResult?.component || context.parameters.component || context.component;
+  const component = storyResult?.component || context.component;
   if (!component) {
     throw new Error(
       "@storybook/marko/testing: Story function result does not have a component."
@@ -268,4 +277,34 @@ function toRenderable<T extends StoryFnMarkoReturnType>(
       return Reflect.get(target, prop, receiver);
     },
   });
+}
+
+/**
+ * Roughly the same as https://github.com/storybookjs/storybook/blob/ee22b3957f3d48bb613f9ba93e092c0cb04ccf8e/lib/csf-tools/src/CsfFile.ts#L25-L37
+ */
+function patternToTest(
+  pattern: undefined | null | string | string[] | RegExp | RegExp[]
+) {
+  if (pattern) {
+    switch (typeof pattern) {
+      case "string":
+        return (v: string) => v === pattern;
+      case "object":
+        return Array.isArray(pattern)
+          ? (v: string) => {
+              for (const item of pattern) {
+                if (typeof item === "string") {
+                  if (v === item) return true;
+                } else if (item.test(v)) {
+                  return true;
+                }
+              }
+
+              return false;
+            }
+          : pattern.test.bind(pattern);
+      default:
+        throw new Error(`Invalid pattern ${pattern}`);
+    }
+  }
 }

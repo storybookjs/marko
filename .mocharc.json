@@ -7,6 +7,7 @@
   "require": [
     "esbuild-register",
     "@marko/compiler/register",
+    "patch-interpret.ts",
     "src/__tests__/setup.ts"
   ]
 }
