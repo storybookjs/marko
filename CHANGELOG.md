@@ -1,5 +1,12 @@
 Changelog
 
+# [7.3.0](https://github.com/storybookjs/marko/compare/v7.2.3...v7.3.0) (2021-12-02)
+
+
+### Features
+
+* upgrade to storybook 6.4 ([#5](https://github.com/storybookjs/marko/issues/5)) ([2aa840e](https://github.com/storybookjs/marko/commit/2aa840eeecf7d403b4526d75a09288feb4b19d8e))
+
 ## [7.2.3](https://github.com/storybookjs/marko/compare/v7.2.2...v7.2.3) (2021-09-14)
 
 
