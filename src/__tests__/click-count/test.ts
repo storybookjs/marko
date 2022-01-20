@@ -30,7 +30,9 @@ describe(stories.default.title!, () => {
     before(async () => {
       await page.goto(`http://localhost:8080/?path=/story/${id}`);
       await page.waitForSelector("#storybook-preview-iframe");
-      frame = page.frame({ name: "storybook-preview-iframe" })!;
+      frame = (await (
+        await page.waitForSelector("#storybook-preview-iframe")
+      ).contentFrame())!;
     });
 
     it("supports controls addon", async () => {

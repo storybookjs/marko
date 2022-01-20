@@ -23,27 +23,24 @@ describe(stories.default.title!, () => {
 
     before(async () => {
       await page.goto(`http://localhost:8080/?path=/story/${id}`);
-      await page.waitForSelector("#storybook-preview-iframe");
-      frame = page.frame({ name: "storybook-preview-iframe" })!;
+      frame = (await (
+        await page.waitForSelector("#storybook-preview-iframe")
+      ).contentFrame())!;
     });
 
     it("supports controls addon", async () => {
-      const $el = await frame.waitForSelector("text=Hello");
       await page.click("text=Controls");
-      assert.ok(await page.waitForSelector("text=name"));
-      assert.strictEqual(await $el.innerText(), "Hello World");
-      await page.fill('textarea:has-text("World")', "Marko");
-      assert.strictEqual(await $el.innerText(), "Hello Marko");
+      await page.fill('textarea:has-text("World")', "Updated");
+      assert.ok(await frame.waitForSelector('div:has-text("Hello Updated")'));
     });
 
     it("can navigate to another story", async () => {
       await Promise.all([
         frame.waitForNavigation(),
-        page.click("text=Hello Marko"),
+        page.click('a:has-text("Hello Marko")'),
       ]);
-      const $el = await frame.waitForSelector("text=Hello");
 
-      assert.strictEqual(await $el.innerText(), "Hello Marko");
+      assert.ok(await frame.waitForSelector('div:has-text("Hello Marko")'));
     });
   });
 
