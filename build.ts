@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import glob from "fast-glob";
-import { build } from "esbuild";
+import { build, BuildOptions } from "esbuild";
 
 (async () => {
   const entryPoints = [];
@@ -21,15 +21,39 @@ import { build } from "esbuild";
     }
   }
 
-  await build({
+  const opts: BuildOptions = {
     outdir,
     entryPoints,
     outbase: srcdir,
     platform: "node",
     target: ["node14"],
-    format: "cjs",
-  });
-})().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+  };
+
+  await Promise.all([
+    build({
+      ...opts,
+      format: "cjs",
+    }),
+    build({
+      ...opts,
+      format: "esm",
+      bundle: true,
+      splitting: true,
+      outExtension: { ".js": ".mjs" },
+      plugins: [
+        {
+          name: "external-modules",
+          setup(build) {
+            build.onResolve(
+              { filter: /^[^./]|^\.[^./]|^\.\.[^/]/ },
+              ({ path }) => ({
+                path,
+                external: true,
+              })
+            );
+          },
+        },
+      ],
+    }),
+  ]);
+})();
