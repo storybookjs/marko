@@ -1,5 +1,13 @@
 Changelog
 
+# [7.4.0](https://github.com/storybookjs/marko/compare/v7.3.0...v7.4.0) (2022-01-20)
+
+
+### Features
+
+* avoid using intermediary template for rendering ([0b24f0f](https://github.com/storybookjs/marko/commit/0b24f0f037399f1f691dea61b7d6c58233f7192d))
+* upgrade deps and output esm build ([066b305](https://github.com/storybookjs/marko/commit/066b305d2a220324841b557b8c2184f629154f09))
+
 # [7.3.0](https://github.com/storybookjs/marko/compare/v7.2.3...v7.3.0) (2021-12-02)
 
 
