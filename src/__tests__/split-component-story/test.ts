@@ -26,6 +26,7 @@ describe(stories.default.title!, () => {
       frame = (await (
         await page.waitForSelector("#storybook-preview-iframe")
       ).contentFrame())!;
+      await frame.waitForLoadState();
     });
 
     it("supports controls addon", async () => {
