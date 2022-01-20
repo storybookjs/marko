@@ -1,5 +1,4 @@
 import type { RenderContext } from "@storybook/store";
-import rootTemplate from "./template.marko";
 import win from "./globals";
 
 type MarkoFramework = {
@@ -8,9 +7,9 @@ type MarkoFramework = {
 };
 
 const document = win.document as Document;
-const rootEl = document.getElementById("root");
+const rootEl = document.getElementById("root")!;
 const activeSubscriptions: Record<string, (...args: unknown[]) => void> = {};
-let rootComponent: any = null; // a permanently mounted component which the current story is rendered into.
+let activeComponent: any = null; // the current mounted component instance.
 let activeTemplate: any = null; // template for the currently loaded component.
 let activeStoryId: string | null = null; // used to determine if we've switched stories.
 
@@ -46,42 +45,53 @@ export function renderToDOM(ctx: RenderContext<MarkoFramework>) {
     }
   }
 
-  if (!rootComponent) {
-    activeStoryId = ctx.id;
-    rootComponent = rootTemplate
-      .renderSync({ input, component })
-      .appendTo(rootEl)
-      .getComponent();
-  } else {
-    if (activeStoryId === ctx.id && activeTemplate === component) {
-      // When rendering the same template with new input, we reuse the same instance.
-      for (const eventName in activeSubscriptions) {
-        const fn = activeSubscriptions[eventName];
-        if (subscriptions[eventName] !== fn) {
-          delete activeSubscriptions[eventName];
-          rootComponent.getComponent("story").removeListener(eventName, fn);
-        }
+  if (
+    activeStoryId === ctx.id &&
+    activeTemplate === component &&
+    activeComponent.state
+  ) {
+    activeComponent.input = input;
+    activeComponent.update();
+
+    for (const eventName in activeSubscriptions) {
+      const fn = activeSubscriptions[eventName];
+      if (subscriptions[eventName] !== fn) {
+        delete activeSubscriptions[eventName];
+        activeComponent.removeListener(eventName, fn);
       }
-    } else {
+    }
+
+    for (const eventName in subscriptions) {
+      const fn = subscriptions[eventName];
+      if (activeSubscriptions[eventName] !== fn) {
+        activeSubscriptions[eventName] = fn;
+        activeComponent.on(eventName, fn);
+      }
+    }
+  } else {
+    if (activeComponent) {
       for (const eventName in activeSubscriptions) {
         delete activeSubscriptions[eventName];
       }
+
+      activeComponent.destroy();
     }
 
-    rootComponent.input = { input, component };
-    rootComponent.update();
-  }
+    activeStoryId = ctx.id;
+    activeTemplate = component;
+    activeComponent = component
+      .renderSync(input)
+      .replaceChildrenOf(rootEl)
+      .getComponent();
 
-  for (const eventName in subscriptions) {
-    const fn = subscriptions[eventName];
-    if (activeSubscriptions[eventName] !== fn) {
-      activeSubscriptions[eventName] = fn;
-      rootComponent.getComponent("story").on(eventName, fn);
+    for (const eventName in subscriptions) {
+      activeComponent.on(
+        eventName,
+        (activeSubscriptions[eventName] = subscriptions[eventName])
+      );
     }
   }
 
-  activeStoryId = ctx.id;
-  activeTemplate = component;
   ctx.showMain();
 }
 
