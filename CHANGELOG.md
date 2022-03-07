@@ -1,5 +1,12 @@
 Changelog
 
+## [7.4.1](https://github.com/storybookjs/marko/compare/v7.4.0...v7.4.1) (2022-03-07)
+
+
+### Bug Fixes
+
+* auto generate full export maps ([6739fe1](https://github.com/storybookjs/marko/commit/6739fe1b8e6b1e2cf52b9942ad3b6b7756ee1dd0))
+
 # [7.4.0](https://github.com/storybookjs/marko/compare/v7.3.0...v7.4.0) (2022-01-20)
 
 
