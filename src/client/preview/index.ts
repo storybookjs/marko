@@ -1,4 +1,4 @@
-import { start } from "@storybook/core/client";
+import { start } from "@storybook/core-client";
 import { renderToDOM, render } from "./render";
 
 const framework = "marko";

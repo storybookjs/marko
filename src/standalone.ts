@@ -1,4 +1,4 @@
-import build from "@storybook/core/standalone";
+import build from "@storybook/core-server/standalone.js";
 import frameworkOptions from "./server/options";
 
 export default async function buildStandalone(

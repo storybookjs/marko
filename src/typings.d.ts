@@ -11,7 +11,7 @@ declare module "@storybook/react-docgen-typescript-plugin" {
   export type PluginOptions = any;
 }
 
-declare module "@storybook/core/standalone";
+declare module "@storybook/core-server/standalone.js";
 
 declare module "*.marko" {
   let x: any;

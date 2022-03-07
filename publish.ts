@@ -20,6 +20,10 @@ async function updatePackageExports() {
     }
 
     const exportMap: any = {
+      ".": {
+        import: "./dist/client/index.mjs",
+        default: "./dist/client/index.js",
+      },
       "./bin/build.js": "./bin/build.js",
       "./bin/index.js": "./bin/index.js",
     };
