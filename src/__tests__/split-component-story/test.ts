@@ -30,6 +30,7 @@ describe(stories.default.title!, () => {
     });
 
     it("supports controls addon", async () => {
+      await page.waitForTimeout(100);
       await page.click("text=Controls");
       await page.fill('textarea:has-text("World")', "Updated");
       assert.ok(await frame.waitForSelector('div:has-text("Hello Updated")'));
