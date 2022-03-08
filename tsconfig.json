@@ -8,7 +8,7 @@
     "sourceMap": false,
     "declaration": true,
     "incremental": true,
-    "module": "CommonJS",
+    "module": "ESNext",
     "skipLibCheck": true,
     "stripInternal": true,
     "esModuleInterop": true,

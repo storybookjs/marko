@@ -19,6 +19,6 @@ export {
   raw,
 } from "./preview";
 
-if (module && module.hot && module.hot.decline) {
-  module.hot.decline();
+if (import.meta.webpackHot) {
+  import.meta.webpackHot.decline();
 }

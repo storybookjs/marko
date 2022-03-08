@@ -33,6 +33,10 @@ import { build, BuildOptions } from "esbuild";
     build({
       ...opts,
       format: "cjs",
+      inject: ["./import-meta-webpack.js"],
+      define: {
+        "import.meta.webpackHot": "import_meta_webpackHot",
+      },
     }),
     build({
       ...opts,
