@@ -1,5 +1,13 @@
 Changelog
 
+## [7.4.2](https://github.com/storybookjs/marko/compare/v7.4.1...v7.4.2) (2022-03-08)
+
+
+### Bug Fixes
+
+* module paths for esm imports ([dc63597](https://github.com/storybookjs/marko/commit/dc635975273ec08e7ca7f2c3d9b400a7f8c85ece))
+* race condition in test ([f5e238b](https://github.com/storybookjs/marko/commit/f5e238bbfcde4ac1403bd7c5e6a5d5b53ff0817f))
+
 ## [7.4.1](https://github.com/storybookjs/marko/compare/v7.4.0...v7.4.1) (2022-03-07)
 
 
