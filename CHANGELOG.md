@@ -1,5 +1,12 @@
 Changelog
 
+## [7.4.3](https://github.com/storybookjs/marko/compare/v7.4.2...v7.4.3) (2022-03-08)
+
+
+### Bug Fixes
+
+* hmr in esm mode ([3c96656](https://github.com/storybookjs/marko/commit/3c966560b264ee23e7d19d334270ba7f4b1baad8))
+
 ## [7.4.2](https://github.com/storybookjs/marko/compare/v7.4.1...v7.4.2) (2022-03-08)
 
 
