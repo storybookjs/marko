@@ -1,5 +1,5 @@
+import type { LoadOptions } from "@storybook/core-common";
 import fs from "fs";
-import path from "path";
 import findUp from "escalade/sync";
 
 const packageJsonFile = findUp(
@@ -9,7 +9,8 @@ const packageJsonFile = findUp(
 
 export default {
   framework: "marko",
-  frameworkPresets: [path.join(__dirname, "framework-preset-marko")],
+  frameworkPath: "@storybook/marko",
+  frameworkPresets: [require.resolve("./framework-preset-marko")],
   packageJson:
     packageJsonFile && JSON.parse(fs.readFileSync(packageJsonFile, "utf-8")),
-};
+} as LoadOptions;
