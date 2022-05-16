@@ -1,5 +1,12 @@
 Changelog
 
+## [7.4.4](https://github.com/storybookjs/marko/compare/v7.4.3...v7.4.4) (2022-05-16)
+
+
+### Bug Fixes
+
+* add support for framework option in sb config ([#6](https://github.com/storybookjs/marko/issues/6)) ([11bff11](https://github.com/storybookjs/marko/commit/11bff11474da1a556df3db7b47f44618dce08d39))
+
 ## [7.4.3](https://github.com/storybookjs/marko/compare/v7.4.2...v7.4.3) (2022-03-08)
 
 
