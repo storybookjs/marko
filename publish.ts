@@ -24,6 +24,10 @@ async function updatePackageExports() {
         import: "./dist/client/index.mjs",
         default: "./dist/client/index.js",
       },
+      "./preset": {
+        import: "./dist/server/preset.mjs",
+        default: "./dist/server/preset.js",
+      },
       "./bin/build.js": "./bin/build.js",
       "./bin/index.js": "./bin/index.js",
     };
