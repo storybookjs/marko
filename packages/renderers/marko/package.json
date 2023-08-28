@@ -1,0 +1,45 @@
+{
+  "name": "@storybook/marko",
+  "version": "7.4.4",
+  "description": "Storybook for Marko: Develop Marko Components in isolation.",
+  "keywords": [
+    "marko",
+    "renderer",
+    "storybook"
+  ],
+  "homepage": "https://github.com/storybookjs/marko/blob/main/README.md",
+  "bugs": "https://github.com/storybookjs/marko/issues/new?template=Bug_report.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/storybookjs/marko"
+  },
+  "license": "MIT",
+  "exports": {
+    "./package.json": "./package.json",
+    "./*.d.ts": "./*.d.ts",
+    "./preview": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.mjs",
+      "default": "./dist/config.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist",
+    "preview.js",
+    "!**/*.tsbuildinfo"
+  ],
+  "dependencies": {
+    "@storybook/core-client": "^7.3.2",
+    "@storybook/docs-tools": "^7.3.2",
+    "@storybook/global": "^5.0.0",
+    "@storybook/preview-api": "^7.3.2",
+    "@storybook/types": "^7.3.2"
+  }
+}

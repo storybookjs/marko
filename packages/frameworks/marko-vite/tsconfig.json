@@ -1,0 +1,13 @@
+{
+  "extends": "../../../tsconfig.json",
+  "include": ["src"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@storybook/marko-webpack": ["src/index.ts"]
+    },
+    "outDir": "dist",
+    "rootDir": "src",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+  }
+}

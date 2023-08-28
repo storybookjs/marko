@@ -1,0 +1,19 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["**/dist"],
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false
+  },
+  "references": [
+    {
+      "path": "./packages/renderers/marko"
+    },
+    {
+      "path": "./packages/frameworks/marko-vite"
+    },
+    {
+      "path": "./packages/frameworks/marko-webpack"
+    }
+  ]
+}

@@ -1,6 +1,16 @@
-# Issue:
+<!--- Provide a general summary of your changes in the Title above -->
 
-## What I did
+## Description
+
+<!--- Describe your changes in detail.  Include the package name if applicable. -->
+
+## Motivation and Context
+
+<!--- Why is this change required? What problem does it solve? -->
+
+<!--- If it fixes an open issue, please link to the issue here. -->
+
+## Screenshots (if appropriate):
 
 ## Checklist:
 

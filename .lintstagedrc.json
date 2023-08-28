@@ -1,5 +1,8 @@
 {
-  "*.ts": ["eslint -f visualstudio --fix", "prettier --write"],
+  "*.ts": ["eslint --fix", "prettier --write"],
   "*{.js,.json,.md,.yml,rc}": ["prettier --write"],
-  "./package.json": ["fixpack"]
+  "./{,packages/*/*/,tests/frameworks/*/}package.json": [
+    "prettier --write",
+    "sort-package-json --quiet"
+  ]
 }
