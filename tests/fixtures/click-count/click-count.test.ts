@@ -1,3 +1,46 @@
+// import fs from "fs";
+// import path from "path";
+import { expect, test } from "@playwright/test";
+
+test.describe("Click Count: Default", () => {
+  test.beforeEach(async ({ page }) => {
+    // await page.coverage.startJSCoverage({
+    //   reportAnonymousScripts: true,
+    //   resetOnNavigation: false
+    // });
+    await page.goto("/iframe.html?id=clickcount--default");
+  });
+
+  test("is interactive", async ({ page }) => {
+    const $btn = page.getByText("Click me!");
+    const $count = page.getByText("Current Count:");
+    await expect($btn).toBeVisible();
+    await expect($count).toBeVisible();
+    await expect($count).toContainText("0");
+    await $btn.click();
+    await expect($count).toContainText("1");
+    await $btn.click();
+    await expect($count).toContainText("2");
+    // const coverage = await page.coverage.stopJSCoverage();
+    // const rootPath = path.normalize(`${__dirname}/..`);
+    // const coverageWithPath = coverage.map((entry) => {
+    //   let fileName;
+    //   try {
+    //     fileName = new URL(entry.url).pathname;
+    //   } catch {
+    //     fileName = "/unknown";
+    //   }
+    //   return { ...entry, url: `file:///${rootPath}${fileName}` };
+    // });
+
+    // await fs.promises.mkdir("coverage/tmp", { recursive: true }).catch(() => {});
+    // await fs.promises.writeFile(
+    //   "coverage/tmp/coverage.json",
+    //   JSON.stringify({ result: coverageWithPath }, null, 2)
+    // );
+  });
+});
+
 // import * as assert from "assert";
 // import type * as playwright from "playwright";
 // import { render, screen } from "@marko/testing-library";

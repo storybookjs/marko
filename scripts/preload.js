@@ -4,6 +4,7 @@ const tsconfigPaths = require("tsconfig-paths");
 
 for (const dir of [
   path.join(__dirname, "../packages/renderers/marko"),
+  path.join(__dirname, "../packages/frameworks/marko-vite"),
   path.join(__dirname, "../packages/frameworks/marko-webpack"),
 ]) {
   const {
