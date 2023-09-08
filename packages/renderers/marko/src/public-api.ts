@@ -16,6 +16,9 @@ const api = start<MarkoRenderer>(renderToCanvas, {
   render,
 });
 
+/**
+ * @deprecated
+ */
 export const storiesOf: ClientApi["storiesOf"] = (kind, m) => {
   return (
     api.clientApi.storiesOf(kind, m) as ReturnType<ClientApi["storiesOf"]>
@@ -24,7 +27,18 @@ export const storiesOf: ClientApi["storiesOf"] = (kind, m) => {
   });
 };
 
+/**
+ * @deprecated
+ */
 export const configure: ClientApi["configure"] = (...args) =>
   api.configure(RENDERER, ...args);
+
+/**
+ * @deprecated
+ */
 export const forceReRender: ClientApi["forceReRender"] = api.forceReRender;
+
+/**
+ * @deprecated
+ */
 export const raw: ClientApi["raw"] = api.clientApi.raw;
