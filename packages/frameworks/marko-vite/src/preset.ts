@@ -1,4 +1,3 @@
-// import path from "path";
 import type { PresetProperty } from "@storybook/types";
 import { hasVitePlugins } from "@storybook/builder-vite";
 import type { StorybookConfig } from "./types";
@@ -13,11 +12,11 @@ export const core: PresetProperty<"core", StorybookConfig> = async (
   return {
     ...config,
     builder: {
-      name: getAbsolutePath("@storybook/builder-vite"),
+      name: "@storybook/builder-vite",
       options:
         typeof framework === "string" ? {} : framework.options.builder || {},
     },
-    renderer: getAbsolutePath("@storybook/marko"),
+    renderer: "@storybook/marko",
   };
 };
 
@@ -29,8 +28,3 @@ export const viteFinal: StorybookConfig["viteFinal"] = async (baseConfig) => {
   }
   return baseConfig;
 };
-
-function getAbsolutePath(pkg: string) {
-  return pkg;
-  // return path.dirname(require.resolve(path.join(pkg, "package.json")));
-}

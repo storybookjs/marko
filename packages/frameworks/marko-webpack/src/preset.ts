@@ -1,4 +1,3 @@
-import path from "path";
 import type { PresetProperty } from "@storybook/types";
 import type { StorybookConfig } from "./types";
 
@@ -12,11 +11,11 @@ export const core: PresetProperty<"core", StorybookConfig> = async (
   return {
     ...config,
     builder: {
-      name: getAbsolutePath("@storybook/builder-webpack5"),
+      name: "@storybook/builder-webpack5",
       options:
         typeof framework === "string" ? {} : framework.options.builder || {},
     },
-    renderer: getAbsolutePath("@storybook/marko"),
+    renderer: "@storybook/marko",
   };
 };
 
@@ -41,7 +40,3 @@ export const webpackFinal: StorybookConfig["webpackFinal"] = async (
     },
   };
 };
-
-function getAbsolutePath(pkg: string) {
-  return path.dirname(require.resolve(path.join(pkg, "package.json")));
-}

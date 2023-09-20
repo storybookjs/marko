@@ -3,7 +3,7 @@ import path from "path";
 import glob from "fast-glob";
 import { type BuildOptions, build } from "esbuild";
 
-(async () => {
+export default (async () => {
   for (const packageDir of [
     path.join(__dirname, "../packages/renderers/marko"),
     path.join(__dirname, "../packages/frameworks/marko-vite"),
@@ -32,6 +32,7 @@ import { type BuildOptions, build } from "esbuild";
       outbase: srcdir,
       platform: "node",
       target: ["es2019"],
+      sourcemap: process.env.NODE_V8_COVERAGE ? "inline" : false,
       define: {
         "process.env.NODE_ENV": "'production'",
       },

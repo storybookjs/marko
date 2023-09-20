@@ -4,7 +4,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@storybook/marko-webpack": ["src/index.ts"]
+      "@storybook/marko-vite": ["src/index.ts"],
+      "@storybook/marko-vite/preset": ["src/preset.ts"]
     },
     "outDir": "dist",
     "rootDir": "src",

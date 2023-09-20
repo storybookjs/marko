@@ -1,5 +1,6 @@
 {
-  "parserPlugins": ["objectRestSpread", "typescript"],
+  "excludeAfterRemap": true,
   "reporter": ["text-summary", "lcov"],
-  "include": ["packages/*/src/**/*.+(ts|marko)"]
+  "include": ["packages/*/*/src/**/*.+(ts|marko)"],
+  "parserPlugins": ["objectRestSpread", "typescript"]
 }
