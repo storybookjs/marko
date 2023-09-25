@@ -13,6 +13,7 @@ export const core: PresetProperty<"core", StorybookConfig> = async (
     builder: {
       name: "@storybook/builder-webpack5",
       options:
+        /* c8 ignore next */
         typeof framework === "string" ? {} : framework.options.builder || {},
     },
     renderer: "@storybook/marko",

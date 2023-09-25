@@ -25,5 +25,10 @@
     "allowUnreachableCode": false,
     "allowImportingTsExtensions": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "references": [
+    { "path": "./packages/renderers/marko" },
+    { "path": "./packages/frameworks/marko-vite" },
+    { "path": "./packages/frameworks/marko-webpack" }
+  ]
 }

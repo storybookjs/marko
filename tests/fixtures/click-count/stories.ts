@@ -1,4 +1,4 @@
-import type { Meta, Story } from "@storybook/marko";
+import { type Meta, type Story } from "@storybook/marko";
 import ClickCount, { type Input } from "./index.marko";
 
 export default {
@@ -18,6 +18,7 @@ export default {
       table: { category: "Events" },
     },
     count: {
+      defaultValue: 0,
       control: { type: "number" },
       description: "What the initial count of the counter should be",
       table: {
@@ -30,7 +31,7 @@ export default {
   },
 } as Meta<Input>;
 
-export const Default: Story<Input> = {
+export const Default = {
   argTypes: {
     onIncrement: {
       action: "increment from default",
@@ -43,9 +44,9 @@ export const Default: Story<Input> = {
       },
     },
   },
-};
+} as Story<Input>;
 
-export const InitialCount: Story<Input> = {
+export const InitialCount = {
   args: { count: 2 },
   argTypes: {
     onIncrement: {
@@ -59,4 +60,4 @@ export const InitialCount: Story<Input> = {
       },
     },
   },
-};
+} as Story<Input>;

@@ -1,4 +1,4 @@
-interface Input {
+export interface Input {
   name: string;
 }
 

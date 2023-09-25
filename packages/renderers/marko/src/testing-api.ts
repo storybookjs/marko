@@ -16,20 +16,31 @@ import { render } from "./render";
 import type { Meta } from "./public-types";
 import type { MarkoRenderer } from "./types";
 
-export type ComposedStories<StoryExports> = {
-  [Key in Exclude<keyof StoryExports, keyof Store_CSFExports>]: ComposedStory<
-    StoryExports[Key]
-  >;
-};
-
-export type ComposedStory<StoryExport = StoryAnnotationsOrFn<MarkoRenderer>> =
-  StoryExport extends StoryAnnotationsOrFn<
+type StoryInputForExport<StoryExports> =
+  StoryExports extends StoryAnnotationsOrFn<
     MarkoRenderer<infer Input>,
     infer Input
   >
-    ? ComposedStoryFn<MarkoRenderer<Input>, Partial<Input>> &
-        Marko.Template<Input>
+    ? Input
     : never;
+
+export type ComposedStories<
+  StoryExports extends Store_CSFExports<MarkoRenderer>,
+> = {
+  [Key in Exclude<
+    keyof StoryExports,
+    keyof Store_CSFExports
+  >]: StoryExports[Key] extends StoryAnnotationsOrFn<MarkoRenderer>
+    ? ComposedStory<StoryExports[Key]>
+    : never;
+};
+
+export type ComposedStory<
+  StoryExport extends
+    StoryAnnotationsOrFn<MarkoRenderer> = StoryAnnotationsOrFn<MarkoRenderer>,
+  Input extends
+    StoryInputForExport<StoryExport> = StoryInputForExport<StoryExport>,
+> = ComposedStoryFn<MarkoRenderer, Input> & Marko.Template<Input>;
 
 /** Function that sets the globalConfig of your storybook. The global config is the preview module of your .storybook folder.
  *
@@ -38,7 +49,7 @@ export type ComposedStory<StoryExport = StoryAnnotationsOrFn<MarkoRenderer>> =
  * Example:
  *```jsx
  * // setup.js (for jest)
- * import { setProjectAnnotations } from '@storybook/marko/testing';
+ * import { setProjectAnnotations } from '@storybook/marko';
  * import projectAnnotations from './.storybook/preview';
  *
  * setProjectAnnotations(projectAnnotations);
@@ -54,7 +65,7 @@ export function setProjectAnnotations(
   originalSetProjectAnnotations<MarkoRenderer>(projectAnnotations);
 }
 
-/** Preserved for users migrating from `@storybook/marko/testing@7`.
+/** Preserved for users migrating from `@storybook/marko@7`.
  *
  * @deprecated Use setProjectAnnotations instead
  */
@@ -84,15 +95,15 @@ const defaultProjectAnnotations: ProjectAnnotations<MarkoRenderer<any>> = {
  *
  * Example:
  *```jsx
- * import { render } from '@testing-library/marko';
- * import { composeStory } from '@storybook/marko/testing';
+ * import { composeStory } from '@storybook/marko';
+ * import { render, screen } from '@testing-library/marko';
  * import Meta, { Primary as PrimaryStory } from './Button.stories';
  *
  * const Primary = composeStory(PrimaryStory, Meta);
  *
  * test('renders primary button with Hello World', () => {
- *   const { getByText } = render(<Primary>Hello world</Primary>);
- *   expect(getByText(/Hello world/i)).not.toBeNull();
+ *   await render(Primary, { text: 'Hello world' });
+ *   expect(screen.getByText(/Hello world/i)).not.toBeNull();
  * });
  *```
  *
@@ -101,12 +112,18 @@ const defaultProjectAnnotations: ProjectAnnotations<MarkoRenderer<any>> = {
  * @param [projectAnnotations] - e.g. (import * as projectAnnotations from '../.storybook/preview') this can be applied automatically if you use `setProjectAnnotations` in your setup files.
  * @param [exportsName] - in case your story does not contain a name and you want it to have a name.
  */
-export function composeStory<Input extends Args = Args>(
-  story: StoryAnnotationsOrFn<MarkoRenderer<Input>, Input>,
+export function composeStory<
+  Input extends Args = Args,
+  StoryExport extends StoryAnnotationsOrFn<
+    MarkoRenderer,
+    Args
+  > = StoryAnnotationsOrFn<MarkoRenderer, Args>,
+>(
+  story: StoryExport,
   componentAnnotations: Meta<Input>,
   projectAnnotations?: ProjectAnnotations<MarkoRenderer<any>>,
   exportsName?: string,
-): ComposedStory<typeof story> {
+): ComposedStory<StoryExport> {
   return toRenderable(
     originalComposeStory<MarkoRenderer<Input>, Input>(
       story as StoryAnnotationsOrFn<MarkoRenderer<Input>, Args>,
@@ -115,6 +132,7 @@ export function composeStory<Input extends Args = Args>(
       defaultProjectAnnotations,
       exportsName,
     ),
+    componentAnnotations,
   ) as any;
 }
 
@@ -128,39 +146,30 @@ export function composeStory<Input extends Args = Args>(
  *
  * Example:
  *```jsx
- * import { render } from '@testing-library/marko';
- * import { composeStories } from '@storybook/marko/testing';
+ * import { composeStories } from '@storybook/marko';
+ * import { render, screen } from '@testing-library/marko';
  * import * as stories from './Button.stories';
  *
  * const { Primary, Secondary } = composeStories(stories);
  *
- * test('renders primary button with Hello World', () => {
- *   const { getByText } = render(<Primary>Hello world</Primary>);
- *   expect(getByText(/Hello world/i)).not.toBeNull();
+ * test('renders primary button with Hello World', async () => {
+ *   await render(Primary, { text: 'Hello world' });
+ *   expect(screen.getByText(/Hello world/i)).not.toBeNull();
  * });
  *```
  *
  * @param csfExports - e.g. (import * as stories from './Button.stories')
  * @param [projectAnnotations] - e.g. (import * as projectAnnotations from '../.storybook/preview') this can be applied automatically if you use `setProjectAnnotations` in your setup files.
  */
-export function composeStories<
-  Exports extends Store_CSFExports<MarkoRenderer, any>,
->(
+export function composeStories<Exports extends Store_CSFExports<MarkoRenderer>>(
   csfExports: Exports,
   projectAnnotations?: ProjectAnnotations<MarkoRenderer>,
 ): ComposedStories<Exports> {
-  const composedStories = (originalComposeStories as any)(
+  return (originalComposeStories as any)(
     csfExports,
     projectAnnotations,
     composeStory,
   );
-
-  return Object.fromEntries(
-    Object.entries(composedStories).map(([key, value]) => [
-      key,
-      toRenderable(value as any),
-    ]),
-  ) as any;
 }
 
 /**
@@ -171,52 +180,49 @@ export function composeStories<
  */
 function toRenderable<Input extends Args = Args>(
   composed: ComposedStoryFn<MarkoRenderer<Input>, Partial<Input>>,
+  componentAnnotations: Meta<Input>,
 ) {
   return {
     ...composed,
     createOut() {
       throw new Error(`Cannot use createOut on a composed story.`);
     },
-    render(rawInput: Partial<Marko.TemplateInput<Input>> | undefined, cb: any) {
-      const { component, input } = composed(rawInput);
-      assertIsTemplate(
-        component,
-        `Expecting a Marko template to be returned from the story: "${composed.id}".`,
-      );
+    render(
+      rawInput: Partial<Marko.TemplateInput<Input>> | undefined,
+      cb?: any,
+    ) {
+      const { component, input } = runStory(rawInput);
       return component.render(input!, cb);
     },
     renderSync(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
-      const { component, input } = composed(rawInput);
-      assertIsTemplate(
-        component,
-        `Expecting a Marko template to be returned from the story: "${composed.id}".`,
-      );
+      const { component, input } = runStory(rawInput);
       return component.renderSync(input!);
     },
-    renderToString(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
-      const { component, input } = composed(rawInput);
-      assertIsTemplate(
-        component,
-        `Expecting a Marko template to be returned from the story: "${composed.id}".`,
-      );
-      return component.renderToString(input!);
+    renderToString(
+      rawInput: Partial<Marko.TemplateInput<Input>> | undefined,
+      cb?: any,
+    ) {
+      const { component, input } = runStory(rawInput);
+      return (component as any).renderToString(input!, cb);
     },
     stream(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
-      const { component, input } = composed(rawInput);
-      assertIsTemplate(
-        component,
-        `Expecting a Marko template to be returned from the story: "${composed.id}".`,
-      );
+      const { component, input } = runStory(rawInput);
       return component.stream(input!);
     },
   } satisfies Marko.Template<Input>;
-}
 
-function assertIsTemplate(
-  template: any,
-  msg: string,
-): asserts template is Marko.Template {
-  if (!template || !template.renderSync) {
-    throw new Error(msg);
+  function runStory(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
+    const { component = componentAnnotations?.component, input } =
+      composed(rawInput) || {};
+    if (!component || !component.renderSync) {
+      throw new Error(
+        `Expecting a Marko template to be returned from the story: "${composed.id}".`,
+      );
+    }
+
+    return {
+      component,
+      input,
+    };
   }
 }

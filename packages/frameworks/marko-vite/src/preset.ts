@@ -14,6 +14,7 @@ export const core: PresetProperty<"core", StorybookConfig> = async (
     builder: {
       name: "@storybook/builder-vite",
       options:
+        /* c8 ignore next */
         typeof framework === "string" ? {} : framework.options.builder || {},
     },
     renderer: "@storybook/marko",
