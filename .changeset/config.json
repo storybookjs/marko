@@ -1,6 +1,9 @@
 {
   "$schema": "https://unpkg.com/@changesets/config@2.3.1/schema.json",
-  "changelog": ["@changesets/changelog-github", { "repo": "marko-js/compat" }],
+  "changelog": [
+    "@changesets/changelog-github",
+    { "repo": "storybookjs/marko" }
+  ],
   "commit": false,
   "fixed": [],
   "linked": [],
