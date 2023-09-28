@@ -13,7 +13,7 @@
     "build:types": "mtc -p tsconfig.build.json",
     "change": "changeset add",
     "ci:test": "c8 npm test",
-    "format": "eslint -f unix --fix . && prettier . --write --log-level=error && sort-package-json --quiet ./{,packages/*/*/,tests/frameworks/*/}package.json",
+    "format": "npm run build:types && eslint -f unix --fix . && prettier . --write --log-level=error && sort-package-json --quiet ./{,packages/*/*/,tests/frameworks/*/}package.json",
     "prepare": "husky install",
     "release": "npm run build && changeset publish",
     "test": "npm run build:js && node -r '~preload' --test ./tests/fixtures/*/test.ts",
