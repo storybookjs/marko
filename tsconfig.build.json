@@ -1,0 +1,23 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["tests/**/*"],
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "baseUrl": ".",
+    "paths": {
+      "@storybook/marko": ["./packages/renderer/marko/src/index.ts"]
+    }
+  },
+  "references": [
+    {
+      "path": "./packages/renderers/marko"
+    },
+    {
+      "path": "./packages/frameworks/marko-vite"
+    },
+    {
+      "path": "./packages/frameworks/marko-webpack"
+    }
+  ]
+}

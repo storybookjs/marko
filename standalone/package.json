@@ -1,4 +1,0 @@
-{
-  "main": "../dist/standalone.js",
-  "types": "../dist/standalone.d.ts"
-}
