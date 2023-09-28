@@ -1,9 +1,13 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": ["**/dist"],
+  "include": ["tests/**/*"],
   "compilerOptions": {
     "noEmit": true,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": false,
+    "baseUrl": ".",
+    "paths": {
+      "@storybook/marko": ["./packages/renderer/marko/src/index.ts"]
+    }
   },
   "references": [
     {

@@ -2,11 +2,6 @@
   "extends": "../../../tsconfig.json",
   "include": ["src"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@storybook/marko": ["src/index.ts"],
-      "@storybook/marko/preview": ["src/config.ts"]
-    },
     "outDir": "dist",
     "rootDir": "src",
     "tsBuildInfoFile": "dist/.tsbuildinfo"

@@ -36,10 +36,10 @@
     "!**/*.tsbuildinfo"
   ],
   "dependencies": {
-    "@storybook/core-client": "^7.4.2",
-    "@storybook/docs-tools": "^7.4.2",
+    "@storybook/core-client": "^7.4.5",
+    "@storybook/docs-tools": "^7.4.5",
     "@storybook/global": "^5.0.0",
-    "@storybook/preview-api": "^7.4.2",
-    "@storybook/types": "^7.4.2"
+    "@storybook/preview-api": "^7.4.5",
+    "@storybook/types": "^7.4.5"
   }
 }

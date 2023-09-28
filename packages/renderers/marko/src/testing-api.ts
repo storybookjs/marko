@@ -8,39 +8,28 @@ import type {
   ComposedStoryFn,
   ProjectAnnotations,
   Store_CSFExports,
-  StoryAnnotationsOrFn,
 } from "@storybook/types";
 import { deprecate } from "@storybook/client-logger";
 
 import { render } from "./render";
-import type { Meta } from "./public-types";
+import type { Meta, Story } from "./public-types";
 import type { MarkoRenderer } from "./types";
 
-type StoryInputForExport<StoryExports> =
-  StoryExports extends StoryAnnotationsOrFn<
-    MarkoRenderer<infer Input>,
-    infer Input
-  >
-    ? Input
-    : never;
+type StoryInputForExport<Exports> = Exports extends Story<infer Input>
+  ? Input
+  : never;
 
-export type ComposedStories<
-  StoryExports extends Store_CSFExports<MarkoRenderer>,
-> = {
-  [Key in Exclude<
-    keyof StoryExports,
-    keyof Store_CSFExports
-  >]: StoryExports[Key] extends StoryAnnotationsOrFn<MarkoRenderer>
-    ? ComposedStory<StoryExports[Key]>
-    : never;
+export type ComposedStories<Exports> = {
+  [Key in Exclude<keyof Exports, keyof Store_CSFExports>]: ComposedStory<
+    Exports[Key]
+  >;
 };
 
-export type ComposedStory<
-  StoryExport extends
-    StoryAnnotationsOrFn<MarkoRenderer> = StoryAnnotationsOrFn<MarkoRenderer>,
-  Input extends
-    StoryInputForExport<StoryExport> = StoryInputForExport<StoryExport>,
-> = ComposedStoryFn<MarkoRenderer, Input> & Marko.Template<Input>;
+export type ComposedStory<Export> = ComposedStoryFn<
+  MarkoRenderer,
+  StoryInputForExport<Export>
+> &
+  Marko.Template<StoryInputForExport<Export>>;
 
 /** Function that sets the globalConfig of your storybook. The global config is the preview module of your .storybook folder.
  *
@@ -114,19 +103,16 @@ const defaultProjectAnnotations: ProjectAnnotations<MarkoRenderer<any>> = {
  */
 export function composeStory<
   Input extends Args = Args,
-  StoryExport extends StoryAnnotationsOrFn<
-    MarkoRenderer,
-    Args
-  > = StoryAnnotationsOrFn<MarkoRenderer, Args>,
+  Export extends Story<Input> = Story<Input>,
 >(
-  story: StoryExport,
+  story: Export,
   componentAnnotations: Meta<Input>,
   projectAnnotations?: ProjectAnnotations<MarkoRenderer<any>>,
   exportsName?: string,
-): ComposedStory<StoryExport> {
+): ComposedStory<Export> {
   return toRenderable(
     originalComposeStory<MarkoRenderer<Input>, Input>(
-      story as StoryAnnotationsOrFn<MarkoRenderer<Input>, Args>,
+      story as any,
       componentAnnotations,
       projectAnnotations,
       defaultProjectAnnotations,
@@ -161,7 +147,7 @@ export function composeStory<
  * @param csfExports - e.g. (import * as stories from './Button.stories')
  * @param [projectAnnotations] - e.g. (import * as projectAnnotations from '../.storybook/preview') this can be applied automatically if you use `setProjectAnnotations` in your setup files.
  */
-export function composeStories<Exports extends Store_CSFExports<MarkoRenderer>>(
+export function composeStories<Exports>(
   csfExports: Exports,
   projectAnnotations?: ProjectAnnotations<MarkoRenderer>,
 ): ComposedStories<Exports> {

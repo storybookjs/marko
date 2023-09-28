@@ -2,12 +2,12 @@
   "compilerOptions": {
     "lib": ["dom", "ESNext"],
     "strict": true,
-    "outDir": "dist",
     "composite": true,
     "target": "ESNext",
     "sourceMap": false,
     "declaration": true,
     "incremental": true,
+    "outDir": "dist",
     "module": "ESNext",
     "skipLibCheck": true,
     "stripInternal": true,
@@ -23,12 +23,6 @@
     "verbatimModuleSyntax": true,
     "moduleResolution": "bundler",
     "allowUnreachableCode": false,
-    "allowImportingTsExtensions": true,
     "forceConsistentCasingInFileNames": true
-  },
-  "references": [
-    { "path": "./packages/renderers/marko" },
-    { "path": "./packages/frameworks/marko-vite" },
-    { "path": "./packages/frameworks/marko-webpack" }
-  ]
+  }
 }

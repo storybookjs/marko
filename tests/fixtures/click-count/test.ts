@@ -1,9 +1,12 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { composeStories } from "@storybook/marko";
 import { render, screen } from "@marko/testing-library";
+import { composeStories } from "@storybook/marko";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
+
+// const x: string = 1;
+// console.log(x);
 
 const { Default, InitialCount } = composeStories(stories);
 

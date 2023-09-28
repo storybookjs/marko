@@ -9,7 +9,7 @@
   "settings": {
     "import/resolver": {
       "typescript": {
-        "project": "packages/*/tsconfig.json"
+        "project": true
       }
     }
   },

@@ -40,10 +40,10 @@
     "@babel/core": "^7",
     "@marko/compiler": "^5",
     "@marko/webpack": "^9",
-    "@storybook/builder-webpack5": "^7.4.2",
-    "@storybook/core-common": "^7.4.2",
+    "@storybook/builder-webpack5": "^7.4.5",
+    "@storybook/core-common": "^7.4.5",
     "@storybook/global": "^5.0.0",
-    "@storybook/types": "^7.4.2",
+    "@storybook/types": "^7.4.5",
     "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
     "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
   }
