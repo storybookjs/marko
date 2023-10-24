@@ -1,5 +1,11 @@
 # @storybook/marko-vite
 
+## 1.0.1
+
+### Patch Changes
+
+- [#9](https://github.com/storybookjs/marko/pull/9) [`ad57e70`](https://github.com/storybookjs/marko/commit/ad57e70cc79b806d3d18f9d8ea02ec91e646c4f1) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue where css @imports with `~` were not being resolved.
+
 ## 1.0.0
 
 ### Major Changes
