@@ -2,9 +2,9 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import type { Frame } from "playwright";
 import { render, screen } from "@marko/testing-library";
+import { composeStories } from "@storybook/marko";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
-import { composeStories } from "@storybook/marko";
 
 const { HelloWorld, HelloMarko } = composeStories(stories);
 

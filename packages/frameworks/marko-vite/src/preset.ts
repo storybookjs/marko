@@ -1,4 +1,5 @@
 import type { PresetProperty } from "@storybook/types";
+import { mergeConfig } from "vite";
 import { hasVitePlugins } from "@storybook/builder-vite";
 import type { StorybookConfig } from "./types";
 
@@ -22,10 +23,20 @@ export const core: PresetProperty<"core", StorybookConfig> = async (
 };
 
 export const viteFinal: StorybookConfig["viteFinal"] = async (baseConfig) => {
-  const { plugins = [] } = baseConfig;
-  if (!(await hasVitePlugins(plugins, ["@marko/vite"]))) {
-    const { default: markoPlugin } = await import("@marko/vite");
-    plugins.push(markoPlugin({ linked: false }));
-  }
-  return baseConfig;
+  return mergeConfig(baseConfig, {
+    resolve: {
+      alias: [
+        {
+          // Fixes https://github.com/storybookjs/storybook/issues/23147
+          find: /^~/,
+          replacement: "",
+        },
+      ],
+    },
+    plugins:
+      // Ensure @marko/vite included unless already added.
+      (await hasVitePlugins(baseConfig.plugins || [], ["@marko/vite"]))
+        ? []
+        : [(await import("@marko/vite")).default({ linked: false })],
+  });
 };
