@@ -163,7 +163,7 @@ export const Primary: Story<ButtonInput> = {
 
 ## Testing
 
-`@storybook/marko` also ships with tools to make loading and rendering your stories in your tests easy! See our [testing documentation](./testing/README.md) for more details.
+`@storybook/marko` also ships with tools to make loading and rendering your stories in your tests easy! See our [testing documentation](./testing.md) for more details.
 
 ## Docs
 
