@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { render } from "@marko/testing-library";
-import { composeStories } from "@storybook/marko";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
+import { composeStories } from "@storybook/marko";
 
 const { Default } = composeStories(stories);
 
