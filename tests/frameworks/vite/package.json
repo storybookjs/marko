@@ -5,18 +5,18 @@
     "storybook": "storybook dev -p $PORT --no-version-updates --disable-telemetry --no-open"
   },
   "devDependencies": {
-    "@babel/preset-typescript": "^7.23.0",
-    "@marko/compiler": "^5.33.2",
-    "@marko/vite": "^2.4.9",
-    "@storybook/addon-essentials": "^7.4.5",
-    "@storybook/addon-interactions": "^7.4.5",
-    "@storybook/addon-links": "^7.4.5",
-    "@storybook/blocks": "^7.4.5",
+    "@babel/preset-typescript": "^7.23.3",
+    "@marko/compiler": "^5.33.7",
+    "@marko/vite": "^4.0.1",
+    "@storybook/addon-essentials": "^7.5.3",
+    "@storybook/addon-interactions": "^7.5.3",
+    "@storybook/addon-links": "^7.5.3",
+    "@storybook/blocks": "^7.5.3",
     "@storybook/marko": "*",
     "@storybook/marko-vite": "*",
-    "@storybook/testing-library": "^0.2.1",
-    "marko": "^5.31.10",
-    "storybook": "^7.4.5",
-    "vite": "^4.4.9"
+    "@storybook/testing-library": "^0.2.2",
+    "marko": "^5.31.17",
+    "storybook": "^7.5.3",
+    "vite": "^4.5.0"
   }
 }

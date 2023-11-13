@@ -1,12 +1,12 @@
 import type {
-  StorybookConfig as StorybookConfigBase,
-  TypescriptOptions as TypescriptOptionsBase,
-} from "@storybook/types";
-import type {
   BuilderOptions,
   StorybookConfigWebpack,
   TypescriptOptions as TypescriptOptionsBuilder,
 } from "@storybook/builder-webpack5";
+import type {
+  StorybookConfig as StorybookConfigBase,
+  TypescriptOptions as TypescriptOptionsBase,
+} from "@storybook/types";
 
 type FrameworkName =
   | "@storybook/marko-webpack"

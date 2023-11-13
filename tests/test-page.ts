@@ -1,10 +1,10 @@
-import net from "net";
-import path from "path";
-import fs from "fs/promises";
 import cp from "child_process";
-import timers from "timers/promises";
-import { after, test } from "node:test";
 import { once } from "events";
+import fs from "fs/promises";
+import net from "net";
+import { after, test } from "node:test";
+import path from "path";
+import timers from "timers/promises";
 import * as playwright from "playwright";
 
 const checkCoverage = !!process.env.NODE_V8_COVERAGE;

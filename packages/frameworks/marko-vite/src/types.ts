@@ -1,11 +1,11 @@
 import type {
-  StorybookConfig as StorybookConfigBase,
-  TypescriptOptions as TypescriptOptionsBase,
-} from "@storybook/types";
-import type {
   BuilderOptions,
   StorybookConfigVite,
 } from "@storybook/builder-vite";
+import type {
+  StorybookConfig as StorybookConfigBase,
+  TypescriptOptions as TypescriptOptionsBase,
+} from "@storybook/types";
 
 type FrameworkName = "@storybook/marko-vite" | (string & NonNullable<unknown>);
 type BuilderName = "@storybook/builder-vite" | (string & NonNullable<unknown>);

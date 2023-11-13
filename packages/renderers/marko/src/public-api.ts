@@ -1,5 +1,5 @@
-import type { Addon_ClientStoryApi, Addon_Loadable } from "@storybook/types";
 import { start } from "@storybook/preview-api";
+import type { Addon_ClientStoryApi, Addon_Loadable } from "@storybook/types";
 import { decorateStory } from "./decorators";
 import { render, renderToCanvas } from "./render";
 import type { MarkoRenderer } from "./types";
