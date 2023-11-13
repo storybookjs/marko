@@ -1,3 +1,4 @@
+import { deprecate } from "@storybook/client-logger";
 import {
   composeStories as originalComposeStories,
   composeStory as originalComposeStory,
@@ -9,10 +10,9 @@ import type {
   ProjectAnnotations,
   Store_CSFExports,
 } from "@storybook/types";
-import { deprecate } from "@storybook/client-logger";
 
-import { render } from "./render";
 import type { Meta, Story } from "./public-types";
+import { render } from "./render";
 import type { MarkoRenderer } from "./types";
 
 type StoryInputForExport<Exports> = Exports extends Story<infer Input>

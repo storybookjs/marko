@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
-import glob from "fast-glob";
 import { type BuildOptions, build } from "esbuild";
+import glob from "fast-glob";
 
 export default (async () => {
   for (const packageDir of [

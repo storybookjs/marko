@@ -1,6 +1,6 @@
+import { hasVitePlugins } from "@storybook/builder-vite";
 import type { PresetProperty } from "@storybook/types";
 import { mergeConfig } from "vite";
-import { hasVitePlugins } from "@storybook/builder-vite";
 import type { StorybookConfig } from "./types";
 
 export const core: PresetProperty<"core", StorybookConfig> = async (
