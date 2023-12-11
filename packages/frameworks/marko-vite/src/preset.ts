@@ -1,6 +1,5 @@
 import { hasVitePlugins } from "@storybook/builder-vite";
 import type { PresetProperty } from "@storybook/types";
-import { mergeConfig } from "vite";
 import type { StorybookConfig } from "./types";
 
 export const core: PresetProperty<"core", StorybookConfig> = async (
@@ -23,6 +22,7 @@ export const core: PresetProperty<"core", StorybookConfig> = async (
 };
 
 export const viteFinal: StorybookConfig["viteFinal"] = async (baseConfig) => {
+  const { mergeConfig } = await import("vite");
   return mergeConfig(baseConfig, {
     resolve: {
       alias: [
