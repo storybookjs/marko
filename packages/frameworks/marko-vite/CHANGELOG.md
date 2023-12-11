@@ -1,5 +1,11 @@
 # @storybook/marko-vite
 
+## 1.0.3
+
+### Patch Changes
+
+- [#15](https://github.com/storybookjs/marko/pull/15) [`8a70a7d`](https://github.com/storybookjs/marko/commit/8a70a7d2962b2f3098c8ec449830bc4ae54507a2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Avoid using commonjs import of vite.
+
 ## 1.0.2
 
 ### Patch Changes
