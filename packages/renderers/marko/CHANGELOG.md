@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 8.0.2
+
+### Patch Changes
+
+- [#17](https://github.com/storybookjs/marko/pull/17) [`4b5ea2e`](https://github.com/storybookjs/marko/commit/4b5ea2e6011cd85935762c27c7da71db7da93fcb) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade package dependencies.
+
 ## 8.0.1
 
 ### Patch Changes
