@@ -6,17 +6,17 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.23.3",
-    "@marko/compiler": "^5.33.7",
+    "@marko/compiler": "^5.34.2",
     "@marko/webpack": "^9.3.5",
-    "@storybook/addon-essentials": "^7.5.3",
-    "@storybook/addon-interactions": "^7.5.3",
-    "@storybook/addon-links": "^7.5.3",
-    "@storybook/blocks": "^7.5.3",
+    "@storybook/addon-essentials": "^7.6.4",
+    "@storybook/addon-interactions": "^7.6.4",
+    "@storybook/addon-links": "^7.6.4",
+    "@storybook/blocks": "^7.6.4",
     "@storybook/marko": "*",
     "@storybook/marko-webpack": "*",
     "@storybook/testing-library": "^0.2.2",
-    "marko": "^5.31.17",
-    "storybook": "^7.5.3",
+    "marko": "^5.32.3",
+    "storybook": "^7.6.4",
     "webpack": "^5.89.0"
   }
 }
