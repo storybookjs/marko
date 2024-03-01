@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 8.0.4
+
+### Patch Changes
+
+- [#21](https://github.com/storybookjs/marko/pull/21) [`db8c995`](https://github.com/storybookjs/marko/commit/db8c9950ddd13d7355c8181fd923184d079e989c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with decorators in the test api
+
 ## 8.0.3
 
 ### Patch Changes
