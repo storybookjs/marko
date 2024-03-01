@@ -11,6 +11,7 @@ import type {
   Store_CSFExports,
 } from "@storybook/types";
 
+import { decorateStory } from "./decorators";
 import type { Meta, Story } from "./public-types";
 import { render } from "./render";
 import type { MarkoRenderer } from "./types";
@@ -72,6 +73,7 @@ export function setGlobalConfig(
 // This will not be necessary once we have auto preset loading
 const defaultProjectAnnotations: ProjectAnnotations<MarkoRenderer<any>> = {
   render,
+  applyDecorators: decorateStory,
 };
 
 /**
