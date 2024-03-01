@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 8.0.3
+
+### Patch Changes
+
+- [#19](https://github.com/storybookjs/marko/pull/19) [`7acb618`](https://github.com/storybookjs/marko/commit/7acb618d91d58f1f498dc9ff5e902fc0c0c90565) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with decorators not being applied.
+
 ## 8.0.2
 
 ### Patch Changes
