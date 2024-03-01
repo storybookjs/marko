@@ -135,6 +135,37 @@ export const Secondary = {
 };
 ```
 
+### Using Decorators
+
+[Storybook `decorators`](https://storybook.js.org/docs/writing-stories/decorators) provide a way to wrap a component with another component to provide context, styling, or additional functionality.
+
+With `@storybook/marko` your decorators _must_ be a function that returns the same signature as the story functions.
+The `component` specified in the decorator will be provided a [`renderBody`](https://markojs.com/docs/syntax/#dynamic-body-content) which can be used to render the nested `Story` or another decorator.
+
+```js
+import Button from "./button.marko";
+import Decorator from "./decorator.marko";
+
+export default {
+  title: "Button",
+  component: Button,
+  decorators: [
+    () => ({
+      component: Decorator,
+      input: {
+        // optionally pass some input to the decorator
+      },
+    }),
+  ],
+};
+
+export const Primary = {
+  args: {
+    // ...
+  },
+};
+```
+
 ### Using with TypeScript
 
 Some types are exposed by this module to make it easier to write your stores using TypeScript.
