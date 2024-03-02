@@ -19,7 +19,7 @@ export type { Args, ArgTypes, Parameters, StrictArgs } from "@storybook/types";
  * @see [Default export](https://storybook.js.org/docs/formats/component-story-format/#default-export)
  */
 export type Meta<Input extends Args = Args> = ComponentAnnotations<
-  MarkoRenderer<Input>,
+  MarkoRenderer,
   Input
 >;
 
