@@ -14,6 +14,6 @@ export interface MarkoRenderer<Input extends Args = Args> extends WebRenderer {
 }
 
 export interface MarkoStoryResult<Input extends Args = Args> {
-  component?: Marko.Template<Input, unknown>;
+  component?: Marko.Template<Input>;
   input?: Marko.TemplateInput<Input>;
 }

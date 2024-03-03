@@ -7,12 +7,12 @@ import {
 import type {
   Args,
   ComposedStoryFn,
-  ProjectAnnotations,
   Store_CSFExports,
+  StoryAnnotationsOrFn,
 } from "@storybook/types";
 
 import { decorateStory } from "./decorators";
-import type { Meta, Story } from "./public-types";
+import type { Meta, Story, Preview } from "./public-types";
 import { render } from "./render";
 import type { MarkoRenderer } from "./types";
 
@@ -47,11 +47,7 @@ export type ComposedStory<Export> = ComposedStoryFn<
  *
  * @param projectAnnotations - e.g. (import projectAnnotations from '../.storybook/preview')
  */
-export function setProjectAnnotations(
-  projectAnnotations:
-    | ProjectAnnotations<MarkoRenderer>
-    | ProjectAnnotations<MarkoRenderer>[],
-) {
+export function setProjectAnnotations(projectAnnotations: Preview | Preview[]) {
   originalSetProjectAnnotations<MarkoRenderer>(projectAnnotations);
 }
 
@@ -59,11 +55,7 @@ export function setProjectAnnotations(
  *
  * @deprecated Use setProjectAnnotations instead
  */
-export function setGlobalConfig(
-  projectAnnotations:
-    | ProjectAnnotations<MarkoRenderer>
-    | ProjectAnnotations<MarkoRenderer>[],
-) {
+export function setGlobalConfig(projectAnnotations: Preview | Preview[]) {
   deprecate(
     `setGlobalConfig is deprecated. Use setProjectAnnotations instead.`,
   );
@@ -71,7 +63,7 @@ export function setGlobalConfig(
 }
 
 // This will not be necessary once we have auto preset loading
-const defaultProjectAnnotations: ProjectAnnotations<MarkoRenderer<any>> = {
+const defaultProjectAnnotations: Preview = {
   render,
   applyDecorators: decorateStory,
 };
@@ -105,15 +97,18 @@ const defaultProjectAnnotations: ProjectAnnotations<MarkoRenderer<any>> = {
  */
 export function composeStory<
   Input extends Args = Args,
-  Export extends Story<Input> = Story<Input>,
+  Export extends StoryAnnotationsOrFn<
+    MarkoRenderer,
+    Input
+  > = StoryAnnotationsOrFn<MarkoRenderer, Input>,
 >(
   story: Export,
   componentAnnotations: Meta<Input>,
-  projectAnnotations?: ProjectAnnotations<MarkoRenderer<any>>,
+  projectAnnotations?: Preview,
   exportsName?: string,
 ): ComposedStory<Export> {
   return toRenderable(
-    originalComposeStory<MarkoRenderer<Input>, Input>(
+    originalComposeStory<MarkoRenderer, Input>(
       story as any,
       componentAnnotations,
       projectAnnotations,
@@ -151,7 +146,7 @@ export function composeStory<
  */
 export function composeStories<Exports>(
   csfExports: Exports,
-  projectAnnotations?: ProjectAnnotations<MarkoRenderer>,
+  projectAnnotations?: Preview,
 ): ComposedStories<Exports> {
   return (originalComposeStories as any)(
     csfExports,
@@ -167,7 +162,7 @@ export function composeStories<Exports>(
  * Properties that exist on the story context are also accessible through the proxy.
  */
 function toRenderable<Input extends Args = Args>(
-  composed: ComposedStoryFn<MarkoRenderer<Input>, Partial<Input>>,
+  composed: ComposedStoryFn<MarkoRenderer, Partial<Input>>,
   componentAnnotations: Meta<Input>,
 ) {
   return {
@@ -180,11 +175,11 @@ function toRenderable<Input extends Args = Args>(
       cb?: any,
     ) {
       const { component, input } = runStory(rawInput);
-      return component.render(input!, cb);
+      return component.render(input, cb);
     },
     renderSync(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
       const { component, input } = runStory(rawInput);
-      return component.renderSync(input!);
+      return component.renderSync(input);
     },
     renderToString(
       rawInput: Partial<Marko.TemplateInput<Input>> | undefined,
@@ -195,12 +190,12 @@ function toRenderable<Input extends Args = Args>(
     },
     stream(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
       const { component, input } = runStory(rawInput);
-      return component.stream(input!);
+      return component.stream(input);
     },
   } satisfies Marko.Template<Input>;
 
   function runStory(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
-    const { component = componentAnnotations?.component, input } =
+    const { component = componentAnnotations?.component, input = {} } =
       composed(rawInput) || {};
     if (!component || !component.renderSync) {
       throw new Error(

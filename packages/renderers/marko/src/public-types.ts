@@ -52,15 +52,15 @@ export type Story<Input extends Args = Args> = StoryFn<Input> | StoryObj<Input>;
 
 export type { MarkoRenderer };
 export type Decorator<Input extends Args = Args> = DecoratorFunction<
-  MarkoRenderer<Input>,
+  MarkoRenderer,
   Input
 >;
 export type Loader<Input extends Args = Args> = LoaderFunction<
-  MarkoRenderer<Input>,
+  MarkoRenderer,
   Input
 >;
 export type StoryContext<Input extends Args = Args> = GenericStoryContext<
-  MarkoRenderer<Input>,
+  MarkoRenderer,
   Input
 >;
 export type Preview = ProjectAnnotations<MarkoRenderer>;
