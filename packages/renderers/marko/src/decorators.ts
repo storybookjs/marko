@@ -9,17 +9,14 @@ export const decorateStory: DecoratorApplicator<MarkoRenderer, Args> = (
   decorators.reduce(
     (decorated, decorator) =>
       (context: StoryContext<MarkoRenderer>): MarkoStoryResult => {
-        let story: MarkoRenderer["storyResult"] | undefined;
-        const decoratedStory: MarkoRenderer["storyResult"] = decorator(
-          (update) => {
-            story = decorated({
-              ...context,
-              ...sanitizeStoryContextUpdate(update),
-            });
-            return story;
-          },
-          context,
-        );
+        let story: MarkoStoryResult | undefined;
+        const decoratedStory: MarkoStoryResult = decorator((update) => {
+          story = decorated({
+            ...context,
+            ...sanitizeStoryContextUpdate(update),
+          });
+          return story;
+        }, context);
 
         story ||= decorated(context);
         return decoratedStory === story
