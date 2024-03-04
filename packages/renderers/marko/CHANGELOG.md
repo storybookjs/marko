@@ -1,5 +1,13 @@
 # @storybook/marko
 
+## 8.0.5
+
+### Patch Changes
+
+- [#23](https://github.com/storybookjs/marko/pull/23) [`bf76761`](https://github.com/storybookjs/marko/commit/bf7676120e7ed1c106f663c06f3d5e608e4f4338) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix incorrect types for Meta with decorators/loaders
+
+- [#24](https://github.com/storybookjs/marko/pull/24) [`43f6b9e`](https://github.com/storybookjs/marko/commit/43f6b9e318684a4a8edd1109dce39ba37b5eddf6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Improve types.
+
 ## 8.0.4
 
 ### Patch Changes
