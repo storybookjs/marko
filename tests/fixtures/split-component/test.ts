@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
-import type { Frame } from "playwright";
 import { composeStories } from "@storybook/marko";
+import type { Frame } from "playwright";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
@@ -23,7 +23,6 @@ test("split-component", async () => {
       let frame: Frame;
       test.beforeEach(async () => {
         await page.goto(`/?path=/story/${HelloWorld.id}`);
-        await page.waitForSelector("#storybook-preview-iframe");
         frame = (await (
           await page.waitForSelector("#storybook-preview-iframe")
         ).contentFrame())!;

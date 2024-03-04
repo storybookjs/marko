@@ -32,7 +32,6 @@ test("click-count", async () => {
 
       await test("supports controls addon", async () => {
         await page.goto(`/?path=/story/${Default.id}`);
-        await page.waitForSelector("#storybook-preview-iframe");
         const frame = (await (
           await page.waitForSelector("#storybook-preview-iframe")
         ).contentFrame())!;
@@ -57,7 +56,6 @@ test("click-count", async () => {
 
       await test("can navigate to another story", async () => {
         await page.goto(`/?path=/story/${Default.id}`);
-        await page.waitForSelector("#storybook-preview-iframe");
         const frame = (await (
           await page.waitForSelector("#storybook-preview-iframe")
         ).contentFrame())!;
