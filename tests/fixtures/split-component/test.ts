@@ -23,7 +23,6 @@ test("split-component", async () => {
       let frame: Frame;
       test.beforeEach(async () => {
         await page.goto(`/?path=/story/${HelloWorld.id}`);
-        await page.waitForSelector("#storybook-preview-iframe");
         frame = (await (
           await page.waitForSelector("#storybook-preview-iframe")
         ).contentFrame())!;

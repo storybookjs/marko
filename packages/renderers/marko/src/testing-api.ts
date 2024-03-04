@@ -16,9 +16,8 @@ import type { Meta, Story, Preview } from "./public-types";
 import { render } from "./render";
 import type { MarkoRenderer } from "./types";
 
-type StoryInputForExport<Exports> = Exports extends Story<infer Input>
-  ? Input
-  : never;
+type StoryInputForExport<Exports> =
+  Exports extends Story<infer Input> ? Input : never;
 
 export type ComposedStories<Exports> = {
   [Key in Exclude<keyof Exports, keyof Store_CSFExports>]: ComposedStory<
