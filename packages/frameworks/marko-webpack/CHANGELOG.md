@@ -1,5 +1,11 @@
 # @storybook/marko-webpack
 
+## 2.0.0
+
+### Major Changes
+
+- [#28](https://github.com/storybookjs/marko/pull/28) [`63aa122`](https://github.com/storybookjs/marko/commit/63aa122c97ecf277fe6ff55be9708c3e44833d56) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade to storybook 8. See https://storybook.js.org/docs/migration-guide for changes
+
 ## 1.0.2
 
 ### Patch Changes
