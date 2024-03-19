@@ -7,8 +7,8 @@ import type {
   TypescriptOptions as TypescriptOptionsBase,
 } from "@storybook/types";
 
-type FrameworkName = "@storybook/marko-vite" | (string & NonNullable<unknown>);
-type BuilderName = "@storybook/builder-vite" | (string & NonNullable<unknown>);
+type FrameworkName = "@storybook/marko-vite";
+type BuilderName = "@storybook/builder-vite";
 
 export type FrameworkOptions = {
   builder?: BuilderOptions;

@@ -2,12 +2,8 @@ import { hasVitePlugins } from "@storybook/builder-vite";
 import type { PresetProperty } from "@storybook/types";
 import type { StorybookConfig } from "./types";
 
-export const core: PresetProperty<"core", StorybookConfig> = async (
-  config,
-  options,
-) => {
-  const framework =
-    await options.presets.apply<StorybookConfig["framework"]>("framework");
+export const core: PresetProperty<"core"> = async (config, options) => {
+  const framework = await options.presets.apply("framework");
 
   return {
     ...config,

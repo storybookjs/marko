@@ -1,4 +1,3 @@
-import { deprecate } from "@storybook/client-logger";
 import {
   composeStories as originalComposeStories,
   composeStory as originalComposeStory,
@@ -11,7 +10,7 @@ import type {
   StoryAnnotationsOrFn,
 } from "@storybook/types";
 
-import { decorateStory } from "./decorators";
+import { applyDecorators } from "./decorators";
 import type { Meta, Story, Preview } from "./public-types";
 import { render } from "./render";
 import type { MarkoRenderer } from "./types";
@@ -50,21 +49,10 @@ export function setProjectAnnotations(projectAnnotations: Preview | Preview[]) {
   originalSetProjectAnnotations<MarkoRenderer>(projectAnnotations);
 }
 
-/** Preserved for users migrating from `@storybook/marko@7`.
- *
- * @deprecated Use setProjectAnnotations instead
- */
-export function setGlobalConfig(projectAnnotations: Preview | Preview[]) {
-  deprecate(
-    `setGlobalConfig is deprecated. Use setProjectAnnotations instead.`,
-  );
-  setProjectAnnotations(projectAnnotations);
-}
-
 // This will not be necessary once we have auto preset loading
 const defaultProjectAnnotations: Preview = {
   render,
-  applyDecorators: decorateStory,
+  applyDecorators,
 };
 
 /**

@@ -4,7 +4,7 @@ import type {
   ArgTypesEnhancer,
 } from "@storybook/types";
 
-import type { MarkoStoryResult } from "../types";
+import type { MarkoStoryResult } from "./types";
 
 export const decorators: Addon_DecoratorFunction<MarkoStoryResult>[] = [];
 
@@ -19,3 +19,5 @@ export const parameters = {
 };
 
 export const argTypesEnhancers: ArgTypesEnhancer[] = [enhanceArgTypes];
+
+export { applyDecorators } from "./decorators";

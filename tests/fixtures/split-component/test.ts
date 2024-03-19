@@ -1,12 +1,12 @@
-import assert from "node:assert/strict";
 import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
-import type { Frame } from "playwright";
+import { expect } from "playwright/test";
 import { composeStories } from "@storybook/marko";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
 const { HelloWorld, HelloMarko } = composeStories(stories);
+const initialTimeout = { timeout: 30000 };
 
 test("split-component", async () => {
   await test(HelloWorld.storyName, async () => {
@@ -14,34 +14,39 @@ test("split-component", async () => {
       test.beforeEach(() => render(HelloWorld));
 
       await test("can render", async () => {
-        assert.ok(screen.getByText("Hello World"));
-        assert.equal(HelloWorld.args.name, "World");
+        expect(
+          screen.getByText(`Hello ${HelloWorld.args.name}`),
+        ).not.toBeNull();
+        expect(HelloWorld.args.name).toBe("World");
       });
     });
 
     await testPage(async (page) => {
-      let frame: Frame;
+      const frame = page.frameLocator("#storybook-preview-iframe");
       test.beforeEach(async () => {
         await page.goto(`/?path=/story/${HelloWorld.id}`);
-        frame = (await (
-          await page.waitForSelector("#storybook-preview-iframe")
-        ).contentFrame())!;
-        await frame.waitForLoadState();
       });
       await test("shows correct name", async () => {
-        assert.equal(await page.getByText("Hello World").isVisible(), true);
+        await expect(
+          page.getByText(`Hello ${HelloWorld.args.name}`),
+        ).toBeVisible(initialTimeout);
       });
 
       await test("supports controls addon", async () => {
-        await page.waitForTimeout(100);
-        await page.click("text=Controls");
-        await page.fill('textarea:has-text("World")', "Updated");
-        assert.ok(await frame.waitForSelector('div:has-text("Hello Updated")'));
+        await page.getByText("Controls").click(initialTimeout);
+        await page.getByPlaceholder("Edit string...").fill("Updated");
+        await expect(frame.getByText("Hello Updated")).toBeVisible(
+          initialTimeout,
+        );
       });
 
       await test("can navigate to another story", async () => {
-        await page.click('a:has-text("Hello Marko")');
-        assert.ok(await frame.waitForSelector('div:has-text("Hello Marko")'));
+        await page
+          .getByRole("link", { name: "Hello Marko" })
+          .click(initialTimeout);
+        await expect(frame.getByText("Hello Marko")).toBeVisible(
+          initialTimeout,
+        );
       });
     });
   });
@@ -51,15 +56,19 @@ test("split-component", async () => {
       test.beforeEach(() => render(HelloMarko));
 
       await test("can render", async () => {
-        assert.ok(screen.getByText("Hello Marko"));
-        assert.equal(HelloMarko.args.name, "Marko");
+        expect(
+          screen.getByText(`Hello ${HelloMarko.args.name}`),
+        ).not.toBeNull();
+        expect(HelloMarko.args.name).toBe("Marko");
       });
     });
 
     await testPage(async (page) => {
       test.beforeEach(() => page.goto(`/?path=/story/${HelloMarko.id}`));
       await test("shows correct name", async () => {
-        assert.equal(await page.getByText("Hello World").isVisible(), true);
+        await expect(
+          page.getByText(`Hello ${HelloMarko.args.name}`),
+        ).toBeVisible(initialTimeout);
       });
     });
   });

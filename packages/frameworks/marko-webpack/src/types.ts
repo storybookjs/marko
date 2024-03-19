@@ -8,12 +8,8 @@ import type {
   TypescriptOptions as TypescriptOptionsBase,
 } from "@storybook/types";
 
-type FrameworkName =
-  | "@storybook/marko-webpack"
-  | (string & NonNullable<unknown>);
-type BuilderName =
-  | "@storybook/builder-webpack5"
-  | (string & NonNullable<unknown>);
+type FrameworkName = "@storybook/marko-webpack";
+type BuilderName = "@storybook/builder-webpack5";
 
 export type FrameworkOptions = {
   builder?: BuilderOptions;

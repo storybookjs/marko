@@ -17,10 +17,10 @@
   "exports": {
     "./package.json": "./package.json",
     "./*.d.ts": "./*.d.ts",
-    "./preview": {
-      "types": "./dist/config.d.ts",
-      "import": "./dist/config.mjs",
-      "default": "./dist/config.js"
+    "./preset": {
+      "types": "./dist/preset.d.ts",
+      "import": "./dist/preset.mjs",
+      "default": "./dist/preset.js"
     },
     ".": {
       "types": "./dist/index.d.ts",
@@ -36,10 +36,10 @@
     "!**/*.tsbuildinfo"
   ],
   "dependencies": {
-    "@storybook/core-client": "^7.6.4",
-    "@storybook/docs-tools": "^7.6.4",
+    "@storybook/core-client": "^7.6.17",
+    "@storybook/docs-tools": "^8.0.0",
     "@storybook/global": "^5.0.0",
-    "@storybook/preview-api": "^7.6.4",
-    "@storybook/types": "^7.6.4"
+    "@storybook/preview-api": "^8.0.0",
+    "@storybook/types": "^8.0.0"
   }
 }
