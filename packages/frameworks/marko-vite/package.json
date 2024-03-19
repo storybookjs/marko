@@ -1,6 +1,6 @@
 {
   "name": "@storybook/marko-vite",
-  "version": "1.0.4",
+  "version": "2.0.0",
   "description": "Storybook for Marko and Vite: Develop Marko components in isolation with Hot Reloading.",
   "keywords": [
     "marko",
