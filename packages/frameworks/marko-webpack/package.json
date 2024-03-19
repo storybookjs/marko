@@ -37,14 +37,11 @@
     "!**/*.tsbuildinfo"
   ],
   "dependencies": {
-    "@babel/core": "^7",
     "@marko/compiler": "^5",
     "@marko/webpack": "^9",
-    "@storybook/builder-webpack5": "^7.6.4",
-    "@storybook/core-common": "^7.6.4",
+    "@storybook/builder-webpack5": "^8.0.0",
+    "@storybook/core-common": "^8.0.0",
     "@storybook/global": "^5.0.0",
-    "@storybook/types": "^7.6.4",
-    "react": "^16.8.0 || ^17.0.0 || ^18.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+    "@storybook/types": "^8.0.0"
   }
 }

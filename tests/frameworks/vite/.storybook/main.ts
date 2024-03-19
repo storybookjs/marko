@@ -12,11 +12,4 @@ export default {
     name: "@storybook/marko-vite",
     options: {},
   },
-  babel(config) {
-    config.babelrc = false;
-    config.configFile = false;
-    config.presets ??= [];
-    config.presets.push(require.resolve("@babel/preset-typescript"));
-    return config;
-  },
 } satisfies StorybookConfig;

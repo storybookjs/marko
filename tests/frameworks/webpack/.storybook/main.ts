@@ -7,6 +7,7 @@ export default {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     "@storybook/addon-interactions",
+    "@storybook/addon-webpack5-compiler-babel",
   ],
   framework: {
     name: "@storybook/marko-webpack",
