@@ -16,7 +16,7 @@
   "license": "MIT",
   "exports": {
     "./package.json": "./package.json",
-    "./*.d.ts": "./*.d.ts",
+    "./dist/*": "./dist/*",
     "./preset": {
       "types": "./dist/preset.d.ts",
       "import": "./dist/preset.mjs",
