@@ -1,5 +1,11 @@
 # @storybook/marko-webpack
 
+## 2.0.1
+
+### Patch Changes
+
+- [#30](https://github.com/storybookjs/marko/pull/30) [`346d2cc`](https://github.com/storybookjs/marko/commit/346d2cce85c6dc96a787e93a3fb1e677aa64b1e2) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Include all built/dist files in export maps.
+
 ## 2.0.0
 
 ### Major Changes
