@@ -1,5 +1,5 @@
 {
-  "name": "@storybook/marko",
+  "name": "@storybook/marko-root",
   "private": true,
   "workspaces": [
     "packages/frameworks/*",
