@@ -39,9 +39,9 @@
   "dependencies": {
     "@marko/compiler": "^5",
     "@marko/webpack": "^9",
-    "@storybook/builder-webpack5": "^8.0.0",
-    "@storybook/core-common": "^8.0.0",
+    "@storybook/builder-webpack5": "^8.1.2",
+    "@storybook/core-common": "^8.1.2",
     "@storybook/global": "^5.0.0",
-    "@storybook/types": "^8.0.0"
+    "@storybook/types": "^8.1.2"
   }
 }
