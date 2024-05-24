@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 9.0.2
+
+### Patch Changes
+
+- [#32](https://github.com/storybookjs/marko/pull/32) [`9ee1c5a`](https://github.com/storybookjs/marko/commit/9ee1c5ac8ade2a05eca3f024eb983799de64a985) Thanks [@svallory](https://github.com/svallory)! - Update depencies across all packages
+
 ## 9.0.1
 
 ### Patch Changes
