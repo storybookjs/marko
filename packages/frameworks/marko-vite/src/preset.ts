@@ -31,7 +31,7 @@ export const viteFinal: StorybookConfig["viteFinal"] = async (baseConfig) => {
     },
     plugins:
       // Ensure @marko/vite included unless already added.
-      (await hasVitePlugins(baseConfig.plugins || [], ["@marko/vite"]))
+      (await hasVitePlugins(baseConfig.plugins || [], ["marko-vite:pre"]))
         ? []
         : [(await import("@marko/vite")).default({ linked: false })],
   });
