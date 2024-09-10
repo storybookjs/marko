@@ -1,5 +1,11 @@
 # @storybook/marko-vite
 
+## 2.0.3
+
+### Patch Changes
+
+- [#34](https://github.com/storybookjs/marko/pull/34) [`90f0fe1`](https://github.com/storybookjs/marko/commit/90f0fe1d6ad85ebf18a40d4039ffc01b5768892e) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix issue with @marko/vite not being deduped.
+
 ## 2.0.2
 
 ### Patch Changes
