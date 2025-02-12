@@ -103,6 +103,7 @@ async function startPage(framework: (typeof frameworks)[number]) {
   const page = await pendingPage;
   page.setDefaultTimeout(60000);
   page.setDefaultNavigationTimeout(60000);
+  await timers.setTimeout(5000);
 
   if (checkCoverage) {
     await page.coverage.startJSCoverage({

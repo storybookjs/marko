@@ -5,16 +5,16 @@
     "storybook": "storybook dev -p $PORT --no-version-updates --disable-telemetry --no-open"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.37.9",
-    "@marko/vite": "^4.1.19",
-    "@storybook/addon-essentials": "^8.2.9",
-    "@storybook/addon-interactions": "^8.2.9",
-    "@storybook/addon-links": "^8.2.9",
-    "@storybook/blocks": "^8.2.9",
+    "@marko/compiler": "^5.39.12",
+    "@marko/vite": "^5.0.14",
+    "@storybook/addon-essentials": "^8.5.4",
+    "@storybook/addon-interactions": "^8.5.4",
+    "@storybook/addon-links": "^8.5.4",
+    "@storybook/blocks": "^8.5.4",
     "@storybook/marko": "*",
     "@storybook/marko-vite": "*",
-    "marko": "^5.35.14",
-    "storybook": "^8.2.9",
-    "vite": "^5.4.3"
+    "marko": "^5.37.14",
+    "storybook": "^8.5.4",
+    "vite": "^6.1.0"
   }
 }
