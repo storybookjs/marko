@@ -1,5 +1,11 @@
 # @storybook/marko-webpack
 
+## 3.0.1
+
+### Patch Changes
+
+- [#36](https://github.com/storybookjs/marko/pull/36) [`0f487c3`](https://github.com/storybookjs/marko/commit/0f487c3007271b9f184c6739cba23052142f52e6) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade dependencies.
+
 ## 3.0.0
 
 ### Major Changes

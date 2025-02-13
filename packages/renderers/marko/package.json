@@ -1,6 +1,6 @@
 {
   "name": "@storybook/marko",
-  "version": "9.0.2",
+  "version": "9.0.3",
   "description": "Storybook for Marko: Develop Marko Components in isolation.",
   "keywords": [
     "marko",
