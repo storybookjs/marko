@@ -37,9 +37,9 @@
   ],
   "dependencies": {
     "@storybook/core-client": "^7.6.17",
-    "@storybook/docs-tools": "^8.1.2",
+    "@storybook/docs-tools": "^8.5.4",
     "@storybook/global": "^5.0.0",
-    "@storybook/preview-api": "^8.1.2",
-    "@storybook/types": "^8.1.2"
+    "@storybook/preview-api": "^8.5.4",
+    "@storybook/types": "^8.5.4"
   }
 }
