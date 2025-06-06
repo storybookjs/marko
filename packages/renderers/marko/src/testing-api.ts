@@ -157,6 +157,14 @@ function toRenderable<Input extends Args = Args>(
     createOut() {
       throw new Error(`Cannot use createOut on a composed story.`);
     },
+    mount(
+      rawInput: Partial<Marko.TemplateInput<Input>> | undefined,
+      referenceNode: Parameters<Marko.Template["mount"]>[1],
+      position?: Parameters<Marko.Template["mount"]>[2],
+    ) {
+      const { component, input } = runStory(rawInput);
+      return component.mount(input, referenceNode, position);
+    },
     render(
       rawInput: Partial<Marko.TemplateInput<Input>> | undefined,
       cb?: any,
@@ -179,12 +187,12 @@ function toRenderable<Input extends Args = Args>(
       const { component, input } = runStory(rawInput);
       return component.stream(input);
     },
-  } satisfies Marko.Template<Input>;
+  } as any as typeof composed & Marko.Template<Input>;
 
   function runStory(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
     const { component = componentAnnotations?.component, input = {} } =
       composed(rawInput) || {};
-    if (!component || !component.renderSync) {
+    if (!component || !(component.mount || component.renderSync)) {
       throw new Error(
         `Expecting a Marko template to be returned from the story: "${composed.id}".`,
       );
