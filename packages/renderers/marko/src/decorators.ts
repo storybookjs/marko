@@ -19,17 +19,24 @@ export const applyDecorators: DecoratorApplicator<MarkoRenderer, Args> = (
         }, context);
 
         story ||= decorated(context);
-        return decoratedStory === story
-          ? story
-          : {
-              component: decoratedStory.component || context.component,
-              input: {
-                ...decoratedStory.input,
-                renderBody(out: Marko.Out) {
-                  story?.component?.render(story.input || {}, out);
-                },
-              },
-            };
+
+        if (decoratedStory === story) return story;
+
+        const component = decoratedStory.component || context.component;
+        if (component && !component.renderSync) {
+          throw new Error(
+            "Decorators are not yet supported in Tags API templates",
+          );
+        }
+        return {
+          component,
+          input: {
+            ...decoratedStory.input,
+            renderBody(out: Marko.Out) {
+              story?.component?.render(story.input || {}, out);
+            },
+          },
+        };
       },
     (context: StoryContext<MarkoRenderer>): MarkoStoryResult =>
       storyFn(context),
