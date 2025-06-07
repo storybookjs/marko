@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 9.0.4
+
+### Patch Changes
+
+- [#38](https://github.com/storybookjs/marko/pull/38) [`41c9e8c`](https://github.com/storybookjs/marko/commit/41c9e8c874b0b6208a239be9013c2f16b9526d7d) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Support rendering marko 6 templates.
+
 ## 9.0.3
 
 ### Patch Changes
