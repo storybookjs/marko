@@ -5,17 +5,13 @@
     "storybook": "storybook dev -p ${PORT:-3000} --no-version-updates --disable-telemetry --no-open"
   },
   "devDependencies": {
-    "@marko/compiler": "^5.39.12",
+    "@marko/compiler": "^5.39.28",
     "@marko/webpack": "^10.0.1",
-    "@storybook/addon-essentials": "^8.5.4",
-    "@storybook/addon-interactions": "^8.5.4",
-    "@storybook/addon-links": "^8.5.4",
-    "@storybook/addon-webpack5-compiler-babel": "^3.0.5",
-    "@storybook/blocks": "^8.5.4",
+    "@storybook/addon-webpack5-compiler-babel": "^3.0.6",
     "@storybook/marko": "*",
     "@storybook/marko-webpack": "*",
-    "marko": "^5.37.14",
-    "storybook": "^8.5.4",
-    "webpack": "^5.97.1"
+    "marko": "^5.37.40",
+    "storybook": "^9.0.15",
+    "webpack": "^5.99.9"
   }
 }

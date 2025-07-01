@@ -1,14 +1,14 @@
-import {
-  composeStories as originalComposeStories,
-  composeStory as originalComposeStory,
-  setProjectAnnotations as originalSetProjectAnnotations,
-} from "@storybook/preview-api";
 import type {
   Args,
   ComposedStoryFn,
   Store_CSFExports,
   StoryAnnotationsOrFn,
-} from "@storybook/types";
+} from "storybook/internal/types";
+import {
+  composeStories as originalComposeStories,
+  composeStory as originalComposeStory,
+  setProjectAnnotations as originalSetProjectAnnotations,
+} from "storybook/preview-api";
 
 import { applyDecorators } from "./decorators";
 import type { Meta, Story, Preview } from "./public-types";

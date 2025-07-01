@@ -1,4 +1,4 @@
-import type { ArgsStoryFn, RenderContext } from "@storybook/types";
+import type { ArgsStoryFn, RenderContext } from "storybook/internal/types";
 import type { MarkoRenderer } from "./types";
 
 type Subscriptions = Record<string, (...args: unknown[]) => void>;

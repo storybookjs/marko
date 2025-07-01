@@ -44,6 +44,8 @@ So you can develop UI components in isolation without worrying about app specifi
 
 ## Getting Started
 
+> `@storybook/marko@10` Is for storybook@9, for storybook@8 use `@storybook/marko@9` (yes it'd be cool if these were in sync).
+
 > `@storybook/marko` >= 7 Only supports Marko 5+.
 > For Marko 4 support use `@storybook/marko@6`.
 

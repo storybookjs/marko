@@ -2,7 +2,7 @@ import type {
   Args,
   StoryContext as StoryContextBase,
   WebRenderer,
-} from "@storybook/types";
+} from "storybook/internal/types";
 
 export type StoryContext<Input extends Args = Args> = StoryContextBase<
   MarkoRenderer<Input>
