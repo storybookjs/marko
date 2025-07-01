@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 9.0.5
+
+### Patch Changes
+
+- [#40](https://github.com/storybookjs/marko/pull/40) [`77d7a19`](https://github.com/storybookjs/marko/commit/77d7a196bcbafdbd31eb36fd9eeea29bd2efd060) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Fix avoid stubbing testing apis for known tags api components.
+
 ## 9.0.4
 
 ### Patch Changes
