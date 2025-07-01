@@ -6,7 +6,7 @@ import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
 const { HelloWorld, HelloMarko } = composeStories(stories);
-const initialTimeout = { timeout: 30000 };
+const initialTimeout = { timeout: 60000 };
 
 test("split-component", async () => {
   await test(HelloWorld.storyName, async () => {

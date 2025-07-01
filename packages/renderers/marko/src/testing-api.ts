@@ -152,6 +152,26 @@ function toRenderable<Input extends Args = Args>(
   composed: ComposedStoryFn<MarkoRenderer, Partial<Input>>,
   componentAnnotations: Meta<Input>,
 ) {
+  const defaultComponent = componentAnnotations?.component;
+  const isV6 = defaultComponent && !defaultComponent.createOut;
+  if (isV6) {
+    return {
+      ...composed,
+      mount(
+        rawInput: Partial<Marko.TemplateInput<Input>> | undefined,
+        referenceNode: Parameters<Marko.Template["mount"]>[1],
+        position?: Parameters<Marko.Template["mount"]>[2],
+      ) {
+        const { component, input } = runStory(rawInput);
+        return component.mount(input, referenceNode, position);
+      },
+      render(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
+        const { component, input } = runStory(rawInput);
+        return component.render(input);
+      },
+    } as any as typeof composed & Marko.Template<Input>;
+  }
+
   return {
     ...composed,
     createOut() {
@@ -190,7 +210,7 @@ function toRenderable<Input extends Args = Args>(
   } as any as typeof composed & Marko.Template<Input>;
 
   function runStory(rawInput: Partial<Marko.TemplateInput<Input>> | undefined) {
-    const { component = componentAnnotations?.component, input = {} } =
+    const { component = defaultComponent, input = {} } =
       composed(rawInput) || {};
     if (!component || !(component.mount || component.renderSync)) {
       throw new Error(

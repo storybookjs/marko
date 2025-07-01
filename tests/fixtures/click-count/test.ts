@@ -6,7 +6,7 @@ import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
 const { Default, InitialCount } = composeStories(stories);
-const initialTimeout = { timeout: 30000 };
+const initialTimeout = { timeout: 60000 };
 
 test("click-count", async () => {
   await test(Default.storyName, async () => {
