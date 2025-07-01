@@ -1,6 +1,6 @@
 {
   "name": "@storybook/marko-webpack",
-  "version": "3.0.1",
+  "version": "4.0.0",
   "description": "Storybook for Marko and Webpack: Develop Marko components in isolation with Hot Reloading.",
   "keywords": [
     "marko",
