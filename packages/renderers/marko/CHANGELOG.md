@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 10.0.0
+
+### Major Changes
+
+- [#42](https://github.com/storybookjs/marko/pull/42) [`bff1cd5`](https://github.com/storybookjs/marko/commit/bff1cd50cc76c1d1a1b46e43af62dd31311b677c) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade to support storybook 9.
+
 ## 9.0.5
 
 ### Patch Changes
