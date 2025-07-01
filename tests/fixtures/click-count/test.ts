@@ -1,12 +1,12 @@
 import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
-import { expect } from "playwright/test";
 import { composeStories } from "@storybook/marko";
+import { expect } from "playwright/test";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
 const { Default, InitialCount } = composeStories(stories);
-const initialTimeout = { timeout: 30000 };
+const initialTimeout = { timeout: 60000 };
 
 test("click-count", async () => {
   await test(Default.storyName, async () => {

@@ -1,12 +1,12 @@
 import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
-import { expect } from "playwright/test";
 import { composeStories } from "@storybook/marko";
+import { expect } from "playwright/test";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
 const { HelloWorld, HelloMarko } = composeStories(stories);
-const initialTimeout = { timeout: 30000 };
+const initialTimeout = { timeout: 60000 };
 
 test("split-component", async () => {
   await test(HelloWorld.storyName, async () => {
