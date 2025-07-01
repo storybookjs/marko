@@ -1,8 +1,8 @@
-import { SourceType, enhanceArgTypes } from "@storybook/docs-tools";
+import { SourceType, enhanceArgTypes } from "storybook/internal/docs-tools";
 import type {
   Addon_DecoratorFunction,
   ArgTypesEnhancer,
-} from "@storybook/types";
+} from "storybook/internal/types";
 
 import type { MarkoStoryResult } from "./types";
 

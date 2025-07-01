@@ -1,5 +1,9 @@
-import { sanitizeStoryContextUpdate } from "@storybook/preview-api";
-import type { Args, DecoratorApplicator, StoryContext } from "@storybook/types";
+import type {
+  Args,
+  DecoratorApplicator,
+  StoryContext,
+} from "storybook/internal/types";
+import { sanitizeStoryContextUpdate } from "storybook/preview-api";
 import type { MarkoRenderer, MarkoStoryResult } from "./types";
 
 export const applyDecorators: DecoratorApplicator<MarkoRenderer, Args> = (

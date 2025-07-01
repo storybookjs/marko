@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import { render } from "@marko/testing-library";
-import { expect } from "playwright/test";
 import { composeStories } from "@storybook/marko";
+import { expect } from "playwright/test";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
 

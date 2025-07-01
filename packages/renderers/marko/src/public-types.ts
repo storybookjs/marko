@@ -7,11 +7,16 @@ import type {
   LoaderFunction,
   ProjectAnnotations,
   StoryAnnotations,
-} from "@storybook/types";
+} from "storybook/internal/types";
 
 import type { MarkoRenderer } from "./types";
 
-export type { Args, ArgTypes, Parameters, StrictArgs } from "@storybook/types";
+export type {
+  Args,
+  ArgTypes,
+  Parameters,
+  StrictArgs,
+} from "storybook/internal/types";
 
 /**
  * Metadata to configure the stories for a component.
