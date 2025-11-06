@@ -1,5 +1,15 @@
 # @storybook/marko-vite
 
+## 4.0.0
+
+### Major Changes
+
+- [#44](https://github.com/storybookjs/marko/pull/44) [`a5746bb`](https://github.com/storybookjs/marko/commit/a5746bba0f60a2debef638bc984006afc0135c33) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Bump vite builder to support storybook@10.
+
+### Patch Changes
+
+- [#44](https://github.com/storybookjs/marko/pull/44) [`a966162`](https://github.com/storybookjs/marko/commit/a9661626d95045824d43f3f3c2458e5a2b285489) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Remove @storybook/globals as a dependency.
+
 ## 3.0.0
 
 ### Major Changes
