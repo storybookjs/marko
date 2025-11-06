@@ -9,7 +9,7 @@ export const previewAnnotations: PresetProperty<"previewAnnotations"> = async (
     Object.keys(await options.presets.apply("docs", {}, options)).length > 0;
   return [
     ...input,
-    join(__dirname, "entry-preview.mjs"),
-    ...(docsEnabled ? [join(__dirname, "entry-preview-docs.mjs")] : []),
+    join(import.meta.dirname, "entry-preview.mjs"),
+    ...(docsEnabled ? [join(import.meta.dirname, "entry-preview-docs.mjs")] : []),
   ];
 };

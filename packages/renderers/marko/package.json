@@ -35,8 +35,7 @@
     "preview.js",
     "!**/*.tsbuildinfo"
   ],
-  "dependencies": {
-    "@storybook/global": "^5.0.0",
-    "storybook": "^9.0.15"
+  "peerDependencies": {
+    "storybook": "9 - 10"
   }
 }

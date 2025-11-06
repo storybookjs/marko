@@ -79,6 +79,7 @@ async function startPage(framework: (typeof frameworks)[number]) {
   const port = await getPort();
   const baseURL = `http://localhost:${port}`;
   const pendingPage = browser.newPage({ baseURL });
+  const fwDir = path.join(root, "tests", "frameworks", framework);
   const proc = cp.spawn(
     "storybook",
     [
@@ -88,11 +89,12 @@ async function startPage(framework: (typeof frameworks)[number]) {
       "--no-version-updates",
       "--no-open",
       "-c",
-      path.join(root, "tests", "frameworks", framework, ".storybook"),
+      path.join(fwDir, ".storybook"),
     ],
     {
       // stdio: "inherit",
       stdio: "ignore",
+      cwd: fwDir,
     },
   );
 
