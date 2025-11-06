@@ -27,7 +27,7 @@ export const webpackFinal: StorybookConfig["webpackFinal"] = async (
         ...baseConfig.module!.rules!,
         {
           test: /\.marko$/,
-          loader: require.resolve("@marko/webpack/loader"),
+          loader: "@marko/webpack/loader",
         },
       ],
     },

@@ -43,6 +43,7 @@ test("split-component", async () => {
       await test("can navigate to another story", async () => {
         await page
           .getByRole("link", { name: "Hello Marko" })
+          .or(page.getByRole("button", { name: "Hello Marko" }))
           .click(initialTimeout);
         await expect(frame.getByText("Hello Marko")).toBeVisible(
           initialTimeout,
