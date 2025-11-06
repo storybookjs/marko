@@ -25,7 +25,7 @@ export function renderToCanvas(
     }
 
     if (instance) {
-      (instance as Marko.MountedTemplate).update(config.input || {});
+      (instance as any as Marko.MountedTemplate).update(config.input || {});
     } else {
       instance = template.mount(config.input || {}, canvasElement) as any;
     }
