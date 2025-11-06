@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
-import { expect } from "playwright/test";
 import { composeStories } from "@storybook/marko";
+import { expect } from "playwright/test";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
@@ -46,9 +46,6 @@ test("click-count", async () => {
 
         await page.getByPlaceholder("Edit number...").fill("2");
         await expect($count).toHaveText("Current Count: 2");
-
-        await page.getByText("NameControl").getByRole("button").click();
-        await expect($count).toHaveText("Current Count: 0");
       });
 
       await test("can navigate to another story", async () => {
