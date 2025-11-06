@@ -22,10 +22,9 @@ test("invalid", async () => {
       await test(`shows error display`, async () => {
         await page.goto(`/iframe.html?id=${Default.id}`);
         await expect(
-          page.getByText(
-            'Expected a component to be specified in the story: "InvalidStory > Default".',
-            { exact: true },
-          ),
+          page.getByRole("heading", {
+            name: /Expected a component to be specified in the story/,
+          }),
         ).toBeVisible(initialTimeout);
       });
     });

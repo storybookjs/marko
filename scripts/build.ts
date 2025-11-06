@@ -31,7 +31,6 @@ export default (async () => {
       entryPoints,
       outbase: srcdir,
       platform: "node",
-      target: ["es2019"],
       sourcemap: process.env.NODE_V8_COVERAGE ? "inline" : false,
       define: {
         "process.env.NODE_ENV": "'production'",
@@ -42,6 +41,11 @@ export default (async () => {
       build({
         ...opts,
         format: "cjs",
+        define: {
+          ...opts.define,
+          "import.meta.dirname": "__dirname",
+          "import.meta.filename": "__filename",
+        },
       }),
       build({
         ...opts,
