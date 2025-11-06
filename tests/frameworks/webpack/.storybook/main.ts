@@ -15,7 +15,7 @@ export default {
     config.babelrc = false;
     config.configFile = false;
     config.presets ??= [];
-    config.presets.push(require.resolve("@babel/preset-typescript"));
+    config.presets.push("@babel/preset-typescript");
     return config;
   },
 } satisfies StorybookConfig;
