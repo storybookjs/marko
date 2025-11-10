@@ -1,5 +1,11 @@
 # @storybook/marko-vite
 
+## 4.1.0
+
+### Minor Changes
+
+- [#46](https://github.com/storybookjs/marko/pull/46) [`4db56ea`](https://github.com/storybookjs/marko/commit/4db56eadd7c2ac560efbb1327144ad855a81d2c5) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - When the `--host` cli flag is used with storybook, use that value as a default for the vite `allowedHosts` config.
+
 ## 4.0.0
 
 ### Major Changes
