@@ -17,9 +17,12 @@ export const core: PresetProperty<"core"> = async (config, options) => {
   };
 };
 
-export const viteFinal: StorybookConfig["viteFinal"] = async (baseConfig) => {
+export const viteFinal: StorybookConfig["viteFinal"] = async (
+  viteConfig,
+  storybookConfig,
+) => {
   const { mergeConfig } = await import("vite");
-  return mergeConfig(baseConfig, {
+  return mergeConfig(viteConfig, {
     resolve: {
       alias: [
         {
@@ -29,9 +32,13 @@ export const viteFinal: StorybookConfig["viteFinal"] = async (baseConfig) => {
         },
       ],
     },
+    server:
+      storybookConfig.host && viteConfig.server?.allowedHosts === undefined
+        ? { allowedHosts: [storybookConfig.host] }
+        : undefined,
     plugins:
       // Ensure @marko/vite included unless already added.
-      (await hasVitePlugins(baseConfig.plugins || [], ["marko-vite:pre"]))
+      (await hasVitePlugins(viteConfig.plugins || [], ["marko-vite:pre"]))
         ? []
         : [(await import("@marko/vite")).default({ linked: false })],
   });
