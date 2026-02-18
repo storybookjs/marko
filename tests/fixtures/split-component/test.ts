@@ -33,7 +33,7 @@ test("split-component", async () => {
       });
 
       await test("supports controls addon", async () => {
-        await page.getByText("Controls").click(initialTimeout);
+        await page.getByText("Controls", { exact: true }).click(initialTimeout);
         await page.getByPlaceholder("Edit string...").fill("Updated");
         await expect(frame.getByText("Hello Updated")).toBeVisible(
           initialTimeout,

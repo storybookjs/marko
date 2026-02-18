@@ -36,7 +36,7 @@ test("click-count", async () => {
         await page.goto(`/?path=/story/${Default.id}`);
         const $btn = frame.getByText("Click me!");
         const $count = frame.getByText("Current Count:");
-        await page.getByText("Controls").click(initialTimeout);
+        await page.getByText("Controls", { exact: true }).click(initialTimeout);
 
         await expect($count).toHaveText("Current Count: 0", initialTimeout);
         await $btn.click();
