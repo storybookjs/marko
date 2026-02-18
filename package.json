@@ -16,6 +16,8 @@
     "format": "npm run build:types && eslint -f unix --fix . && prettier . --write --log-level=error && sort-package-json --quiet ./{,packages/*/*/,tests/frameworks/*/}package.json",
     "prepare": "husky",
     "release": "npm run build && changeset publish",
+    "storybook:vite": "npm run storybook --workspace=vite-tests",
+    "storybook:webpack": "npm run storybook --workspace=webpack-tests",
     "test": "npm run build:js && node -r '~preload' --test-reporter=spec --test ./tests/fixtures/*/test.ts",
     "version": "changeset version && npm i --package-lock-only"
   },
