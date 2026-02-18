@@ -1,5 +1,7 @@
 import type { ArgsStoryFn, RenderContext } from "storybook/internal/types";
+import { addons } from "storybook/preview-api";
 import type { MarkoRenderer } from "./types";
+import { UPDATE_STORY_ARGS } from "storybook/internal/core-events";
 
 type Subscriptions = Record<string, (...args: unknown[]) => void>;
 const instanceByCanvasElement = new WeakMap<
@@ -24,10 +26,25 @@ export function renderToCanvas(
       cleanup(canvasElement);
     }
 
+    const input = { ...(config.input ?? {}) };
+
+    for (const key of Object.keys(input)) {
+      const argType = ctx.storyContext.argTypes[key];
+      if (!argType.changeHandler) continue;
+      const changeKey = key + "Change";
+      if (changeKey in input) continue;
+      input[changeKey] = (v: unknown) => {
+        addons.getChannel().emit(UPDATE_STORY_ARGS, {
+          storyId: ctx.id,
+          updatedArgs: { [key]: v },
+        });
+      };
+    }
+
     if (instance) {
-      (instance as any as Marko.MountedTemplate).update(config.input || {});
+      (instance as any as Marko.MountedTemplate).update(input);
     } else {
-      instance = template.mount(config.input || {}, canvasElement) as any;
+      instance = template.mount(input, canvasElement) as any;
     }
   } else {
     if (instance && (ctx.forceRemount || !instance.state)) {
