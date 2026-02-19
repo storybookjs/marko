@@ -18,11 +18,9 @@ declare module "storybook/internal/csf" {
      *
      * Indicates that this arg is [controllable](https://markojs.com/docs/explanation/controllable-components#the-controllable-pattern) via a `_Change` handler.
      *
-     * Pass `true` to add an english-language description written by Marko team
-     *
-     * Pass a string to use it as the description
-     *
-     * Pass a function to build a description from this argType
+     * - Pass `true` to add an english-language description written by Marko team
+     * - Pass a string to use it as the description
+     * - Pass a function to build a description using the name
      *
      * For further customization, add a `_Change` argType manually
      */

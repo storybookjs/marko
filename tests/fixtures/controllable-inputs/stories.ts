@@ -1,6 +1,10 @@
 import { type Meta, type Story } from "@storybook/marko";
 import Controllable, { type Input } from "./index.marko";
 
+function spanishChangeHandlerMessage(name: string) {
+  return `Se utiliza para elevar \`${name}\` con el patrón [controllable](https://markojs.com/docs/explanation/controllable-components). Normalmente se añade implícitamente con la sintaxis de enlace [\`:=\`](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding).`;
+}
+
 export default {
   title: "Controllable",
   component: Controllable,
@@ -21,7 +25,7 @@ export default {
       },
     },
     pressed: {
-      changeHandler: true,
+      changeHandler: "Control the `pressed` attribute with a hoist",
       control: { type: "boolean" },
       description: "Controllable boolean value",
       table: {
@@ -33,7 +37,7 @@ export default {
     },
     color: {
       options: ["red", "orange", "yellow"],
-      changeHandler: true,
+      changeHandler: spanishChangeHandlerMessage,
       control: { type: "inline-radio" },
       description: "Controllable boolean value",
       table: {
