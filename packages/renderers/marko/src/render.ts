@@ -1,4 +1,9 @@
-import type { ArgsStoryFn, RenderContext } from "storybook/internal/types";
+import type {
+  Args,
+  ArgsStoryFn,
+  RenderContext,
+  StoryContext,
+} from "storybook/internal/types";
 import { addons } from "storybook/preview-api";
 import type { MarkoRenderer } from "./types";
 import { UPDATE_STORY_ARGS } from "storybook/internal/core-events";
@@ -27,10 +32,11 @@ export function renderToCanvas(
       cleanup(canvasElement);
     }
 
+    const input = processInput(config.input || {}, ctx.storyContext);
     if (instance) {
-      (instance as any as Marko.MountedTemplate).update(config.input || {});
+      (instance as any as Marko.MountedTemplate).update(input);
     } else {
-      instance = template.mount(config.input || {}, canvasElement) as any;
+      instance = template.mount(input, canvasElement) as any;
     }
   } else {
     if (instance && (ctx.forceRemount || !instance.state)) {
@@ -95,28 +101,7 @@ export const render: ArgsStoryFn<MarkoRenderer> = (args, ctx) => {
   const { component } = ctx;
   assertHasTemplate(component, ctx);
 
-  const input = {} as typeof args;
-
-  for (const key of Object.keys(args)) {
-    let path = key;
-    let obj = input;
-    // Attr tag nested attributes have been converted to `@foo > @bar > baz` by `entry-preview.ts`
-    while (path.startsWith("@")) {
-      const i = path.indexOf(" > ");
-      obj = obj[path.substring(1, i)] ??= attrTag({});
-      path = path.substring(i + 3);
-    }
-    obj[path] = args[key];
-    if (ctx.argTypes[key].changeHandler && !(key + "Change" in args)) {
-      obj[path + "Change"] = (v: unknown) => {
-        addons.getChannel().emit(UPDATE_STORY_ARGS, {
-          storyId: ctx.id,
-          updatedArgs: { [key]: v },
-        });
-      };
-    }
-  }
-  return { component, input };
+  return { component, input: processInput(args, ctx) };
 };
 
 function isTagsAPI(template: Marko.Template) {
@@ -154,4 +139,33 @@ function cleanup(canvasElement: MarkoRenderer["canvasElement"]) {
   canvasElement.innerHTML = "";
   instanceByCanvasElement.delete(canvasElement);
   subscriptionsByInstance.delete(component);
+}
+
+/**
+ * Un-flatten attr tags and add change handlers
+ */
+function processInput(args: Args, ctx: StoryContext) {
+  const input = {} as typeof args;
+
+  for (const key of Object.keys(args)) {
+    let path = key;
+    let obj = input;
+    // Attr tag nested attributes have been converted to `@foo > @bar > baz` by `entry-preview.ts`
+    while (path.startsWith("@")) {
+      const i = path.indexOf(" > ");
+      obj = obj[path.substring(1, i)] ??= attrTag({});
+      path = path.substring(i + 3);
+    }
+    obj[path] = args[key];
+    if (ctx.argTypes[key].changeHandler && !(key + "Change" in args)) {
+      obj[path + "Change"] = (v: unknown) => {
+        addons.getChannel().emit(UPDATE_STORY_ARGS, {
+          storyId: ctx.id,
+          updatedArgs: { [key]: v },
+        });
+      };
+    }
+  }
+
+  return input;
 }
