@@ -2,6 +2,7 @@ import type { ArgsStoryFn, RenderContext } from "storybook/internal/types";
 import { addons } from "storybook/preview-api";
 import type { MarkoRenderer } from "./types";
 import { UPDATE_STORY_ARGS } from "storybook/internal/core-events";
+import { attrTag } from "./attr-tag";
 
 type Subscriptions = Record<string, (...args: unknown[]) => void>;
 const instanceByCanvasElement = new WeakMap<
@@ -26,25 +27,10 @@ export function renderToCanvas(
       cleanup(canvasElement);
     }
 
-    const input = { ...(config.input ?? {}) };
-
-    for (const key of Object.keys(input)) {
-      const argType = ctx.storyContext.argTypes[key];
-      if (!argType.changeHandler) continue;
-      const changeKey = key + "Change";
-      if (changeKey in input) continue;
-      input[changeKey] = (v: unknown) => {
-        addons.getChannel().emit(UPDATE_STORY_ARGS, {
-          storyId: ctx.id,
-          updatedArgs: { [key]: v },
-        });
-      };
-    }
-
     if (instance) {
-      (instance as any as Marko.MountedTemplate).update(input);
+      (instance as any as Marko.MountedTemplate).update(config.input || {});
     } else {
-      instance = template.mount(input, canvasElement) as any;
+      instance = template.mount(config.input || {}, canvasElement) as any;
     }
   } else {
     if (instance && (ctx.forceRemount || !instance.state)) {
@@ -108,7 +94,29 @@ export function renderToCanvas(
 export const render: ArgsStoryFn<MarkoRenderer> = (args, ctx) => {
   const { component } = ctx;
   assertHasTemplate(component, ctx);
-  return { component, input: args };
+
+  const input = {} as typeof args;
+
+  for (const key of Object.keys(args)) {
+    let path = key;
+    let obj = input;
+    // Attr tag nested attributes have been converted to `@foo > @bar > baz` by `entry-preview.ts`
+    while (path.startsWith("@")) {
+      const i = path.indexOf(" > ");
+      obj = obj[path.substring(1, i)] ??= attrTag({});
+      path = path.substring(i + 3);
+    }
+    obj[path] = args[key];
+    if (ctx.argTypes[key].changeHandler && !(key + "Change" in args)) {
+      obj[path + "Change"] = (v: unknown) => {
+        addons.getChannel().emit(UPDATE_STORY_ARGS, {
+          storyId: ctx.id,
+          updatedArgs: { [key]: v },
+        });
+      };
+    }
+  }
+  return { component, input };
 };
 
 function isTagsAPI(template: Marko.Template) {

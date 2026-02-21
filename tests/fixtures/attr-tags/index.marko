@@ -1,0 +1,46 @@
+export interface Input {
+  header?: Marko.AttrTag<{ text: string }>;
+  item?: Marko.AttrTag<{
+    name: string;
+    count: number;
+    icon: Marko.AttrTag<{
+      size: "small" | "medium" | "large";
+      sizeChange?: (s: "small" | "medium" | "large") => void;
+    }>;
+  }>;
+}
+
+<div>
+  <if=input.header>
+    <h1>${input.header.text}</h1>
+  </if>
+  <else>
+    <h1>(No Header)</h1>
+  </else>
+  <ul>
+    <for|item| of=input.item>
+      <li>
+        ${item.name} (${item.count})${" "}
+        <if=item.icon>
+          <let/size:=item.icon.size>
+          <button
+            style={
+              "font-size":
+                item.icon.size === "large"
+                  ? "2rem"
+                  : item.icon.size === "small"
+                    ? "0.5rem"
+                    : "1rem",
+            }
+            onClick() {
+              size = (
+                { small: "medium", medium: "large", large: "small" } as const
+              )[size];
+            }>
+            🙂
+          </button>
+        </if>
+      </li>
+    </for>
+  </ul>
+</div>

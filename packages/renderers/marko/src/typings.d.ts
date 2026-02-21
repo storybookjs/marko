@@ -25,5 +25,13 @@ declare module "storybook/internal/csf" {
      * For further customization, add a `_Change` argType manually
      */
     changeHandler?: true | string | ((name: string) => string);
+    /**
+     * **_[Marko]_**
+     *
+     * This arg may be passed as an [attribute tag](https://markojs.com/docs/reference/language#attribute-tags).
+     *
+     * The value acts as `argTypes` for this attribute tag.
+     */
+    "@"?: Record<string, InputType>;
   }
 }
