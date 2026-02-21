@@ -28,6 +28,7 @@ function flattenAttrTags(
       ? {
           ...argType.table,
           category: prefix.substring(0, prefix.length - 3),
+          subcategory: argType.table?.subcategory || argType.table?.category,
         }
       : argType.table;
 

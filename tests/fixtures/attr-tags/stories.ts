@@ -40,6 +40,9 @@ export default {
               description: "The size of the icon",
               options: ["small", "medium", "large"],
               control: { type: "inline-radio" },
+              table: {
+                type: { summary: "string" },
+              },
             },
           },
         },
