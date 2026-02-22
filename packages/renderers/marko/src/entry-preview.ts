@@ -71,6 +71,11 @@ function addChangeHandlers(argTypes: StrictArgTypes) {
     const changeKey = key + "Change";
     if (argType.changeHandler && !(changeKey in argTypes)) {
       const name = argType.name || key;
+      const type =
+        argType.table?.type?.summary ||
+        argType.type?.name ||
+        argType.type ||
+        "unknown";
       newTypes[changeKey] = {
         name: name + "Change",
         description:
@@ -83,7 +88,7 @@ function addChangeHandlers(argTypes: StrictArgTypes) {
           category: argType.table?.category,
           subcategory: argType.table?.subcategory,
           type: {
-            summary: `(${name.charAt(0)}: ${argType.table?.type?.summary ?? "unknown"}) => void`,
+            summary: `(${name.charAt(0)}: ${type}) => void`,
           },
         },
         control: { disable: true },
