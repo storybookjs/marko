@@ -30,7 +30,7 @@ export default {
         },
         count: {
           description: "The numerical value of this item",
-          control: { type: "number" },
+          control: "number",
         },
         icon: {
           description: "An optional icon",

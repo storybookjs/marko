@@ -1,3 +1,4 @@
+import { normalizeStory } from "storybook/internal/preview-api";
 import type {
   Args,
   ArgsEnhancer,
@@ -11,6 +12,24 @@ import type { MarkoRenderer } from "./types";
 export { renderToCanvas, render } from "./render";
 
 export const parameters = { renderer: "marko" };
+
+/**
+ * Storybook does some normalization _before_ argTypesEnhancers (the one
+ * I found was `type: "foo"` => `type: { name: "foo" }`), so we need to
+ * re-normalize after updating stuff
+ */
+function normalizeArgTypes(
+  argTypes: StrictArgTypes,
+  id: string,
+  title: string,
+): StrictArgTypes {
+  const normalized = normalizeStory(
+    "__argTypes__",
+    { argTypes },
+    { id, title },
+  );
+  return normalized.argTypes ?? argTypes;
+}
 
 function flattenAttrTags(
   argTypes: StrictArgTypes,
@@ -101,6 +120,7 @@ function addChangeHandlers(argTypes: StrictArgTypes) {
 export const argTypesEnhancers: ArgTypesEnhancer<MarkoRenderer>[] = [
   ({ argTypes, initialArgs }) => flattenAttrTags(argTypes, initialArgs)[0],
   ({ argTypes }) => addChangeHandlers(argTypes),
+  ({ argTypes, id, title }) => normalizeArgTypes(argTypes, id, title),
 ];
 
 export const argsEnhancers: ArgsEnhancer<MarkoRenderer>[] = [
