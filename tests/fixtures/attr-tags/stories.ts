@@ -15,7 +15,8 @@ export default {
     header: {
       description: "An optional header",
       "@": {
-        text: {
+        content: {
+          bodyContent: "text",
           description: "The content of the header",
           control: { type: "text" },
         },
@@ -36,7 +37,7 @@ export default {
           description: "An optional icon",
           "@": {
             size: {
-              changeHandler: true,
+              controllable: true,
               description: "The size of the icon",
               options: ["small", "medium", "large"],
               control: { type: "inline-radio" },
@@ -64,7 +65,7 @@ export const Default = {
 export const InitialValues = {
   args: {
     header: {
-      text: "hello",
+      content: "hello",
     } as any,
     item: {
       count: 5,

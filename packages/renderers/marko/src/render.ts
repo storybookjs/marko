@@ -32,7 +32,7 @@ export function renderToCanvas(
       cleanup(canvasElement);
     }
 
-    const input = processInput(config.input || {}, ctx.storyContext);
+    const input = processInput(config.input || {}, ctx.storyContext, true);
     if (instance) {
       (instance as any as Marko.MountedTemplate).update(input);
     } else {
@@ -79,7 +79,7 @@ export function renderToCanvas(
       }
     } else {
       instance = template
-        .renderSync(input)
+        .renderSync(processInput(input, ctx.storyContext, false))
         .replaceChildrenOf(canvasElement)
         .getComponent();
 
@@ -101,7 +101,7 @@ export const render: ArgsStoryFn<MarkoRenderer> = (args, ctx) => {
   const { component } = ctx;
   assertHasTemplate(component, ctx);
 
-  return { component, input: processInput(args, ctx) };
+  return { component, input: processInput(args, ctx, isTagsAPI(component)) };
 };
 
 function isTagsAPI(template: Marko.Template) {
@@ -144,10 +144,10 @@ function cleanup(canvasElement: MarkoRenderer["canvasElement"]) {
 /**
  * Un-flatten attr tags and add change handlers
  */
-function processInput(args: Args, ctx: StoryContext) {
+function processInput(args: Args, ctx: StoryContext, tagsApi: boolean) {
   const input = {} as typeof args;
 
-  for (const key of Object.keys(args)) {
+  for (const key in args) {
     let path = key;
     let obj = input;
     // Attr tag nested attributes have been converted to `@foo > @bar > baz` by `entry-preview.ts`
@@ -156,8 +156,22 @@ function processInput(args: Args, ctx: StoryContext) {
       obj = obj[path.substring(1, i)] ??= attrTag({});
       path = path.substring(i + 3);
     }
-    obj[path] = args[key];
-    if (ctx.argTypes[key].changeHandler && !(key + "Change" in args)) {
+
+    // Normalize body content
+    if (ctx.argTypes[key]?.bodyContent) {
+      const type = ctx.argTypes[key]?.bodyContent;
+      if (tagsApi) {
+        obj[path] = /* TODO */ args[key];
+      } else {
+        if (type === "html") obj[path] = (out: any) => out.html(args[key]);
+        else obj[path] = (out: any) => out.text(args[key]);
+      }
+    } else {
+      obj[path] = args[key];
+    }
+
+    // Add controllable change handlers
+    if (ctx.argTypes[key]?.controllable && !args[key + "Change"]) {
       obj[path + "Change"] = (v: unknown) => {
         addons.getChannel().emit(UPDATE_STORY_ARGS, {
           storyId: ctx.id,

@@ -79,47 +79,21 @@ function flattenAttrTags(
   return [newArgTypes, newArgs] as const;
 }
 
-function addChangeHandlers(argTypes: StrictArgTypes) {
-  const newTypes: StrictArgTypes = {};
-
+function addControllableChangeHandlers(argTypes: StrictArgTypes) {
   for (const key of Object.keys(argTypes)) {
     const argType = argTypes[key];
 
-    newTypes[key] = { ...argType };
-
-    const changeKey = key + "Change";
-    if (argType.changeHandler && !(changeKey in argTypes)) {
-      const name = argType.name || key;
-      const type =
-        argType.table?.type?.summary ||
-        argType.type?.name ||
-        argType.type ||
-        "unknown";
-      newTypes[changeKey] = {
-        name: name + "Change",
-        description:
-          typeof argType.changeHandler === "string"
-            ? argType.changeHandler
-            : typeof argType.changeHandler === "function"
-              ? argType.changeHandler(name)
-              : `Used to hoist \`${name}\` with the [controllable](https://markojs.com/docs/explanation/controllable-components) pattern. Typically added implicitly with [the \`:=\` bind syntax](https://markojs.com/docs/reference/language#shorthand-change-handlers-two-way-binding).`,
-        table: {
-          category: argType.table?.category,
-          subcategory: argType.table?.subcategory,
-          type: {
-            summary: `(${name.charAt(0)}: ${type}) => void`,
-          },
-        },
-        control: { disable: true },
-      };
+    if (argType.controllable && !argTypes[key + "Change"]) {
+      argTypes[key].name =
+        (argType.name || key) + ", " + (argType.name || key) + "Change";
     }
   }
-  return newTypes;
+  return argTypes;
 }
 
 export const argTypesEnhancers: ArgTypesEnhancer<MarkoRenderer>[] = [
   ({ argTypes, initialArgs }) => flattenAttrTags(argTypes, initialArgs)[0],
-  ({ argTypes }) => addChangeHandlers(argTypes),
+  ({ argTypes }) => addControllableChangeHandlers(argTypes),
   ({ argTypes, id, title }) => normalizeArgTypes(argTypes, id, title),
 ];
 

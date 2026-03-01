@@ -4,6 +4,16 @@ import SplitComponent, { type Input } from "./index.marko";
 export default {
   title: "SplitComponent",
   component: SplitComponent,
+  argTypes: {
+    name: {
+      type: "string",
+      control: "text",
+    },
+    content: {
+      control: "text",
+      bodyContent: "html",
+    },
+  },
 } as Meta<Input>;
 
 export const HelloWorld = {

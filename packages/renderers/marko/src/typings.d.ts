@@ -18,13 +18,9 @@ declare module "storybook/internal/csf" {
      *
      * Indicates that this arg is [controllable](https://markojs.com/docs/explanation/controllable-components#the-controllable-pattern) via a `_Change` handler.
      *
-     * - Pass `true` to add an english-language description written by Marko team
-     * - Pass a string to use it as the description
-     * - Pass a function to build a description using the name
-     *
      * For further customization, add a `_Change` argType manually
      */
-    changeHandler?: true | string | ((name: string) => string);
+    controllable?: true;
     /**
      * **_[Marko]_**
      *
@@ -33,5 +29,11 @@ declare module "storybook/internal/csf" {
      * The value acts as `argTypes` for this attribute tag.
      */
     "@"?: Record<string, InputType>;
+    /**
+     * **_[Marko]_**
+     *
+     * Pass control text as [content](https://markojs.com/docs/reference/language#tag-content).
+     */
+    bodyContent?: true | "text" | "html";
   }
 }
