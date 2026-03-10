@@ -15,10 +15,10 @@ export default {
     header: {
       description: "An optional header",
       "@": {
-        content: {
-          bodyContent: "text",
+        description: {
+          type: "string",
+          control: "text",
           description: "The content of the header",
-          control: { type: "text" },
         },
       },
     },
@@ -65,7 +65,7 @@ export const Default = {
 export const InitialValues = {
   args: {
     header: {
-      content: "hello",
+      description: "Hello",
     } as any,
     item: {
       count: 5,

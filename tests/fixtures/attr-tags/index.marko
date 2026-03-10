@@ -1,5 +1,5 @@
 export interface Input {
-  header?: Marko.AttrTag<Marko.HTML.H1>;
+  header?: Marko.AttrTag<Marko.HTML.H1 & { description: string }>;
   item?: Marko.AttrTag<{
     name: string;
     count: number;
@@ -12,7 +12,9 @@ export interface Input {
 
 <div>
   <if=input.header>
-    <h1 ...input.header/>
+    <h1 ...input.header>
+      ${input.header.description}
+    </h1>
   </if>
   <else>
     <h1>(No Header)</h1>
