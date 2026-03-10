@@ -39,7 +39,7 @@ function flattenAttrTags(
   const newArgTypes: StrictArgTypes = {};
   const newArgs: Args | undefined = args ? {} : undefined;
 
-  for (const key of Object.keys(argTypes)) {
+  for (const key in argTypes) {
     if (key.startsWith("@")) continue;
     const argType = argTypes[key];
     const name = argType.name || key;
@@ -80,7 +80,7 @@ function flattenAttrTags(
 }
 
 function addControllableChangeHandlers(argTypes: StrictArgTypes) {
-  for (const key of Object.keys(argTypes)) {
+  for (const key in argTypes) {
     const argType = argTypes[key];
 
     if (argType.controllable && !argTypes[key + "Change"]) {
@@ -91,9 +91,22 @@ function addControllableChangeHandlers(argTypes: StrictArgTypes) {
   return argTypes;
 }
 
+function addBodyContentSummary(argTypes: StrictArgTypes) {
+  for (const key in argTypes) {
+    if (argTypes[key].bodyContent) {
+      argTypes[key].table = {
+        ...argTypes[key].table,
+        type: argTypes[key].table?.type || { summary: "Marko.Body" },
+      };
+    }
+  }
+  return argTypes;
+}
+
 export const argTypesEnhancers: ArgTypesEnhancer<MarkoRenderer>[] = [
   ({ argTypes, initialArgs }) => flattenAttrTags(argTypes, initialArgs)[0],
   ({ argTypes }) => addControllableChangeHandlers(argTypes),
+  ({ argTypes }) => addBodyContentSummary(argTypes),
   ({ argTypes, id, title }) => normalizeArgTypes(argTypes, id, title),
 ];
 
