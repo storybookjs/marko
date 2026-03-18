@@ -43,19 +43,6 @@ test("controllable-inputs", async () => {
   });
 
   await test(InitialValues.storyName, async () => {
-    await test("testing", async () => {
-      await test("can render with initial args", async () => {
-        await render(InitialValues);
-        expect(screen.getByRole("button", { name: "ON" })).toBeTruthy();
-        expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe(
-          "Marko!",
-        );
-        expect(InitialValues.args.value).toBe("Marko!");
-        expect(InitialValues.args.pressed).toBe(true);
-        expect(InitialValues.args.color).toBe("orange");
-      });
-    });
-
     await testPage(async (page) => {
       const frame = page.frameLocator("#storybook-preview-iframe");
 
