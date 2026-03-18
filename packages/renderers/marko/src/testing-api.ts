@@ -84,10 +84,8 @@ const defaultProjectAnnotations: Preview = {
  */
 export function composeStory<
   Input extends Args = Args,
-  Export extends StoryAnnotationsOrFn<
-    MarkoRenderer,
-    Input
-  > = StoryAnnotationsOrFn<MarkoRenderer, Input>,
+  Export extends StoryAnnotationsOrFn<MarkoRenderer, Input> =
+    StoryAnnotationsOrFn<MarkoRenderer, Input>,
 >(
   story: Export,
   componentAnnotations: Meta<Input>,

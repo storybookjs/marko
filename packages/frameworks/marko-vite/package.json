@@ -38,7 +38,7 @@
   ],
   "dependencies": {
     "@marko/compiler": "^5",
-    "@marko/vite": "^5",
-    "@storybook/builder-vite": "^10.0.5"
+    "@marko/vite": "^6",
+    "@storybook/builder-vite": "^10.3.0"
   }
 }
