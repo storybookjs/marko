@@ -1,4 +1,3 @@
-import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
 import { composeStories } from "@storybook/marko";
 import { expect } from "playwright/test";
@@ -8,10 +7,10 @@ import * as stories from "./stories";
 const { Default, InitialValues } = composeStories(stories);
 const initialTimeout = { timeout: 60000 };
 
-test("controllable-inputs", async () => {
-  await test(Default.storyName, async () => {
-    await test("testing", async () => {
-      await test("can render with no initial args", async () => {
+describe("controllable-inputs", () => {
+  describe(Default.storyName, () => {
+    describe("testing", () => {
+      test("can render with no initial args", async () => {
         await render(Default);
         expect(screen.getByRole("button", { name: "OFF" })).toBeTruthy();
         const textbox = screen.getByRole("textbox") as HTMLInputElement;
@@ -22,10 +21,10 @@ test("controllable-inputs", async () => {
       });
     });
 
-    await testPage(async (page) => {
-      const frame = page.frameLocator("#storybook-preview-iframe");
-
-      await test("when value arg is unset, typing in input does not sync to args", async () => {
+    testPage((getPage) => {
+      test("when value arg is unset, typing in input does not sync to args", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
         await page.goto(`/?path=/story/${Default.id}`);
         const storyTextbox = frame.getByRole("textbox");
 
@@ -42,11 +41,11 @@ test("controllable-inputs", async () => {
     });
   });
 
-  await test(InitialValues.storyName, async () => {
-    await testPage(async (page) => {
-      const frame = page.frameLocator("#storybook-preview-iframe");
-
-      await test("args and display stay in sync when arg is set", async () => {
+  describe(InitialValues.storyName, () => {
+    testPage((getPage) => {
+      test("args and display stay in sync when arg is set", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
         await page.goto(`/?path=/story/${InitialValues.id}`);
         await page.getByText("Controls", { exact: true }).click(initialTimeout);
         const panel = page.locator("#storybook-panel-root");

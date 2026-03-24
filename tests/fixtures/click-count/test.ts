@@ -1,4 +1,3 @@
-import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
 import { composeStories } from "@storybook/marko";
 import { expect } from "playwright/test";
@@ -8,20 +7,19 @@ import * as stories from "./stories";
 const { Default, InitialCount } = composeStories(stories);
 const initialTimeout = { timeout: 60000 };
 
-test("click-count", async () => {
-  await test(Default.storyName, async () => {
-    await test("testing", async () => {
-      await test("can render", async () => {
+describe("click-count", () => {
+  describe(Default.storyName, () => {
+    describe("testing", () => {
+      test("can render", async () => {
         await render(Default);
         expect(screen.getByText("Current Count: 0")).toBeTruthy();
         expect(Default.args).not.toHaveProperty("count");
       });
     });
 
-    await testPage(async (page) => {
-      const frame = page.frameLocator("#storybook-preview-iframe");
-
-      await test(`can increment counter`, async () => {
+    testPage((getPage) => {
+      test(`can increment counter`, async () => {
+        const page = await getPage();
         await page.goto(`/iframe.html?id=${Default.id}`);
         const $btn = page.getByText("Click me!");
         const $count = page.getByText("Current Count:");
@@ -32,7 +30,9 @@ test("click-count", async () => {
         await expect($count).toHaveText("Current Count: 2");
       });
 
-      await test("supports controls addon", async () => {
+      test("supports controls addon", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
         await page.goto(`/?path=/story/${Default.id}`);
         const $btn = frame.getByText("Click me!");
         const $count = frame.getByText("Current Count:");
@@ -48,7 +48,9 @@ test("click-count", async () => {
         await expect($count).toHaveText("Current Count: 2");
       });
 
-      await test("can navigate to another story", async () => {
+      test("can navigate to another story", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
         await page.goto(`/?path=/story/${Default.id}`);
         await page.getByText("Initial Count").click(initialTimeout);
 
@@ -74,9 +76,9 @@ test("click-count", async () => {
     });
   });
 
-  await test(InitialCount.storyName, async () => {
-    await test("testing", async () => {
-      await test("can render", async () => {
+  describe(InitialCount.storyName, () => {
+    describe("testing", () => {
+      test("can render", async () => {
         await render(InitialCount);
         expect(screen.getByText("Current Count: 2")).toBeTruthy();
         expect(InitialCount.args.count).toBe(2);

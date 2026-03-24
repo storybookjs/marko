@@ -1,4 +1,3 @@
-import { test } from "node:test";
 import { render, screen } from "@marko/testing-library";
 import { composeStories } from "@storybook/marko";
 import { expect } from "playwright/test";
@@ -8,10 +7,10 @@ import * as stories from "./stories";
 const { Default, InitialValues } = composeStories(stories);
 const initialTimeout = { timeout: 60000 };
 
-test("attr-tags", async () => {
-  await test(Default.storyName, async () => {
-    await test("testing", async () => {
-      await test("can render with no args - attributes passed through", async () => {
+describe("attr-tags", () => {
+  describe(Default.storyName, () => {
+    describe("testing", () => {
+      test("can render with no args - attributes passed through", async () => {
         await render(Default);
         expect(screen.getByRole("heading", { level: 1 }).textContent).toContain(
           "(No Header)",
@@ -21,10 +20,10 @@ test("attr-tags", async () => {
       });
     });
 
-    await testPage(async (page) => {
-      const frame = page.frameLocator("#storybook-preview-iframe");
-
-      await test("renders default story in iframe", async () => {
+    testPage((getPage) => {
+      test("renders default story in iframe", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
         await page.goto(`/?path=/story/${Default.id}`);
         await expect(
           frame.getByRole("heading", { name: "(No Header)" }),
@@ -33,9 +32,9 @@ test("attr-tags", async () => {
     });
   });
 
-  await test(InitialValues.storyName, async () => {
-    await test("testing", async () => {
-      await test("InitialValues story has expected args shape", async () => {
+  describe(InitialValues.storyName, () => {
+    describe("testing", () => {
+      test("InitialValues story has expected args shape", async () => {
         expect(InitialValues.args?.header).toBeDefined();
         expect(
           (InitialValues.args?.header as unknown as { description: string })
@@ -53,10 +52,10 @@ test("attr-tags", async () => {
       });
     });
 
-    await testPage(async (page) => {
-      const frame = page.frameLocator("#storybook-preview-iframe");
-
-      await test("all attributes passed through to DOM in story", async () => {
+    testPage((getPage) => {
+      test("all attributes passed through to DOM in story", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
         await page.goto(`/?path=/story/${InitialValues.id}`);
         await expect(frame.getByRole("heading", { name: "Hello" })).toBeVisible(
           initialTimeout,
@@ -66,10 +65,12 @@ test("attr-tags", async () => {
         );
         const storyButton = frame.getByRole("button", { name: "🙂" });
         await expect(storyButton).toBeVisible(initialTimeout);
-        await expect(storyButton).toHaveCSS("font-size", "8px");
+        await expect(storyButton).toHaveCSS("font-size", "8px", initialTimeout);
       });
 
-      await test("controllable icon size - control updates story", async () => {
+      test("controllable icon size - control updates story", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
         await page.goto(`/?path=/story/${InitialValues.id}`);
         await page.getByText("Controls", { exact: true }).click(initialTimeout);
 
@@ -80,7 +81,7 @@ test("attr-tags", async () => {
 
         const storyButton = frame.getByRole("button", { name: "🙂" });
         await expect(storyButton).toBeVisible(initialTimeout);
-        await expect(storyButton).toHaveCSS("font-size", "8px");
+        await expect(storyButton).toHaveCSS("font-size", "8px", initialTimeout);
 
         const panel = page.locator("#storybook-panel-root");
         const sizeRadios = panel.getByRole("radio", {

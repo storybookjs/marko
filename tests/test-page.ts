@@ -1,14 +1,13 @@
-import cp from "child_process";
-import { once } from "events";
-import fs from "fs/promises";
-import net from "net";
-import { after, test } from "node:test";
-import path from "path";
-import timers from "timers/promises";
+import cp from "node:child_process";
+import { once } from "node:events";
+import fs from "node:fs/promises";
+import net from "node:net";
+import path from "node:path";
+import timers from "node:timers/promises";
 import * as playwright from "playwright";
 
 const checkCoverage = !!process.env.NODE_V8_COVERAGE;
-const root = path.join(__dirname, "..");
+const root = path.resolve(import.meta.dirname, "..");
 const frameworks = ["vite", "webpack"] as const;
 const pages = new Map<
   (typeof frameworks)[number],
@@ -16,7 +15,7 @@ const pages = new Map<
 >();
 let browser: playwright.Browser | undefined;
 
-after(async () => {
+afterAll(async () => {
   if (!browser) return;
 
   await Promise.all(
@@ -59,10 +58,14 @@ after(async () => {
   await browser.close();
 });
 
-export async function testPage(fn: (page: playwright.Page) => unknown) {
+export function testPage(
+  fn: (getPage: () => Promise<playwright.Page>) => void,
+) {
   for (const framework of frameworks) {
-    await test(framework, async () => {
-      await fn(await getPage(framework));
+    let page: Promise<playwright.Page>;
+    describe(framework, () => {
+      beforeAll(() => (page = getPage(framework)), 60_000);
+      fn(() => page);
     });
   }
 }
@@ -92,8 +95,8 @@ async function startPage(framework: (typeof frameworks)[number]) {
       path.join(fwDir, ".storybook"),
     ],
     {
-      // stdio: "inherit",
-      stdio: "ignore",
+      stdio: "inherit",
+      // stdio: "ignore",
       cwd: fwDir,
     },
   );
