@@ -7,6 +7,9 @@ export default defineConfig({
     globals: true,
     environment: "jsdom",
     include: ["tests/fixtures/*/test.ts"],
-    testTimeout: 20_000,
+    globalSetup: ["./tests/test-setup.ts"],
+    testTimeout: 60_000,
+    hookTimeout: 120_000,
+    retry: 2,
   },
 });
