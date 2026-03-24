@@ -4,6 +4,9 @@
   "scripts": {
     "storybook": "storybook dev -p ${PORT:-3000} --no-version-updates --disable-telemetry --no-open"
   },
+  "dependencies": {
+    "@babel/preset-typescript": "^7.28.5"
+  },
   "devDependencies": {
     "@marko/compiler": "^5.39.62",
     "@marko/webpack": "^10.0.1",

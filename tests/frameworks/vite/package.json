@@ -2,7 +2,7 @@
   "name": "vite-tests",
   "private": true,
   "scripts": {
-    "storybook": "storybook dev -p $PORT --no-version-updates --disable-telemetry --no-open"
+    "storybook": "storybook dev -p ${PORT:-3000} --no-version-updates --disable-telemetry --no-open"
   },
   "devDependencies": {
     "@marko/compiler": "^5.39.62",

@@ -1,5 +1,13 @@
-import type { ArgsStoryFn, RenderContext } from "storybook/internal/types";
+import type {
+  Args,
+  ArgsStoryFn,
+  RenderContext,
+  StoryContext,
+} from "storybook/internal/types";
+import { addons } from "storybook/preview-api";
 import type { MarkoRenderer } from "./types";
+import { UPDATE_STORY_ARGS } from "storybook/internal/core-events";
+import { attrTag } from "./attr-tag";
 
 type Subscriptions = Record<string, (...args: unknown[]) => void>;
 const instanceByCanvasElement = new WeakMap<
@@ -24,10 +32,11 @@ export function renderToCanvas(
       cleanup(canvasElement);
     }
 
+    const input = processInput(config.input || {}, ctx.storyContext, true);
     if (instance) {
-      (instance as any as Marko.MountedTemplate).update(config.input || {});
+      (instance as any as Marko.MountedTemplate).update(input);
     } else {
-      instance = template.mount(config.input || {}, canvasElement) as any;
+      instance = template.mount(input, canvasElement) as any;
     }
   } else {
     if (instance && (ctx.forceRemount || !instance.state)) {
@@ -70,7 +79,7 @@ export function renderToCanvas(
       }
     } else {
       instance = template
-        .renderSync(input)
+        .renderSync(processInput(input, ctx.storyContext, false))
         .replaceChildrenOf(canvasElement)
         .getComponent();
 
@@ -91,7 +100,8 @@ export function renderToCanvas(
 export const render: ArgsStoryFn<MarkoRenderer> = (args, ctx) => {
   const { component } = ctx;
   assertHasTemplate(component, ctx);
-  return { component, input: args };
+
+  return { component, input: processInput(args, ctx, isTagsAPI(component)) };
 };
 
 function isTagsAPI(template: Marko.Template) {
@@ -129,4 +139,47 @@ function cleanup(canvasElement: MarkoRenderer["canvasElement"]) {
   canvasElement.innerHTML = "";
   instanceByCanvasElement.delete(canvasElement);
   subscriptionsByInstance.delete(component);
+}
+
+/**
+ * Un-flatten attr tags and add change handlers
+ */
+function processInput(args: Args, ctx: StoryContext, tagsApi: boolean) {
+  const input = {} as typeof args;
+
+  for (const key in args) {
+    let path = key;
+    let obj = input;
+    // Attr tag nested attributes have been converted to `@foo > @bar > baz` by `entry-preview.ts`
+    while (path.startsWith("@")) {
+      const i = path.indexOf(" > ");
+      obj = obj[path.substring(1, i)] ??= attrTag({});
+      path = path.substring(i + 3);
+    }
+
+    // Normalize body content
+    if (ctx.argTypes[key]?.bodyContent) {
+      const type = ctx.argTypes[key]?.bodyContent;
+      if (tagsApi) {
+        obj[path] = /* TODO */ args[key];
+      } else {
+        if (type === "html") obj[path] = (out: any) => out.html(args[key]);
+        else obj[path] = (out: any) => out.text(args[key]);
+      }
+    } else {
+      obj[path] = args[key];
+    }
+
+    // Add controllable change handlers
+    if (ctx.argTypes[key]?.controllable && !args[key + "Change"]) {
+      obj[path + "Change"] = (v: unknown) => {
+        addons.getChannel().emit(UPDATE_STORY_ARGS, {
+          storyId: ctx.id,
+          updatedArgs: { [key]: v },
+        });
+      };
+    }
+  }
+
+  return input;
 }

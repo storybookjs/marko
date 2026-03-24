@@ -1,6 +1,0 @@
-{
-  "excludeAfterRemap": true,
-  "reporter": ["text-summary", "lcov"],
-  "include": ["packages/*/*/src/**/*.+(ts|marko)"],
-  "parserPlugins": ["objectRestSpread", "typescript"]
-}

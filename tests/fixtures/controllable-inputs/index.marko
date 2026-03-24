@@ -1,0 +1,22 @@
+export interface Input extends Omit<Marko.HTML.Input, "type"> {
+  pressed: boolean;
+  pressedChange(p: boolean): void;
+  color: string;
+  colorChange(t: string): void;
+}
+
+<input ...input type="text">
+
+<let/pressed:=input.pressed>
+<button onClick() { pressed = !pressed }>
+  ${pressed ? "ON" : "OFF"}
+</button>
+
+<div>
+  <let/currColor:=input.color>
+  <for|color| of=["red", "orange", "yellow"]>
+    <button onClick() { currColor = color } style={ "background-color": color === currColor ? color : "white" }>
+      ${color}
+    </button>
+  </for>
+</div>

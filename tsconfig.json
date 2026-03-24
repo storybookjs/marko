@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "ESNext"],
+    "types": ["vitest/globals"],
     "strict": true,
     "composite": true,
     "target": "ESNext",
