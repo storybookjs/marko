@@ -98,7 +98,12 @@ async function startPage(framework: (typeof frameworks)[number]) {
     },
   );
 
+  const startTime = Date.now();
   while ((await fetch(baseURL).catch(noop))?.status !== 200) {
+    if (Date.now() - startTime > 60000) {
+      proc.kill();
+      throw new Error(`${framework} storybook server did not start within 60s`);
+    }
     await timers.setTimeout(100);
   }
 
