@@ -1,5 +1,11 @@
 # @storybook/marko
 
+## 10.1.0
+
+### Minor Changes
+
+- [#48](https://github.com/storybookjs/marko/pull/48) [`3dd1596`](https://github.com/storybookjs/marko/commit/3dd15966355bd940e9e48a79ec81939ea695913d) Thanks [@LuLaValva](https://github.com/LuLaValva)! - Add first-class support for change handlers
+
 ## 10.0.1
 
 ### Patch Changes
