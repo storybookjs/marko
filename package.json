@@ -39,7 +39,7 @@
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^17.4.0",
     "husky": "^9.1.7",
-    "jsdom": "^27.1.0",
+    "jsdom": "^29.0.1",
     "lint-staged": "^16.4.0",
     "marko": "^5.38.33",
     "prettier": "^3.8.1",
