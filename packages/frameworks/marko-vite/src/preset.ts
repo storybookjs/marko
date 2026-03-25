@@ -1,5 +1,6 @@
 import { hasVitePlugins } from "@storybook/builder-vite";
 import type { PresetProperty } from "storybook/internal/types";
+
 import type { StorybookConfig } from "./types";
 
 export const core: PresetProperty<"core"> = async (config, options) => {

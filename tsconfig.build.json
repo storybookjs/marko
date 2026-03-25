@@ -6,7 +6,7 @@
     "emitDeclarationOnly": false,
     "baseUrl": ".",
     "paths": {
-      "@storybook/marko": ["./packages/renderer/marko/src/index.ts"]
+      "@storybook/marko": ["./packages/renderers/marko/src/index.ts"]
     }
   },
   "references": [

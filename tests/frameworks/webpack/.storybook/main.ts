@@ -1,5 +1,5 @@
-import path from "path";
 import type { StorybookConfig } from "@storybook/marko-webpack";
+import path from "path";
 
 export default {
   stories: [path.join(process.cwd(), "../../fixtures/**/stories.ts")],
@@ -11,7 +11,7 @@ export default {
     name: "@storybook/marko-webpack",
     options: {},
   },
-  babel(config) {
+  babel(config: any) {
     config.babelrc = false;
     config.configFile = false;
     config.presets ??= [];

@@ -9,7 +9,7 @@ import type {
 
 import type { MarkoRenderer } from "./types";
 
-export { renderToCanvas, render } from "./render";
+export { render, renderToCanvas } from "./render";
 
 export const parameters = { renderer: "marko" };
 

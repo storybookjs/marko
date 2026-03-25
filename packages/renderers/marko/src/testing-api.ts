@@ -11,7 +11,7 @@ import {
 } from "storybook/preview-api";
 
 import { applyDecorators } from "./decorators";
-import type { Meta, Story, Preview } from "./public-types";
+import type { Meta, Preview, Story } from "./public-types";
 import { render } from "./render";
 import type { MarkoRenderer } from "./types";
 

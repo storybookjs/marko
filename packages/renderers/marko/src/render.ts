@@ -1,3 +1,4 @@
+import { UPDATE_STORY_ARGS } from "storybook/internal/core-events";
 import type {
   Args,
   ArgsStoryFn,
@@ -5,9 +6,9 @@ import type {
   StoryContext,
 } from "storybook/internal/types";
 import { addons } from "storybook/preview-api";
-import type { MarkoRenderer } from "./types";
-import { UPDATE_STORY_ARGS } from "storybook/internal/core-events";
+
 import { attrTag } from "./attr-tag";
+import type { MarkoRenderer } from "./types";
 
 type Subscriptions = Record<string, (...args: unknown[]) => void>;
 const instanceByCanvasElement = new WeakMap<

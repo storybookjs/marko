@@ -1,4 +1,4 @@
-import { SourceType, enhanceArgTypes } from "storybook/internal/docs-tools";
+import { enhanceArgTypes, SourceType } from "storybook/internal/docs-tools";
 import type {
   Addon_DecoratorFunction,
   ArgTypesEnhancer,

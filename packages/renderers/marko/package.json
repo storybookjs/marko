@@ -29,10 +29,9 @@
     }
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "files": [
     "dist",
-    "preview.js",
+    "preset.js",
     "!**/*.tsbuildinfo"
   ],
   "peerDependencies": {
