@@ -30,7 +30,6 @@
     }
   },
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
   "files": [
     "dist",
     "preset.js",

@@ -3,10 +3,10 @@ import type {
   Args,
   ComponentAnnotations,
   DecoratorFunction,
-  StoryContext as GenericStoryContext,
   LoaderFunction,
   ProjectAnnotations,
   StoryAnnotations,
+  StoryContext as GenericStoryContext,
 } from "storybook/internal/types";
 
 import type { MarkoRenderer } from "./types";

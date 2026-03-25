@@ -1,1 +1,1 @@
-npm exec -- lint-staged && npm run build:types
+npm exec lint-staged && npm run build:types

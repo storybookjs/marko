@@ -1,7 +1,7 @@
+import { build, type BuildOptions } from "esbuild";
+import glob from "fast-glob";
 import fs from "fs";
 import path from "path";
-import { type BuildOptions, build } from "esbuild";
-import glob from "fast-glob";
 
 for (const packageDir of [
   path.join(import.meta.dirname, "../packages/renderers/marko"),

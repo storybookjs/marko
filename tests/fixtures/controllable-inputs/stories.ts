@@ -1,4 +1,5 @@
-import { type Meta, type Story } from "@storybook/marko";
+import type { Meta, Story } from "@storybook/marko";
+
 import Controllable, { type Input } from "./index.marko";
 
 export default {

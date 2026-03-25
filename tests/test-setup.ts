@@ -3,6 +3,7 @@ import { once } from "node:events";
 import net from "node:net";
 import path from "node:path";
 import timers from "node:timers/promises";
+
 import type { TestProject } from "vitest/node";
 
 declare module "vitest" {
