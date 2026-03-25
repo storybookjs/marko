@@ -1,5 +1,11 @@
 # @storybook/marko-vite
 
+## 5.0.0
+
+### Major Changes
+
+- [#49](https://github.com/storybookjs/marko/pull/49) [`c4bce54`](https://github.com/storybookjs/marko/commit/c4bce54f5a02562701b6083ba7827b5b16ea6054) Thanks [@DylanPiercey](https://github.com/DylanPiercey)! - Upgrade to latest @marko/vite to support vite 8 natively.
+
 ## 4.1.0
 
 ### Minor Changes
