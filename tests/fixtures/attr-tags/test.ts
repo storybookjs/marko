@@ -5,7 +5,7 @@ import { expect } from "playwright/test";
 import { testPage } from "../../test-page";
 import * as stories from "./stories";
 
-const { Default, InitialValues } = composeStories(stories);
+const { Default, InitialValues, Repeated } = composeStories(stories);
 const initialTimeout = { timeout: 60000 };
 
 describe("attr-tags", () => {
@@ -90,6 +90,12 @@ describe("attr-tags", () => {
         });
         await sizeRadios.first().waitFor({ state: "visible", timeout: 10000 });
 
+        await expect(
+          panel.getByText("The content of the header."),
+        ).toBeVisible();
+        await expect(panel.getByText("The item name.")).toBeVisible();
+        await expect(panel.getByText("The size of the icon.")).toBeVisible();
+
         await panel.getByRole("radio", { name: /medium/i }).click();
         await expect(storyButton).toHaveCSS("font-size", "16px");
 
@@ -98,6 +104,64 @@ describe("attr-tags", () => {
 
         await panel.getByRole("radio", { name: /small/i }).click();
         await expect(storyButton).toHaveCSS("font-size", "8px");
+        await expect(panel.getByText("size, sizeChange")).toBeVisible();
+        await storyButton.click();
+        await expect(storyButton).toHaveCSS("font-size", "16px");
+        await expect(
+          panel.getByRole("radio", { name: /medium/i }),
+        ).toBeChecked();
+      });
+    });
+  });
+
+  describe(Repeated.storyName, () => {
+    describe("testing", () => {
+      test("renders repeated items and inherited attributes", async () => {
+        await render(Repeated);
+        expect(screen.getByRole("heading", { level: 1 }).className).toBe("big");
+        expect(screen.getByText(/first \(1\)/)).toBeTruthy();
+        expect(screen.getByText(/second \(2\)/)).toBeTruthy();
+      });
+    });
+
+    testPage((getPage) => {
+      test("renders repeated items and inherited attributes", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
+        await page.goto(`/?path=/story/${Repeated.id}`);
+        await expect(frame.getByText(/second \(2\)/)).toBeVisible(
+          initialTimeout,
+        );
+        await expect(frame.getByText(/first \(1\)/)).toBeVisible();
+        await expect(frame.getByRole("heading", { name: "Hi" })).toHaveClass(
+          "big",
+        );
+      });
+
+      test("a nested control leaves repeated items alone", async () => {
+        const page = await getPage();
+        const frame = page.frameLocator("#storybook-preview-iframe");
+        await page.goto(`/?path=/story/${Repeated.id}`);
+        await page.getByText("Controls", { exact: true }).click(initialTimeout);
+        const panel = page.locator("#storybook-panel-root");
+        const nameRow = panel.getByRole("row").filter({ hasText: /^name\b/ });
+        await nameRow
+          .getByRole("button", { name: /set string/i })
+          .click(initialTimeout);
+        await nameRow.getByRole("textbox").fill("changed");
+        // Then edit the single `header`, so there is a render to wait for.
+        const descriptionRow = panel
+          .getByRole("row")
+          .filter({ hasText: /^description\b/ });
+        await descriptionRow
+          .getByRole("button", { name: /set string/i })
+          .click();
+        await descriptionRow.getByRole("textbox").fill("Edited");
+        await expect(
+          frame.getByRole("heading", { name: "Edited" }),
+        ).toHaveClass("big");
+        await expect(frame.getByText(/first \(1\)/)).toBeVisible();
+        await expect(frame.getByText(/second \(2\)/)).toBeVisible();
       });
     });
   });

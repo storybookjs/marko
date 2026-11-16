@@ -1,0 +1,36 @@
+export type Size = "small" | "large";
+export type Unrelated = "none" | "reset";
+
+export interface Input<Index extends number | string = number> {
+  /** Body content. */
+  content?: Marko.Body;
+  /** An aliased union. */
+  size?: Size;
+  /** A boolean. */
+  flag?: boolean;
+  /** Nullable text. */
+  label: string | null;
+  /** Typed by a parameter. */
+  index?: Index;
+  /** Members in an order the checker would not keep. */
+  state?: "loading" | "expand" | "reset" | "none";
+  /** A lone boolean literal among strings. */
+  mode?: true | "auto";
+  /** An inline type, whose member docs stay out of the displayed type. */
+  items?: Array<{
+    /** The label. */
+    label: string;
+  }>;
+  /** Written over several lines, as Prettier does. */
+  slot?:
+    | Marko.Body
+    | Marko.HTML.Span;
+  /** Only ever null. */
+  nothing?: null;
+  /** Only names a type from outside the project. */
+  tag?: keyof Marko.NativeTags;
+  /** Escapes JSON can't read as written. */
+  escaped?: "a\0b" | "\v";
+}
+
+<div/>

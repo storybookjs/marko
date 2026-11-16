@@ -5,6 +5,7 @@ export default {
   stories: [path.join(process.cwd(), "../../fixtures/**/stories.ts")],
   addons: [
     "@storybook/addon-links",
+    "@storybook/addon-docs",
     "@storybook/addon-webpack5-compiler-babel",
   ],
   framework: {

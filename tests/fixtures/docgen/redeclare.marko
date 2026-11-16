@@ -1,0 +1,8 @@
+export type Input = Omit<Marko.HTML.Button, "type"> & {
+  /** Fired on click. */
+  onClick?(event: MouseEvent): void;
+  /** Extra classes. */
+  class?: string;
+};
+
+<button/>

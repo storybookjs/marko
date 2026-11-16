@@ -13,38 +13,13 @@ export default {
     },
   },
   argTypes: {
-    header: {
-      description: "An optional header",
-      "@": {
-        description: {
-          type: "string",
-          control: "text",
-          description: "The content of the header",
-        },
-      },
-    },
     item: {
-      description: "Repeatable attribute tag for list items",
       "@": {
-        name: {
-          description: "The item name",
-          control: { type: "text" },
-        },
-        count: {
-          description: "The numerical value of this item",
-          control: "number",
-        },
         icon: {
-          description: "An optional icon",
           "@": {
+            // Controllable from `sizeChange` in the Input type.
             size: {
-              controllable: true,
-              description: "The size of the icon",
-              options: ["small", "medium", "large"],
               control: { type: "inline-radio" },
-              table: {
-                type: { summary: "string" },
-              },
             },
           },
         },
@@ -82,5 +57,19 @@ export const InitialValues = {
         code: `<attr-tags/>`,
       },
     },
+  },
+} as Story<Input>;
+
+export const Repeated = {
+  args: {
+    header: {
+      description: "Hi",
+      // Inherited from the native `<h1>`, so not one of the listed attributes.
+      class: "big",
+    } as any,
+    item: [
+      { name: "first", count: 1 },
+      { name: "second", count: 2 },
+    ] as any,
   },
 } as Story<Input>;

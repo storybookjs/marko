@@ -1,5 +1,13 @@
+/**
+ * A button that tracks how many times it has been clicked.
+ */
 export interface Input {
+  /**
+   * The initial count for the counter.
+   * @default 0
+   */
   count?: number;
+  /** Fired each time the internal counter is incremented. */
   onIncrement?(count: number): void;
 }
 

@@ -1,0 +1,14 @@
+export type Camel<T> = T & {
+  [K in keyof T as K extends `aria-${infer R}`
+    ? `aria${Capitalize<R>}`
+    : never]: T[K];
+};
+
+export interface Base extends Marko.HTML.Span {
+  /** Declared in the project. */
+  mine?: string;
+}
+
+export interface Input extends Camel<Base> {}
+
+<span/>

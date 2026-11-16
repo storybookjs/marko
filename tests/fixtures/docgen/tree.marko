@@ -1,0 +1,13 @@
+export interface TreeItem {
+  /** The item's label. */
+  label: string;
+  /** Nested items. */
+  item?: Marko.AttrTag<TreeItem>;
+}
+
+export interface Input {
+  /** Top level items. */
+  item?: Marko.AttrTag<TreeItem>;
+}
+
+<div/>

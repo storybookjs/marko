@@ -7,7 +7,7 @@ import type {
 } from "storybook/internal/types";
 import { addons } from "storybook/preview-api";
 
-import { attrTag } from "./attr-tag";
+import { attrTag, isPlainObject } from "./attr-tag";
 import type { MarkoRenderer } from "./types";
 
 type Subscriptions = Record<string, (...args: unknown[]) => void>;
@@ -60,7 +60,7 @@ export function renderToCanvas(
     }
     if (instance) {
       const activeSubscriptions = subscriptionsByInstance.get(instance)!;
-      (instance as any).input = input;
+      (instance as any).input = processInput(input, ctx.storyContext, false);
       instance.update();
 
       for (const eventName in activeSubscriptions) {
@@ -147,19 +147,29 @@ function cleanup(canvasElement: MarkoRenderer["canvasElement"]) {
  */
 function processInput(args: Args, ctx: StoryContext, tagsApi: boolean) {
   const input = {} as typeof args;
+  // Attr tags built here, so the story's own arg objects are never changed.
+  const built = new WeakSet<object>();
 
-  for (const key in args) {
+  args: for (const key in args) {
     let path = key;
     let obj = input;
-    // Attr tag nested attributes have been converted to `@foo > @bar > baz` by `entry-preview.ts`
+    // Attr tag attributes may be flattened to `@foo > @bar > baz` keys by
+    // `flattenAttrTags`
     while (path.startsWith("@")) {
       const i = path.indexOf(" > ");
-      obj = obj[path.substring(1, i)] ??= attrTag({});
+      const name = path.substring(1, i);
+      const value = obj[name];
+      if (!built.has(value)) {
+        // One tag's attribute can't apply to eg an array of repeated tags.
+        if (value !== undefined && !isPlainObject(value)) continue args;
+        built.add((obj[name] = attrTag({ ...value })));
+      }
+      obj = obj[name];
       path = path.substring(i + 3);
     }
 
-    // Normalize body content
-    if (ctx.argTypes[key]?.bodyContent) {
+    // Normalize body content (given as text; this may run twice per render)
+    if (ctx.argTypes[key]?.bodyContent && typeof args[key] === "string") {
       const type = ctx.argTypes[key]?.bodyContent;
       if (tagsApi) {
         obj[path] = /* TODO */ args[key];
@@ -174,6 +184,16 @@ function processInput(args: Args, ctx: StoryContext, tagsApi: boolean) {
     // Add controllable change handlers
     if (ctx.argTypes[key]?.controllable && !args[key + "Change"]) {
       obj[path + "Change"] = (v: unknown) => {
+        // Storybook doesn't re-render a story whose args are fixed (eg those
+        // listed in docs), so the component gets the value directly too.
+        if (tagsApi) {
+          obj[path] = v;
+          (
+            instanceByCanvasElement.get(ctx.canvasElement) as
+              | Marko.MountedTemplate
+              | undefined
+          )?.update({ ...input });
+        }
         addons.getChannel().emit(UPDATE_STORY_ARGS, {
           storyId: ctx.id,
           updatedArgs: { [key]: v },

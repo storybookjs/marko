@@ -38,6 +38,7 @@
   "dependencies": {
     "@marko/compiler": "^5",
     "@marko/webpack": "^10",
-    "@storybook/builder-webpack5": "^10.0.5"
+    "@storybook/builder-webpack5": "^10.0.5",
+    "@storybook/marko": "^10.1.0"
   }
 }

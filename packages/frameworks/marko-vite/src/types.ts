@@ -12,6 +12,11 @@ type BuilderName = "@storybook/builder-vite";
 
 export type FrameworkOptions = {
   builder?: BuilderOptions;
+  /**
+   * Set to `false` to skip reading docs from each component's `Input` type.
+   * @default true
+   */
+  docgen?: boolean;
 };
 
 type StorybookConfigFramework = {

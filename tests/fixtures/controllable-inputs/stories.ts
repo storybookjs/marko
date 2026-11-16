@@ -21,8 +21,9 @@ export default {
         type: { summary: "string" },
       },
     },
+    // `pressed` and `color` are controllable from their `Input` types; the
+    // native `value` has no type of ours to say so.
     pressed: {
-      controllable: true,
       control: { type: "boolean" },
       description: "Controllable boolean value",
       table: {
@@ -34,7 +35,6 @@ export default {
     },
     color: {
       options: ["red", "orange", "yellow"],
-      controllable: true,
       control: { type: "inline-radio" },
       description: "Controllable boolean value",
       table: {
