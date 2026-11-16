@@ -22,6 +22,11 @@
       "import": "./dist/preset.mjs",
       "default": "./dist/preset.js"
     },
+    "./docgen": {
+      "types": "./dist/docgen.d.ts",
+      "import": "./dist/docgen.mjs",
+      "default": "./dist/docgen.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
@@ -34,6 +39,10 @@
     "preset.js",
     "!**/*.tsbuildinfo"
   ],
+  "dependencies": {
+    "@marko/language-tools": "^2.8.2",
+    "typescript": "^6.0.3"
+  },
   "peerDependencies": {
     "storybook": "9 - 10"
   }

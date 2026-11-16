@@ -194,6 +194,44 @@ export const Primary: Story<ButtonInput> = {
 };
 ```
 
+### Automatic docs from `Input` types
+
+When [docs](https://storybook.js.org/docs/writing-docs) are enabled (eg with `@storybook/addon-docs`), Storybook reads each component's exported `Input` type and fills its controls and [autodocs](https://storybook.js.org/docs/writing-docs/autodocs) table from it, so most stories need no `argTypes` at all:
+
+```marko
+export interface Input {
+  /**
+   * The button's visual weight.
+   * @default "secondary"
+   */
+  priority?: "primary" | "secondary" | "tertiary";
+  /** Whether the menu is open. */
+  open?: boolean;
+  openChange?(open: boolean): void;
+  /** The heading shown above the content. */
+  header?: Marko.AttrTag<{
+    /** The heading level. */
+    level?: 2 | 3 | 4;
+  }>;
+}
+```
+
+- A doc comment on `Input` itself becomes the component's description, unless `parameters.docs.description.component` sets one.
+- JSDoc descriptions, `@default` values, types and required-ness fill the table, and a union of literals becomes an option control in the order written.
+- [Attribute tags](https://markojs.com/docs/reference/language#attribute-tags) (`Marko.AttrTag`) list their own members nested beneath them. Their controls start empty, since only a story's own `"@"` argTypes split its attribute tag args into them.
+- Event handlers (`onFoo` or `on-foo` functions) log to the Actions panel and are grouped under "Events" in the table, with no `argTypesRegex` needed, so every story passes one. Set `action: false` in a handler's argType to leave it out. Handlers of attribute tags are listed but don't log, since an action for one would create the tag.
+- A `fooChange` handler next to `foo` (the [controllable pattern](https://markojs.com/docs/explanation/controllable-components#the-controllable-pattern)) makes `foo` controllable, as if its argType said `controllable: true`, and shares its row. To opt out, set `controllable: false` and give `fooChange` its own argType if it should still be listed.
+- Props inherited from your own types are listed like the rest. Those from types outside your project (eg `Input extends Marko.HTML.Button`) aren't listed (add an argType to list one), and a prop you re-declare from one shows only your docs.
+
+Anything written in a story's `argTypes` wins over what is extracted, so reach for it only to change what the types can't say, such as a control's look. Types are read with `@storybook/marko`'s own TypeScript, so this works whichever version your project uses, if any. Components installed in `node_modules` aren't read. To turn extraction off, set `docgen: false` in the framework's options:
+
+```ts
+framework: {
+  name: "@storybook/marko-vite",
+  options: { docgen: false },
+},
+```
+
 ## Testing
 
 `@storybook/marko` also ships with tools to make loading and rendering your stories in your tests easy! See our [testing documentation](./testing.md) for more details.

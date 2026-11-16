@@ -1,0 +1,20 @@
+export type Input = SingleInput | RangeInput;
+
+export interface SingleInput {
+  value?: number;
+  valueChange?: (value: number) => void;
+  /** Plain text or a heading attribute tag. */
+  title?:
+    | string
+    | Marko.AttrTag<{
+        /** The heading level. */
+        level: number;
+      }>;
+}
+
+export interface RangeInput extends Marko.HTML.Div {
+  value?: [number, number];
+  valueChange?: (value: [number, number]) => void;
+}
+
+<div/>

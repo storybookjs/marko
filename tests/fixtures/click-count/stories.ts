@@ -14,20 +14,10 @@ export default {
     },
   },
   argTypes: {
-    onIncrement: {
-      description: "Event fired each time the internal counter is incremented",
-      table: { category: "Events" },
-    },
     count: {
-      defaultValue: 0,
-      control: { type: "number" },
+      // Deliberately differs from the Input JSDoc: explicit argTypes win.
       description: "What the initial count of the counter should be",
-      table: {
-        category: "Input",
-        defaultValue: {
-          summary: "0",
-        },
-      },
+      table: { category: "Input" },
     },
   },
 } as Meta<Input>;
@@ -62,3 +52,6 @@ export const InitialCount = {
     },
   },
 } as Story<Input>;
+
+/** Leaves `onIncrement` to docgen, which makes it an action. */
+export const AutomaticAction = {} as Story<Input>;

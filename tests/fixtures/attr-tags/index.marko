@@ -1,9 +1,23 @@
+// Aliased attr tag types must be recognized like inline `Marko.AttrTag<...>`.
+export type Header = Marko.AttrTag<
+  Marko.HTML.H1 & {
+    /** The content of the header. */
+    description: string;
+  }
+>;
+
 export interface Input {
-  header?: Marko.AttrTag<Marko.HTML.H1 & { description: string }>;
+  /** An optional header. */
+  header?: Header;
+  /** Repeatable attribute tag for list items. */
   item?: Marko.AttrTag<{
+    /** The item name. */
     name: string;
+    /** The numerical value of this item. */
     count: number;
+    /** An optional icon. */
     icon: Marko.AttrTag<{
+      /** The size of the icon. */
       size: "small" | "medium" | "large";
       sizeChange?: (s: "small" | "medium" | "large") => void;
     }>;

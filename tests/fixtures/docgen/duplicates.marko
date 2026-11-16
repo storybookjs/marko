@@ -1,0 +1,13 @@
+export interface Single {
+  selected?: string | { from?: string };
+  content?: Marko.Body;
+}
+
+export interface Range {
+  selected?: { from?: string };
+  content?: string;
+}
+
+export type Input = Single | Range;
+
+<div/>

@@ -18,9 +18,11 @@ declare module "storybook/internal/csf" {
      *
      * Indicates that this arg is [controllable](https://markojs.com/docs/explanation/controllable-components#the-controllable-pattern) via a `_Change` handler.
      *
-     * For further customization, add a `_Change` argType manually
+     * For further customization, add a `_Change` argType manually. Inferred
+     * when the component's `Input` declares the `_Change` handler; set `false`
+     * to opt out.
      */
-    controllable?: true;
+    controllable?: boolean;
     /**
      * **_[Marko]_**
      *

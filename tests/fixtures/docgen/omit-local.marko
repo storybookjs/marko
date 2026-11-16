@@ -1,0 +1,6 @@
+import type { Input as ExtendsInput } from "./extends.marko";
+
+export interface Input
+  extends Omit<ExtendsInput, "base" | "hidden" | "title"> {}
+
+<div/>

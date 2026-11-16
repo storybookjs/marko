@@ -1,0 +1,20 @@
+import type { Shared } from "./shared";
+
+export interface Base extends Omit<Marko.HTML.Span, "role" | "aria-label" | `on${string}`> {
+  /** Declared on an in-project base. */
+  base?: string;
+}
+
+export interface Input extends Base, Shared {
+  hidden?: boolean;
+  /** Overrides the native title without inheriting its docs. */
+  title?: string;
+  heading?: Marko.AttrTag<
+    Marko.HTML.H1 & {
+      /** The heading text. */
+      text: string;
+    }
+  >;
+}
+
+<div/>
