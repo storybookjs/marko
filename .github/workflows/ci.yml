@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 concurrency:
-  group: "${{ github.workflow }}-${{ github.head_ref || github.ref }}"
+  group: "${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}"
   cancel-in-progress: true
 
 jobs:
@@ -19,6 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
         with:
+          repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
           ref: ${{ github.head_ref }}
       - name: Install node
         uses: actions/setup-node@v6
@@ -29,14 +30,20 @@ jobs:
         run: npm ci
       - name: Format code
         run: npm run format
+      - name: Check formatting
+        # Another repo's branch can't be pushed to, so its PR fails instead.
+        if: github.event.pull_request && github.event.pull_request.head.repo.full_name != github.repository
+        run: git diff --exit-code
       - name: Commit changes
+        if: ${{ !github.event.pull_request || github.event.pull_request.head.repo.full_name == github.repository }}
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "[ci] format"
           commit_user_name: "github-actions[bot]"
           commit_user_email: "github-actions[bot]@users.noreply.github.com"
   test:
-    runs-on: ubuntu-latest
+    # Playwright 1.58 can't install browsers on ubuntu-latest (26.04).
+    runs-on: ubuntu-24.04
     name: "test: node@${{ matrix.node }}"
     strategy:
       fail-fast: false
